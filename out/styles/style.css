@@ -1,0 +1,11 @@
+@import '/vendor/normalize.css';
+body{padding:50px 0;text-align:center;font-size:13px}
+a{color:#000}
+header{padding:0 0 30px;}
+header h1{font-size:50px;margin:0;}
+header h1 span{color:#555;font-weight:normal;font-size:40px}
+header p{color:#ddd;margin:0;font-weight:bold;font-size:30px}
+article h1{font-size:50px;color:#333;font-weight:bold;margin:0 auto;padding:0 0 10px}
+article h2{font-size:15px;font-weight:normal;margin:0 auto}
+article ul{margin:0 auto;font-size:20px;display:inline-block;list-style-type:circle;text-align:left;line-height:1.5;color:#d00}
+footer{padding:30px 0 0;color:#ddd}
