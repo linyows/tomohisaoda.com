@@ -8,4 +8,6 @@ header p{color:#ddd;margin:0;font-weight:bold;font-size:30px}
 article h1{font-size:50px;color:#333;font-weight:bold;margin:0 auto;padding:0 0 10px}
 article h2{font-size:15px;font-weight:normal;margin:0 auto}
 article ul{margin:0 auto;font-size:20px;display:inline-block;list-style-type:circle;text-align:left;line-height:1.5;color:#d00}
+article img{border:1px solid #ddd}
+article .me{border:10px solid #f5f5f5;margin:0 auto 30px;width:82px;height:82px;overflow:hidden;line-height:1}
 footer{padding:30px 0 0;color:#ddd}
