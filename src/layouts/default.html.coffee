@@ -23,6 +23,17 @@ html lang: 'en', ->
         text @blocks.styles.join('')
         link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
         link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
+
+        # Analytics
+        script type: 'text/javascript', ->
+            text 'var _gaq = _gaq || [];'
+            text "_gaq.push(['_setAccount', 'UA-328462-11']);"
+            text "_gaq.push(['_trackPageview']);"
+            text "(function() {"
+            text "var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;"
+            text "ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';"
+            text "var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);"
+            text "})();"
     body ->
         # Header
         header ->
