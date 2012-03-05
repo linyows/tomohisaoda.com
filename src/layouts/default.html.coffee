@@ -1,5 +1,5 @@
 ---
-title: 'TomohisaOda.com'
+title: 'Tomohisa Oda'
 description: 'my blog site.'
 author: 'Tomohisa Oda'
 ---
@@ -23,6 +23,7 @@ html lang: 'en', ->
         text @blocks.styles.join('')
         link rel: 'stylesheet', href: '/styles/style.css', media: 'screen, projection'
         link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
+        link rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Raleway:100|Prata|Fanwood+Text|Snippet', media: 'screen, projection'
 
         # Analytics
         script type: 'text/javascript', ->
@@ -37,9 +38,8 @@ html lang: 'en', ->
     body ->
         header ->
             h1 class: 'site-name', ->
-                text 'TomohisaOda'
-                span '.com'
-            p class: 'site-description', 'my blog site.'
+                span 'Tomohisa Oda'
+            p class: 'site-description', '...web engineer, designer...'
 
         nav class: 'global', ->
             ul ->
@@ -52,8 +52,8 @@ html lang: 'en', ->
             text @content
 
         footer ->
-            p "copyright #{new Date().getFullYear()} &copy; tomohisaoda.com"
-            p "This website was generatedn #{@site.date.toIsoDateString()} and has #{@site.totalDocuments} documents"
+            p "copyright #{new Date().getFullYear()} &copy; tomohisa oda"
+            p "This website was generated on #{@site.date.toIsoDateString()}."
 
         # Scripts
         text @blocks.scripts.join('')
