@@ -35,20 +35,25 @@ html lang: 'en', ->
             text "var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);"
             text "})();"
     body ->
-        # Header
         header ->
             h1 class: 'site-name', ->
                 text 'TomohisaOda'
                 span '.com'
             p class: 'site-description', 'my blog site.'
 
+        nav class: 'global', ->
+            ul ->
+                for document in @documents
+                    if document.url.indexOf('/posts') == 0
+                        a href: document.url, ->
+                            li document.title
+
         article ->
-            # Document
             text @content
 
-        # Footer
         footer ->
-            p 'copyright &copy; tomohisaoda.com'
+            p "copyright #{new Date().getFullYear()} &copy; tomohisaoda.com"
+            p "This website was generatedn #{@site.date.toIsoDateString()} and has #{@site.totalDocuments} documents"
 
         # Scripts
         text @blocks.scripts.join('')
