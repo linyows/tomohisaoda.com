@@ -1,17 +1,15 @@
 @import '/vendor/normalize.css';
-body{padding:50px 30%;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";letter-spacing:5px;background-position:0 0;background-repeat:repeat}
+body{padding:50px 30%;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-position:0 0;background-repeat:repeat}
 a{color:#000}
-header{padding:0 0 50px;}
+header{padding:0 0 30px;}
 header h1{border-top:1px solid #ddd;border-bottom:1px solid #eee;font-size:25px;margin:0;letter-spacing:15px;font-weight:normal;}
-header h1 span{border-top:3px solid #f5f5f5;padding:10px 0;display:block}
+header h1 a{padding:10px 0;border-top:3px solid #f5f5f5;text-decoration:none;display:block}
 header p{color:#ddd;margin:0;padding:6px 0;font-size:16px;border-bottom:1px solid #eee}
-nav{border-bottom:1px solid #eee;}
-nav ul{margin:0 auto 20px;padding:0 0 20px;font-size:17px;font-weight:bold;display:inline-block;list-style-type:circle;text-align:left;line-height:1.5;color:#d00}
-article{padding:30px 0 0;}
+article{padding:0;}
 article h1{font-size:20px;color:#666;font-weight:bold;margin:0 auto;padding:0 0 10px}
 article h2{font-size:15px;font-weight:normal;margin:0 auto}
-article ul{margin:0 auto;font-size:15px;display:inline-block;list-style-type:circle;text-align:left;line-height:1.5;color:#d00}
-article img{border:1px solid #ddd}
-article .me{border:10px solid #f5f5f5;margin:0 auto 30px;width:82px;height:82px;overflow:hidden;line-height:1}
+article ul{margin:0 auto;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#d00;}
+article ul li p{margin:0;padding:0}
+article p{line-height:1.5;font-size:16px}
 footer{border-top:1px solid #eee;border-bottom:1px solid #eee;margin:50px 0;padding:7px 0;color:#ddd;font-size:11px}
-footer p{padding:0;margin:0;letter-spacing:2px}
+footer p{padding:0;margin:0}
