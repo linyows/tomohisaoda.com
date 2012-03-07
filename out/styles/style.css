@@ -1,5 +1,9 @@
 @import '/vendor/normalize.css';
-body{padding:50px 30%;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-position:0 0;background-repeat:repeat}
+.clr{clear:both;float:none;overflow:hidden;width:1px;height:0;margin:0 -1px -1px 0;border:0;padding:0;font-size:0;line-height:0}
+.pkg:after{content:" ";display:block;visibility:hidden;clear:both;height:.1px;font-size:.1em;line-height:0}
+* html .pkg{display:inline-block;height:1%}
+.pkg,article ul.posts li{display:block}
+body{padding:50px 5%;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-position:0 0;background-repeat:repeat}
 a{color:#000}
 header{padding:0 0 30px;}
 header h1{border-top:1px solid #ddd;border-bottom:1px solid #eee;font-size:25px;margin:0;letter-spacing:15px;font-weight:normal;}
@@ -8,8 +12,12 @@ header p{color:#ddd;margin:0;padding:6px 0;font-size:16px;border-bottom:1px soli
 article{padding:0;}
 article h1{font-size:20px;color:#666;font-weight:bold;margin:0 auto;padding:0 0 10px}
 article h2{font-size:15px;font-weight:normal;margin:0 auto}
-article ul{margin:0 auto;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#d00;}
-article ul li p{margin:0;padding:0}
+article ul.posts{margin:0 auto;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#d00;}
+article ul.posts li p{margin:0;padding:0}
+article ul.posts li .date{float:left;width:6em;display:inline-block;background-color:#eee;padding:.4em 1em .3em;text-align:right;-webkit-transform:rotate(-10deg);-moz-transform:rotate(-10deg) skew(-10deg)}
+article ul.posts li .body{text-align:left;float:right;width:30em;-webkit-transform:rotate(10deg);-moz-transform:rotate(10deg) skew(10deg) translate(-5px);}
+article ul.posts li .body a{display:inline-block;text-decoration:none;background-color:#d00;color:#fff;padding:.4em 1em .3em;text-align:left}
+article ul.posts li .body span{display:block;padding:0 1em}
 article p{line-height:1.5;font-size:16px}
 footer{border-top:1px solid #eee;border-bottom:1px solid #eee;margin:50px 0;padding:7px 0;color:#ddd;font-size:11px}
 footer p{padding:0;margin:0}

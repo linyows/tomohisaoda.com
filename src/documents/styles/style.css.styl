@@ -12,8 +12,34 @@
 
 // ====================================
 // Styles
+
+.clr
+  clear: both
+  float: none
+  overflow: hidden
+  width: 1px
+  height: 0px
+  margin: 0 -1px -1px 0
+  border: 0
+  padding: 0
+  font-size: 0
+  line-height: 0
+.pkg:after
+  content: " "
+  display: block
+  visibility: hidden
+  clear: both
+  height: 0.1px
+  font-size: 0.1em
+  line-height: 0
+* html .pkg
+  display: inline-block
+  height: 1%
+.pkg
+  display: block
+
 body
-  padding: 50px 30%
+  padding: 50px 5%
   text-align: center
   font-size: 13px
   font-family: Prata, serif, "MS P明朝", "ヒラギノ明朝 Pro W3", "平成明朝"
@@ -54,7 +80,7 @@ article
     font-size: 15px
     font-weight: normal
     margin: 0 auto
-  ul
+  ul.posts
     margin: 0 auto
     padding: 0
     font-size: 15px
@@ -63,9 +89,35 @@ article
     line-height: 1.5
     color: #DD0000
     li
+      @extend .pkg
       p
         margin: 0
         padding: 0
+      .date
+        float: left
+        width: 6em
+        display: inline-block
+        background-color: #EEE
+        padding: .4em 1em .3em
+        text-align: right
+        -webkit-transform: rotate(-10deg)
+        -moz-transform: rotate(-10deg) skew(-10deg)
+      .body
+        text-align: left
+        float: right
+        width: 30em
+        -webkit-transform: rotate(10deg)
+        -moz-transform: rotate(10deg) skew(10deg) translate(-5px)
+        a
+          display: inline-block
+          text-decoration: none
+          background-color: #DD0000
+          color: #FFF
+          padding: .4em 1em .3em
+          text-align: left
+        span
+          display: block
+          padding: 0 1em
   p
     line-height: 1.5
     font-size: 16px

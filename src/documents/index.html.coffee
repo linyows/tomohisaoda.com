@@ -9,7 +9,6 @@ ul class: 'posts',  ->
       li ->
         p class: 'date', ->
           text @tool.moment(document.date).format('MMM D, YYYY')
-        p class: 'title', ->
+        p class: 'body', ->
           a href: document.url, property: 'dc:title', "#{document.title}"
-        p class: 'footer', ->
-          text "posted in #{document.tags}"
+          span class: 'meta', "posted in #{document.tags}"
