@@ -2,22 +2,24 @@
 .clr{clear:both;float:none;overflow:hidden;width:1px;height:0;margin:0 -1px -1px 0;border:0;padding:0;font-size:0;line-height:0}
 .pkg:after{content:" ";display:block;visibility:hidden;clear:both;height:.1px;font-size:.1em;line-height:0}
 * html .pkg{display:inline-block;height:1%}
-.pkg,article ul.posts li{display:block}
+.pkg,ul.posts li{display:block}
 body{padding:50px 5%;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-position:0 0;background-repeat:repeat}
 a{color:#000}
 header{padding:0 0 30px;}
-header h1{border-top:1px solid #ddd;border-bottom:1px solid #eee;font-size:25px;margin:0;letter-spacing:15px;font-weight:normal;}
-header h1 a{padding:10px 0;border-top:3px solid #f5f5f5;text-decoration:none;display:block}
-header p{color:#ddd;margin:0;padding:6px 0;font-size:16px;border-bottom:1px solid #eee}
+header h1{font-size:25px;margin:0;padding-left:20px;letter-spacing:15px;font-weight:normal;}
+header h1 a{padding:10px 0;text-decoration:none;display:block}
+header p{color:#ddd;margin:0;padding:6px 0;font-size:16px}
 article{padding:0;}
-article h1{font-size:20px;color:#666;font-weight:bold;margin:0 auto;padding:0 0 10px}
+article h1{font-size:20px;color:#d00;font-weight:bold;margin:0 auto;padding:0 0 30px}
 article h2{font-size:15px;font-weight:normal;margin:0 auto}
-article ul.posts{margin:0 auto;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#d00;}
-article ul.posts li p{margin:0;padding:0}
-article ul.posts li .date{float:left;width:6em;display:inline-block;background-color:#eee;padding:.4em 1em .3em;text-align:right;-webkit-transform:rotate(-10deg);-moz-transform:rotate(-10deg) skew(-10deg)}
-article ul.posts li .body{text-align:left;float:right;width:30em;-webkit-transform:rotate(10deg);-moz-transform:rotate(10deg) skew(10deg) translate(-5px);}
-article ul.posts li .body a{display:inline-block;text-decoration:none;background-color:#d00;color:#fff;padding:.4em 1em .3em;text-align:left}
-article ul.posts li .body span{display:block;padding:0 1em}
-article p{line-height:1.5;font-size:16px}
-footer{border-top:1px solid #eee;border-bottom:1px solid #eee;margin:50px 0;padding:7px 0;color:#ddd;font-size:11px}
+article p{width:450px;line-height:1.7;font-size:16px;text-align:left;margin:0 auto;padding:0 0 20px;text-indent:1em;}
+article p code{border:1px solid #ddd;padding:3px 5px;font-size:14px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;color:#666;margin:0 5px 3px}
+footer{margin:50px 0;padding:7px 0;color:#ddd;font-size:12px;line-height:1.5}
 footer p{padding:0;margin:0}
+ul.posts{margin:70px 0 20px 200px;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#d00;}
+ul.posts li p{margin:0;padding:0;line-height:1.5;font-size:16px}
+ul.posts li .date{float:left;width:6em;display:inline-block;background-color:#eee;padding:.4em 1em .3em;text-align:right;-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-o-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-ms-transform:rotate(-15deg) skew(-15deg) translate(0,-25px)}
+ul.posts li .body{text-align:left;float:left;width:30em;-moz-transform:rotate(10deg) skew(10deg) translate(-5px);-webkit-transform:rotate(10deg) skew(10deg) translate(-5px);-o-transform:rotate(10deg) skew(10deg) translate(-5px);-ms-transform:rotate(10deg) skew(10deg) translate(-5px);}
+ul.posts li .body a{display:inline-block;text-decoration:none;background-color:#d00;color:#fff;padding:.4em 1em .3em;text-align:left}
+ul.posts li .body a:hover{background-color:#000}
+ul.posts li .body span{display:block;padding:0 1em}

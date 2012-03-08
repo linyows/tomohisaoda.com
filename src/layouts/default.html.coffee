@@ -41,7 +41,7 @@ html lang: 'en', ->
         header ->
             h1 class: 'site-name', ->
                 a href: '/', 'Tomohisa Oda'
-            p class: 'site-description', 'web engineer, designer'
+            p class: 'site-description', 'is... web engineer, designer.'
 
             # form 'search', action: 'http://google.com/search', method: 'get', ->
               # input type: 'hidden', name: 'q', value: 'site:tomohisaoda.com'
@@ -54,8 +54,11 @@ html lang: 'en', ->
                         a href: document.url, ->
                             li document.title
 
-        article ->
-            text @content
+        if @document.url == '/index.html'
+          text @content
+        else
+          article ->
+              text @content
 
         footer ->
             p "copyright #{new Date().getFullYear()} &copy; tomohisa oda"

@@ -51,15 +51,13 @@ a
 header
   padding: 0 0 30px
   h1
-    border-top: 1px solid #ddd
-    border-bottom: 1px solid #eee
     font-size: 25px
     margin: 0
+    padding-left: 20px
     letter-spacing: 15px
     font-weight: normal
     a
       padding: 10px 0
-      border-top: 3px solid #f5f5f5
       text-decoration: none
       display: block
   p
@@ -67,67 +65,88 @@ header
     margin: 0
     padding: 6px 0
     font-size: 16px
-    border-bottom: 1px solid #eee
 article
   padding: 0
   h1
     font-size: 20px
-    color: #666
+    color: #DD0000
     font-weight: bold
     margin: 0 auto
-    padding: 0 0 10px
+    padding: 0 0 30px
   h2
     font-size: 15px
     font-weight: normal
     margin: 0 auto
-  ul.posts
-    margin: 0 auto
-    padding: 0
-    font-size: 15px
-    display: inline-block
-    list-style-type: none
-    line-height: 1.5
-    color: #DD0000
-    li
-      @extend .pkg
-      p
-        margin: 0
-        padding: 0
-      .date
-        float: left
-        width: 6em
-        display: inline-block
-        background-color: #EEE
-        padding: .4em 1em .3em
-        text-align: right
-        -webkit-transform: rotate(-10deg)
-        -moz-transform: rotate(-10deg) skew(-10deg)
-      .body
-        text-align: left
-        float: right
-        width: 30em
-        -webkit-transform: rotate(10deg)
-        -moz-transform: rotate(10deg) skew(10deg) translate(-5px)
-        a
-          display: inline-block
-          text-decoration: none
-          background-color: #DD0000
-          color: #FFF
-          padding: .4em 1em .3em
-          text-align: left
-        span
-          display: block
-          padding: 0 1em
   p
-    line-height: 1.5
+    width: 450px
+    line-height: 1.7
     font-size: 16px
+    text-align: left
+    margin: 0 auto
+    padding: 0 0 20px
+    text-indent: 1em
+    code
+      border: 1px solid #ddd
+      padding: 3px 5px
+      font-size: 14px
+      border-radius: 5px
+      -webkit-border-radius: 5px
+      -moz-border-radius: 5px
+      color: #666
+      margin: 0 5px 3px
 footer
   p
     padding: 0
     margin: 0
-  border-top: 1px solid #eee
-  border-bottom: 1px solid #eee
   margin: 50px 0
   padding: 7px 0
   color: #ddd
-  font-size: 11px
+  font-size: 12px
+  line-height: 1.5
+
+ul.posts
+  margin: 70px 0 20px 200px
+  padding: 0
+  font-size: 15px
+  display: inline-block
+  list-style-type: none
+  line-height: 1.5
+  color: #DD0000
+  li
+    @extend .pkg
+    p
+      margin: 0
+      padding: 0
+      line-height: 1.5
+      font-size: 16px
+    .date
+      float: left
+      width: 6em
+      display: inline-block
+      background-color: #EEE
+      padding: .4em 1em .3em
+      text-align: right
+      -moz-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
+      -webkit-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
+      -o-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
+      -ms-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
+    .body
+      text-align: left
+      float: left
+      width: 30em
+      -moz-transform: rotate(10deg) skew(10deg) translate(-5px)
+      -webkit-transform: rotate(10deg) skew(10deg) translate(-5px)
+      -o-transform: rotate(10deg) skew(10deg) translate(-5px)
+      -ms-transform: rotate(10deg) skew(10deg) translate(-5px)
+      a
+        display: inline-block
+        text-decoration: none
+        background-color: #DD0000
+        color: #FFF
+        padding: .4em 1em .3em
+        text-align: left
+      a:hover
+        background-color: #000
+      span
+        display: block
+        padding: 0 1em
