@@ -5,10 +5,10 @@
 .pkg,ul.posts li{display:block}
 body{padding:50px 5%;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-position:0 0;background-repeat:repeat}
 a{color:#000}
-header{padding:0 0 30px;}
-header h1{font-size:25px;margin:0;padding-left:20px;letter-spacing:15px;font-weight:normal;}
-header h1 a{padding:10px 0;text-decoration:none;display:block}
-header p{color:#ddd;margin:0;padding:6px 0;font-size:16px}
+header{background-color:#6bd07b;padding:.4em 1em .3em;text-align:left;width:330px;margin:0 auto;-moz-transform:rotate(10deg) skew(10deg) translate(22px);-webkit-transform:rotate(10deg) skew(10deg) translate(-6px);-o-transform:rotate(10deg) skew(10deg) translate(-6px);-ms-transform:rotate(10deg) skew(10deg) translate(-6px);}
+header h1{font-size:25px;margin:0;letter-spacing:15px;font-weight:normal;}
+header h1 a{padding:10px 0;text-decoration:none;display:block;color:#399d49}
+header p{color:#fff;margin:0;padding:0 0 6px;font-size:16px}
 article{padding:0;}
 article h1{font-size:20px;color:#d00;font-weight:bold;margin:0 auto;padding:0 0 30px}
 article h2{font-size:15px;font-weight:normal;margin:0 auto}
@@ -16,7 +16,7 @@ article p{width:450px;line-height:1.7;font-size:16px;text-align:left;margin:0 au
 article p code{border:1px solid #ddd;padding:3px 5px;font-size:14px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;color:#666;margin:0 5px 3px}
 footer{margin:50px 0;padding:7px 0;color:#ddd;font-size:12px;line-height:1.5}
 footer p{padding:0;margin:0}
-ul.posts{margin:70px 0 20px 200px;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#d00;}
+ul.posts{margin:30px 0 20px 50px;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#d00;}
 ul.posts li p{margin:0;padding:0;line-height:1.5;font-size:16px}
 ul.posts li .date{float:left;width:6em;display:inline-block;background-color:#eee;padding:.4em 1em .3em;text-align:right;-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-o-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-ms-transform:rotate(-15deg) skew(-15deg) translate(0,-25px)}
 ul.posts li .body{text-align:left;float:left;width:30em;-moz-transform:rotate(10deg) skew(10deg) translate(-5px);-webkit-transform:rotate(10deg) skew(10deg) translate(-5px);-o-transform:rotate(10deg) skew(10deg) translate(-5px);-ms-transform:rotate(10deg) skew(10deg) translate(-5px);}
