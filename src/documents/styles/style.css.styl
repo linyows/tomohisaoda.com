@@ -13,6 +13,15 @@
 // ====================================
 // Styles
 
+xxxdark = #000
+xxdark  = #399D49
+xdark   = #6BD07B
+dark    = #458950
+neutral = #80E991
+hi      = #bbb
+xhi     = #fff
+xxxhi   = #fff
+
 .clr
   clear: both
   float: none
@@ -39,15 +48,17 @@
   display: block
 
 body
-  padding: 50px 5%
+  padding: 50px 20px
   text-align: center
   font-size: 13px
   font-family: Prata, serif, "MS P明朝", "ヒラギノ明朝 Pro W3", "平成明朝"
   background-image: url(../images/bg3.png)
   background-position: 0 0
   background-repeat: repeat
+
 a
-  color: #000
+  color: xxxdark
+
 header
   padding: 0 0 30px
   h1
@@ -60,16 +71,18 @@ header
       padding: 10px 0
       text-decoration: none
       display: block
+      text-shadow: 0 2px xxxhi
   p
-    color: #ddd
+    color: hi
     margin: 0
     padding: 6px 0
     font-size: 16px
+
 article
   padding: 0
   h1
     font-size: 20px
-    color: #DD0000
+    color: dark
     font-weight: bold
     margin: 0 auto
     padding: 0 0 30px
@@ -94,13 +107,14 @@ article
       -moz-border-radius: 5px
       color: #666
       margin: 0 5px 3px
+
 footer
   p
     padding: 0
     margin: 0
   margin: 50px 0
   padding: 7px 0
-  color: #ddd
+  color: hi
   font-size: 12px
   line-height: 1.5
 
@@ -111,7 +125,7 @@ ul.posts
   display: inline-block
   list-style-type: none
   line-height: 1.5
-  color: #399D49
+  color: xxdark
   li
     @extend .pkg
     p
@@ -123,36 +137,33 @@ ul.posts
       float: left
       width: 6em
       display: inline-block
-      background-color: #6BD07B
+      // background-color: xdark
+      text-shadow: 0 1px neutral
       padding: .4em 1em .3em
       text-align: right
-      -moz-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
-      -webkit-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
-      -o-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
-      -ms-transform: rotate(-15deg) skew(-15deg) translate(0,-25px)
-      background-image: url(../images/arrow_green.gif)
+      vendor('transform', rotate(-15deg) skew(-15deg) translate(0,-25px))
+      background-image: url(../images/arrow.png)
       background-position: -2px 50%
       background-repeat: no-repeat
     .body
       text-align: left
       float: left
       width: 30em
-      -moz-transform: rotate(10deg) skew(10deg) translate(-6px)
-      -webkit-transform: rotate(10deg) skew(10deg) translate(-6px)
-      -o-transform: rotate(10deg) skew(10deg) translate(-6px)
-      -ms-transform: rotate(10deg) skew(10deg) translate(-6px)
+      vendor('transform', rotate(10deg) skew(10deg) translate(-6px))
       a
         display: inline-block
         text-decoration: none
-        background-color: #80E991
-        color: #FFF
+        // background-color: neutral
+        color: xxxhi
+        text-shadow: 0 -1px xdark
         padding: .4em 3em .3em 1em
         text-align: left
-        background-image: url(../images/arrow_light_green.gif)
+        background-image: url(../images/arrow2.png)
         background-position: right 50%
         background-repeat: no-repeat
       a:hover
-        background-color: #000
+        background-image: url(../images/arrow3.png)
+        text-shadow: 0 1px xxxdark
       span
         display: block
         padding: 0 1em
