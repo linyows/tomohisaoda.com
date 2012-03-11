@@ -39,6 +39,7 @@ html lang: 'en', ->
             """
     body ->
         header ->
+            p class: 'greeting', 'hi!'
             h1 class: 'site-name', ->
                 a href: '/', 'Tomohisa Oda'
             p class: 'site-description', 'is... web engineer, designer.'

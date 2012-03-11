@@ -1,14 +1,18 @@
 @import '/vendor/normalize.css';
-.clr{clear:both;float:none;overflow:hidden;width:1px;height:0;margin:0 -1px -1px 0;border:0;padding:0;font-size:0;line-height:0}
+.clr,header .site-description{clear:both;float:none;overflow:hidden;width:1px;height:0;margin:0 -1px -1px 0;border:0;padding:0;font-size:0;line-height:0}
 .pkg:after{content:" ";display:block;visibility:hidden;clear:both;height:.1px;font-size:.1em;line-height:0}
 * html .pkg{display:inline-block;height:1%}
-.pkg,ul.posts li{display:block}
+.pkg{display:block}
 body{padding:50px 20px;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-image:url("../images/bg3.png");background-position:0 0;background-repeat:repeat}
 a{color:#000}
-header{padding:0 0 30px;}
-header h1{font-size:25px;margin:0;padding-left:20px;letter-spacing:15px;font-weight:normal;}
-header h1 a{padding:10px 0;text-decoration:none;display:block;text-shadow:0 2px #fff}
-header p{color:#bbb;margin:0;padding:6px 0;font-size:16px}
+header{padding:.4em 1em .3em;text-align:left;margin:0 auto;display:inline-block;}
+header:before,header:after{content:'';display:block}
+header:after{clear:both}
+header{zoom:1}
+header h1{font-size:25px;margin:0;letter-spacing:15px;font-weight:normal;float:left;}
+header h1 a{background-color:#6bd07b;color:#399d49;padding:10px 0;text-decoration:none;display:block;text-shadow:0 2px #80e991;display:inline-block}
+header p.greeting{font-size:25px;margin:0;background-color:#80e991;color:#458950;float:left;width:6em;color:#80e991}
+header .site-description{padding:0 0 6px;font-size:16px;position:absolute;bottom:0;-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);transform:rotate(-15deg) skew(-15deg) translate(0,-25px)}
 article{padding:0;}
 article h1{font-size:20px;color:#458950;font-weight:bold;margin:0 auto;padding:0 0 30px}
 article h2{font-size:15px;font-weight:normal;margin:0 auto}
@@ -16,7 +20,10 @@ article p{width:450px;line-height:1.7;font-size:16px;text-align:left;margin:0 au
 article p code{border:1px solid #ddd;padding:3px 5px;font-size:14px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;color:#666;margin:0 5px 3px}
 footer{margin:50px 0;padding:7px 0;color:#bbb;font-size:12px;line-height:1.5}
 footer p{padding:0;margin:0}
-ul.posts{margin:70px 0 20px 200px;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#399d49;}
+ul.posts{margin:30px 0 20px 50px;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#399d49;}
+ul.posts li:before,ul.posts li:after{content:'';display:block}
+ul.posts li:after{clear:both}
+ul.posts li{zoom:1}
 ul.posts li p{margin:0;padding:0;line-height:1.5;font-size:16px}
 ul.posts li .date{float:left;width:6em;display:inline-block;text-shadow:0 1px #80e991;padding:.4em 1em .3em;text-align:right;-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);transform:rotate(-15deg) skew(-15deg) translate(0,-25px);background-image:url("../images/arrow.png");background-position:-2px 50%;background-repeat:no-repeat}
 ul.posts li .body{text-align:left;float:left;width:30em;-webkit-transform:rotate(10deg) skew(10deg) translate(-6px);-moz-transform:rotate(10deg) skew(10deg) translate(-6px);-webkit-transform:rotate(10deg) skew(10deg) translate(-6px);-moz-transform:rotate(10deg) skew(10deg) translate(-6px);transform:rotate(10deg) skew(10deg) translate(-6px);}

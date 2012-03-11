@@ -47,6 +47,16 @@ xxxhi   = #fff
 .pkg
   display: block
 
+clearfix()
+  &:before,
+  &:after
+    content ''
+    display: block
+  &:after
+    clear both
+  &
+    zoom 1
+
 body
   padding: 50px 20px
   text-align: center
@@ -60,23 +70,42 @@ a
   color: xxxdark
 
 header
-  padding: 0 0 30px
+  padding: .4em 1em .3em
+  text-align: left
+  margin: 0 auto
+  display: inline-block
+  clearfix()
   h1
     font-size: 25px
     margin: 0
-    padding-left: 20px
     letter-spacing: 15px
     font-weight: normal
+    float: left
+    //vendor('transform', rotate(10deg) skew(10deg) translate(-6px))
     a
+      background-color: xdark
+      color: xxdark
       padding: 10px 0
       text-decoration: none
       display: block
-      text-shadow: 0 2px xxxhi
-  p
-    color: hi
+      text-shadow: 0 2px neutral
+      display: inline-block
+  p.greeting
+    font-size: 25px
     margin: 0
-    padding: 6px 0
+    background-color: neutral
+    color: dark
+    float: left
+    //vendor('transform', rotate(-15deg) skew(-15deg) translate(0,-25px))
+    width: 6em
+    color: neutral
+  .site-description
+    @extend .clr
+    padding: 0 0 6px
     font-size: 16px
+    position: absolute
+    bottom: 0
+    vendor('transform', rotate(-15deg) skew(-15deg) translate(0,-25px))
 
 article
   padding: 0
@@ -119,7 +148,7 @@ footer
   line-height: 1.5
 
 ul.posts
-  margin: 70px 0 20px 200px
+  margin: 30px 0 20px 50px
   padding: 0
   font-size: 15px
   display: inline-block
@@ -127,7 +156,7 @@ ul.posts
   line-height: 1.5
   color: xxdark
   li
-    @extend .pkg
+    clearfix()
     p
       margin: 0
       padding: 0
@@ -137,7 +166,6 @@ ul.posts
       float: left
       width: 6em
       display: inline-block
-      // background-color: xdark
       text-shadow: 0 1px neutral
       padding: .4em 1em .3em
       text-align: right
@@ -153,7 +181,6 @@ ul.posts
       a
         display: inline-block
         text-decoration: none
-        // background-color: neutral
         color: xxxhi
         text-shadow: 0 -1px xdark
         padding: .4em 3em .3em 1em
