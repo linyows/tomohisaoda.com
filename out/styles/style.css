@@ -5,14 +5,14 @@
 .pkg{display:block}
 body{padding:50px 20px;text-align:center;font-size:13px;font-family:Prata,serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-image:url("../images/bg3.png");background-position:0 0;background-repeat:repeat}
 a{color:#000}
-header{padding:.4em 1em .3em;text-align:left;margin:0 auto;display:inline-block;}
+header{padding:.4em 3.7em .3em 0;text-align:left;margin:0 auto;display:inline-block;}
 header:before,header:after{content:'';display:block}
 header:after{clear:both}
 header{zoom:1}
-header h1{font-size:25px;margin:0;letter-spacing:15px;font-weight:normal;float:left;}
-header h1 a{background-color:#6bd07b;color:#399d49;padding:10px 0;text-decoration:none;display:block;text-shadow:0 2px #80e991;display:inline-block}
-header p.greeting{font-size:25px;margin:0;background-color:#80e991;color:#458950;float:left;width:6em;color:#80e991}
-header .site-description{padding:0 0 6px;font-size:16px;position:absolute;bottom:0;-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-25px);transform:rotate(-15deg) skew(-15deg) translate(0,-25px)}
+header h1{font-size:25px;margin:0;letter-spacing:15px;font-weight:normal;float:left;-webkit-transform:rotate(10deg) skew(10deg) translate(-6px);-moz-transform:rotate(10deg) skew(10deg) translate(-6px);-webkit-transform:rotate(10deg) skew(10deg) translate(-6px);-moz-transform:rotate(10deg) skew(10deg) translate(-6px);transform:rotate(10deg) skew(10deg) translate(-6px);}
+header h1 a{background-color:#6bd07b;background-color:#aaa;color:#f5f5f5;padding:20px 0 20px 20px;text-decoration:none;display:block;text-shadow:0 1px #777;display:inline-block}
+header p.greeting{font-size:25px;padding:20px 0 20px 20px;margin:0;background-color:#80e991;background-color:#999;color:#999;float:left;-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-18px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-18px);-webkit-transform:rotate(-15deg) skew(-15deg) translate(0,-18px);-moz-transform:rotate(-15deg) skew(-15deg) translate(0,-18px);transform:rotate(-15deg) skew(-15deg) translate(0,-18px);width:3em}
+header .site-description{padding:0 0 6px;font-size:16px;position:absolute;width:300px;-webkit-transform:rotate(10deg) skew(10deg) translate(6px);-moz-transform:rotate(10deg) skew(10deg) translate(6px);-webkit-transform:rotate(10deg) skew(10deg) translate(6px);-moz-transform:rotate(10deg) skew(10deg) translate(6px);transform:rotate(10deg) skew(10deg) translate(6px)}
 article{padding:0;}
 article h1{font-size:20px;color:#458950;font-weight:bold;margin:0 auto;padding:0 0 30px}
 article h2{font-size:15px;font-weight:normal;margin:0 auto}

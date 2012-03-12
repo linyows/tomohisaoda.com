@@ -70,7 +70,7 @@ a
   color: xxxdark
 
 header
-  padding: .4em 1em .3em
+  padding: .4em 3.7em .3em 0
   text-align: left
   margin: 0 auto
   display: inline-block
@@ -81,31 +81,33 @@ header
     letter-spacing: 15px
     font-weight: normal
     float: left
-    //vendor('transform', rotate(10deg) skew(10deg) translate(-6px))
+    vendor('transform', rotate(10deg) skew(10deg) translate(-6px))
     a
       background-color: xdark
-      color: xxdark
-      padding: 10px 0
+      background-color: #aaa
+      color: #f5f5f5
+      padding: 20px 0 20px 20px
       text-decoration: none
       display: block
-      text-shadow: 0 2px neutral
+      text-shadow: 0 1px #777
       display: inline-block
   p.greeting
     font-size: 25px
+    padding: 20px 0 20px 20px
     margin: 0
     background-color: neutral
-    color: dark
+    background-color: #999
+    color: #999
     float: left
-    //vendor('transform', rotate(-15deg) skew(-15deg) translate(0,-25px))
-    width: 6em
-    color: neutral
+    vendor('transform', rotate(-15deg) skew(-15deg) translate(0,-18px))
+    width: 3em
   .site-description
     @extend .clr
     padding: 0 0 6px
     font-size: 16px
     position: absolute
-    bottom: 0
-    vendor('transform', rotate(-15deg) skew(-15deg) translate(0,-25px))
+    width: 300px
+    vendor('transform', rotate(10deg) skew(10deg) translate(6px))
 
 article
   padding: 0
