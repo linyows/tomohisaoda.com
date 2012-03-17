@@ -39,10 +39,10 @@ html lang: 'en', ->
             """
     body ->
         header ->
-            p class: 'greeting', 'hi!'
+            p class: 'greeting', 'hi! my name is tomohisa oda.'
             h1 class: 'site-name', ->
                 a href: '/', 'Tomohisa Oda'
-            p class: 'site-description', 'is... web engineer, designer.'
+            #p class: 'site-description', 'is... web engineer, designer.'
 
             # form 'search', action: 'http://google.com/search', method: 'get', ->
               # input type: 'hidden', name: 'q', value: 'site:tomohisaoda.com'

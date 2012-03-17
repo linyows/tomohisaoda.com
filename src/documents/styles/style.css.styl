@@ -33,10 +33,10 @@ clearfix()
     zoom 1
 
 body
-  padding: 50px 20px
+  padding: 15px 20px
   text-align: center
   font-size: 13px
-  font-family: Prata, serif, "MS P明朝", "ヒラギノ明朝 Pro W3", "平成明朝"
+  font-family: serif, "MS P明朝", "ヒラギノ明朝 Pro W3", "平成明朝"
   background-image: url(../images/bg3.png)
   background-position: 0 0
   background-repeat: repeat
@@ -45,52 +45,31 @@ a
   color: xxxdark
 
 header
-  padding: .4em 3.7em .3em 0
+  padding: 0
+  margin: 0 auto
   text-align: left
-  margin: 30px auto 0
   display: inline-block
-  position: relative
-  clearfix()
+  .greeting
+    color: hi
   h1
-    font-size: 25px
     margin: 0
-    letter-spacing: 15px
-    font-weight: normal
-    float: left
-    vendor('transform', rotate(-12deg) skew(-12deg) translate(0px, 18px))
+    padding: 0 117px 0 0
     a
-      background-color: xdark
-      background-color: #aaa
-      color: #f5f5f5
-      padding: 20px 0 20px 20px
-      text-decoration: none
       display: block
-      text-shadow: 0 1px #777
-      display: inline-block
-  p.greeting
-    font-size: 25px
-    padding: 20px 0 20px 20px
-    margin: 0
-    background-color: neutral
-    background-color: #999
-    color: #999
-    float: left
-    vendor('transform', rotate(20deg) skew(20deg) translate(7px, 37px))
-    width: 2em
-  .site-description
-    padding: 0 0 6px
-    font-size: 16px
-    position: absolute
-    width: 300px
-    top: -25px
-    left: 100px
-    vendor('transform', rotate(-12deg) skew(-12deg))
+      width: 462px
+      height: 133px
+      text-indent: -7777em
+      background-image: url(../images/logo.png)
+      background-position: 0 0
+      background-repeat: no-repeat
 
 article
-  padding: 0
+  padding: 50px 0 0
+  color: #555
   h1
     font-size: 20px
-    color: dark
+    color: #E8C49B
+    text-shadow: 0 1px #D0B18D
     font-weight: bold
     margin: 0 auto
     padding: 0 0 30px
@@ -127,15 +106,16 @@ footer
   line-height: 1.5
 
 ul.posts
-  margin: 15px 0 20px 50px
+  margin: -60px 0 20px
   padding: 0
   font-size: 15px
   display: inline-block
   list-style-type: none
   line-height: 1.5
-  color: xxdark
+  color: #80E991
   li
     clearfix()
+    padding-bottom: 7px
     p
       margin: 0
       padding: 0
@@ -143,33 +123,39 @@ ul.posts
       font-size: 16px
     .date
       float: left
-      width: 6em
+      color: #FFCC99
+      width: 20em
       display: inline-block
-      text-shadow: 0 1px neutral
-      padding: .6em 1em .5em
       text-align: right
-      background-image: url(../images/arrow.png)
-      background-position: -2px 50%
-      background-repeat: no-repeat
-      vendor('transform', rotate(20deg) skew(20deg) translate(0, 27px))
+      vendor('transform', rotate(20deg) skew(20deg) translate(0, 7px))
+      span
+        display: inline-block
+        padding: .5em 1em .5em 1.5em
+        text-align: right
+        background-image: url(../images/arrow.png)
+        background-position: -2px 50%
+        background-repeat: no-repeat
+        text-shadow: 0 -1px #B7A081
     .body
       text-align: left
       float: left
-      width: 30em
-      vendor('transform', rotate(-12deg) skew(-12deg) translate(-9px))
+      width: 35em
+      vendor('transform', rotate(-12deg) skew(-12deg) translate(-16px))
       a
         display: inline-block
         text-decoration: none
-        color: xxxhi
-        text-shadow: 0 -1px xdark
-        padding: .6em 3em .5em 1em
+        color: #FFF
+        padding: .6em 3em .5em .3em
         text-align: left
         background-image: url(../images/arrow2.png)
         background-position: right 50%
         background-repeat: no-repeat
+        text-shadow: 0 -1px #D0B18D
       a:hover
         background-image: url(../images/arrow3.png)
-        text-shadow: 0 1px xxxdark
+        text-shadow: 0 -1px #D0B18D
       span
-        display: block
-        padding: 0 1em
+        padding: 0 0 0 .3em
+        font-size: 12px
+        font-weight: bold
+        vertical-align: bottom

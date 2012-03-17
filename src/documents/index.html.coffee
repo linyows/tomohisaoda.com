@@ -8,7 +8,9 @@ ul class: 'posts',  ->
     if 0 is document.url.indexOf '/posts'
       li ->
         p class: 'date', ->
-          text @tool.moment(document.date).format('MMM D, YYYY')
+          span class: 'inner', ->
+            text "#{document.tags}"
         p class: 'body', ->
           a href: document.url, property: 'dc:title', "#{document.title}"
-          span class: 'meta', "posted in #{document.tags}"
+          span class: 'meta', ->
+            text @tool.moment(document.date).format('MMMM D, YYYY')
