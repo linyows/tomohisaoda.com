@@ -7,11 +7,98 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();</script></head><body><header><p class="greeting">hi! my name is tomohisa oda.</p><h1 class="site-name"><a href="/">Tomohisa Oda</a></h1></header><nav class="global"><ul></ul></nav><article><h1>JekyllのNode版であるDocpadを使ってみる</h1>
 
-<p>なんか巷では、jekyll, octpress が流行っているっぽい。<br />完全に乗り遅れたので（乗るつもりなかった）、node.js版 jekyll の Docpadを使ってみる事にした。</p>
+<p>なんか巷では、jekyll, octpress が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、node弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。</p>
 
-<p>ローカルでMarkdown形式の記事書いて、<code>$ docpad cli</code>から<code>server</code>と<code>watch</code>叩く事で記事の確認。<br />GitHubをoriginリポジトリにして、pushしたらwebhookでGitHubからpullするようにしてDeploy。</p>
+<h2>Install</h2>
 
-<p>途中。あとでちゃんと書く。</p></article><footer><p>copyright 2012 &copy; tomohisa oda</p><p>This website was generated on Mar 17, 2012.</p></footer><!--scripts--><script src="/vendor/jquery-1.7.1.js"></script><script src="/vendor/modernizr-2.0.6.js"></script><script src="/vendor/underscore-1.2.3.js"></script><script src="/vendor/backbone-0.5.3.js"></script><script src="/scripts/script.js"></script><!--disqus--><script>var disqus_shortname = 'tomohisaoda';
+<p>docpadは、coffee-scriptで実装されていて、まずmacにcoffeeと一緒にインストールする。</p>
+
+<div class="highlight"><pre lang="shell">$ npm install -g coffee-script docpad
+</pre></div>
+
+<p>プロジェクト用のディレクトリでスケルトン用コマンドを叩くとどのスケルトンを使うか聞かれるので選択する。</p>
+
+<div class="highlight"><pre lang="shell">$ docpad run
+info: Welcome to DocPad v3.3.0
+You are about to create your new project inside your current directory. Below is a list of skeletons to bootstrap your new project:
+
+<pre><code>    canvas.docpad
+    The Blank Canvas Skeleton for DocPad. Your web development playground.
+
+    kitchensink.docpad
+    Kitchensink Skeleton for DocPad, based off Twitter's Bootstrap
+</code></pre>
+
+Which skeleton will you use?
+  1) canvas.docpad
+  2) kitchensink.docpad
+  :
+</pre></div>
+
+<p>必要なモジュールがインストールされて、サーバーが<code>localhost:9778</code>に起動する。runコマンドは、scaffold, generate, watch, serverがラップされていて、インストール以降は、個別にコマンドを叩く。記事書いて確認したりするには、<code>$ docpad cli</code>が便利かも。docpadのコマンドをそのまま叩ける状態になるので、<code>server</code>と<code>watch</code>を叩く事で更新をlocalhostで確認しやすい。</p>
+
+<div class="highlight"><pre lang="shell">$ docpad cli
+info: Welcome to DocPad v3.3.0
+What would you like to do now?
+
+
+<blockquote>
+  <p>server<br />info: DocPad listening to <a href='http://localhost:9778/'>http://localhost:9778/</a> with directory /Users/foo/Projects/bar/out<br />info: The action completed successfully</p>
+</blockquote>
+
+What would you like to do now?
+
+
+<blockquote>
+  <p>watch<br />info: Watching setup starting...<br />info: Watching setup<br />info: The action completed successfully</p>
+</blockquote>
+
+What would you like to do now?
+>
+</pre></div>
+
+<p>こんな風に対話式にコマンドを叩ける</p>
+
+<h2>記事を書く</h2>
+
+<p>以下は、ディレクトリ構成。</p>
+
+<div class="highlight"><pre lang="shell">├── README.md
+├── node_modules
+│   ├── coffee-script
+│   ├── docpad
+│   ├── express
+│   ├── moment
+│   └── underscore
+├── out
+│   ├── images
+│   ├── index.html
+│   ├── scripts
+│   ├── styles
+│   └── vendor
+├── package.json
+├── plugins
+└── src
+    ├── documents
+    │   ├── index.html.coffee
+    │   ├── posts
+    │   ├── scripts
+    │   └── styles
+    ├── layouts
+    │   └── default.html.coffee
+    └── public
+        ├── images
+        └── vendor
+</pre></div>
+
+<p>outは、docpadが出力する静的ファイル群で、基本src配下を弄る。とりあえず、記事はpostsディレクトリをほってそこにmarkdownファイルを作っていく事にした。<br />また、レイアウトファイルやその他のファイルはcoffeeで作ってみたけど、RoyやMoveも使えるみたいで、Markupには、Markdown以外にEcoやJade, Hamlとかいけるみたい。Styleは、Stylus, Less, Sassなど。</p>
+
+<h2>Deploy</h2>
+
+<p>GitHubをoriginリポジトリにして、pushしたらwebhookでGitHubからpullするようにしてDeployするようにした。</p>
+
+<div class="highlight"><pre lang="shell">
+</pre></div></article><footer><p>copyright 2012 &copy; tomohisa oda</p><p>This website was generated on Mar 19, 2012.</p></footer><!--scripts--><script src="/vendor/jquery-1.7.1.js"></script><script src="/vendor/modernizr-2.0.6.js"></script><script src="/vendor/underscore-1.2.3.js"></script><script src="/vendor/backbone-0.5.3.js"></script><script src="/scripts/script.js"></script><!--disqus--><script>var disqus_shortname = 'tomohisaoda';
 (function () {
 var s = document.createElement('script'); s.async = true;
 s.type = 'text/javascript';
