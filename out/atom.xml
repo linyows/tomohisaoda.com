@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="undefined/atom.xml" rel="self" /><link /><updated>2012-03-20T14:10:01Z</updated><id></id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>S3のAPI"Delete Multiple Objects"をknoxに実装した</title><link href="/posts/2012/delete_multilpe_objects.html" /><updated>2012-03-20T12:26:13Z</updated><id>/posts/2012/delete_multilpe_objects.html</id><summary type="html">S3のAPI"Delete Multiple Objects"をknoxに実装した去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。AWS Documentation - Delete Multiple Objec...</summary><content type="html"><![CDATA[ <h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="undefined/atom.xml" rel="self" /><link /><updated>2012-03-20T14:21:08Z</updated><id></id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>S3のAPI"Delete Multiple Objects"をknoxに実装した</title><link href="/posts/2012/delete_multilpe_objects.html" /><updated>2012-03-20T14:11:39Z</updated><id>/posts/2012/delete_multilpe_objects.html</id><summary type="html">S3のAPI"Delete Multiple Objects"をknoxに実装した去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。AWS Documentation - Delete Multiple Objec...</summary><content type="html"><![CDATA[ <h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
 
 <p>去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。</p>
 
@@ -8,7 +8,7 @@
 <li>Knox <a href='https://github.com/LearnBoost/knox'>https://github.com/LearnBoost/knox</a></li>
 </ul>
 
-<p>Delte Multiple Objects について後で追記する</p> ]]></content></entry><entry><title>JekyllのNode版であるDocpadを使ってみる</title><link href="/posts/2012/using_docpad.html" /><updated>2012-03-20T08:27:47Z</updated><id>/posts/2012/using_docpad.html</id><summary type="html">JekyllのNode版であるDocpadを使ってみるなんか巷では、jekyll, octpress が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、node弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。Docpad https://g...</summary><content type="html"><![CDATA[ <h1>JekyllのNode版であるDocpadを使ってみる</h1>
+<p>Delte Multiple Objects について後で追記する</p> ]]></content></entry><entry><title>JekyllのNode版であるDocpadを使ってみる</title><link href="/posts/2012/using_docpad.html" /><updated>2012-03-20T14:11:39Z</updated><id>/posts/2012/using_docpad.html</id><summary type="html">JekyllのNode版であるDocpadを使ってみるなんか巷では、jekyll, octpress が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、node弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。Docpad https://g...</summary><content type="html"><![CDATA[ <h1>JekyllのNode版であるDocpadを使ってみる</h1>
 
 <p>なんか巷では、<a href="http://jekyllrb.com/">jekyll</a>, <a href="http://octopress.org/">octpress</a> が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、<a href="http://nodejs.org/">node</a>弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。</p>
 
