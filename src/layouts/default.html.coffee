@@ -25,6 +25,8 @@ html lang: 'en', ->
     link rel: 'stylesheet', href: '/styles/print.css', media: 'print'
     #link rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Raleway:100|Prata|Fanwood+Text|Snippet', media: 'screen, projection'
 
+    link rel: 'alternate', type: 'application/atom+xml', title: "Atom", href: 'http://feeds.feedburner.com/TomohisaOda'
+
     comment 'analytics'
     script ->
       """
