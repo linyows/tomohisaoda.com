@@ -5,12 +5,28 @@ _gaq.push(['_trackPageview']);
 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();</script></head><body><header><p class="greeting">hi! my name is tomohisa oda.</p><h1 class="site-name"><a href="/">Tomohisa Oda</a></h1></header><nav class="global"><ul></ul></nav><article><h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
+})();</script></head><body><header><p class="greeting">hi! my name is tomohisa oda.</p><h1 class="site-name"><a href="/">Tomohisa Oda</a></h1></header><article><h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
 
-<p>去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応した。</p></article><footer><p>copyright 2012 &copy; tomohisa oda</p><p>This website was generated on Mar 19, 2012.</p></footer><!--scripts--><script src="/vendor/jquery-1.7.1.js"></script><script src="/vendor/modernizr-2.0.6.js"></script><script src="/vendor/underscore-1.2.3.js"></script><script src="/vendor/backbone-0.5.3.js"></script><script src="/scripts/script.js"></script><!--disqus--><script>var disqus_shortname = 'tomohisaoda';
+<p>去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。</p>
+
+<ul>
+<li>AWS Documentation - Delete Multiple Objects <a href='http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html'>http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html</a></li>
+<li>Knox <a href='https://github.com/LearnBoost/knox'>https://github.com/LearnBoost/knox</a></li>
+</ul>
+
+<p>Delte Multiple Objects について後で追記する</p><!--disqus--><div id="disqus_thread"></div><script>var disqus_shortname = 'tomohisaoda';
+var d = 'http://tomohisaoda.com';
+var disqus_identifier = d + '/posts/2012/delete_multilpe_objects.html';
+var disqus_url = d + '/posts/2012/delete_multilpe_objects.html';
+var disqus_script = 'embed.js';
 (function () {
-var s = document.createElement('script'); s.async = true;
-s.type = 'text/javascript';
-s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());</script></article><div id="footer-nav"><nav class="latest-posts"><h3>Latest posts</h3><ul><a href="/posts/2012/delete_multilpe_objects.html"><li>S3のAPI"Delete Multiple Objects"をknoxに実装した</li></a><a href="/posts/2012/using_docpad.html"><li>JekyllのNode版であるDocpadを使ってみる</li></a></ul></nav><div id="search"><h3>Search</h3><form class="search" action="http://google.com/search" method="get"><input type="hidden" name="q" value="site:tomohisaoda.com" /><input class="search-query" type="text" name="q" results="0" placeholder="Search" /></form></div></div><footer><p>copyright 2012 &copy; tomohisa oda</p><p>This website was generated on Mar 20, 2012.</p></footer><!--scripts--><script src="/vendor/jquery-1.7.1.js"></script><script src="/vendor/modernizr-2.0.6.js"></script><script src="/vendor/underscore-1.2.3.js"></script><script src="/vendor/backbone-0.5.3.js"></script><script src="/scripts/script.js"></script><!--comment count--><script>var disqus_shortname = 'tomohisaoda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
 }());</script></body></html>
