@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="undefined/atom.xml" rel="self" /><link /><updated>2012-03-20T14:21:08Z</updated><id></id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>S3のAPI"Delete Multiple Objects"をknoxに実装した</title><link href="/posts/2012/delete_multilpe_objects.html" /><updated>2012-03-20T14:11:39Z</updated><id>/posts/2012/delete_multilpe_objects.html</id><summary type="html">S3のAPI"Delete Multiple Objects"をknoxに実装した去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。AWS Documentation - Delete Multiple Objec...</summary><content type="html"><![CDATA[ <h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="undefined/atom.xml" rel="self" /><link /><updated>2012-03-22T14:41:54Z</updated><id></id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>gitのtagをいい感じに削除するshell書いた</title><link href="/posts/2012/git_tag_cleaning_shell.html" /><updated>2012-03-22T14:41:35Z</updated><id>/posts/2012/git_tag_cleaning_shell.html</id><summary type="html">gitのtagをいい感じに削除するshell書いたGit使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。どんないい感じにしてくれるかと言うと、各マイナーマージョンの最新と...</summary><content type="html"><![CDATA[ <h1>gitのtagをいい感じに削除するshell書いた</h1>
+
+<p>Git使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。<br />どんないい感じにしてくれるかと言うと、</p>
+
+<p><strong>各マイナーマージョンの最新</strong>と<strong>現バージョンの全て</strong>を<em>残して削除</em>する感じ。</p>
+
+<p>gist: <a href='https://gist.github.com/2156669'>https://gist.github.com/2156669</a></p>
+
+<h2>Usage</h2>
+
+<p>dry-run。削除対象tagを確認することが出来る。</p>
+
+<pre>
+$ ./git_tag test
+</pre>
+
+<p>ローカルリポジトリもリモートも削除...</p>
+
+<pre>
+$ ./git_tag clean
+</pre>
+
+<h2>Little Sucker</h2>
+
+<ul>
+<li><code>6.12.7</code>みたいなフォーマットしか対応してない。<code>v2.3.12</code>とかのprefixに対応してない。</li>
+<li>ローカルもリモートも消してしまう</li>
+</ul>
+
+<p>もっとスマートなやり方があるだろうし<em>shellで書かなくても...</em>って言う気はするけど取り急ぎ書いた。ちゃんと書きたくなったらそのとき考よう。</p> ]]></content></entry><entry><title>S3のAPI"Delete Multiple Objects"をknoxに実装した</title><link href="/posts/2012/delete_multilpe_objects.html" /><updated>2012-03-20T14:11:39Z</updated><id>/posts/2012/delete_multilpe_objects.html</id><summary type="html">S3のAPI"Delete Multiple Objects"をknoxに実装した去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。AWS Documentation - Delete Multiple Objec...</summary><content type="html"><![CDATA[ <h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
 
 <p>去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。</p>
 
