@@ -1,6 +1,7 @@
 ---
 title: 'S3のAPI"Delete Multiple Objects"をknoxに実装した'
 layout: 'default'
+date: '2012-03-07'
 tags: ['knox', 'node']
 ---
 

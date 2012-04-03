@@ -1,6 +1,7 @@
 ---
 title: 'gitのtagをいい感じに削除するshell書いた'
 layout: 'default'
+date: '2012-03-25'
 tags: ['git', 'shell']
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: 'GithubでWikiを検索するUserScript書いた'
 layout: 'default'
+date: '2012-04-03'
 tags: ['github', 'userscript']
 ---
 
@@ -9,8 +10,8 @@ GithubでWikiを検索するUserScript書いた
 
 Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？
 
-最初は、[@morygonzalez](https://twitter.com/#!/morygonzalez)に「Wiki内って検索出来ないけどどうすんの？」って言われて、「cloneして`ack`叩けば？」って言ったものの、ターミナルアレルギーなデザイナーは仕方ないとして、自分も他プロジェクトのをいちいちcloneして探すのは確かに面倒だなあと。
-なので、UserScript書いてWikiの全文検索うまくいったのでお知らせしてみる。
+最初は、[@morygonzalez](https://twitter.com/#!/morygonzalez)に「Wiki内って検索出来ないけどどうすんの？」って言われて、「cloneして`ack`叩けば？」って言ったものの、ターミナルアレルギーなデザイナーは仕方ないとして、自分も他プロジェクトのをいちいちcloneして探すのは確かに面倒だなあと思ったわけ。
+なので、UserScriptを書いてみてGithub Wikiの全文検索がうまくいったのでお知らせしてみる。
 
 Github Wiki Search - https://github.com/linyows/github-wiki-search
 

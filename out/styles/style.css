@@ -11,7 +11,7 @@ article a{color:#86b38b;text-decoration:none;border-bottom:1px solid #86b38b}
 article a:hover{color:#66896d;border:none}
 article h1{font-size:20px;color:#e8c49b;text-shadow:0 1px #d0b18d;font-weight:bold;margin:0 auto;padding:0 0 30px}
 article h2{font-size:20px;color:#80e991;text-shadow:0 1px #86b38b;font-weight:bold;margin:0 auto;padding:0 0 20px 20px;letter-spacing:3px}
-article ol{width:635px;margin:0 auto 20px;line-height:1.5;text-align:left;}
+article ol{width:612px;text-align:left;border:3px solid #ccc;padding:15px 15px 5px;color:#000;margin:0 auto 20px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;font-size:13px;line-height:22px;opacity:.8;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);-moz-opacity:.4;list-style-position:inside;}
 article ol li{font-size:15px;color:#666;padding:0 0 10px}
 article ul{width:650px;margin:0 auto 20px;line-height:1.5;text-align:left;list-style-type:circle;}
 article ul li{font-size:15px;color:#666;padding:0 0 10px}
@@ -20,6 +20,7 @@ article strong{background-color:#86b38b;color:#fff;padding-top:.2em;margin:0 5px
 article p{width:650px;line-height:1.7;font-size:16px;text-align:left;margin:0 auto;padding:0 0 20px;text-indent:1em}
 article code{border:1px solid #ddd;padding:3px 5px;font-size:14px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;color:#666;margin:0 5px 3px}
 article pre{width:612px;text-align:left;border:3px solid #ccc;padding:15px;color:#000;margin:0 auto 20px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;font-size:13px;line-height:19px;overflow:auto;font-family:arial;background-color:#eee;opacity:.4;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);-moz-opacity:.4}
+article hr{width:650px;height:0;border-top:1px solid #fff;border-bottom:1px solid #ddd;border-left:0;border-right:0;margin:0 auto 20px;opacity:.8;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);-moz-opacity:.8}
 footer{margin:50px 0 20px;padding:7px 0;color:#bbb;font-size:12px;line-height:1.5}
 footer p{padding:0;margin:0}
 footer a{color:#aaa}

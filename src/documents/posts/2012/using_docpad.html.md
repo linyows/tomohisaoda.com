@@ -1,6 +1,7 @@
 ---
 title: 'JekyllのNode版であるDocpadを使ってみる'
 layout: 'default'
+date: '2012-03-01'
 tags: ['javascript', 'docpad']
 ---
 
@@ -110,3 +111,12 @@ Deploy
 GitHubをoriginリポジトリにして、*pushしたらwebhookでGitHubからpullするようにしてdeploy*するようにした。Deploy先にリモートリポジトリ作っても良かったけどそこにpushするのがめんどかったのでwebhookにしたけど、*もっといいやり方があれば誰か教えて欲しい*。
 
  - Github repository https://github.com/linyows/tomohisaoda.com
+
+- - -
+
+P.S. - April 3, 2012
+
+DocpadのShowcaseで、この記事 と このサイト が紹介されてたみたい。
+https://github.com/bevry/docpad/wiki/Showcase
+
+Thanks!
