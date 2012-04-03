@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="undefined/atom.xml" rel="self" /><link /><updated>2012-03-22T14:41:54Z</updated><id></id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>gitのtagをいい感じに削除するshell書いた</title><link href="/posts/2012/git_tag_cleaning_shell.html" /><updated>2012-03-22T14:41:35Z</updated><id>/posts/2012/git_tag_cleaning_shell.html</id><summary type="html">gitのtagをいい感じに削除するshell書いたGit使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。どんないい感じにしてくれるかと言うと、各マイナーマージョンの最新と...</summary><content type="html"><![CDATA[ <h1>gitのtagをいい感じに削除するshell書いた</h1>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="undefined/atom.xml" rel="self" /><link /><updated>2012-04-03T14:10:30Z</updated><id></id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>GithubでWikiを検索するUserScript書いた</title><link href="/posts/2012/created_github_wiki_search.html" /><updated>2012-04-03T13:51:12Z</updated><id>/posts/2012/created_github_wiki_search.html</id><summary type="html">GithubでWikiを検索するUserScript書いたGithubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？最初は、@...</summary><content type="html"><![CDATA[ <h1>GithubでWikiを検索するUserScript書いた</h1>
+
+<p>Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？</p>
+
+<p>最初は、<a href="https://twitter.com/#!/morygonzalez">@morygonzalez</a>に「Wiki内って検索出来ないけどどうすんの？」って言われて、「cloneして<code>ack</code>叩けば？」って言ったものの、ターミナルアレルギーなデザイナーは仕方ないとして、自分も他プロジェクトのをいちいちcloneして探すのは確かに面倒だなあと。<br />なので、UserScript書いてWikiの全文検索うまくいったのでお知らせしてみる。</p>
+
+<p>Github Wiki Search - <a href='https://github.com/linyows/github-wiki-search'>https://github.com/linyows/github-wiki-search</a></p>
+
+<p>なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、<em>Pull Request</em>お願いします。</p>
+
+<h2>Screenshots</h2>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/1.png" alt="screenshot1" title="" /></p>
+
+<p>ページ右上に検索ボックス。</p>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/2.png" alt="screenshot2" title="" /></p>
+
+<p>検索ワードを入力して<code>Enter</code>したら検索開始。</p>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/3.png" alt="screenshot3" title="" /></p>
+
+<p>検索結果は、非同期で見つかった順に表示。</p>
+
+<h2>Logic</h2>
+
+<p>生のjsガリガリ書くのは面倒だったのでjQueryを使った。</p>
+
+<p>以下、コード中やってること。</p>
+
+<ol>
+<li>PagesタブにWikiの<em>全てのページのリンクがある</em>ので<code>GET</code>してページのURLリストを作成。</li>
+<li>URLリストからコンテンツを<code>GET</code>して、検索文字をgrep。</li>
+<li>grepしてmatchしたら結果表示しつつ、次のコンテンツを<code>GET</code>してgrepを繰り返す。</li>
+</ol>
+
+<p>補足</p>
+
+<ul>
+<li>１度全ページロードしたらキャッシュしてる。ロードの状態は、プログレスバーで視覚的に分かるようにした。</li>
+<li>検索結果表示数が多いと もともと何のページか分からなくなるのであえて少なくしてる。（Wikiってそんなにページ数少ないし...）</li>
+</ul>
+
+<h2>Install</h2>
+
+<p>インストールは、<strong>userscripts.org</strong>に登録してるので<em>Install</em>ボタンからどうぞ。</p>
+
+<p><a href='http://userscripts.org/scripts/show/129930'>http://userscripts.org/scripts/show/129930</a></p>
+
+<p>ブラウザは、以下で一通り動作するのを確認済み。</p>
+
+<ul>
+<li>Chrome</li>
+<li>Firefox - need <a href="https://addons.mozilla.org/ja/firefox/addon/greasemonkey/">Greasemonekey</a></li>
+<li>Safari - need <a href="http://d.hatena.ne.jp/os0x/20100612/1276330696">NinjaKit</a></li>
+</ul> ]]></content></entry><entry><title>gitのtagをいい感じに削除するshell書いた</title><link href="/posts/2012/git_tag_cleaning_shell.html" /><updated>2012-04-03T12:36:49Z</updated><id>/posts/2012/git_tag_cleaning_shell.html</id><summary type="html">gitのtagをいい感じに削除するshell書いたGit使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。どんないい感じにしてくれるかと言うと、各マイナーマージョンの最新と...</summary><content type="html"><![CDATA[ <h1>gitのtagをいい感じに削除するshell書いた</h1>
 
 <p>Git使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。<br />どんないい感じにしてくれるかと言うと、</p>
 

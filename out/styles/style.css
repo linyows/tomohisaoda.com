@@ -10,9 +10,11 @@ article{padding:30px 0 0;color:#555;}
 article a{color:#86b38b;text-decoration:none;border-bottom:1px solid #86b38b}
 article a:hover{color:#66896d;border:none}
 article h1{font-size:20px;color:#e8c49b;text-shadow:0 1px #d0b18d;font-weight:bold;margin:0 auto;padding:0 0 30px}
-article h2{font-size:20px;color:#80e991;text-shadow:0 1px #86b38b;font-weight:bold;margin:0 auto;padding:0 0 20px;letter-spacing:3px}
-article ul{width:650px;margin:0 auto 20px;line-height:1.7;text-align:left;list-style-type:circle;}
-article ul li{font-size:15px;color:#666}
+article h2{font-size:20px;color:#80e991;text-shadow:0 1px #86b38b;font-weight:bold;margin:0 auto;padding:0 0 20px 20px;letter-spacing:3px}
+article ol{width:635px;margin:0 auto 20px;line-height:1.5;text-align:left;}
+article ol li{font-size:15px;color:#666;padding:0 0 10px}
+article ul{width:650px;margin:0 auto 20px;line-height:1.5;text-align:left;list-style-type:circle;}
+article ul li{font-size:15px;color:#666;padding:0 0 10px}
 article em{padding-bottom:.1em;background-image:url("../images/wave.gif");background-position:left bottom;background-repeat:repeat-x;font-style:normal;margin:0 5px}
 article strong{background-color:#86b38b;color:#fff;padding-top:.2em;margin:0 5px;opacity:.6;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=60);-moz-opacity:.6}
 article p{width:650px;line-height:1.7;font-size:16px;text-align:left;margin:0 auto;padding:0 0 20px;text-indent:1em}
@@ -20,6 +22,7 @@ article code{border:1px solid #ddd;padding:3px 5px;font-size:14px;-webkit-border
 article pre{width:612px;text-align:left;border:3px solid #ccc;padding:15px;color:#000;margin:0 auto 20px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;font-size:13px;line-height:19px;overflow:auto;font-family:arial;background-color:#eee;opacity:.4;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);-moz-opacity:.4}
 footer{margin:50px 0 20px;padding:7px 0;color:#bbb;font-size:12px;line-height:1.5}
 footer p{padding:0;margin:0}
+footer a{color:#aaa}
 ul.posts{margin:-40px 0 20px;padding:0;font-size:15px;display:inline-block;list-style-type:none;line-height:1.5;color:#80e991;}
 ul.posts li{padding-bottom:7px;}
 ul.posts li:before,ul.posts li:after{content:'';display:block}

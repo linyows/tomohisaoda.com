@@ -83,7 +83,10 @@ html lang: 'en', ->
 
     footer ->
       p "copyright #{new Date().getFullYear()} &copy; tomohisa oda"
-      p "This website was generated on #{@tool.moment(@site.date).format('MMM D, YYYY')}."
+      p ->
+        text "This website was generated on #{@tool.moment(@site.date).format('MMM D, YYYY')}. Using "
+        a href: 'https://github.com/bevry/docpad', 'Docpad'
+        text '.'
 
     comment 'scripts'
     text @blocks.scripts.join('')

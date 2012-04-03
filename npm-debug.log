@@ -1,0 +1,1864 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'update' ]
+info using npm@1.1.15
+info using node@v0.6.11
+verbose /usr/local/bin/node node symlink
+verbose config file /Users/enfar/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose config file /usr/local/lib/node_modules/npm/npmrc
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/package.json
+verbose loadDefaults canvas.docpad@0.2.0
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/coffee-script/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/moment/package.json
+verbose loadDefaults moment@1.4.0
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/underscore/package.json
+verbose loadDefaults underscore@1.3.1
+verbose cache add [ 'moment', 'latest' ]
+silly cache add: name, spec, args [ 'moment', 'latest', [ 'moment', 'latest' ] ]
+verbose parsed url { pathname: 'latest', path: 'latest', href: 'latest' }
+verbose addNamed [ 'moment', 'latest' ]
+verbose addNamed [ null, null ]
+info addNameTag [ 'moment', 'latest' ]
+verbose cache add [ 'underscore', 'latest' ]
+silly cache add: name, spec, args [ 'underscore', 'latest', [ 'underscore', 'latest' ] ]
+verbose parsed url { pathname: 'latest', path: 'latest', href: 'latest' }
+verbose addNamed [ 'underscore', 'latest' ]
+verbose addNamed [ null, null ]
+info addNameTag [ 'underscore', 'latest' ]
+verbose cache add [ 'coffee-script', '1.1.x' ]
+silly cache add: name, spec, args [ 'coffee-script', '1.1.x', [ 'coffee-script', '1.1.x' ] ]
+verbose parsed url { pathname: '1.1.x', path: '1.1.x', href: '1.1.x' }
+verbose addNamed [ 'coffee-script', '1.1.x' ]
+verbose addNamed [ null, '>=1.1.0- <1.2.0-' ]
+silly name, range, hasData [ 'coffee-script', '>=1.1.0- <1.2.0-', false ]
+verbose cache add [ 'express', '2.5.x' ]
+silly cache add: name, spec, args [ 'express', '2.5.x', [ 'express', '2.5.x' ] ]
+verbose parsed url { pathname: '2.5.x', path: '2.5.x', href: '2.5.x' }
+verbose addNamed [ 'express', '2.5.x' ]
+verbose addNamed [ null, '>=2.5.0- <2.6.0-' ]
+silly name, range, hasData [ 'express', '>=2.5.0- <2.6.0-', false ]
+verbose cache add [ 'docpad', '2.6.x' ]
+silly cache add: name, spec, args [ 'docpad', '2.6.x', [ 'docpad', '2.6.x' ] ]
+verbose parsed url { pathname: '2.6.x', path: '2.6.x', href: '2.6.x' }
+verbose addNamed [ 'docpad', '2.6.x' ]
+verbose addNamed [ null, '>=2.6.0- <2.7.0-' ]
+silly name, range, hasData [ 'docpad', '>=2.6.0- <2.7.0-', false ]
+verbose raw, before any munging underscore
+verbose url resolving [ 'https://registry.npmjs.org/', './underscore' ]
+verbose url resolved https://registry.npmjs.org/underscore
+verbose etag "9WZIMI3WFXDZ3WCR6GZDBFUT2"
+http GET https://registry.npmjs.org/underscore
+verbose raw, before any munging coffee-script
+verbose url resolving [ 'https://registry.npmjs.org/', './coffee-script' ]
+verbose url resolved https://registry.npmjs.org/coffee-script
+verbose etag "5QS8QSI99HOWS0N3KR665W6VF"
+http GET https://registry.npmjs.org/coffee-script
+verbose raw, before any munging express
+verbose url resolving [ 'https://registry.npmjs.org/', './express' ]
+verbose url resolved https://registry.npmjs.org/express
+verbose etag "8TD9VJDU5S6ZQ545KE4QT4X5E"
+http GET https://registry.npmjs.org/express
+verbose raw, before any munging moment
+verbose url resolving [ 'https://registry.npmjs.org/', './moment' ]
+verbose url resolved https://registry.npmjs.org/moment
+verbose etag "D2X34MQ7U1L5CWQFKA7EQ9OX9"
+http GET https://registry.npmjs.org/moment
+verbose raw, before any munging docpad
+verbose url resolving [ 'https://registry.npmjs.org/', './docpad' ]
+verbose url resolved https://registry.npmjs.org/docpad
+verbose etag "1819NT9DLJ5819L5ONPUY25M7"
+http GET https://registry.npmjs.org/docpad
+http 304 https://registry.npmjs.org/underscore
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"9WZIMI3WFXDZ3WCR6GZDBFUT2"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:06 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag underscore from cache
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '6cb8aad0e77eb5dbbfb54b22bcd8697309cf9641',
+verbose bin dist     tarball: 'http://registry.npmjs.org/underscore/-/underscore-1.3.1.tgz' } ]
+verbose caching /Users/enfar/.npm/underscore/1.3.1/package/package.json
+verbose loadDefaults underscore@1.3.1
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/underscore/package.json
+http 304 https://registry.npmjs.org/express
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"8TD9VJDU5S6ZQ545KE4QT4X5E"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:06 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag express from cache
+silly name, range, hasData 2 [ 'express', '>=2.5.0- <2.6.0-', true ]
+silly versions [ 'express',
+silly versions   [ '0.14.0',
+silly versions     '0.14.1',
+silly versions     '1.0.0beta',
+silly versions     '1.0.0beta2',
+silly versions     '1.0.0rc',
+silly versions     '1.0.0rc2',
+silly versions     '1.0.0rc3',
+silly versions     '1.0.0rc4',
+silly versions     '1.0.0',
+silly versions     '1.0.1',
+silly versions     '1.0.2',
+silly versions     '1.0.3',
+silly versions     '1.0.4',
+silly versions     '1.0.5',
+silly versions     '1.0.6',
+silly versions     '1.0.7',
+silly versions     '2.5.0',
+silly versions     '2.5.1',
+silly versions     '2.5.2',
+silly versions     '2.5.3',
+silly versions     '2.5.4',
+silly versions     '2.5.5',
+silly versions     '2.5.6',
+silly versions     '2.5.7',
+silly versions     '2.5.8',
+silly versions     '2.5.9' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '62d111ccaccf425182e1f30e541f84b551a72f2c',
+verbose bin dist     tarball: 'http://registry.npmjs.org/express/-/express-2.5.9.tgz' } ]
+verbose caching /Users/enfar/.npm/express/2.5.9/package/package.json
+verbose loadDefaults express@2.5.9
+http 304 https://registry.npmjs.org/coffee-script
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5QS8QSI99HOWS0N3KR665W6VF"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:06 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag coffee-script from cache
+silly name, range, hasData 2 [ 'coffee-script', '>=1.1.0- <1.2.0-', true ]
+silly versions [ 'coffee-script',
+silly versions   [ '0.7.0',
+silly versions     '0.7.1',
+silly versions     '0.7.2',
+silly versions     '0.9.0',
+silly versions     '0.9.1',
+silly versions     '0.9.2',
+silly versions     '0.9.3',
+silly versions     '0.9.4',
+silly versions     '0.9.5',
+silly versions     '0.9.6',
+silly versions     '1.0.0',
+silly versions     '1.0.1',
+silly versions     '1.1.0',
+silly versions     '1.1.1',
+silly versions     '1.1.2',
+silly versions     '1.1.3',
+silly versions     '1.2.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '04cb82e59653fcad6ae6050900c81adf3af6d798',
+verbose bin dist     tarball: 'http://registry.npmjs.org/coffee-script/-/coffee-script-1.1.3.tgz' } ]
+verbose caching /Users/enfar/.npm/coffee-script/1.1.3/package/package.json
+verbose loadDefaults coffee-script@1.1.3
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/coffee-script/package.json
+http 304 https://registry.npmjs.org/docpad
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"1819NT9DLJ5819L5ONPUY25M7"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:06 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag docpad from cache
+silly name, range, hasData 2 [ 'docpad', '>=2.6.0- <2.7.0-', true ]
+silly versions [ 'docpad',
+silly versions   [ '0.1.0',
+silly versions     '0.4.0',
+silly versions     '0.5.0',
+silly versions     '0.5.1',
+silly versions     '0.6.0',
+silly versions     '0.6.1',
+silly versions     '0.7.0',
+silly versions     '0.8.0',
+silly versions     '0.8.1',
+silly versions     '0.8.3',
+silly versions     '0.9.0',
+silly versions     '0.9.1',
+silly versions     '0.9.2',
+silly versions     '0.9.3',
+silly versions     '0.9.4',
+silly versions     '0.9.5',
+silly versions     '0.9.6',
+silly versions     '0.9.7',
+silly versions     '0.9.8',
+silly versions     '0.9.9',
+silly versions     '0.9.10',
+silly versions     '0.9.11',
+silly versions     '0.9.12',
+silly versions     '0.9.13',
+silly versions     '0.9.14',
+silly versions     '0.9.15',
+silly versions     '0.9.16',
+silly versions     '0.9.17',
+silly versions     '0.9.18',
+silly versions     '0.9.19',
+silly versions     '0.9.20',
+silly versions     '0.9.21',
+silly versions     '0.9.22',
+silly versions     '0.10.0',
+silly versions     '1.0.0',
+silly versions     '1.0.1',
+silly versions     '1.0.2',
+silly versions     '1.0.3',
+silly versions     '1.1.1',
+silly versions     '1.1.2',
+silly versions     '1.1.3',
+silly versions     '1.1.4',
+silly versions     '1.1.6',
+silly versions     '1.2.0',
+silly versions     '1.2.1',
+silly versions     '1.2.2',
+silly versions     '1.2.3',
+silly versions     '1.2.4',
+silly versions     '1.2.5',
+silly versions     '1.3.0',
+silly versions     '1.3.1',
+silly versions     '1.3.2',
+silly versions     '1.3.3',
+silly versions     '1.3.5',
+silly versions     '1.3.6',
+silly versions     '1.3.7',
+silly versions     '1.3.8',
+silly versions     '1.4.0',
+silly versions     '1.4.1',
+silly versions     '2.0.0',
+silly versions     '2.0.1',
+silly versions     '2.0.2',
+silly versions     '2.1.0',
+silly versions     '2.1.1',
+silly versions     '2.2.0',
+silly versions     '2.2.1',
+silly versions     '2.3.0',
+silly versions     '2.3.1',
+silly versions     '2.3.2',
+silly versions     '2.3.3',
+silly versions     '2.3.4',
+silly versions     '2.3.5',
+silly versions     '2.3.6',
+silly versions     '2.3.7',
+silly versions     '2.3.8',
+silly versions     '2.4.0',
+silly versions     '2.5.0',
+silly versions     '2.6.0',
+silly versions     '2.6.1',
+silly versions     '3.2.0',
+silly versions     '3.2.1',
+silly versions     '3.2.2',
+silly versions     '3.2.3',
+silly versions     '3.2.4',
+silly versions     '3.2.5',
+silly versions     '3.2.6',
+silly versions     '3.2.7',
+silly versions     '3.2.8',
+silly versions     '3.3.0',
+silly versions     '3.3.1',
+silly versions     '3.3.2' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '5dd67a54e5059df75dab91979a0c94a3342c7a06',
+verbose bin dist     tarball: 'http://registry.npmjs.org/docpad/-/docpad-2.6.1.tgz' } ]
+verbose caching /Users/enfar/.npm/docpad/2.6.1/package/package.json
+verbose loadDefaults docpad@2.6.1
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/bal-util/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/commander/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/growl/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/coffee-script/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/query-engine/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/underscore/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/watchr/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/yaml/package.json
+verbose cache add [ 'bal-util', '0.8.x' ]
+silly cache add: name, spec, args [ 'bal-util', '0.8.x', [ 'bal-util', '0.8.x' ] ]
+verbose parsed url { pathname: '0.8.x', path: '0.8.x', href: '0.8.x' }
+verbose addNamed [ 'bal-util', '0.8.x' ]
+verbose addNamed [ null, '>=0.8.0- <0.9.0-' ]
+silly name, range, hasData [ 'bal-util', '>=0.8.0- <0.9.0-', false ]
+verbose cache add [ 'express', '2.5.x' ]
+silly cache add: name, spec, args [ 'express', '2.5.x', [ 'express', '2.5.x' ] ]
+verbose parsed url { pathname: '2.5.x', path: '2.5.x', href: '2.5.x' }
+verbose addNamed [ 'express', '2.5.x' ]
+verbose addNamed [ null, '>=2.5.0- <2.6.0-' ]
+silly name, range, hasData [ 'express', '>=2.5.0- <2.6.0-', false ]
+verbose cache add [ 'query-engine', '0.5.x' ]
+silly cache add: name, spec, args [ 'query-engine', '0.5.x', [ 'query-engine', '0.5.x' ] ]
+verbose parsed url { pathname: '0.5.x', path: '0.5.x', href: '0.5.x' }
+verbose addNamed [ 'query-engine', '0.5.x' ]
+verbose addNamed [ null, '>=0.5.0- <0.6.0-' ]
+silly name, range, hasData [ 'query-engine', '>=0.5.0- <0.6.0-', false ]
+verbose cache add [ 'watchr', '0.1.x' ]
+silly cache add: name, spec, args [ 'watchr', '0.1.x', [ 'watchr', '0.1.x' ] ]
+verbose parsed url { pathname: '0.1.x', path: '0.1.x', href: '0.1.x' }
+verbose addNamed [ 'watchr', '0.1.x' ]
+verbose addNamed [ null, '>=0.1.0- <0.2.0-' ]
+silly name, range, hasData [ 'watchr', '>=0.1.0- <0.2.0-', false ]
+verbose cache add [ 'caterpillar', '0.1.x' ]
+silly cache add: name, spec, args [ 'caterpillar', '0.1.x', [ 'caterpillar', '0.1.x' ] ]
+verbose parsed url { pathname: '0.1.x', path: '0.1.x', href: '0.1.x' }
+verbose addNamed [ 'caterpillar', '0.1.x' ]
+verbose addNamed [ null, '>=0.1.0- <0.2.0-' ]
+silly name, range, hasData [ 'caterpillar', '>=0.1.0- <0.2.0-', false ]
+verbose cache add [ 'commander', '0.5.x' ]
+silly cache add: name, spec, args [ 'commander', '0.5.x', [ 'commander', '0.5.x' ] ]
+verbose parsed url { pathname: '0.5.x', path: '0.5.x', href: '0.5.x' }
+verbose addNamed [ 'commander', '0.5.x' ]
+verbose addNamed [ null, '>=0.5.0- <0.6.0-' ]
+silly name, range, hasData [ 'commander', '>=0.5.0- <0.6.0-', false ]
+verbose cache add [ 'growl', '1.4.x' ]
+silly cache add: name, spec, args [ 'growl', '1.4.x', [ 'growl', '1.4.x' ] ]
+verbose parsed url { pathname: '1.4.x', path: '1.4.x', href: '1.4.x' }
+verbose addNamed [ 'growl', '1.4.x' ]
+verbose addNamed [ null, '>=1.4.0- <1.5.0-' ]
+silly name, range, hasData [ 'growl', '>=1.4.0- <1.5.0-', false ]
+verbose cache add [ 'yaml', '0.2.1' ]
+silly cache add: name, spec, args [ 'yaml', '0.2.1', [ 'yaml', '0.2.1' ] ]
+verbose parsed url { pathname: '0.2.1', path: '0.2.1', href: '0.2.1' }
+verbose addNamed [ 'yaml', '0.2.1' ]
+verbose addNamed [ '0.2.1', '0.2.1' ]
+verbose cache add [ 'coffee-script', '1.2.x' ]
+silly cache add: name, spec, args [ 'coffee-script', '1.2.x', [ 'coffee-script', '1.2.x' ] ]
+verbose parsed url { pathname: '1.2.x', path: '1.2.x', href: '1.2.x' }
+verbose addNamed [ 'coffee-script', '1.2.x' ]
+verbose addNamed [ null, '>=1.2.0- <1.3.0-' ]
+silly name, range, hasData [ 'coffee-script', '>=1.2.0- <1.3.0-', false ]
+verbose cache add [ 'js2coffee', '0.1.x' ]
+silly cache add: name, spec, args [ 'js2coffee', '0.1.x', [ 'js2coffee', '0.1.x' ] ]
+verbose parsed url { pathname: '0.1.x', path: '0.1.x', href: '0.1.x' }
+verbose addNamed [ 'js2coffee', '0.1.x' ]
+verbose addNamed [ null, '>=0.1.0- <0.2.0-' ]
+silly name, range, hasData [ 'js2coffee', '>=0.1.0- <0.2.0-', false ]
+verbose cache add [ 'underscore', '1.2.x' ]
+silly cache add: name, spec, args [ 'underscore', '1.2.x', [ 'underscore', '1.2.x' ] ]
+verbose parsed url { pathname: '1.2.x', path: '1.2.x', href: '1.2.x' }
+verbose addNamed [ 'underscore', '1.2.x' ]
+verbose addNamed [ null, '>=1.2.0- <1.3.0-' ]
+silly name, range, hasData [ 'underscore', '>=1.2.0- <1.3.0-', false ]
+verbose cache add [ 'npm', '>=1.0.x' ]
+silly cache add: name, spec, args [ 'npm', '>=1.0.x', [ 'npm', '>=1.0.x' ] ]
+verbose parsed url { pathname: '=1.0.x', path: '=1.0.x', href: '=1.0.x' }
+verbose addNamed [ 'npm', '>=1.0.x' ]
+verbose addNamed [ null, '>=1.0.0-' ]
+silly name, range, hasData [ 'npm', '>=1.0.0-', false ]
+verbose raw, before any munging bal-util
+verbose url resolving [ 'https://registry.npmjs.org/', './bal-util' ]
+verbose url resolved https://registry.npmjs.org/bal-util
+verbose etag "5REY5Q8XZ194OZXGSISNJ0LRN"
+http GET https://registry.npmjs.org/bal-util
+verbose raw, before any munging query-engine
+verbose url resolving [ 'https://registry.npmjs.org/', './query-engine' ]
+verbose url resolved https://registry.npmjs.org/query-engine
+verbose etag "8WCBVWB7LC09LDGDAANHM3NZE"
+http GET https://registry.npmjs.org/query-engine
+verbose raw, before any munging watchr
+verbose url resolving [ 'https://registry.npmjs.org/', './watchr' ]
+verbose url resolved https://registry.npmjs.org/watchr
+verbose etag "AEMBBRV06X4M1CVHCW5E4SBEZ"
+http GET https://registry.npmjs.org/watchr
+verbose raw, before any munging caterpillar
+verbose url resolving [ 'https://registry.npmjs.org/', './caterpillar' ]
+verbose url resolved https://registry.npmjs.org/caterpillar
+verbose etag "AWJH83HI1MJ09QA5DRALMBT5Y"
+http GET https://registry.npmjs.org/caterpillar
+verbose raw, before any munging commander
+verbose url resolving [ 'https://registry.npmjs.org/', './commander' ]
+verbose url resolved https://registry.npmjs.org/commander
+verbose etag "77XWP5DV4KCWIM2LWJP9FRE3R"
+http GET https://registry.npmjs.org/commander
+verbose raw, before any munging growl
+verbose url resolving [ 'https://registry.npmjs.org/', './growl' ]
+verbose url resolved https://registry.npmjs.org/growl
+verbose etag "2B1KBQ97FC1E5ZOZSXU9KB8LV"
+http GET https://registry.npmjs.org/growl
+verbose raw, before any munging yaml/0.2.1
+verbose url resolving [ 'https://registry.npmjs.org/', './yaml/0.2.1' ]
+verbose url resolved https://registry.npmjs.org/yaml/0.2.1
+verbose etag "5W4TAJSYQI513MQR9ONZOKNXI"
+http GET https://registry.npmjs.org/yaml/0.2.1
+verbose raw, before any munging coffee-script
+verbose url resolving [ 'https://registry.npmjs.org/', './coffee-script' ]
+verbose url resolved https://registry.npmjs.org/coffee-script
+verbose etag "5QS8QSI99HOWS0N3KR665W6VF"
+http GET https://registry.npmjs.org/coffee-script
+verbose raw, before any munging js2coffee
+verbose url resolving [ 'https://registry.npmjs.org/', './js2coffee' ]
+verbose url resolved https://registry.npmjs.org/js2coffee
+verbose etag "827A6D8SRY2HQRNX7L7FY01PA"
+http GET https://registry.npmjs.org/js2coffee
+verbose raw, before any munging underscore
+verbose url resolving [ 'https://registry.npmjs.org/', './underscore' ]
+verbose url resolved https://registry.npmjs.org/underscore
+verbose etag "9WZIMI3WFXDZ3WCR6GZDBFUT2"
+http GET https://registry.npmjs.org/underscore
+verbose raw, before any munging express
+verbose url resolving [ 'https://registry.npmjs.org/', './express' ]
+verbose url resolved https://registry.npmjs.org/express
+verbose etag "8TD9VJDU5S6ZQ545KE4QT4X5E"
+http GET https://registry.npmjs.org/express
+verbose raw, before any munging npm
+verbose url resolving [ 'https://registry.npmjs.org/', './npm' ]
+verbose url resolved https://registry.npmjs.org/npm
+verbose etag "5GQZYG4ASGFJ3XFRSRAT9UA7G"
+http GET https://registry.npmjs.org/npm
+http 200 https://registry.npmjs.org/moment
+silly get cb [ 200,
+silly get cb   { vary: 'Accept',
+silly get cb     server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"AY27B8LX5Y76X4SSS95P80PNP"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:06 GMT',
+silly get cb     'content-type': 'application/json',
+silly get cb     'content-length': '9201' } ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'f62f40a1ce487c00d5d0105c50b2b9b92bb7952d',
+verbose bin dist     tarball: 'http://registry.npmjs.org/moment/-/moment-1.5.0.tgz' } ]
+verbose addRemoteTarball [ 'https://registry.npmjs.org/moment/-/moment-1.5.0.tgz',
+verbose addRemoteTarball   'f62f40a1ce487c00d5d0105c50b2b9b92bb7952d' ]
+verbose fetch to /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456747198-0.7713693499099463/tmp.tgz
+http GET https://registry.npmjs.org/moment/-/moment-1.5.0.tgz
+http 304 https://registry.npmjs.org/commander
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"77XWP5DV4KCWIM2LWJP9FRE3R"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:07 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag commander from cache
+silly name, range, hasData 2 [ 'commander', '>=0.5.0- <0.6.0-', true ]
+silly versions [ 'commander',
+silly versions   [ '0.2.1',
+silly versions     '0.3.0',
+silly versions     '0.3.1',
+silly versions     '0.3.2',
+silly versions     '0.3.3',
+silly versions     '0.4.0',
+silly versions     '0.4.1',
+silly versions     '0.4.2',
+silly versions     '0.4.3',
+silly versions     '0.5.0',
+silly versions     '0.5.1',
+silly versions     '0.5.2' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '0cc59302bc1daa1ddc92e1f7ffb82599581a79b6',
+verbose bin dist     tarball: 'http://registry.npmjs.org/commander/-/commander-0.5.2.tgz' } ]
+verbose caching /Users/enfar/.npm/commander/0.5.2/package/package.json
+verbose loadDefaults commander@0.5.2
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/commander/package.json
+http 304 https://registry.npmjs.org/growl
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"2B1KBQ97FC1E5ZOZSXU9KB8LV"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:07 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag growl from cache
+silly name, range, hasData 2 [ 'growl', '>=1.4.0- <1.5.0-', true ]
+silly versions [ 'growl',
+silly versions   [ '1.0.1',
+silly versions     '1.0.2',
+silly versions     '1.1.0',
+silly versions     '1.2.0',
+silly versions     '1.2.1',
+silly versions     '1.3.0',
+silly versions     '1.4.0',
+silly versions     '1.4.1',
+silly versions     '1.5.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'dc77840728f89cbb0d6b64f08b6551406ab653c5',
+verbose bin dist     tarball: 'http://registry.npmjs.org/growl/-/growl-1.4.1.tgz' } ]
+verbose caching /Users/enfar/.npm/growl/1.4.1/package/package.json
+verbose loadDefaults growl@1.4.1
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/growl/package.json
+http 304 https://registry.npmjs.org/yaml/0.2.1
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5W4TAJSYQI513MQR9ONZOKNXI"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:07 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag yaml/0.2.1 from cache
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'e925585765208789e7006d673d79e52deee92b54',
+verbose bin dist     tarball: 'http://registry.npmjs.org/yaml/-/yaml-0.2.1.tgz' } ]
+verbose caching /Users/enfar/.npm/yaml/0.2.1/package/package.json
+verbose loadDefaults yaml@0.2.1
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/yaml/package.json
+http 304 https://registry.npmjs.org/coffee-script
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5QS8QSI99HOWS0N3KR665W6VF"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:07 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag coffee-script from cache
+silly name, range, hasData 2 [ 'coffee-script', '>=1.2.0- <1.3.0-', true ]
+silly versions [ 'coffee-script',
+silly versions   [ '0.7.0',
+silly versions     '0.7.1',
+silly versions     '0.7.2',
+silly versions     '0.9.0',
+silly versions     '0.9.1',
+silly versions     '0.9.2',
+silly versions     '0.9.3',
+silly versions     '0.9.4',
+silly versions     '0.9.5',
+silly versions     '0.9.6',
+silly versions     '1.0.0',
+silly versions     '1.0.1',
+silly versions     '1.1.0',
+silly versions     '1.1.1',
+silly versions     '1.1.2',
+silly versions     '1.1.3',
+silly versions     '1.2.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'b5e61e55f1ca8c4a9eb87d53aa0657ea43125b91',
+verbose bin dist     tarball: 'http://registry.npmjs.org/coffee-script/-/coffee-script-1.2.0.tgz' } ]
+verbose caching /Users/enfar/.npm/coffee-script/1.2.0/package/package.json
+verbose loadDefaults coffee-script@1.2.0
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/coffee-script/package.json
+http 304 https://registry.npmjs.org/js2coffee
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"827A6D8SRY2HQRNX7L7FY01PA"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag js2coffee from cache
+silly name, range, hasData 2 [ 'js2coffee', '>=0.1.0- <0.2.0-', true ]
+silly versions [ 'js2coffee',
+silly versions   [ '0.0.1',
+silly versions     '0.0.2',
+silly versions     '0.0.3',
+silly versions     '0.0.4',
+silly versions     '0.0.5',
+silly versions     '0.1.0',
+silly versions     '0.1.1',
+silly versions     '0.1.2',
+silly versions     '0.1.3' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'cea2e13fd483daab8ac834a3e703015ce240dc80',
+verbose bin dist     tarball: 'http://registry.npmjs.org/js2coffee/-/js2coffee-0.1.3.tgz' } ]
+verbose caching /Users/enfar/.npm/js2coffee/0.1.3/package/package.json
+verbose loadDefaults js2coffee@0.1.3
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee/package.json
+verbose cache add [ 'underscore', '>= 0.0.1' ]
+silly cache add: name, spec, args [ 'underscore', '>= 0.0.1', [ 'underscore', '>= 0.0.1' ] ]
+verbose parsed url { pathname: '=', path: '=', href: '=' }
+verbose addNamed [ 'underscore', '>= 0.0.1' ]
+verbose addNamed [ null, '>=0.0.1' ]
+silly name, range, hasData [ 'underscore', '>=0.0.1', false ]
+verbose cache add [ 'coffee-script', '>= 1.1.0' ]
+silly cache add: name, spec, args [ 'coffee-script', '>= 1.1.0', [ 'coffee-script', '>= 1.1.0' ] ]
+verbose parsed url { pathname: '=', path: '=', href: '=' }
+verbose addNamed [ 'coffee-script', '>= 1.1.0' ]
+verbose addNamed [ null, '>=1.1.0' ]
+silly name, range, hasData [ 'coffee-script', '>=1.1.0', false ]
+verbose raw, before any munging underscore
+verbose url resolving [ 'https://registry.npmjs.org/', './underscore' ]
+verbose url resolved https://registry.npmjs.org/underscore
+verbose etag "9WZIMI3WFXDZ3WCR6GZDBFUT2"
+http GET https://registry.npmjs.org/underscore
+verbose raw, before any munging coffee-script
+verbose url resolving [ 'https://registry.npmjs.org/', './coffee-script' ]
+verbose url resolved https://registry.npmjs.org/coffee-script
+verbose etag "5QS8QSI99HOWS0N3KR665W6VF"
+http GET https://registry.npmjs.org/coffee-script
+http 304 https://registry.npmjs.org/watchr
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"AEMBBRV06X4M1CVHCW5E4SBEZ"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag watchr from cache
+http 304 https://registry.npmjs.org/query-engine
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"8WCBVWB7LC09LDGDAANHM3NZE"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag query-engine from cache
+http 304 https://registry.npmjs.org/underscore
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"9WZIMI3WFXDZ3WCR6GZDBFUT2"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag underscore from cache
+http 304 https://registry.npmjs.org/bal-util
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5REY5Q8XZ194OZXGSISNJ0LRN"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag bal-util from cache
+http 304 https://registry.npmjs.org/caterpillar
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"AWJH83HI1MJ09QA5DRALMBT5Y"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag caterpillar from cache
+silly name, range, hasData 2 [ 'watchr', '>=0.1.0- <0.2.0-', true ]
+silly versions [ 'watchr', [ '0.1.0', '1.0.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'f9533dc60d942b0bb5b68e098aedfc4d2d75a8cb',
+verbose bin dist     tarball: 'http://registry.npmjs.org/watchr/-/watchr-0.1.0.tgz' } ]
+silly name, range, hasData 2 [ 'query-engine', '>=0.5.0- <0.6.0-', true ]
+silly versions [ 'query-engine',
+silly versions   [ '0.1.0',
+silly versions     '0.1.1',
+silly versions     '0.2.0',
+silly versions     '0.2.1',
+silly versions     '0.2.2',
+silly versions     '0.3.0',
+silly versions     '0.3.1',
+silly versions     '0.4.0',
+silly versions     '0.5.1',
+silly versions     '0.5.2',
+silly versions     '0.5.3',
+silly versions     '0.5.4',
+silly versions     '0.6.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '4a4eee58f84dce22c65945a632c0549852239067',
+verbose bin dist     tarball: 'http://registry.npmjs.org/query-engine/-/query-engine-0.5.4.tgz' } ]
+silly name, range, hasData 2 [ 'underscore', '>=1.2.0- <1.3.0-', true ]
+silly versions [ 'underscore',
+silly versions   [ '1.0.3',
+silly versions     '1.0.4',
+silly versions     '1.1.0',
+silly versions     '1.1.1',
+silly versions     '1.1.2',
+silly versions     '1.1.3',
+silly versions     '1.1.4',
+silly versions     '1.1.5',
+silly versions     '1.1.6',
+silly versions     '1.1.7',
+silly versions     '1.2.0',
+silly versions     '1.2.1',
+silly versions     '1.2.2',
+silly versions     '1.2.3',
+silly versions     '1.2.4',
+silly versions     '1.3.0',
+silly versions     '1.3.1' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'e8da6241aa06f64df2473bb2590b8c17c84c3c7e',
+verbose bin dist     tarball: 'http://registry.npmjs.org/underscore/-/underscore-1.2.4.tgz' } ]
+silly name, range, hasData 2 [ 'caterpillar', '>=0.1.0- <0.2.0-', true ]
+silly versions [ 'caterpillar',
+silly versions   [ '0.1.0',
+silly versions     '0.1.1',
+silly versions     '0.1.2',
+silly versions     '0.1.3',
+silly versions     '0.1.4',
+silly versions     '0.1.5',
+silly versions     '0.1.6',
+silly versions     '0.1.7',
+silly versions     '1.0.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '9180cad0656baa0f2b4effa0ae6f1477b75c9eac',
+verbose bin dist     tarball: 'http://registry.npmjs.org/caterpillar/-/caterpillar-0.1.7.tgz' } ]
+silly name, range, hasData 2 [ 'bal-util', '>=0.8.0- <0.9.0-', true ]
+silly versions [ 'bal-util',
+silly versions   [ '0.1.0',
+silly versions     '0.1.1',
+silly versions     '0.1.2',
+silly versions     '0.1.3',
+silly versions     '0.1.4',
+silly versions     '0.1.5',
+silly versions     '0.1.6',
+silly versions     '0.2.0',
+silly versions     '0.2.1',
+silly versions     '0.2.2',
+silly versions     '0.2.3',
+silly versions     '0.3.0',
+silly versions     '0.4.0',
+silly versions     '0.5.0',
+silly versions     '0.6.0',
+silly versions     '0.7.0',
+silly versions     '0.8.0',
+silly versions     '0.8.1',
+silly versions     '0.9.0',
+silly versions     '1.0.0',
+silly versions     '1.1.0',
+silly versions     '1.2.0',
+silly versions     '1.3.0',
+silly versions     '1.4.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'ad21fbba5192dff94edad180609475d3cad203bf',
+verbose bin dist     tarball: 'http://registry.npmjs.org/bal-util/-/bal-util-0.8.1.tgz' } ]
+verbose caching /Users/enfar/.npm/watchr/0.1.0/package/package.json
+verbose loadDefaults watchr@0.1.0
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/watchr/package.json
+verbose caching /Users/enfar/.npm/query-engine/0.5.4/package/package.json
+verbose loadDefaults query-engine@0.5.4
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/query-engine/package.json
+verbose caching /Users/enfar/.npm/underscore/1.2.4/package/package.json
+verbose loadDefaults underscore@1.2.4
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/underscore/package.json
+verbose caching /Users/enfar/.npm/caterpillar/0.1.7/package/package.json
+verbose loadDefaults caterpillar@0.1.7
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/package.json
+verbose caching /Users/enfar/.npm/bal-util/0.8.1/package/package.json
+verbose loadDefaults bal-util@0.8.1
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/bal-util/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/node_modules/cli-color/package.json
+verbose cache add [ 'cli-color', '=0.1.3' ]
+silly cache add: name, spec, args [ 'cli-color', '=0.1.3', [ 'cli-color', '=0.1.3' ] ]
+verbose parsed url { pathname: '=0.1.3', path: '=0.1.3', href: '=0.1.3' }
+verbose addNamed [ 'cli-color', '=0.1.3' ]
+verbose addNamed [ '0.1.3', '=0.1.3' ]
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/bal-util/node_modules/request/package.json
+verbose cache add [ 'request', '2.2.x' ]
+silly cache add: name, spec, args [ 'request', '2.2.x', [ 'request', '2.2.x' ] ]
+verbose parsed url { pathname: '2.2.x', path: '2.2.x', href: '2.2.x' }
+verbose addNamed [ 'request', '2.2.x' ]
+verbose addNamed [ null, '>=2.2.0- <2.3.0-' ]
+silly name, range, hasData [ 'request', '>=2.2.0- <2.3.0-', false ]
+verbose raw, before any munging request
+verbose url resolving [ 'https://registry.npmjs.org/', './request' ]
+verbose url resolved https://registry.npmjs.org/request
+verbose etag "A728U9K2HN47F8UA38QTZBDS1"
+http GET https://registry.npmjs.org/request
+verbose raw, before any munging cli-color/0.1.3
+verbose url resolving [ 'https://registry.npmjs.org/', './cli-color/0.1.3' ]
+verbose url resolved https://registry.npmjs.org/cli-color/0.1.3
+verbose etag "EHA94Q0RUPRJMUR24WMLG2YTM"
+http GET https://registry.npmjs.org/cli-color/0.1.3
+http 304 https://registry.npmjs.org/express
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"8TD9VJDU5S6ZQ545KE4QT4X5E"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag express from cache
+silly name, range, hasData 2 [ 'express', '>=2.5.0- <2.6.0-', true ]
+silly versions [ 'express',
+silly versions   [ '0.14.0',
+silly versions     '0.14.1',
+silly versions     '1.0.0beta',
+silly versions     '1.0.0beta2',
+silly versions     '1.0.0rc',
+silly versions     '1.0.0rc2',
+silly versions     '1.0.0rc3',
+silly versions     '1.0.0rc4',
+silly versions     '1.0.0',
+silly versions     '1.0.1',
+silly versions     '1.0.2',
+silly versions     '1.0.3',
+silly versions     '1.0.4',
+silly versions     '1.0.5',
+silly versions     '1.0.6',
+silly versions     '1.0.7',
+silly versions     '2.5.0',
+silly versions     '2.5.1',
+silly versions     '2.5.2',
+silly versions     '2.5.3',
+silly versions     '2.5.4',
+silly versions     '2.5.5',
+silly versions     '2.5.6',
+silly versions     '2.5.7',
+silly versions     '2.5.8',
+silly versions     '2.5.9' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '62d111ccaccf425182e1f30e541f84b551a72f2c',
+verbose bin dist     tarball: 'http://registry.npmjs.org/express/-/express-2.5.9.tgz' } ]
+verbose from cache /Users/enfar/.npm/express/2.5.9/package/package.json
+http 200 https://registry.npmjs.org/moment/-/moment-1.5.0.tgz
+http 304 https://registry.npmjs.org/npm
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5GQZYG4ASGFJ3XFRSRAT9UA7G"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag npm from cache
+silly name, range, hasData 2 [ 'npm', '>=1.0.0-', true ]
+silly versions [ 'npm',
+silly versions   [ '1.0.106',
+silly versions     '0.2.19',
+silly versions     '1.1.0',
+silly versions     '1.1.0-1',
+silly versions     '1.1.0-2',
+silly versions     '1.1.0-3',
+silly versions     '1.1.1',
+silly versions     '1.1.2',
+silly versions     '1.1.3',
+silly versions     '1.1.4',
+silly versions     '1.1.5',
+silly versions     '1.1.6',
+silly versions     '1.1.7',
+silly versions     '1.1.8',
+silly versions     '1.1.9',
+silly versions     '1.1.10',
+silly versions     '1.1.11',
+silly versions     '1.1.12',
+silly versions     '1.1.13',
+silly versions     '1.1.14',
+silly versions     '1.1.15' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'f99f311a5e5139435364963e873c17d6a5efaebe',
+verbose bin dist     tarball: 'http://registry.npmjs.org/npm/-/npm-1.1.15.tgz' } ]
+verbose caching /Users/enfar/.npm/npm/1.1.15/package/package.json
+verbose loadDefaults npm@1.1.15
+http 304 https://registry.npmjs.org/underscore
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"9WZIMI3WFXDZ3WCR6GZDBFUT2"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag underscore from cache
+http 304 https://registry.npmjs.org/coffee-script
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5QS8QSI99HOWS0N3KR665W6VF"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag coffee-script from cache
+silly name, range, hasData 2 [ 'underscore', '>=0.0.1', true ]
+silly versions [ 'underscore',
+silly versions   [ '1.0.3',
+silly versions     '1.0.4',
+silly versions     '1.1.0',
+silly versions     '1.1.1',
+silly versions     '1.1.2',
+silly versions     '1.1.3',
+silly versions     '1.1.4',
+silly versions     '1.1.5',
+silly versions     '1.1.6',
+silly versions     '1.1.7',
+silly versions     '1.2.0',
+silly versions     '1.2.1',
+silly versions     '1.2.2',
+silly versions     '1.2.3',
+silly versions     '1.2.4',
+silly versions     '1.3.0',
+silly versions     '1.3.1' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '6cb8aad0e77eb5dbbfb54b22bcd8697309cf9641',
+verbose bin dist     tarball: 'http://registry.npmjs.org/underscore/-/underscore-1.3.1.tgz' } ]
+silly name, range, hasData 2 [ 'coffee-script', '>=1.1.0', true ]
+silly versions [ 'coffee-script',
+silly versions   [ '0.7.0',
+silly versions     '0.7.1',
+silly versions     '0.7.2',
+silly versions     '0.9.0',
+silly versions     '0.9.1',
+silly versions     '0.9.2',
+silly versions     '0.9.3',
+silly versions     '0.9.4',
+silly versions     '0.9.5',
+silly versions     '0.9.6',
+silly versions     '1.0.0',
+silly versions     '1.0.1',
+silly versions     '1.1.0',
+silly versions     '1.1.1',
+silly versions     '1.1.2',
+silly versions     '1.1.3',
+silly versions     '1.2.0' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'b5e61e55f1ca8c4a9eb87d53aa0657ea43125b91',
+verbose bin dist     tarball: 'http://registry.npmjs.org/coffee-script/-/coffee-script-1.2.0.tgz' } ]
+verbose from cache /Users/enfar/.npm/underscore/1.3.1/package/package.json
+verbose from cache /Users/enfar/.npm/coffee-script/1.2.0/package/package.json
+http 304 https://registry.npmjs.org/request
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"A728U9K2HN47F8UA38QTZBDS1"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:08 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag request from cache
+silly name, range, hasData 2 [ 'request', '>=2.2.0- <2.3.0-', true ]
+silly versions [ 'request',
+silly versions   [ '0.10.0',
+silly versions     '0.8.3',
+silly versions     '0.9.0',
+silly versions     '0.9.1',
+silly versions     '0.9.5',
+silly versions     '1.0.0',
+silly versions     '1.1.0',
+silly versions     '1.1.1',
+silly versions     '1.2.0',
+silly versions     '1.9.0',
+silly versions     '1.9.1',
+silly versions     '1.9.2',
+silly versions     '1.9.3',
+silly versions     '1.9.5',
+silly versions     '1.9.7',
+silly versions     '1.9.8',
+silly versions     '1.9.9',
+silly versions     '2.0.0',
+silly versions     '2.0.1',
+silly versions     '2.0.2',
+silly versions     '2.0.3',
+silly versions     '2.0.4',
+silly versions     '2.0.5',
+silly versions     '2.1.0',
+silly versions     '2.1.1',
+silly versions     '2.2.0',
+silly versions     '2.2.5',
+silly versions     '2.2.6',
+silly versions     '2.2.9',
+silly versions     '2.9.0',
+silly versions     '2.9.1',
+silly versions     '2.9.2',
+silly versions     '2.9.3',
+silly versions     '2.9.100',
+silly versions     '2.9.150',
+silly versions     '2.9.151',
+silly versions     '2.9.152',
+silly versions     '2.9.153' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'efbf8afbfe7f1e200d483b99752b6c42b404a0f1',
+verbose bin dist     tarball: 'http://registry.npmjs.org/request/-/request-2.2.9.tgz' } ]
+verbose caching /Users/enfar/.npm/request/2.2.9/package/package.json
+verbose loadDefaults request@2.2.9
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/bal-util/node_modules/request/package.json
+http 200 https://registry.npmjs.org/cli-color/0.1.3
+silly get cb [ 200,
+silly get cb   { vary: 'Accept',
+silly get cb     server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"E29BWOX4COXNRD7NRLBNU2G5T"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:09 GMT',
+silly get cb     'content-type': 'application/json',
+silly get cb     'content-length': '1131' } ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'ad1f914e2195388204d8e55bf3e2c3a709685f77',
+verbose bin dist     tarball: 'http://registry.npmjs.org/cli-color/-/cli-color-0.1.3.tgz' } ]
+verbose addRemoteTarball [ 'https://registry.npmjs.org/cli-color/-/cli-color-0.1.3.tgz',
+verbose addRemoteTarball   'ad1f914e2195388204d8e55bf3e2c3a709685f77' ]
+verbose fetch to /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456749286-0.39034144463948905/tmp.tgz
+http GET https://registry.npmjs.org/cli-color/-/cli-color-0.1.3.tgz
+silly updated sha bytes 40960
+silly updated sha bytes 12772
+info shasum f62f40a1ce487c00d5d0105c50b2b9b92bb7952d
+info shasum /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456747198-0.7713693499099463/tmp.tgz
+verbose unpack /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456747198-0.7713693499099463/tmp.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry .gitignore
+silly extracting entry .jshintrc
+silly extracting entry lang/
+silly extracting entry lang/ca.js
+silly extracting entry lang/da.js
+silly extracting entry lang/de.js
+silly extracting entry lang/en-gb.js
+silly extracting entry lang/es.js
+silly extracting entry lang/eu.js
+silly extracting entry lang/fr.js
+silly extracting entry lang/gl.js
+silly extracting entry lang/it.js
+silly extracting entry lang/kr.js
+silly extracting entry lang/nb.js
+silly extracting entry lang/nl.js
+silly extracting entry lang/pl.js
+silly extracting entry lang/pt.js
+silly extracting entry lang/ru.js
+silly extracting entry lang/sv.js
+silly extracting entry lang/tr.js
+silly extracting entry lang/zh-cn.js
+silly extracting entry lang/zh-tw.js
+silly extracting entry Makefile
+silly extracting entry min/
+silly extracting entry min/lang/
+silly extracting entry min/lang/ca.js
+silly extracting entry min/lang/da.js
+silly extracting entry min/lang/de.js
+silly extracting entry min/lang/en-gb.js
+silly extracting entry min/lang/es.js
+silly extracting entry min/lang/eu.js
+silly extracting entry min/lang/fr.js
+silly extracting entry min/lang/gl.js
+silly extracting entry min/lang/it.js
+silly extracting entry min/lang/kr.js
+silly extracting entry min/lang/nb.js
+silly extracting entry min/lang/nl.js
+silly extracting entry min/lang/pl.js
+silly extracting entry min/lang/pt.js
+silly extracting entry min/lang/ru.js
+silly extracting entry min/lang/sv.js
+silly extracting entry min/lang/tr.js
+silly extracting entry min/lang/zh-cn.js
+silly extracting entry min/lang/zh-tw.js
+silly extracting entry min/lang-all.min.js
+silly extracting entry min/moment.min.js
+silly extracting entry min/moment.min.pretty.js
+silly extracting entry moment.js
+silly extracting entry package.json
+silly extracting entry README.markdown
+silly extracting entry test/
+silly extracting entry test/lang/
+silly extracting entry test/lang/ca.js
+silly extracting entry test/lang/da.js
+silly extracting entry test/lang/de.js
+silly extracting entry test/lang/en-gb.js
+silly extracting entry test/lang/en.js
+silly extracting entry test/lang/es.js
+silly extracting entry test/lang/eu.js
+silly extracting entry test/lang/fr.js
+silly extracting entry test/lang/gl.js
+silly extracting entry test/lang/it.js
+silly extracting entry test/lang/kr.js
+silly extracting entry test/lang/nb.js
+silly extracting entry test/lang/nl.js
+silly extracting entry test/lang/pl.js
+silly extracting entry test/lang/pt.js
+silly extracting entry test/lang/ru.js
+silly extracting entry test/lang/sv.js
+silly extracting entry test/lang/tr.js
+silly extracting entry test/lang/zh-cn.js
+silly extracting entry test/lang/zh-tw.js
+silly extracting entry test/moment/
+silly extracting entry test/moment/add_subtract.js
+silly extracting entry test/moment/create.js
+silly extracting entry test/moment/days_in_month.js
+silly extracting entry test/moment/diff.js
+silly extracting entry test/moment/format.js
+silly extracting entry test/moment/getters_setters.js
+silly extracting entry test/moment/humanize_duration.js
+silly extracting entry test/moment/is_moment.js
+silly extracting entry test/moment/leapyear.js
+silly extracting entry test/moment/sod_eod.js
+silly extracting entry test/moment/utc.js
+verbose caching /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456747198-0.7713693499099463/package/package.json
+verbose loadDefaults moment@1.5.0
+verbose from cache /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456747198-0.7713693499099463/package/package.json
+verbose tar.pack [ '/Users/enfar/.npm/moment/1.5.0/package.tgz',
+verbose tar.pack   '/var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456747198-0.7713693499099463/package' ]
+verbose tarball /Users/enfar/.npm/moment/1.5.0/package.tgz
+verbose folder /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456747198-0.7713693499099463/package
+verbose unpack /Users/enfar/.npm/moment/1.5.0/package.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry .npmignore
+silly extracting entry moment.js
+silly extracting entry .jshintrc
+silly extracting entry lang/ca.js
+silly extracting entry lang/fr.js
+silly extracting entry lang/gl.js
+silly extracting entry lang/it.js
+silly extracting entry lang/eu.js
+silly extracting entry lang/nb.js
+silly extracting entry lang/nl.js
+silly extracting entry lang/pl.js
+silly extracting entry lang/pt.js
+silly extracting entry lang/ru.js
+silly extracting entry lang/es.js
+silly extracting entry lang/sv.js
+silly extracting entry lang/en-gb.js
+silly extracting entry lang/tr.js
+silly extracting entry lang/de.js
+silly extracting entry lang/zh-cn.js
+silly extracting entry lang/da.js
+silly extracting entry lang/zh-tw.js
+silly extracting entry lang/kr.js
+silly extracting entry Makefile
+silly extracting entry min/lang-all.min.js
+silly extracting entry min/moment.min.js
+silly extracting entry min/moment.min.pretty.js
+silly extracting entry min/lang/ca.js
+silly extracting entry min/lang/fr.js
+silly extracting entry min/lang/gl.js
+silly extracting entry min/lang/it.js
+silly extracting entry min/lang/eu.js
+silly extracting entry min/lang/nb.js
+silly extracting entry min/lang/nl.js
+silly extracting entry min/lang/pl.js
+silly extracting entry min/lang/pt.js
+silly extracting entry min/lang/ru.js
+silly extracting entry min/lang/es.js
+silly extracting entry min/lang/sv.js
+silly extracting entry min/lang/en-gb.js
+silly extracting entry min/lang/tr.js
+silly extracting entry min/lang/de.js
+silly extracting entry min/lang/zh-cn.js
+silly extracting entry min/lang/da.js
+silly extracting entry min/lang/zh-tw.js
+silly extracting entry min/lang/kr.js
+silly extracting entry README.markdown
+silly extracting entry test/lang/ca.js
+silly extracting entry test/lang/eu.js
+silly extracting entry test/lang/fr.js
+silly extracting entry test/lang/gl.js
+silly extracting entry test/lang/it.js
+silly extracting entry test/lang/es.js
+silly extracting entry test/lang/nb.js
+silly extracting entry test/lang/nl.js
+silly extracting entry test/lang/pl.js
+silly extracting entry test/lang/pt.js
+silly extracting entry test/lang/ru.js
+silly extracting entry test/lang/en.js
+silly extracting entry test/lang/sv.js
+silly extracting entry test/lang/en-gb.js
+silly extracting entry test/lang/tr.js
+silly extracting entry test/lang/de.js
+silly extracting entry test/lang/zh-cn.js
+silly extracting entry test/lang/da.js
+silly extracting entry test/lang/zh-tw.js
+silly extracting entry test/lang/kr.js
+silly extracting entry test/moment/add_subtract.js
+silly extracting entry test/moment/days_in_month.js
+silly extracting entry test/moment/diff.js
+silly extracting entry test/moment/format.js
+silly extracting entry test/moment/create.js
+silly extracting entry test/moment/humanize_duration.js
+silly extracting entry test/moment/is_moment.js
+silly extracting entry test/moment/leapyear.js
+silly extracting entry test/moment/sod_eod.js
+silly extracting entry test/moment/utc.js
+silly extracting entry test/moment/getters_setters.js
+verbose caching /Users/enfar/.npm/moment/1.5.0/package/package.json
+verbose loadDefaults moment@1.5.0
+silly updated sha bytes 40960
+silly updated sha bytes 15738
+info shasum 662f727afd3a55c78c7f8abbd106d125f8258e13
+info shasum /Users/enfar/.npm/moment/1.5.0/package.tgz
+verbose from cache /Users/enfar/.npm/moment/1.5.0/package/package.json
+verbose chmod /Users/enfar/.npm/moment/1.5.0/package.tgz 644
+verbose chown [ '/Users/enfar/.npm/moment/1.5.0/package.tgz', 502, 502 ]
+http 200 https://registry.npmjs.org/cli-color/-/cli-color-0.1.3.tgz
+silly updated sha bytes 3345
+info shasum ad1f914e2195388204d8e55bf3e2c3a709685f77
+info shasum /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456749286-0.39034144463948905/tmp.tgz
+verbose unpack /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456749286-0.39034144463948905/tmp.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry .gitignore
+silly extracting entry CHANGES
+silly extracting entry Makefile
+silly extracting entry package.json
+silly extracting entry README.md
+silly extracting entry lib/index.js
+silly extracting entry lib/throbber.js
+silly extracting entry lib/trim.js
+silly extracting entry test/index.js
+silly extracting entry test/throbber.js
+silly extracting entry test/trim.js
+silly extracting entry test/__playground/throbber.formatted.js
+silly extracting entry test/__playground/throbber.js
+verbose caching /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456749286-0.39034144463948905/package/package.json
+verbose loadDefaults cli-color@0.1.3
+verbose from cache /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456749286-0.39034144463948905/package/package.json
+verbose tar.pack [ '/Users/enfar/.npm/cli-color/0.1.3/package.tgz',
+verbose tar.pack   '/var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456749286-0.39034144463948905/package' ]
+verbose tarball /Users/enfar/.npm/cli-color/0.1.3/package.tgz
+verbose folder /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456749286-0.39034144463948905/package
+verbose unpack /Users/enfar/.npm/cli-color/0.1.3/package.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry .npmignore
+silly extracting entry README.md
+silly extracting entry CHANGES
+silly extracting entry lib/index.js
+silly extracting entry lib/throbber.js
+silly extracting entry lib/trim.js
+silly extracting entry Makefile
+silly extracting entry test/index.js
+silly extracting entry test/throbber.js
+silly extracting entry test/trim.js
+silly extracting entry test/__playground/throbber.formatted.js
+silly extracting entry test/__playground/throbber.js
+verbose caching /Users/enfar/.npm/cli-color/0.1.3/package/package.json
+verbose loadDefaults cli-color@0.1.3
+silly updated sha bytes 3336
+info shasum ddbcbd64b188a77e018caa6356b5ca793c8b37e6
+info shasum /Users/enfar/.npm/cli-color/0.1.3/package.tgz
+verbose from cache /Users/enfar/.npm/cli-color/0.1.3/package/package.json
+verbose chmod /Users/enfar/.npm/cli-color/0.1.3/package.tgz 644
+verbose chown [ '/Users/enfar/.npm/cli-color/0.1.3/package.tgz', 502, 502 ]
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/node_modules/cli-color/package.json
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/node_modules/cli-color/node_modules/es5-ext/package.json
+verbose cache add [ 'es5-ext', '0.6.x' ]
+silly cache add: name, spec, args [ 'es5-ext', '0.6.x', [ 'es5-ext', '0.6.x' ] ]
+verbose parsed url { pathname: '0.6.x', path: '0.6.x', href: '0.6.x' }
+verbose addNamed [ 'es5-ext', '0.6.x' ]
+verbose addNamed [ null, '>=0.6.0- <0.7.0-' ]
+silly name, range, hasData [ 'es5-ext', '>=0.6.0- <0.7.0-', false ]
+verbose raw, before any munging es5-ext
+verbose url resolving [ 'https://registry.npmjs.org/', './es5-ext' ]
+verbose url resolved https://registry.npmjs.org/es5-ext
+verbose etag "BWIH5SNWDA3FCFBECRZFNGEBC"
+http GET https://registry.npmjs.org/es5-ext
+http 304 https://registry.npmjs.org/es5-ext
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"BWIH5SNWDA3FCFBECRZFNGEBC"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:12 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag es5-ext from cache
+silly name, range, hasData 2 [ 'es5-ext', '>=0.6.0- <0.7.0-', true ]
+silly versions [ 'es5-ext',
+silly versions   [ '0.1.0',
+silly versions     '0.2.0',
+silly versions     '0.2.1',
+silly versions     '0.3.0',
+silly versions     '0.4.0',
+silly versions     '0.5.0',
+silly versions     '0.5.1',
+silly versions     '0.6.0',
+silly versions     '0.6.1',
+silly versions     '0.6.2',
+silly versions     '0.6.3',
+silly versions     '0.7.0',
+silly versions     '0.7.1' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '53c14283b92a81474088bd856c021fe186380ba0',
+verbose bin dist     tarball: 'http://registry.npmjs.org/es5-ext/-/es5-ext-0.6.3.tgz' } ]
+verbose caching /Users/enfar/.npm/es5-ext/0.6.3/package/package.json
+verbose loadDefaults es5-ext@0.6.3
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/node_modules/cli-color/node_modules/es5-ext/package.json
+info outdated updating [ [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com',
+info outdated updating     'express',
+info outdated updating     '2.5.8',
+info outdated updating     '2.5.9' ],
+info outdated updating   [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com',
+info outdated updating     'moment',
+info outdated updating     '1.4.0',
+info outdated updating     '1.5.0' ],
+info outdated updating   [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad',
+info outdated updating     'express',
+info outdated updating     '2.5.8',
+info outdated updating     '2.5.9' ],
+info outdated updating   [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad',
+info outdated updating     'npm',
+info outdated updating     undefined,
+info outdated updating     '1.1.15' ],
+info outdated updating   [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee',
+info outdated updating     'underscore',
+info outdated updating     '1.2.4',
+info outdated updating     '1.3.1' ] ]
+verbose install(where, what) [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com',
+verbose install(where, what)   [ 'express@2.5.9' ] ]
+verbose install(where, what) [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com',
+verbose install(where, what)   [ 'moment@1.5.0' ] ]
+verbose install(where, what) [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad',
+verbose install(where, what)   [ 'express@2.5.9' ] ]
+verbose install(where, what) [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad',
+verbose install(where, what)   [ 'npm@1.1.15' ] ]
+verbose install(where, what) [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee',
+verbose install(where, what)   [ 'underscore@1.3.1' ] ]
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/coffee-script/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/moment/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/underscore/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/coffee-script/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/moment/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/underscore/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/bal-util/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/coffee-script/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/commander/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/growl/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/query-engine/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/underscore/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/watchr/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/yaml/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/bal-util/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/caterpillar/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/coffee-script/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/commander/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/growl/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/query-engine/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/underscore/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/watchr/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/yaml/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/js2coffee/package.json
+verbose readDependencies: using package.json deps
+verbose cache add [ 'express@2.5.9', null ]
+silly cache add: name, spec, args [ undefined, 'express@2.5.9', [ 'express@2.5.9', null ] ]
+verbose parsed url { pathname: 'express@2.5.9',
+verbose parsed url   path: 'express@2.5.9',
+verbose parsed url   href: 'express@2.5.9' }
+silly cache add: name, spec, args [ 'express', '2.5.9', [ 'express', '2.5.9' ] ]
+verbose parsed url { pathname: '2.5.9', path: '2.5.9', href: '2.5.9' }
+verbose addNamed [ 'express', '2.5.9' ]
+verbose addNamed [ '2.5.9', '2.5.9' ]
+verbose readDependencies: using package.json deps
+verbose cache add [ 'moment@1.5.0', null ]
+silly cache add: name, spec, args [ undefined, 'moment@1.5.0', [ 'moment@1.5.0', null ] ]
+verbose parsed url { pathname: 'moment@1.5.0',
+verbose parsed url   path: 'moment@1.5.0',
+verbose parsed url   href: 'moment@1.5.0' }
+silly cache add: name, spec, args [ 'moment', '1.5.0', [ 'moment', '1.5.0' ] ]
+verbose parsed url { pathname: '1.5.0', path: '1.5.0', href: '1.5.0' }
+verbose addNamed [ 'moment', '1.5.0' ]
+verbose addNamed [ '1.5.0', '1.5.0' ]
+verbose readDependencies: using package.json deps
+verbose cache add [ 'underscore@1.3.1', null ]
+silly cache add: name, spec, args [ undefined, 'underscore@1.3.1', [ 'underscore@1.3.1', null ] ]
+verbose parsed url { pathname: 'underscore@1.3.1',
+verbose parsed url   path: 'underscore@1.3.1',
+verbose parsed url   href: 'underscore@1.3.1' }
+silly cache add: name, spec, args [ 'underscore', '1.3.1', [ 'underscore', '1.3.1' ] ]
+verbose parsed url { pathname: '1.3.1', path: '1.3.1', href: '1.3.1' }
+verbose addNamed [ 'underscore', '1.3.1' ]
+verbose addNamed [ '1.3.1', '1.3.1' ]
+verbose raw, before any munging moment/1.5.0
+verbose url resolving [ 'https://registry.npmjs.org/', './moment/1.5.0' ]
+verbose url resolved https://registry.npmjs.org/moment/1.5.0
+http GET https://registry.npmjs.org/moment/1.5.0
+verbose raw, before any munging underscore/1.3.1
+verbose url resolving [ 'https://registry.npmjs.org/', './underscore/1.3.1' ]
+verbose url resolved https://registry.npmjs.org/underscore/1.3.1
+http GET https://registry.npmjs.org/underscore/1.3.1
+verbose raw, before any munging express/2.5.9
+verbose url resolving [ 'https://registry.npmjs.org/', './express/2.5.9' ]
+verbose url resolved https://registry.npmjs.org/express/2.5.9
+verbose etag "8TD9VJDU5S6ZQ545KE4QT4X5E"
+http GET https://registry.npmjs.org/express/2.5.9
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/package.json
+verbose readDependencies: using package.json deps
+verbose cache add [ 'express@2.5.9', null ]
+silly cache add: name, spec, args [ undefined, 'express@2.5.9', [ 'express@2.5.9', null ] ]
+verbose parsed url { pathname: 'express@2.5.9',
+verbose parsed url   path: 'express@2.5.9',
+verbose parsed url   href: 'express@2.5.9' }
+silly cache add: name, spec, args [ 'express', '2.5.9', [ 'express', '2.5.9' ] ]
+verbose parsed url { pathname: '2.5.9', path: '2.5.9', href: '2.5.9' }
+verbose addNamed [ 'express', '2.5.9' ]
+verbose readDependencies: using package.json deps
+verbose cache add [ 'npm@1.1.15', null ]
+silly cache add: name, spec, args [ undefined, 'npm@1.1.15', [ 'npm@1.1.15', null ] ]
+verbose parsed url { pathname: 'npm@1.1.15',
+verbose parsed url   path: 'npm@1.1.15',
+verbose parsed url   href: 'npm@1.1.15' }
+silly cache add: name, spec, args [ 'npm', '1.1.15', [ 'npm', '1.1.15' ] ]
+verbose parsed url { pathname: '1.1.15', path: '1.1.15', href: '1.1.15' }
+verbose addNamed [ 'npm', '1.1.15' ]
+verbose addNamed [ '1.1.15', '1.1.15' ]
+verbose raw, before any munging npm/1.1.15
+verbose url resolving [ 'https://registry.npmjs.org/', './npm/1.1.15' ]
+verbose url resolved https://registry.npmjs.org/npm/1.1.15
+verbose etag "5GQZYG4ASGFJ3XFRSRAT9UA7G"
+http GET https://registry.npmjs.org/npm/1.1.15
+http 304 https://registry.npmjs.org/npm/1.1.15
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5GQZYG4ASGFJ3XFRSRAT9UA7G"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:14 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag npm/1.1.15 from cache
+http 304 https://registry.npmjs.org/express/2.5.9
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"8TD9VJDU5S6ZQ545KE4QT4X5E"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:14 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag express/2.5.9 from cache
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '62d111ccaccf425182e1f30e541f84b551a72f2c',
+verbose bin dist     tarball: 'http://registry.npmjs.org/express/-/express-2.5.9.tgz' } ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'f99f311a5e5139435364963e873c17d6a5efaebe',
+verbose bin dist     tarball: 'http://registry.npmjs.org/npm/-/npm-1.1.15.tgz' } ]
+verbose from cache /Users/enfar/.npm/express/2.5.9/package/package.json
+silly resolved [ { name: 'express',
+silly resolved     description: 'Sinatra inspired web development framework',
+silly resolved     version: '2.5.9',
+silly resolved     author: { name: 'TJ Holowaychuk', email: 'tj@vision-media.ca' },
+silly resolved     contributors: 
+silly resolved      [ { name: 'TJ Holowaychuk', email: 'tj@vision-media.ca' },
+silly resolved        { name: 'Aaron Heckmann',
+silly resolved          email: 'aaron.heckmann+github@gmail.com' },
+silly resolved        { name: 'Ciaran Jessup', email: 'ciaranj@gmail.com' },
+silly resolved        { name: 'Guillermo Rauch', email: 'rauchg@gmail.com' } ],
+silly resolved     dependencies: { connect: '1.x', mime: '1.2.4', qs: '0.4.x', mkdirp: '0.3.0' },
+silly resolved     devDependencies: 
+silly resolved      { 'connect-form': '0.2.1',
+silly resolved        ejs: '0.4.2',
+silly resolved        expresso: '0.9.2',
+silly resolved        hamljs: '0.6.x',
+silly resolved        jade: '0.16.2',
+silly resolved        stylus: '0.13.0',
+silly resolved        should: '0.3.2',
+silly resolved        'express-messages': '0.0.2',
+silly resolved        'node-markdown': '>= 0.0.1',
+silly resolved        'connect-redis': '>= 0.0.1' },
+silly resolved     keywords: [ 'framework', 'sinatra', 'web', 'rest', 'restful' ],
+silly resolved     repository: { type: 'git', url: 'git://github.com/visionmedia/express.git' },
+silly resolved     main: 'index',
+silly resolved     bin: { express: './bin/express' },
+silly resolved     scripts: { test: 'make test', prepublish: 'npm prune' },
+silly resolved     engines: { node: '>= 0.4.1 < 0.7.0' },
+silly resolved     _id: 'express@2.5.9',
+silly resolved     optionalDependencies: {},
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.1.15',
+silly resolved     _nodeVersion: 'v0.6.11',
+silly resolved     _defaultsLoaded: true,
+silly resolved     _from: 'express@2.5.9' } ]
+info into /Users/enfar/Dropbox/Projects/tomohisaoda.com express@2.5.9
+info installOne express@2.5.9
+silly resolved [ { name: 'express',
+silly resolved     description: 'Sinatra inspired web development framework',
+silly resolved     version: '2.5.9',
+silly resolved     author: { name: 'TJ Holowaychuk', email: 'tj@vision-media.ca' },
+silly resolved     contributors: 
+silly resolved      [ { name: 'TJ Holowaychuk', email: 'tj@vision-media.ca' },
+silly resolved        { name: 'Aaron Heckmann',
+silly resolved          email: 'aaron.heckmann+github@gmail.com' },
+silly resolved        { name: 'Ciaran Jessup', email: 'ciaranj@gmail.com' },
+silly resolved        { name: 'Guillermo Rauch', email: 'rauchg@gmail.com' } ],
+silly resolved     dependencies: { connect: '1.x', mime: '1.2.4', qs: '0.4.x', mkdirp: '0.3.0' },
+silly resolved     devDependencies: 
+silly resolved      { 'connect-form': '0.2.1',
+silly resolved        ejs: '0.4.2',
+silly resolved        expresso: '0.9.2',
+silly resolved        hamljs: '0.6.x',
+silly resolved        jade: '0.16.2',
+silly resolved        stylus: '0.13.0',
+silly resolved        should: '0.3.2',
+silly resolved        'express-messages': '0.0.2',
+silly resolved        'node-markdown': '>= 0.0.1',
+silly resolved        'connect-redis': '>= 0.0.1' },
+silly resolved     keywords: [ 'framework', 'sinatra', 'web', 'rest', 'restful' ],
+silly resolved     repository: { type: 'git', url: 'git://github.com/visionmedia/express.git' },
+silly resolved     main: 'index',
+silly resolved     bin: { express: './bin/express' },
+silly resolved     scripts: { test: 'make test', prepublish: 'npm prune' },
+silly resolved     engines: { node: '>= 0.4.1 < 0.7.0' },
+silly resolved     _id: 'express@2.5.9',
+silly resolved     optionalDependencies: {},
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.1.15',
+silly resolved     _nodeVersion: 'v0.6.11',
+silly resolved     _defaultsLoaded: true,
+silly resolved     _from: 'express@2.5.9' } ]
+info into /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad express@2.5.9
+info installOne express@2.5.9
+verbose from cache /Users/enfar/.npm/npm/1.1.15/package/package.json
+silly resolved [ { name: 'npm',
+silly resolved     publishConfig: { 'proprietary-attribs': false },
+silly resolved     description: 'A package manager for node',
+silly resolved     keywords: [ 'package manager', 'modules', 'install', 'package.json' ],
+silly resolved     version: '1.1.15',
+silly resolved     preferGlobal: true,
+silly resolved     config: { publishtest: false },
+silly resolved     homepage: 'http://npmjs.org/',
+silly resolved     author: 
+silly resolved      { name: 'Isaac Z. Schlueter',
+silly resolved        email: 'i@izs.me',
+silly resolved        url: 'http://blog.izs.me' },
+silly resolved     repository: { type: 'git', url: 'git://github.com/isaacs/npm.git' },
+silly resolved     bugs: 
+silly resolved      { email: 'npm-@googlegroups.com',
+silly resolved        url: 'http://github.com/isaacs/npm/issues' },
+silly resolved     directories: { doc: './doc', man: './man', lib: './lib', bin: './bin' },
+silly resolved     main: './lib/npm.js',
+silly resolved     bin: { npm: './bin/npm-cli.js' },
+silly resolved     dependencies: 
+silly resolved      { semver: '1',
+silly resolved        ini: '1',
+silly resolved        slide: '1',
+silly resolved        abbrev: '1',
+silly resolved        'graceful-fs': '~1.1.1',
+silly resolved        minimatch: '~0.2',
+silly resolved        nopt: '1',
+silly resolved        'node-uuid': '~1.3',
+silly resolved        'proto-list': '1',
+silly resolved        rimraf: '2',
+silly resolved        request: '~2.9',
+silly resolved        which: '1',
+silly resolved        tar: '~0.1.12',
+silly resolved        fstream: '~0.1.17',
+silly resolved        'block-stream': '*',
+silly resolved        inherits: '1',
+silly resolved        mkdirp: '0.3',
+silly resolved        read: '0',
+silly resolved        'lru-cache': '1',
+silly resolved        'node-gyp': '~0.3.7',
+silly resolved        'fstream-npm': '0 >=0.0.4',
+silly resolved        'uid-number': '0',
+silly resolved        archy: '0',
+silly resolved        chownr: '0' },
+silly resolved     bundleDependencies: 
+silly resolved      [ 'slide',
+silly resolved        'ini',
+silly resolved        'semver',
+silly resolved        'abbrev',
+silly resolved        'graceful-fs',
+silly resolved        'minimatch',
+silly resolved        'nopt',
+silly resolved        'node-uuid',
+silly resolved        'rimraf',
+silly resolved        'request',
+silly resolved        'proto-list',
+silly resolved        'which',
+silly resolved        'tar',
+silly resolved        'fstream',
+silly resolved        'block-stream',
+silly resolved        'inherits',
+silly resolved        'mkdirp',
+silly resolved        'fast-list',
+silly resolved        'read',
+silly resolved        'lru-cache',
+silly resolved        'node-gyp',
+silly resolved        'fstream-npm',
+silly resolved        'uid-number',
+silly resolved        'archy',
+silly resolved        'chownr' ],
+silly resolved     devDependencies: { ronn: 'https://github.com/isaacs/ronnjs/tarball/master' },
+silly resolved     engines: { node: '0.6 || 0.7 || 0.8', npm: '1' },
+silly resolved     scripts: 
+silly resolved      { test: 'node ./test/run.js',
+silly resolved        prepublish: 'npm prune; rm -rf node_modules/*/{test,example,bench}*; make -j4 doc',
+silly resolved        dumpconf: 'env | grep npm | sort | uniq' },
+silly resolved     licenses: 
+silly resolved      [ { type: 'MIT +no-false-attribs',
+silly resolved          url: 'http://github.com/isaacs/npm/raw/master/LICENSE' } ],
+silly resolved     _id: 'npm@1.1.15',
+silly resolved     contributors: 
+silly resolved      [ { name: 'Isaac Z. Schlueter',
+silly resolved          email: 'i@izs.me',
+silly resolved          url: 'http://blog.izs.me/' },
+silly resolved        { name: 'Steve Steiner',
+silly resolved          email: 'ssteinerX@gmail.com',
+silly resolved          url: 'http://websaucesoftware.com/blog/' },
+silly resolved        { name: 'Mikeal Rogers',
+silly resolved          email: 'mikeal.rogers@gmail.com',
+silly resolved          url: 'http://www.mikealrogers.com/' },
+silly resolved        { name: 'Aaron Blohowiak',
+silly resolved          email: 'aaron.blohowiak@gmail.com',
+silly resolved          url: 'http://aaronblohowiak.com/' },
+silly resolved        { name: 'Martyn Smith',
+silly resolved          email: 'martyn@dollyfish.net.nz',
+silly resolved          url: 'http://dollyfish.net.nz/' },
+silly resolved        { name: 'Mathias Pettersson',
+silly resolved          email: 'mape@mape.me',
+silly resolved          url: 'http://mape.me/' },
+silly resolved        { name: 'Brian Hammond',
+silly resolved          email: 'brian@fictorial.com',
+silly resolved          url: 'http://fictorial.com/' },
+silly resolved        { name: 'Charlie Robbins',
+silly resolved          email: 'charlie.robbins@gmail.com',
+silly resolved          url: 'http://www.charlierobbins.com/' },
+silly resolved        { name: 'Francisco Treacy',
+silly resolved          email: 'francisco.treacy@gmail.com',
+silly resolved          url: 'http://franciscotreacy.com/' },
+silly resolved        { name: 'Cliffano Subagio',
+silly resolved          email: 'cliffano@gmail.com',
+silly resolved          url: 'http://blog.cliffano.com/' },
+silly resolved        { name: 'Christian Eager',
+silly resolved          email: 'christian.eager@nokia.com',
+silly resolved          url: 'http://perpenduum.com' },
+silly resolved        { name: 'Dav Glass',
+silly resolved          email: 'davglass@gmail.com',
+silly resolved          url: 'http://blog.davglass.com' },
+silly resolved        { name: 'Alex K. Wolfe', email: 'alexkwolfe@gmail.com' },
+silly resolved        { name: 'James Sanders',
+silly resolved          email: 'jimmyjazz14@gmail.com',
+silly resolved          url: 'http://james-sanders.com/' },
+silly resolved        { name: 'Reid Burke',
+silly resolved          email: 'me@reidburke.com',
+silly resolved          url: 'http://reidburke.com/' },
+silly resolved        { name: 'Arlo Breault',
+silly resolved          email: 'arlolra@gmail.com',
+silly resolved          url: 'http://thoughtherder.com/' },
+silly resolved        { name: 'Timo Derstappen',
+silly resolved          email: 'teemow@gmail.com',
+silly resolved          url: 'http://teemow.com' },
+silly resolved        { name: 'Bradley Meck', email: 'bradley.meck@gmail.com' },
+silly resolved        { name: 'Bart Teeuwisse',
+silly resolved          email: 'bart.teeuwisse@thecodemill.biz',
+silly resolved          url: 'http://thecodemill.biz/' },
+silly resolved        { name: 'Ben Noordhuis',
+silly resolved          email: 'info@bnoordhuis.nl',
+silly resolved          url: 'http://bnoordhuis.nl/' },
+silly resolved        { name: 'Tor Valamo',
+silly resolved          email: 'tor.valamo@gmail.com',
+silly resolved          url: 'http://www.magnimedia.no/' },
+silly resolved        { name: 'Whyme.Lyu',
+silly resolved          email: '5longluna@gmail.com',
+silly resolved          url: 'http://whyme.kuantu.com/' },
+silly resolved        { name: 'Olivier Melcher', email: 'olivier.melcher@gmail.com' },
+silly resolved        { name: 'Tomaž Muraus',
+silly resolved          email: 'kami@k5-storitve.net',
+silly resolved          url: 'http://www.tomaz-muraus.info' },
+silly resolved        { name: 'Evan Meagher',
+silly resolved          email: 'evan.meagher@gmail.com',
+silly resolved          url: 'http://evanmeagher.net/' },
+silly resolved        { name: 'Orlando Vazquez',
+silly resolved          email: 'ovazquez@gmail.com',
+silly resolved          url: 'http://2wycked.net/' },
+silly resolved        { name: 'George Miroshnykov', email: 'gmiroshnykov@lohika.com' },
+silly resolved        { name: 'Geoff Flarity',
+silly resolved          url: 'http://ca.linkedin.com/pub/geoff-flarity/a/536/43a' },
+silly resolved        { name: 'Pete Kruckenberg', email: 'pete@kruckenberg.com' },
+silly resolved        { name: 'Laurie Harper',
+silly resolved          email: 'laurie@holoweb.net',
+silly resolved          url: 'http://laurie.holoweb.net/' },
+silly resolved        { name: 'Chris Wong', email: 'chris@chriswongstudio.com' },
+silly resolved        { name: 'Max Goodman',
+silly resolved          email: 'c@chromacode.com',
+silly resolved          url: 'http://chromacode.com/' },
+silly resolved        { name: 'Scott Bronson', email: 'brons_github@rinspin.com' },
+silly resolved        { name: 'Federico Romero', email: 'federomero@gmail.com' },
+silly resolved        { name: 'Visnu Pitiyanuvath',
+silly resolved          email: 'visnupx@gmail.com',
+silly resolved          url: 'http://visnup.com' },
+silly resolved        { name: 'Irakli Gozalishvili',
+silly resolved          email: 'rfobic@gmail.com',
+silly resolved          url: 'http://jeditoolkit.com/' },
+silly resolved        { name: 'Mark Cahill',
+silly resolved          email: 'mark@tiemonster.info',
+silly resolved          url: 'http://www.tiemonster.info/' },
+silly resolved        { name: 'Zearin', email: 'zearin@gonk.net' },
+silly resolved        { name: 'Iain Sproat', email: 'iainsproat@gmail.com' },
+silly resolved        { name: 'Trent Mick',
+silly resolved          email: 'trentm@gmail.com',
+silly resolved          url: 'http://trentm.com/' },
+silly resolved        { name: 'Felix Geisendörfer',
+silly resolved          email: 'felix@debuggable.com',
+silly resolved          url: 'http://www.debuggable.com/' },
+silly resolved        { name: 'Conny Brunnkvist',
+silly resolved          email: 'cbrunnkvist@gmail.com',
+silly resolved          url: 'http://twitter.com/connyb' },
+silly resolved        { name: 'Will Elwood',
+silly resolved          email: 'w.elwood08@gmail.com',
+silly resolved          url: 'https://github.com/welwood08' },
+silly resolved        { name: 'Oleg Efimov',
+silly resolved          email: 'efimovov@gmail.com',
+silly resolved          url: 'http://sannis.ru' },
+silly resolved        { name: 'Martin Cooper', email: 'mfncooper@gmail.com' },
+silly resolved        { name: 'Jameson Little', email: 't.jameson.little@gmail.com' },
+silly resolved        { name: 'cspotcode', email: 'cspotcode@gmail.com' },
+silly resolved        { name: 'Maciej Małecki',
+silly resolved          email: 'maciej.malecki@notimplemented.org' },
+silly resolved        { name: 'Stephen Sugden', email: 'glurgle@gmail.com' },
+silly resolved        { name: 'Gautham Pai', email: 'buzypi@gmail.com' },
+silly resolved        { name: 'David Trejo', email: 'david.daniel.trejo@gmail.com' },
+silly resolved        { name: 'Paul Vorbach', email: 'paul@vorb.de' },
+silly resolved        { name: 'George Ornbo', email: 'george@shapeshed.com' },
+silly resolved        { name: 'Tim Oxley', email: 'secoif@gmail.com' },
+silly resolved        { name: 'Tyler Green', email: 'tyler.green2@gmail.com' },
+silly resolved        { name: 'atomizer', email: 'danila.gerasimov@gmail.com' },
+silly resolved        { name: 'Rod Vagg', email: 'rod@vagg.org' },
+silly resolved        { name: 'Christian Howe', email: 'coderarity@gmail.com' },
+silly resolved        { name: 'Andrew Lunny', email: 'alunny@gmail.com' },
+silly resolved        { name: 'Henrik Hodne', email: 'dvyjones@binaryhex.com' },
+silly resolved        { name: 'Adam Blackburn', email: 'regality@gmail.com' },
+silly resolved        { name: 'Kris Windham', email: 'kriswindham@gmail.com' } ],
+silly resolved     optionalDependencies: {},
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.1.15',
+silly resolved     _nodeVersion: 'v0.6.11',
+silly resolved     _defaultsLoaded: true,
+silly resolved     man: 
+silly resolved      [ 'man/man1/adduser.1',
+silly resolved        'man/man1/author.1',
+silly resolved        'man/man1/bin.1',
+silly resolved        'man/man1/bugs.1',
+silly resolved        'man/man1/build.1',
+silly resolved        'man/man1/bundle.1',
+silly resolved        'man/man1/cache.1',
+silly resolved        'man/man1/changelog.1',
+silly resolved        'man/man1/coding-style.1',
+silly resolved        'man/man1/completion.1',
+silly resolved        'man/man1/config.1',
+silly resolved        'man/man1/deprecate.1',
+silly resolved        'man/man1/developers.1',
+silly resolved        'man/man1/disputes.1',
+silly resolved        'man/man1/docs.1',
+silly resolved        'man/man1/edit.1',
+silly resolved        'man/man1/explore.1',
+silly resolved        'man/man1/faq.1',
+silly resolved        'man/man1/find.1',
+silly resolved        'man/man1/folders.1',
+silly resolved        'man/man1/get.1',
+silly resolved        'man/man1/global.1',
+silly resolved        'man/man1/help-search.1',
+silly resolved        'man/man1/help.1',
+silly resolved        'man/man1/home.1',
+silly resolved        'man/man1/index.1',
+silly resolved        'man/man1/init.1',
+silly resolved        'man/man1/install.1',
+silly resolved        'man/man1/json.1',
+silly resolved        'man/man1/link.1',
+silly resolved        'man/man1/list.1',
+silly resolved        'man/man1/ln.1',
+silly resolved        'man/man1/ls.1',
+silly resolved        'man/man1/npm.1',
+silly resolved        'man/man1/outdated.1',
+silly resolved        'man/man1/owner.1',
+silly resolved        'man/man1/pack.1',
+silly resolved        'man/man1/prefix.1',
+silly resolved        'man/man1/prune.1',
+silly resolved        'man/man1/publish.1',
+silly resolved        'man/man1/README.1',
+silly resolved        'man/man1/rebuild.1',
+silly resolved        'man/man1/registry.1',
+silly resolved        'man/man1/removing-npm.1',
+silly resolved        'man/man1/restart.1',
+silly resolved        'man/man1/rm.1',
+silly resolved        'man/man1/root.1',
+silly resolved        'man/man1/run-script.1',
+silly resolved        'man/man1/scripts.1',
+silly resolved        'man/man1/search.1',
+silly resolved        'man/man1/semver.1',
+silly resolved        'man/man1/set.1',
+silly resolved        'man/man1/shrinkwrap.1',
+silly resolved        'man/man1/star.1',
+silly resolved        'man/man1/start.1',
+silly resolved        'man/man1/stop.1',
+silly resolved        'man/man1/submodule.1',
+silly resolved        'man/man1/tag.1',
+silly resolved        'man/man1/test.1',
+silly resolved        'man/man1/uninstall.1',
+silly resolved        'man/man1/unpublish.1',
+silly resolved        'man/man1/update.1',
+silly resolved        'man/man1/version.1',
+silly resolved        'man/man1/view.1',
+silly resolved        'man/man1/whoami.1',
+silly resolved        'man/man3/author.3',
+silly resolved        'man/man3/bin.3',
+silly resolved        'man/man3/bugs.3',
+silly resolved        'man/man3/commands.3',
+silly resolved        'man/man3/config.3',
+silly resolved        'man/man3/deprecate.3',
+silly resolved        'man/man3/docs.3',
+silly resolved        'man/man3/edit.3',
+silly resolved        'man/man3/explore.3',
+silly resolved        'man/man3/find.3',
+silly resolved        'man/man3/get.3',
+silly resolved        'man/man3/help-search.3',
+silly resolved        'man/man3/home.3',
+silly resolved        'man/man3/init.3',
+silly resolved        'man/man3/install.3',
+silly resolved        'man/man3/link.3',
+silly resolved        'man/man3/list.3',
+silly resolved        'man/man3/ln.3',
+silly resolved        'man/man3/load.3',
+silly resolved        'man/man3/ls.3',
+silly resolved        'man/man3/npm.3',
+silly resolved        'man/man3/outdated.3',
+silly resolved        'man/man3/owner.3',
+silly resolved        'man/man3/pack.3',
+silly resolved        'man/man3/prefix.3',
+silly resolved        'man/man3/prune.3',
+silly resolved        'man/man3/publish.3',
+silly resolved        'man/man3/rebuild.3',
+silly resolved        'man/man3/restart.3',
+silly resolved        'man/man3/rm.3',
+silly resolved        'man/man3/root.3',
+silly resolved        'man/man3/run-script.3',
+silly resolved        'man/man3/search.3',
+silly resolved        'man/man3/set.3',
+silly resolved        'man/man3/shrinkwrap.3',
+silly resolved        'man/man3/start.3',
+silly resolved        'man/man3/stop.3',
+silly resolved        'man/man3/submodule.3',
+silly resolved        'man/man3/tag.3',
+silly resolved        'man/man3/test.3',
+silly resolved        'man/man3/uninstall.3',
+silly resolved        'man/man3/unpublish.3',
+silly resolved        'man/man3/update.3',
+silly resolved        'man/man3/version.3',
+silly resolved        'man/man3/view.3',
+silly resolved        'man/man3/whoami.3' ],
+silly resolved     _from: 'npm@1.1.15' } ]
+info into /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad npm@1.1.15
+info installOne npm@1.1.15
+verbose from cache /Users/enfar/.npm/express/2.5.9/package/package.json
+info unbuild /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/express
+verbose from cache /Users/enfar/.npm/express/2.5.9/package/package.json
+info unbuild /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express
+verbose from cache /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express/package.json
+info preuninstall express@2.5.8
+verbose from cache /Users/enfar/.npm/npm/1.1.15/package/package.json
+info unbuild /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/docpad/node_modules/npm
+info uninstall express@2.5.8
+verbose unpack /Users/enfar/.npm/express/2.5.9/package.tgz
+verbose unbuild express@2.5.8 [ true,
+verbose unbuild express@2.5.8   '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules',
+verbose unbuild express@2.5.8   '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules' ]
+verbose binRoot [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/.bin',
+verbose binRoot   { express: './bin/express' } ]
+silly gunzTarPerm modes [ '755', '644' ]
+info unbuild /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express
+verbose caching /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express/package.json
+info preuninstall express@2.5.8
+silly extracting entry .npmignore
+info uninstall express@2.5.8
+verbose unbuild express@2.5.8 [ true,
+verbose unbuild express@2.5.8   '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules',
+verbose unbuild express@2.5.8   '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules' ]
+verbose binRoot [ '/Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/.bin',
+verbose binRoot   { express: './bin/express' } ]
+http 200 https://registry.npmjs.org/moment/1.5.0
+silly get cb [ 200,
+silly get cb   { vary: 'Accept',
+silly get cb     server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"AY27B8LX5Y76X4SSS95P80PNP"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:14 GMT',
+silly get cb     'content-type': 'application/json',
+silly get cb     'content-length': '1050' } ]
+http 200 https://registry.npmjs.org/underscore/1.3.1
+silly get cb [ 200,
+silly get cb   { vary: 'Accept',
+silly get cb     server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"9WZIMI3WFXDZ3WCR6GZDBFUT2"',
+silly get cb     date: 'Tue, 03 Apr 2012 12:39:14 GMT',
+silly get cb     'content-type': 'application/json',
+silly get cb     'content-length': '922' } ]
+silly extracting entry bin/
+silly extracting entry bin/express
+info postuninstall express@2.5.8
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: 'f62f40a1ce487c00d5d0105c50b2b9b92bb7952d',
+verbose bin dist     tarball: 'http://registry.npmjs.org/moment/-/moment-1.5.0.tgz' } ]
+verbose addRemoteTarball [ 'https://registry.npmjs.org/moment/-/moment-1.5.0.tgz',
+verbose addRemoteTarball   'f62f40a1ce487c00d5d0105c50b2b9b92bb7952d' ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl0.9.8r-v83.6.6.20-darwin-x64-11.3.0',
+verbose bin dist   { shasum: '6cb8aad0e77eb5dbbfb54b22bcd8697309cf9641',
+verbose bin dist     tarball: 'http://registry.npmjs.org/underscore/-/underscore-1.3.1.tgz' } ]
+verbose addRemoteTarball [ 'https://registry.npmjs.org/underscore/-/underscore-1.3.1.tgz',
+verbose addRemoteTarball   '6cb8aad0e77eb5dbbfb54b22bcd8697309cf9641' ]
+verbose fetch to /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456755346-0.3092138913925737/tmp.tgz
+verbose fetch to /var/folders/js/frg3ythj7xd8llf35_5g96c80000gp/T/npm-1333456747198/1333456755346-0.08053808147087693/tmp.tgz
+silly extracting entry History.md
+silly extracting entry index.js
+http GET https://registry.npmjs.org/moment/-/moment-1.5.0.tgz
+http GET https://registry.npmjs.org/underscore/-/underscore-1.3.1.tgz
+silly extracting entry lib/
+silly extracting entry lib/express.js
+verbose unpack /Users/enfar/.npm/npm/1.1.15/package.tgz
+silly extracting entry lib/http.js
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry lib/https.js
+silly extracting entry lib/request.js
+silly extracting entry lib/response.js
+silly extracting entry lib/router/
+silly extracting entry lib/router/collection.js
+silly extracting entry lib/router/index.js
+silly extracting entry .npmignore
+silly extracting entry lib/router/methods.js
+silly extracting entry lib/router/route.js
+silly extracting entry lib/utils.js
+silly extracting entry lib/view/
+silly extracting entry .travis.yml
+silly extracting entry AUTHORS
+silly extracting entry lib/view/partial.js
+silly extracting entry lib/view/view.js
+silly extracting entry lib/view.js
+silly extracting entry lib-cov/
+silly extracting entry bin/
+silly extracting entry bin/node-gyp-bin/
+ERR! Refusing to delete: /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/.bin/express not in /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express
+ERR! File exists: /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/.bin/express
+ERR! Move it away, and try again.
+ERR! 
+ERR! System Darwin 11.3.0
+ERR! command "node" "/usr/local/bin/npm" "update"
+ERR! cwd /Users/enfar/Dropbox/Projects/tomohisaoda.com
+ERR! node -v v0.6.11
+ERR! npm -v 1.1.15
+ERR! path /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/.bin/express
+ERR! code EEXIST
+ERR! message Refusing to delete: /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/.bin/express not in /Users/enfar/Dropbox/Projects/tomohisaoda.com/node_modules/express
+ERR! errno {}
+verbose exit [ 1, true ]

@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><!--meta--><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta http-equiv="content-type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta http-equiv="X-Powered-By" content="DocPad"/><!--document--><title>GithubでWikiを検索するUserScript書いた</title><meta name="description" /><meta name="author" /><!--styles--><link rel="stylesheet" href="/styles/style.css" media="screen, projection" /><link rel="stylesheet" href="/styles/print.css" media="print" /><link rel="alternate" type="application/atom+xml" title="Atom" href="http://feeds.feedburner.com/TomohisaOda" /><!--analytics--><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-328462-11']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></head><body><header><p class="greeting">hi! my name is tomohisa oda.</p><h1 class="site-name"><a href="/">Tomohisa Oda</a></h1></header><article><h1>GithubでWikiを検索するUserScript書いた</h1>
+
+<p>Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？</p>
+
+<p>最初は、<a href="https://twitter.com/#!/morygonzalez">@morygonzalez</a>に「Wiki内って検索出来ないけどどうすんの？」って言われて、「cloneして<code>ack</code>叩けば？」って言ったものの、ターミナルアレルギーなデザイナーは仕方ないとして、自分も他プロジェクトのをいちいちcloneして探すのは確かに面倒だなあと。<br />なので、UserScript書いてWikiの全文検索うまくいったのでお知らせしてみる。</p>
+
+<p>Github Wiki Search - <a href='https://github.com/linyows/github-wiki-search'>https://github.com/linyows/github-wiki-search</a></p>
+
+<p>なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、<em>Pull Request</em>お願いします。</p>
+
+<h2>Screenshots</h2>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/1.png" alt="screenshot1" title="" /></p>
+
+<p>ページ右上に検索ボックス。</p>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/2.png" alt="screenshot2" title="" /></p>
+
+<p>検索ワードを入力して<code>Enter</code>したら検索開始。</p>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/3.png" alt="screenshot3" title="" /></p>
+
+<p>検索結果は、非同期で見つかった順に表示。</p>
+
+<h2>Logic</h2>
+
+<p>生のjsガリガリ書くのは面倒だったのでjQueryを使った。</p>
+
+<p>以下、コード中やってること。</p>
+
+<ol>
+<li>PagesタブにWikiの<em>全てのページのリンクがある</em>ので<code>GET</code>してページのURLリストを作成。</li>
+<li>URLリストからコンテンツを<code>GET</code>して、検索文字をgrep。</li>
+<li>grepしてmatchしたら結果表示しつつ、次のコンテンツを<code>GET</code>してgrepを繰り返す。</li>
+</ol>
+
+<p>補足</p>
+
+<ul>
+<li>１度全ページロードしたらキャッシュしてる。ロードの状態は、プログレスバーで視覚的に分かるようにした。</li>
+<li>検索結果表示数が多いと もともと何のページか分からなくなるのであえて少なくしてる。（Wikiってそんなにページ数少ないし...）</li>
+</ul>
+
+<h2>Install</h2>
+
+<p>インストールは、<strong>userscripts.org</strong>に登録してるので<em>Install</em>ボタンからどうぞ。</p>
+
+<p><a href='http://userscripts.org/scripts/show/129930'>http://userscripts.org/scripts/show/129930</a></p>
+
+<p>ブラウザは、以下で一通り動作するのを確認済み。</p>
+
+<ul>
+<li>Chrome</li>
+<li>Firefox - need <a href="https://addons.mozilla.org/ja/firefox/addon/greasemonkey/">Greasemonekey</a></li>
+<li>Safari - need <a href="http://d.hatena.ne.jp/os0x/20100612/1276330696">NinjaKit</a></li>
+</ul><!--disqus--><div id="disqus_thread"></div><script>var disqus_shortname = 'tomohisaoda';
+var d = 'http://tomohisaoda.com';
+var disqus_identifier = d + '/posts/2012/created_github_wiki_search.html';
+var disqus_url = d + '/posts/2012/created_github_wiki_search.html';
+var disqus_script = 'embed.js';
+(function () {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());</script></article><div id="footer-nav"><nav class="latest-posts"><h3>Latest posts</h3><ul><a href="/posts/2012/created_github_wiki_search.html"><li>GithubでWikiを検索するUserScript書いた</li></a><a href="/posts/2012/git_tag_cleaning_shell.html"><li>gitのtagをいい感じに削除するshell書いた</li></a><a href="/posts/2012/delete_multilpe_objects.html"><li>S3のAPI"Delete Multiple Objects"をknoxに実装した</li></a><a href="/posts/2012/using_docpad.html"><li>JekyllのNode版であるDocpadを使ってみる</li></a></ul></nav><div id="search"><h3>Search</h3><form class="search" action="http://google.com/search" method="get"><input type="hidden" name="q" value="site:tomohisaoda.com" /><input class="search-query" type="text" name="q" results="0" placeholder="Search" /></form></div></div><footer><p>copyright 2012 &copy; tomohisa oda</p><p>This website was generated on Apr 3, 2012. Using <a href="https://github.com/bevry/docpad">Docpad</a>.</p></footer><!--scripts--><script src="/vendor/jquery-1.7.1.js"></script><script src="/vendor/modernizr-2.0.6.js"></script><script src="/vendor/underscore-1.2.3.js"></script><script src="/vendor/backbone-0.5.3.js"></script><script src="/scripts/script.js"></script><!--comment count--><script>var disqus_shortname = 'tomohisaoda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());</script></body></html>
