@@ -1,8 +1,8 @@
 @import '/vendor/normalize.css';
 body{padding:15px 20px;text-align:center;font-size:13px;font-family:serif,"MS P明朝","ヒラギノ明朝 Pro W3","平成明朝";background-image:url("../images/bg3.png");background-position:0 0;background-repeat:repeat}
 a{color:#000}
-header{padding:0;margin:0 auto;text-align:left;display:inline-block;}
-header .greeting{color:#bbb}
+header{padding:0 0 0 71px;margin:0 auto;text-align:left;width:650px;}
+header #display: inline-block,header .greeting{color:#bbb}
 header h1{margin:0;padding:0 117px 0 0;}
 header h1 a{display:block;width:462px;height:133px;text-indent:-7777em;background-image:url("../images/logo.png");background-position:0 0;background-repeat:no-repeat}
 header h1 a:hover{background-image:url("../images/logo_hover.png")}
