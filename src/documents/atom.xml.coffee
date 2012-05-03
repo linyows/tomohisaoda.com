@@ -11,8 +11,9 @@ render_content = (doc) ->
   text "<![CDATA[ #{rendered} ]]>"
 render_excerpt = (doc) ->
   rendered = doc.contentRenderedWithoutLayouts
-  rendered = rendered.replace(/[\n|\r\n]/g, '').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
-  text rendered.substring(0, 160) + '...'
+  if rendered
+    rendered = rendered.replace(/[\n|\r\n]/g, '').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
+    text rendered.substring(0, 160) + '...'
 
 anEntry = (document) ->
   tag 'entry', ->

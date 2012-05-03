@@ -1,9 +1,9 @@
----
-title: 'Tomohisa Oda'
-description: 'my blog site.'
-author: 'Tomohisa Oda'
----
+# Site & Document Data
+site = @site
+documentTitle = @document.title
+#documentTitle = if @document.title == @site.title then @site.title else "#{@document.title} | #{@site.title}"
 
+# HTML
 doctype 5
 html lang: 'en', ->
   head ->
@@ -15,7 +15,7 @@ html lang: 'en', ->
     text @blocks.meta.join('')
 
     comment 'document'
-    title @document.title
+    title documentTitle
     meta name: 'description', content: @document.description or ''
     meta name: 'author', content: @document.author or ''
 
