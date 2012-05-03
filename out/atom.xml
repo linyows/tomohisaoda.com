@@ -1,5 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="undefined/atom.xml" rel="self" /><link /><updated>2012-04-19T01:00:01Z</updated><id></id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>GithubでWikiを検索するUserScript書いた</title><link href="/posts/2012/created_github_wiki_search.html" /><updated>2012-04-03T00:00:00Z</updated><id>/posts/2012/created_github_wiki_search.html</id><summary type="html">GithubでWikiを検索するUserScript書いたGithubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？最初は、@...</summary><content type="html"><![CDATA[ <h1>GithubでWikiを検索するUserScript書いた</h1>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="http://tomohisaoda.com/atom.xml" rel="self" /><link href="http://tomohisaoda.com" /><updated>2012-05-03T15:17:11Z</updated><id>http://tomohisaoda.com</id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>S3 の画像をリアルタイムにリサイズするServer書いた</title><link href="/posts/2012/created_realtime_resizing_image_server.html" /><updated>2012-05-04T00:00:00Z</updated><id>/posts/2012/created_realtime_resizing_image_server.html</id><summary type="html">S3の画像をリアルタイムにリサイズするServer書いたS3に配置した画像をURLから指定したサイズにリサイズできるリアルタイムリサイズサーバをnodeで書いた。Featuresスケーラブルでハイパフォーマンス。導入はとっても簡単。複数のバケットが使える。賢いキャッシュ。（ファイルサイズと更新日から304を返す）Arc...</summary><content type="html"><![CDATA[ <h1>S3の画像をリアルタイムにリサイズするServer書いた</h1>
+
+<p>S3に配置した画像を<strong>URLから指定したサイズ</strong>にリサイズできるリアルタイムリサイズサーバをnodeで書いた。</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>スケーラブルでハイパフォーマンス。</li>
+<li>導入はとっても簡単。</li>
+<li>複数のバケットが使える。</li>
+<li>賢いキャッシュ。（ファイルサイズと更新日から304を返す）</li>
+</ul>
+
+<h2>Architecture</h2>
+
+<p>1台構成</p>
+
+<div class="highlight"><pre lang="console">+---------+      +------------+      +------------+      +----+
+| Browser | <--> | CloudFront | <--> | EC2 (hose) | <--> | S3 |
++---------+      +------------+      +------------+      +----+
+</pre></div>
+
+<p>スケールアウト</p>
+
+<div class="highlight"><pre lang="console">                                                  +------------+
+                                                  | EC2 (hose) |
++---------+      +------------+      +-----+      +------------+      +----+
+| Browser | <--> | CloudFront | <--> | ELB | <-->                <--> | S3 |
++---------+      +------------+      +-----+      +------------+      +----+
+                                                  | EC2 (hose) |
+                                                  +------------+
+</pre></div>
+
+<ul>
+<li>SSLに対応していないので、ELBとhoseの間に<em>NGINXなどを挟んだ方がいい</em>。</li>
+</ul>
+
+<h2>Url</h2>
+
+<div class="highlight"><pre lang="console">//hose.com/bucket/key/100x50cq75/802a393d7247aa0caf9056223503bdf611d478ee.jpg
+</pre></div>
+
+<ul>
+<li>bucketは、<em>configファイルに書けば</em>省略することができる。</li>
+<li>keyは、拡張子ナシのS3のキーで、<em>指定バケットのファイルまでのパス</em>。</li>
+<li>100x100cq75は、width x hight crop quality の組み合わせ。</li>
+<li>最後のファイル名は、S3のプライベートキーで作成した<em>HMAC</em>と拡張子。</li>
+</ul>
+
+<h2>This is called "hose"</h2>
+
+<p>プロジェクト名は"hose"。最近、<a href="https://twitter.com/#!/gosukenator">@gosukenator</a>さんからこの"hose"にPull Requestもらって、一昨年に書いて放置してたのをリファクタリングしたのでブログで告知です。(テストをまだ書いてないのでまだ微妙) ほんと、<em>Pull Requestってモチベーションあがる</em>よね、すごいいい仕組み！自分もできるだけほかのプロジェクトにPull Requestしていこうと思う。</p>
+
+<p>"hose"はそもそもcookpad <a href="https://twitter.com/#!/mirakui">@mirakui</a>さんの<a href="http://www.slideshare.net/mirakui/ss-8150494">tofuのスライド</a>を見たのがきっかけ。Railsアプリケーションとかだと、<a href="https://github.com/thoughtbot/paperclip">Paperclip</a>使うのがお手軽だったりするんだけど、画像サイズが固定だったりするから後でサイズを変更したいときは、バッチでリサイズ処理やったりと結構大変。また、Applicationサーバでリサイズ処理をやるのはそもそもリソースがもったいないよね。そこで"hose"なら全部解決できるってわけ。</p>
+
+<p>特に、<em>AWS使うなら絶対に便利</em>だと思うので、たくさんの人に使ってもらいたい。</p>
+
+<p>hose - <a href='https://github.com/linyows/hose'>https://github.com/linyows/hose</a></p>
+
+<p>なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、<em>Pull Request</em>お願いします。</p> ]]></content></entry><entry><title>GithubでWikiを検索するUserScript書いた</title><link href="/posts/2012/created_github_wiki_search.html" /><updated>2012-04-03T00:00:00Z</updated><id>/posts/2012/created_github_wiki_search.html</id><summary type="html">GithubでWikiを検索するUserScript書いたGithubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？最初は、@...</summary><content type="html"><![CDATA[ <h1>GithubでWikiを検索するUserScript書いた</h1>
 
 <p>Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？</p>
 
