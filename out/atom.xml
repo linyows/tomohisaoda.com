@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="http://tomohisaoda.com/atom.xml" rel="self" /><link href="http://tomohisaoda.com" /><updated>2012-05-03T15:17:11Z</updated><id>http://tomohisaoda.com</id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>S3 の画像をリアルタイムにリサイズするServer書いた</title><link href="/posts/2012/created_realtime_resizing_image_server.html" /><updated>2012-05-04T00:00:00Z</updated><id>/posts/2012/created_realtime_resizing_image_server.html</id><summary type="html">S3の画像をリアルタイムにリサイズするServer書いたS3に配置した画像をURLから指定したサイズにリサイズできるリアルタイムリサイズサーバをnodeで書いた。Featuresスケーラブルでハイパフォーマンス。導入はとっても簡単。複数のバケットが使える。賢いキャッシュ。（ファイルサイズと更新日から304を返す）Arc...</summary><content type="html"><![CDATA[ <h1>S3の画像をリアルタイムにリサイズするServer書いた</h1>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tomohisa Oda</title><link href="http://tomohisaoda.com/atom.xml" rel="self" /><link href="http://tomohisaoda.com" /><updated>2012-05-15T14:41:07Z</updated><id>http://tomohisaoda.com</id><author><name>Tomohisa Oda</name><email>linyows@gmail.com</email></author><entry><title>S3 の画像をリアルタイムにリサイズするServer書いた</title><link href="http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html" /><updated>2012-05-04T00:00:00Z</updated><id>http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html</id><summary type="html">S3の画像をリアルタイムにリサイズするServer書いたS3に配置した画像をURLから指定したサイズにリサイズできるリアルタイムリサイズサーバをnodeで書いた。Featuresスケーラブルでハイパフォーマンス。導入はとっても簡単。複数のバケットが使える。賢いキャッシュ。（ファイルサイズと更新日から304を返す）Arc...</summary><content type="html"><![CDATA[ <h1>S3の画像をリアルタイムにリサイズするServer書いた</h1>
 
 <p>S3に配置した画像を<strong>URLから指定したサイズ</strong>にリサイズできるリアルタイムリサイズサーバをnodeで書いた。</p>
 
@@ -58,7 +58,7 @@
 
 <p>hose - <a href='https://github.com/linyows/hose'>https://github.com/linyows/hose</a></p>
 
-<p>なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、<em>Pull Request</em>お願いします。</p> ]]></content></entry><entry><title>GithubでWikiを検索するUserScript書いた</title><link href="/posts/2012/created_github_wiki_search.html" /><updated>2012-04-03T00:00:00Z</updated><id>/posts/2012/created_github_wiki_search.html</id><summary type="html">GithubでWikiを検索するUserScript書いたGithubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？最初は、@...</summary><content type="html"><![CDATA[ <h1>GithubでWikiを検索するUserScript書いた</h1>
+<p>なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、<em>Pull Request</em>お願いします。</p> ]]></content></entry><entry><title>GithubでWikiを検索するUserScript書いた</title><link href="http://tomohisaoda.com/posts/2012/created_github_wiki_search.html" /><updated>2012-04-03T00:00:00Z</updated><id>http://tomohisaoda.com/posts/2012/created_github_wiki_search.html</id><summary type="html">GithubでWikiを検索するUserScript書いたGithubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？最初は、@...</summary><content type="html"><![CDATA[ <h1>GithubでWikiを検索するUserScript書いた</h1>
 
 <p>Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？</p>
 
@@ -113,7 +113,7 @@
 <li>Chrome</li>
 <li>Firefox - need <a href="https://addons.mozilla.org/ja/firefox/addon/greasemonkey/">Greasemonekey</a></li>
 <li>Safari - need <a href="http://d.hatena.ne.jp/os0x/20100612/1276330696">NinjaKit</a></li>
-</ul> ]]></content></entry><entry><title>gitのtagをいい感じに削除するshell書いた</title><link href="/posts/2012/git_tag_cleaning_shell.html" /><updated>2012-03-25T00:00:00Z</updated><id>/posts/2012/git_tag_cleaning_shell.html</id><summary type="html">gitのtagをいい感じに削除するshell書いたGit使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。どんないい感じにしてくれるかと言うと、各マイナーマージョンの最新と...</summary><content type="html"><![CDATA[ <h1>gitのtagをいい感じに削除するshell書いた</h1>
+</ul> ]]></content></entry><entry><title>gitのtagをいい感じに削除するshell書いた</title><link href="http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html" /><updated>2012-03-25T00:00:00Z</updated><id>http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html</id><summary type="html">gitのtagをいい感じに削除するshell書いたGit使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。どんないい感じにしてくれるかと言うと、各マイナーマージョンの最新と...</summary><content type="html"><![CDATA[ <h1>gitのtagをいい感じに削除するshell書いた</h1>
 
 <p>Git使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。<br />どんないい感じにしてくれるかと言うと、</p>
 
@@ -142,7 +142,7 @@ $ ./git_tag clean
 <li>ローカルもリモートも消してしまう</li>
 </ul>
 
-<p>もっとスマートなやり方があるだろうし<em>shellで書かなくても...</em>って言う気はするけど取り急ぎ書いた。ちゃんと書きたくなったらそのとき考よう。</p> ]]></content></entry><entry><title>S3のAPI"Delete Multiple Objects"をknoxに実装した</title><link href="/posts/2012/delete_multilpe_objects.html" /><updated>2012-03-07T00:00:00Z</updated><id>/posts/2012/delete_multilpe_objects.html</id><summary type="html">S3のAPI"Delete Multiple Objects"をknoxに実装した去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。AWS Documentation - Delete Multiple Objec...</summary><content type="html"><![CDATA[ <h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
+<p>もっとスマートなやり方があるだろうし<em>shellで書かなくても...</em>って言う気はするけど取り急ぎ書いた。ちゃんと書きたくなったらそのとき考よう。</p> ]]></content></entry><entry><title>S3のAPI"Delete Multiple Objects"をknoxに実装した</title><link href="http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html" /><updated>2012-03-07T00:00:00Z</updated><id>http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html</id><summary type="html">S3のAPI"Delete Multiple Objects"をknoxに実装した去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。AWS Documentation - Delete Multiple Objec...</summary><content type="html"><![CDATA[ <h1>S3のAPI"Delete Multiple Objects"をknoxに実装した</h1>
 
 <p>去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。</p>
 
@@ -151,7 +151,7 @@ $ ./git_tag clean
 <li>Knox <a href='https://github.com/LearnBoost/knox'>https://github.com/LearnBoost/knox</a></li>
 </ul>
 
-<p>Delte Multiple Objects について後で追記する</p> ]]></content></entry><entry><title>JekyllのNode版であるDocpadを使ってみる</title><link href="/posts/2012/using_docpad.html" /><updated>2012-03-01T00:00:00Z</updated><id>/posts/2012/using_docpad.html</id><summary type="html">JekyllのNode版であるDocpadを使ってみるなんか巷では、jekyll, octpress が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、node弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。Docpad https://g...</summary><content type="html"><![CDATA[ <h1>JekyllのNode版であるDocpadを使ってみる</h1>
+<p>Delte Multiple Objects について後で追記する</p> ]]></content></entry><entry><title>JekyllのNode版であるDocpadを使ってみる</title><link href="http://tomohisaoda.com/posts/2012/using_docpad.html" /><updated>2012-03-01T00:00:00Z</updated><id>http://tomohisaoda.com/posts/2012/using_docpad.html</id><summary type="html">JekyllのNode版であるDocpadを使ってみるなんか巷では、jekyll, octpress が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、node弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。Docpad https://g...</summary><content type="html"><![CDATA[ <h1>JekyllのNode版であるDocpadを使ってみる</h1>
 
 <p>なんか巷では、<a href="http://jekyllrb.com/">jekyll</a>, <a href="http://octopress.org/">octpress</a> が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、<a href="http://nodejs.org/">node</a>弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。</p>
 

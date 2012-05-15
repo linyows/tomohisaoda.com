@@ -18,9 +18,9 @@ render_excerpt = (doc) ->
 anEntry = (document) ->
   tag 'entry', ->
     title document.title
-    tag 'link', href: document.url
+    tag 'link', href: "#{@site.url}#{document.url}"
     tag 'updated', document.date.toIsoDateString()
-    tag 'id', document.url
+    tag 'id', "#{@site.url}#{document.url}"
     tag 'summary', type: 'html', -> render_excerpt(document)
     tag 'content', type: 'html', -> render_content(document)
 
