@@ -101,8 +101,7 @@ article
     border-radius: 5px
     font-size: 13px
     line-height: 22px
-    opacity: 0.80
-    -moz-opacity: 0.40
+    opacity: 0.40
     list-style-position: inside
     li
       font-size: 15px
@@ -131,7 +130,6 @@ article
     padding-top: .2em
     margin: 0 5px
     opacity: 0.60
-    -moz-opacity: 0.60
   p
     width: 650px
     line-height: 1.7
@@ -145,8 +143,6 @@ article
     padding: 3px 5px
     font-size: 14px
     border-radius: 5px
-    -webkit-border-radius: 5px
-    -moz-border-radius: 5px
     color: #666
     margin: 0 5px 3px
   pre
@@ -164,7 +160,6 @@ article
     font-family: 'Bitstream Vera Sans Mono','Courier',monospace
     background-color: #eee
     opacity: 0.40
-    -moz-opacity: 0.40
   hr
     width: 650px
     height: 0
@@ -174,7 +169,6 @@ article
     border-right: 0
     margin: 0 auto 20px
     opacity: 0.80
-    -moz-opacity: 0.80
 
 footer
   p
@@ -210,7 +204,7 @@ ul.posts
       width: 20em
       display: inline-block
       text-align: right
-      vendor('transform', rotate(20deg) skew(20deg) translate(0, 7px))
+      vendor('transform', rotate(20deg) skewX(20deg) translateY(7px))
       span
         display: inline-block
         padding: .5em 1em .5em 1.2em
@@ -237,7 +231,7 @@ ul.posts
       text-align: left
       float: left
       width: 35em
-      vendor('transform', rotate(-12deg) skew(-12deg) translate(-16px))
+      vendor('transform', rotate(-12deg) skewX(-12deg) translateX(-16px))
       a
         display: inline-block
         text-decoration: none
@@ -324,11 +318,9 @@ ul.posts
   margin: 0 auto 20px
   .gist-data
     opacity: 0.75
-    -moz-opacity: 0.75
     color: #000
   .gist-meta
     text-align: left
     opacity: 0.40
-    -moz-opacity: 0.40
   a
     border: none
