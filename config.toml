@@ -1,0 +1,18 @@
+baseurl = "http://tomohisaoda.com/"
+languageCode = "ja-jp"
+title = "Tomohisa Oda"
+uglyurls = true
+
+[permalinks]
+  post = "/:year/:filename"
+
+[params]
+  intro = "My name is..."
+  description = "Programming, Tech and Life."
+  bio = "Made with ♥ in Fukuoka."
+  author = "linyows"
+  twitter   = "linyows"
+  github    = "linyows"
+  google_plus = ""
+  analytics = "UA-328462-11"
+  feed_burner = "TomohisaOda"
