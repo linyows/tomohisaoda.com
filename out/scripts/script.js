@@ -1,5 +1,0 @@
-(function() {
-
-  $(function() {});
-
-}).call(this);
