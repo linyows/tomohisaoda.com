@@ -17,7 +17,7 @@ build:
         name: commit built html to deploy branch
         code: |
           git checkout -b deploy
-          ls | grep -v public | xargs rm -rf
+          ls | grep -v public | grep -v config | grep -v file | xargs rm -rf
           mv public/* ./
           git config user.email "pleasemailus@wercker.com" ; git config user.name "werckerbot"
           git add .
