@@ -1,6 +1,8 @@
 box: debian
 build:
   steps:
+    - add-ssh-key:
+        keyname: DEPLOY_SSH_KEY
     - script:
         name: prepare building
         code: |
