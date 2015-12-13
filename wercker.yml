@@ -22,10 +22,12 @@ build:
           git config user.email "pleasemailus@wercker.com" ; git config user.name "werckerbot"
           git add .
           git commit -m "deploy from $WERCKER_STARTED_BY"
-          git push -f origin deploy
+          git remote add pushable https://$GITHUB_TOKEN:x-oauth-basic@github.com/linyows/tomohisaoda.com.git
+          git push -f pushable deploy
 deploy:
   steps:
     - script:
         name: deploy to server
         code: |
+          apt-get -y install ssh
           ssh $SSH_USER@$SSH_HOST -port $SSH_PORT "cd web/tomohisaoda.com; git pull origin deploy"
