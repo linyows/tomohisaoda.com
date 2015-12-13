@@ -1,0 +1,29 @@
+box: debian
+build:
+  steps:
+    - script:
+        name: prepare building
+        code: |
+          apt-get update
+          apt-get -y install git
+          git clone https://github.com/linyows/hugo-theme-flag themes/flag
+          rm -rf themes/flag/.git
+    - arjen/hugo-build:
+        version: '0.14'
+        theme: flag
+    - script:
+        name: commit built html to deploy branch
+        code: |
+          git checkout deploy
+          ls | grep -v public | xargs rm -rf
+          mv public/* ./
+          git config user.email "pleasemailus@wercker.com" ; git config user.name "werckerbot"
+          git add .
+          git commit -m "deploy from $WERCKER_STARTED_BY"
+          git push -f origin deploy
+deploy:
+  steps:
+    - script:
+        name: deploy to server
+        code: |
+          ssh $SSH_USER@$SSH_HOST -port $SSH_PORT "cd web/tomohisaoda.com; git pull origin deploy"
