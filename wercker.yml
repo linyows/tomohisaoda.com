@@ -22,9 +22,9 @@ build:
           git config user.email "pleasemailus@wercker.com" ; git config user.name "werckerbot"
           git add .
           git commit -m "deploy from $WERCKER_STARTED_BY"
-          git remote add pushable https://$GITHUB_TOKEN:x-oauth-basic@github.com/linyows/tomohisaoda.com.git
-          git push -f pushable deploy
-          #git push -f origin deploy
+          #git remote add pushable https://$GITHUB_TOKEN:x-oauth-basic@github.com/linyows/tomohisaoda.com.git
+          #git push -f pushable deploy
+          git push -f origin deploy
 deploy:
   steps:
     - add-ssh-key:
