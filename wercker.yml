@@ -1,4 +1,4 @@
-box: debian
+box: ruby
 build:
   steps:
     - add-ssh-key:
@@ -24,10 +24,11 @@ build:
           git commit -m "deploy from $WERCKER_STARTED_BY"
           git remote add pushable https://$GITHUB_TOKEN:x-oauth-basic@github.com/linyows/tomohisaoda.com.git
           git push -f pushable deploy
+          #git push -f origin deploy
 deploy:
   steps:
-    - script:
-        name: deploy to server
-        code: |
-          apt-get -y install ssh
-          ssh $SSH_USER@$SSH_HOST -port $SSH_PORT "cd web/tomohisaoda.com; git pull origin deploy"
+    - add-ssh-key:
+        keyname: DEPLOY_SSH_KEY
+    - bundle-install
+    - cap:
+        stage: production
