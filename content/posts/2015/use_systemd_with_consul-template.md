@@ -72,6 +72,16 @@ systemdは管理下のプロセスをcgroupsによる分類を行うことで各
 consul-templateはmiddlewareのconfを書き換えることになるのでsystemdを使う場合は、
 `PrivateTmp=true` になっていないか注意する必要があります。
 
+Note
+----
+
+今回、Consul導入にあたってChefを使いました。既存のconsul-cookbookを利用しようと
+思ったんですが、シンプルじゃなくて使いにくい設計だったので作り直しました。
+
+https://github.com/linyows/consul-cookbook
+
+もちろん、Consul WebUI・consul-templateに対応してあります。
+
 ### Reference
 
 - Introducing Consul Template - HashiCorp  
