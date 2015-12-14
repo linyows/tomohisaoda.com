@@ -32,4 +32,4 @@ deploy:
         key-secret: $S3_SECRET
         bucket-url: $S3_BUCKET
         source-dir: $S3_SOURCE
-        opts: '--acl-public --exclude=".git*"'
+        opts: '--region=ap-northeast-1 --exclude=".git*" --acl-public'
