@@ -5,11 +5,11 @@ tags = ["systemd", "consul-template"]
 
 +++
 
-この記事は [HashiCorp Advent Calendar 2015 - Qiita][advent-calendar] の 14日目の記事です。
+このエントリは [HashiCorp Advent Calendar 2015 - Qiita][advent-calendar] 14日目の記事です。
 [advent-calendar]: http://qiita.com/advent-calendar/2015/hashicorp
 
 [consul-template][consul-template]は、[consul][consul]の様々なイベントをトリガーに指定したテンプレートファイルを元に指定したファイルを更新するためのデーモンです。
-ユースケースは、[HAProxy][haproxy] や [Nginx][nginx] などのロードバランサやリバースプロキシのバックエンドを、
+ユースケースは、[HAProxy][haproxy] や [Nginx][nginx] などロードバランサやリバースプロキシのバックエンドを、
 状態に応じて動的にクラスタ（ロードバランサやリバースプロキシ）へ追加・削除し、可用性や拡張性を高めたい場合などです。
 [consul-template]: https://github.com/hashicorp/consul-template
 [consul]: https://www.consul.io/
