@@ -19,16 +19,17 @@ build:
         name: commit built html to deploy branch
         code: |
           git checkout -b deploy
-          ls | grep -v public | grep -v config | grep -v file | xargs rm -rf
-          mv public/* ./
-          git config user.email "pleasemailus@wercker.com" ; git config user.name "werckerbot"
+          ls | grep -v public | xargs rm -rf
+          mv public/* ./ ; rm -rf public
+          git config user.email 'pleasemailus@wercker.com' ; git config user.name 'werckerbot'
           git add .
           git commit -m "deploy from $WERCKER_STARTED_BY"
           git push -f origin deploy
 deploy:
   steps:
-    - add-ssh-key:
-        keyname: DEPLOY_SSH_KEY
-    - bundle-install
-    - cap:
-        stage: production
+    - s3sync:
+        key-id: $S3_KEY
+        key-secret: $S3_SECRET
+        bucket-url: $S3_BUCKET
+        source-dir: $S3_SOURCE
+        opts: '--acl-public --exclude=".git*"'
