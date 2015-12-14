@@ -59,7 +59,7 @@ systemd[1]: PID file /run/nginx.pid not readable (yet?) after reload.
 PrivateTmp=true
 ```
 
-これは、このサービス専用に独立した/tmp を使う設定のようで、これが機能しているた
+これは、このサービス専用に独立した `/tmp` を使う設定のようで、これが機能しているた
 めに、confの書き換えができないのでした。PrivateTmpをコメントアウトしてやると、
 systemdでconsul-templateを動かすことができるようになりました。
 
@@ -70,17 +70,14 @@ systemdは管理下のプロセスをcgroupsによる分類を行うことで各
 プロセス間で情報をやり取りする場合は `/tmp` を使います。ただ、`/tmp` はサービスと関係のないプロセスからも参照できるので
 各サービスのみが使う場合は `PrivateTmp=true` を使うことが望ましいでしょう。
 consul-templateはmiddlewareのconfを書き換えることになるのでsystemdを使う場合は、
-`PrivateTmp=true` になっていないか注意する必要があります。
+middlewareのsystemd service fileで `PrivateTmp=true` になっていないか注意する必要があります。
 
-Note
-----
+### Note
 
 今回、Consul導入にあたってChefを使いました。既存のconsul-cookbookを利用しようと
-思ったんですが、シンプルじゃなくて使いにくい設計だったので作り直しました。
+思ったんですが、シンプルじゃなくて使いにくい設計だったので作り直しました。もちろん、Consul WebUI・consul-templateに対応してあります。
 
 https://github.com/linyows/consul-cookbook
-
-もちろん、Consul WebUI・consul-templateに対応してあります。
 
 ### Reference
 
