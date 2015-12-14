@@ -25,6 +25,10 @@ build:
           git add .
           git commit -m "deploy from $WERCKER_STARTED_BY"
           git push -f origin deploy
+  after-steps:
+    - linyows/slack_notification:
+        token: $SLACK_TOKEN
+        channel: C02FCHEQH
 deploy:
   steps:
     - s3sync:
@@ -33,3 +37,7 @@ deploy:
         bucket-url: $S3_BUCKET
         source-dir: $S3_SOURCE
         opts: '--region=ap-northeast-1 --acl-public'
+  after-steps:
+    - linyows/slack_notification:
+        token: $SLACK_TOKEN
+        channel: C02FCHEQH
