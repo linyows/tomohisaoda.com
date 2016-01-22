@@ -1,7 +1,8 @@
 +++
-date = "2016-01-06T10:00:00+09:00"
+date = "2016-01-22T10:00:00+09:00"
 draft = true
 title = "リトライコマンドをgoで書いた"
+tags = ["monitoring", "golang", "consul"]
 
 +++
 
@@ -81,3 +82,28 @@ $ retry -i 5s -c 2 '/usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhos
 ```sh
 $ go get -d github.com/linyows/go-retry
 ```
+
+ビルド済みのものをgithub releasesに上げてますので、実際監視で利用する場合はそちら
+からdownloadして使うのが便利です。
+
+https://github.com/linyows/go-retry/releases
+
+```sh
+$ wget https://github.com/linyows/go-retry/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip && rm linux_amd64.zip
+```
+
+また、これは先日紹介した consul-cookbook の中にレシピを追加しているので consul使
+う人はこのcookbookを使うと大変便利じゃないでしょうか。
+
+https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb
+
+"わたし、諦めない！" ... じゃないですが、誤検知でお困りの方は使うと便利なコマン
+ドの紹介でした。
+
+### Reference
+
+- わたし、諦めない! - golangの場合 | おそらくはそれさえも平凡な日々  
+    http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html
+- わたし、諦めない! - Sub::Retry - tokuhirom blog  
+    http://blog.64p.org/entry/20110113/1294920074
