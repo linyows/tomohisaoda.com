@@ -1,6 +1,5 @@
 +++
 date = "2016-01-22T09:30:00+09:00"
-draft = true
 title = "リトライコマンドをgoで書いた"
 tags = ["monitoring", "golang", "consul"]
 
