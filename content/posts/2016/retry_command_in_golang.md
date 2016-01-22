@@ -18,7 +18,8 @@ Consulでは一定期間・一定回数リトライする機能を要望する i
 Retry check interval · Issue #1268 · hashicorp/consul
 https://github.com/hashicorp/consul/issues/1268
 
-### Retry Command in Bash
+Retry Command in Bash
+---------------------
 
 ということで、shell scriptでサッと書いてみました。
 
@@ -63,20 +64,21 @@ exit $exit_status
 
 シンプルでとても短いコードです。
 
-### Retry Command in Go
+Retry Command in Go
+-------------------
 
 さらに、遊びで同じ仕様のものをgolangで書いてみました。
 
 linyows/go-retry
 https://github.com/linyows/go-retry
 
-#### Usage
+### Usage
 
 ```sh
 $ retry -i 5s -c 2 '/usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost'
 ```
 
-#### Install
+### Install
 
 ```sh
 $ go get -d github.com/linyows/go-retry
