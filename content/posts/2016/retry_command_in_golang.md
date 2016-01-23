@@ -84,8 +84,7 @@ $ retry -i 5s -c 2 '/usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhos
 $ go get -d github.com/linyows/go-retry
 ```
 
-ビルド済みのものをgithub releasesに上げてますので、実際監視で利用する場合はそちら
-からdownloadして使うのが便利です。
+ビルド済みのものをgithub releasesに上げてますので、実際監視で利用する場合はそちらからdownloadして使うのが便利です。
 
 https://github.com/linyows/go-retry/releases
 
@@ -94,13 +93,11 @@ $ wget https://github.com/linyows/go-retry/releases/download/v0.1.0/linux_amd64.
 $ unzip linux_amd64.zip && rm linux_amd64.zip
 ```
 
-また、これは先日紹介した consul-cookbook の中にレシピを追加しているので consul使
-う人はこのcookbookを使うと大変便利じゃないでしょうか。
+また、これは先日紹介した consul-cookbook の中にレシピを追加しているので consul使う人はこのcookbookを使うと大変便利じゃないでしょうか。
 
 https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb
 
-"わたし、諦めない！" ... じゃないですが、誤検知でお困りの方は使うと便利なコマン
-ドの紹介でした。
+"わたし、諦めない！" ... じゃないですが、誤検知でお困りの方は使うと便利なコマンドの紹介でした。
 
 ### Reference
 
