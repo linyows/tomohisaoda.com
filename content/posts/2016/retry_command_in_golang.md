@@ -105,3 +105,32 @@ https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb
     http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html
 - わたし、諦めない! - Sub::Retry - tokuhirom blog  
     http://blog.64p.org/entry/20110113/1294920074
+
+- - -
+
+Update - 24 Jan 2016
+--------------------
+
+@songmu さんや @mattn_jp さんから以下のtweetもらってほんとその通りだったので、文字列でなくそのまま渡せるように修正した。
+実は、実装後にキモいので直そうと思ってたのを忘れちゃってたというのが、言い訳になります...
+
+<blockquote class="twitter-tweet" data-lang="en">
+    <p lang="ja" dir="ltr">go-retryコマンド、コマンド文字列指定なの嫌だな。</p>
+    &mdash; songmu (@songmu) <a href="https://twitter.com/songmu/status/690367169012568065">January 22, 2016</a>
+</blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-lang="en">
+    <p lang="ja" dir="ltr">
+    <a href="https://twitter.com/songmu">@songmu</a> retry .. /bin/sh -c &quot;foo bar baz&quot; で行けそうですが直観的でないすな</p> &mdash; mattn (@mattn_jp) <a href="https://twitter.com/mattn_jp/status/690373524700135425">January 22, 2016</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+なので、以下のような使い方になります。
+
+```sh
+$ retry -i 5s -c 2 /usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost
+```
+
+また、コマンド実行をshell越しにやれるように `-shell` オプションも追加しております。
+go-shellwords便利〜！こういうのを気軽にアドバイス頂けるのありがたいなぁ。ありがとうございます！
