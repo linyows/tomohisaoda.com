@@ -8,6 +8,10 @@ tags = ["mruby", "pam", "auth", "github"]
 このエントリは [mruby Advent Calendar 2016 - Qiita][adventc] 15日目の記事です。
 [adventc]: http://qiita.com/advent-calendar/2016/mruby
 
+前日は d6rkaizさんの [check external ip and geoip with ngx_mruby][yesterday] でした。
+`mruby-geoip` を使うことで手軽にアクセス制御を動的に出来ることがわかりました。
+[yesterday]: https://blog.d6rkaiz.com/archives/2016/12/14/check-external-ip-and-geoip-with-ngx_mruby/
+
 気がつけば、ブログをadvent calendar書く頻度でしか更新しておらず、
 もっとなんか書かなきゃなという気持ちで、_来年から頑張る_ という決意しております。
 これまでmrubyに触れてこなかったのでAdvent Calendar駆動でmrubyを触ってみようという流れです。
@@ -95,8 +99,8 @@ $ sudo chmod 600 /etc/pam-mruby.rb
 ```
 
 これで `su <github username>` するとパスワードにgithub tokenを入力して認証が成功するようになります。
-また、/etc/pam.d/sshd にも pam-mruby.so を入れると sshログインに関してもmrubyでの認証が可能となります。
-ただ、存在しないユーザに対してはもちろん認証出来ないので _あらかじめuserを作っておく必要_ はあります。
+PAMなので、sshdに対しても同様に /etc/pam.d/sshd へ pam-mruby.so を追加するとsshログインに関してもmrubyでの認証が可能となります。
+ただし、存在しないユーザに対してはもちろん認証出来ないので _あらかじめuserを作っておく必要_ はあります。
 
 ということで、「パスワード認証であること」「Githubに依存すること」はさておき、
 管理をGithubのOrganizationに作ったTeamに任せるだけで専用のサーバを立てたり、
@@ -104,6 +108,9 @@ AWSでAPI GatewayやLambdaを準備する必要がないのは非常に手軽な
 
 公開鍵認証もsshdのAuthorizedKeysCommandからGithubから鍵取ってくればできるし、
 GithubがDownした時の案（default userでログインするなど）さえ準備できていれば十分な気はします。
+また、認証部分を直接GithubのAPIではなく、Hashicorpの[Vault][vault]のAPI（Github Backend）を叩くことでaudit loghとしても活用できるでしょう。
+[vault]: https://www.vaultproject.io/
+
 ネックなのは、httpまたぐので認証にもたつくことでしょうか。
 
 Use libnss-ato
@@ -179,6 +186,9 @@ Conclusion
 mrubyをいじることでCのソース読んだりruby書いたりと、mrubyは複数の言語学べてお得だなという印象で、
 libpam-mrubyを使うことで簡単にGithubのOrganization/Teamで連携認証が出来ました。
 ただし、libpam-mruby を使わなくとも pam_exec を使って外部ファイル認証できるよってことは内緒です。
+
+次は[drednoteさん][drednote]です。
+[drednote]: http://qiita.com/drednote
 
 ### Reference
 
