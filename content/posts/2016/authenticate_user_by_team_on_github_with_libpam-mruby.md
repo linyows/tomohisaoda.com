@@ -1,7 +1,6 @@
 +++
 date = "2016-12-16T00:00:00+09:00"
-title = "libpam-mrubyを使ってGithubのチーム認証をする"
-draft = true
+title = "libpam-mrubyを使ってGithubのチームで認証をする"
 tags = ["mruby", "pam", "auth", "github"]
 
 +++
@@ -10,17 +9,19 @@ tags = ["mruby", "pam", "auth", "github"]
 [adventc]: http://qiita.com/advent-calendar/2016/mruby
 
 気がつけば、ブログをadvent calendar書く頻度でしか更新しておらず、
-もっとなんか書かなきゃなという気持ちで、*来年から頑張る*という決意しております。
+もっとなんか書かなきゃなという気持ちで、_来年から頑張る_ という決意しております。
 これまでmrubyに触れてこなかったのでAdvent Calendar駆動でmrubyを触ってみようという流れです。
 
-### 管理が楽でシンプルな認証とは
+管理が楽でシンプルな認証とは
+----------------------------
 
 僕はlinuxの認証まわりをLDAPじゃないもっとシンプルな何かに出来ないかなという考えがなんとなくあって、
-それを @pyama氏 が `STNS`という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
+それを @pyama氏 が STNS という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
 ただ、Githubのチームがそのまま認証になったらサーバレスかつ管理が楽でさらに良いなって考えを持っていたのでした。
-なので、@antipopさんや @udzuraさんが去年あたりにやってた `libpam-mruby` を使ってGithub認証をしてみます。
+なので、@antipopさんや @udzuraさんが去年あたりにやってた libpam-mruby を使ってGithub認証をしてみます。
 
-### Use libpam-mruby
+Use libpam-mruby
+----------------
 
 libpam-mrubyは、PAMにmrubyを組み込んで認証部分をrubyで書くというものです。
 なので、ビルドにmrubyのgemであるmgemを追加してあげれば大体やりたいことはできるし、
@@ -47,7 +48,7 @@ $ rake
 $ sudo install build/pam_mruby.so /usr/lib64/security/pam_mruby.so
 ```
 
-そして、`/etc/pam.d/system-auth-ac` の認証を `pam_unix` から `pam_mruby.so` に変更します。
+そして、`/etc/pam.d/system-auth-ac` の認証を `pam_unix.so` から `pam_mruby.so` に変更します。
 
 ```
 auth  sufficient  pam_mruby.so rbfile=/etc/pam-mruby.rb debug try_first_pass
@@ -89,17 +90,20 @@ EOL
 $ sudo chmod 600 /etc/pam-mruby.rb
 ```
 
-これで `su <github username>` するとパスワードにgithub tokenを入力すると認証が成功するようになります。
-また、`/etc/pam.d/sshd` にも pam-mruby.so を入れると sshログインに関してもmrubyでの認証が可能となります。
-ただ、存在しないユーザに対してはもちろん認証出来ないのであらかじめuserを作っておく必要があります。
+これで `su <github username>` するとパスワードにgithub tokenを入力して認証が成功するようになります。
+また、/etc/pam.d/sshd にも pam-mruby.so を入れると sshログインに関してもmrubyでの認証が可能となります。
+ただ、存在しないユーザに対してはもちろん認証出来ないので _あらかじめuserを作っておく必要_ はあります。
 
-ということで、パスワード認証であること、Githubに依存することはさておき、
+ということで、「パスワード認証であること」「Githubに依存すること」はさておき、
 管理をGithubのOrganizationに作ったTeamに任せるだけで専用のサーバを立てたり、
 AWSでAPI GatewayやLambdaを準備する必要がないのは非常に手軽なのではないでしょうか。
-鍵認証もlibnss-githubを作ればよいし、GithubがDownした時の案（default userでログインするなど）さえ準備できていれば十分な気はします。
+
+公開鍵認証もsshdのAuthorizedKeysCommandからGithubから鍵取ってくればできるし、
+GithubがDownした時の案（default userでログインするなど）さえ準備できていれば十分な気はします。
 ネックなのは、httpまたぐので認証にもたつくことでしょうか。
 
-### Use libnss-ato
+Use libnss-ato
+--------------
 
 ここで、面白そうなnssモジュールを見つけたのでご紹介します。
 名前解決できなかったuserを設定したユーザーに紐付けてしまうnssモジュールです。
@@ -131,12 +135,16 @@ uid=1000(vagrant) gid=1000(vagrant) groups=1000(vagrant)
 ```
 
 当然ですが、`useradd foo` は既に存在するため作成できません。。。
-しかし、このモジュールを使えば、上記libpam-mrubyによって認証されたユーザは存在しなくても紐づけたユーザでログインできる様になります。
+しかし、このモジュールを使えば、
+上記libpam-mrubyによって認証されたユーザは存在しなくても紐づけたユーザでログインできる様になります。
 
-### Use mruby-github
+Use mruby-github
+----------------
 
-直接`mruby-httprequest`を使ってもコード少ないですが、せっかくなのでmruby用のgithub clientを作ってみました。
+直接`mruby-httprequest`を使ってもコード少ないですが、
+せっかくなのでmruby用のgithub clientを作ってみました。
 
+linyows/mruby-github
 https://github.com/linyows/mruby-github
 
 このmgemを一緒にlibpam-mrubyをビルドしてやると上述の認証scriptは以下の様になります。
@@ -151,19 +159,22 @@ def authenticate(username, password)
   client = Github::Client.new
   client.token = token
   team = client.org_teams(org_name).find { |t| t['name'] == team_name }
-  client.team_member?(team['id'], username) && client.basic_authenticated?(username, password)
+  client.team_member?(team['id'], username) &&
+    client.basic_authenticated?(username, password)
 end
 EOL
 ```
 
-team名で指定してますが、変更する場合を想定してIDのままがいいかもしれません。
-mruby-githubは、`mruby-mrbgem-template` を使って作ったのですが、C言語のサンプルが出力されていて、mruby作法を知らない人には非常に勉強になります。
+Teamを名前で指定してますが、変更する場合を想定してIDのままがいいかもしれません。
+mruby-githubは、`mruby-mrbgem-template` を使って作ったのですが、
+C言語のサンプルが出力されていて、mruby作法を知らない人には非常に勉強になります。
 
-### Conclusion
+Conclusion
+----------
 
 mrubyをいじることでCのソース読んだりruby書いたりと、mrubyは複数の言語学べてお得だなという印象で、
 libpam-mrubyを使うことで簡単にGithubのOrganization/Teamで連携認証が出来ました。
-ただし、pam_exec を使って外部ファイル認証できるよってことは内緒です。
+ただし、libpam-mruby を使わなくとも pam_exec を使って外部ファイル認証できるよってことは内緒です。
 
 ### Reference
 
@@ -171,7 +182,7 @@ libpam-mrubyを使うことで簡単にGithubのOrganization/Teamで連携認証
   https://ten-snapon.com/archives/1228
 - libpam-mruby を試してみた  
   http://qiita.com/udzura/items/0817ac7cd703aaca6124
-- libpam-mrubyによりmrubyでLinuxのログイン認証をする 
+- libpam-mrubyによりmrubyでLinuxのログイン認証をする  
   http://blog.kentarok.org/entry/2015/12/22/231114
 - mrubyの拡張モジュールであるmrbgemのテンプレートを自動で生成するmrbgem作った  
   http://blog.matsumoto-r.jp/?p=3923
