@@ -1,5 +1,5 @@
 +++
-date = "2016-12-16T00:00:00+09:00"
+date = "2016-12-15T00:00:00+09:00"
 title = "libpam-mrubyを使ってGithubのチームで認証をする"
 tags = ["mruby", "pam", "auth", "github"]
 
