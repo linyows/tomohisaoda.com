@@ -13,14 +13,14 @@ tags = ["mruby", "pam", "auth", "github"]
 もっとなんか書かなきゃなという気持ちで、*来年から頑張る*という決意しております。
 これまでmrubyに触れてこなかったのでAdvent Calendar駆動でmrubyを触ってみようという流れです。
 
-### 管理が楽でシンプルな認証
+### 管理が楽でシンプルな認証とは
 
-なんとなく、linuxの認証まわりをLDAPじゃないもっとシンプルな何かに出来ないかなという考えがあって、
-それを @pyama氏 が `STNS`という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と思いつつ
-僕としては、Githubのチームがそのまま認証になったら「それでいいやん」という気持ちを持っていたのでした。
-そこで、antipopさんやudzuraさんが去年あたりにやってた `libpam-mruby` を使ってGithub認証をしてみます。
+僕はlinuxの認証まわりをLDAPじゃないもっとシンプルな何かに出来ないかなという考えがなんとなくあって、
+それを @pyama氏 が `STNS`という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
+ただ、Githubのチームがそのまま認証になったらサーバレスかつ管理が楽でさらに良いなって考えを持っていたのでした。
+なので、@antipopさんや @udzuraさんが去年あたりにやってた `libpam-mruby` を使ってGithub認証をしてみます。
 
-### libpam-mruby
+### Use libpam-mruby
 
 libpam-mrubyは、PAMにmrubyを組み込んで認証部分をrubyで書くというものです。
 なので、ビルドにmrubyのgemであるmgemを追加してあげれば大体やりたいことはできるし、
@@ -99,7 +99,7 @@ AWSでAPI GatewayやLambdaを準備する必要がないのは非常に手軽な
 鍵認証もlibnss-githubを作ればよいし、GithubがDownした時の案（default userでログインするなど）さえ準備できていれば十分な気はします。
 ネックなのは、httpまたぐので認証にもたつくことでしょうか。
 
-### libnss-ato
+### Use libnss-ato
 
 ここで、面白そうなnssモジュールを見つけたのでご紹介します。
 名前解決できなかったuserを設定したユーザーに紐付けてしまうnssモジュールです。
@@ -107,32 +107,63 @@ AWSでAPI GatewayやLambdaを準備する必要がないのは非常に手軽な
 Name Service Switch module All-To-One
 https://github.com/donapieppo/libnss-ato
 
-インストールは、リポジトリにrpmがあるのでyumで入れることができ、
+インストール・セットアップは、READMEにある通りですが、リポジトリにrpmのSPECファイルがあるので
+ビルドしてyumで入れることができます。
 あとは`nsswitch.conf` の `/etc/passwd` や `/etc/shadow` に `ato` を追加し、
-紐付けるユーザーをconfとして定義するだけです。
-しない
+紐付けるユーザーを `/etc/libnss-ato.conf` に定義するだけです。
 
 ```
 $ git clone https://github.com/donapieppo/libnss-ato.git
+$ cd libnss-ato
+$ make rpm
 $ sudo yum install RPMS/x86_64/libnss-ato-0.2-1.x86_64.rpm
 $ cat <<EOL | sudo tee /etc/libnss-ato.conf
 vagrant:x:1000:1000:vagrant,,,:/home/vagrant:/bin/bash
 EOL
 ```
 
-すると、こんな感じであたかも存在することになりますが、uid等がvagrantになっていて非常に気持ち悪いです。
+すると、存在しないuserがあたかも存在するかのように名前が引ける様になります。
+uidやgidが紐づけたuserにすり替わっていて不思議な様子です。
 
 ```
 $ id foo
 uid=1000(vagrant) gid=1000(vagrant) groups=1000(vagrant)
 ```
 
-### mruby-github
+当然ですが、`useradd foo` は既に存在するため作成できません。。。
+しかし、このモジュールを使えば、上記libpam-mrubyによって認証されたユーザは存在しなくても紐づけたユーザでログインできる様になります。
 
-せっかくなので、mruby用のgithub clientを作ってみました。
+### Use mruby-github
+
+直接`mruby-httprequest`を使ってもコード少ないですが、せっかくなのでmruby用のgithub clientを作ってみました。
+
 https://github.com/linyows/mruby-github
 
-これは、`mruby-mrbgem-template` を使って作ったのですが、C言語のサンプルが出力されていて、mruby作法を知らない人には非常に便利でした。
+このmgemを一緒にlibpam-mrubyをビルドしてやると上述の認証scriptは以下の様になります。
+
+```
+$ cat <<EOL | sudo tee /etc/pam-mruby.rb
+def authenticate(username, password)
+  token = 'github token'
+  org_name = 'foobar'
+  team_name = 'zoo'
+
+  client = Github::Client.new
+  client.token = token
+  team = client.org_teams(org_name).find { |t| t['name'] == team_name }
+  client.team_member?(team['id'], username) && client.basic_authenticated?(username, password)
+end
+EOL
+```
+
+team名で指定してますが、変更する場合を想定してIDのままがいいかもしれません。
+mruby-githubは、`mruby-mrbgem-template` を使って作ったのですが、C言語のサンプルが出力されていて、mruby作法を知らない人には非常に勉強になります。
+
+### Conclusion
+
+mrubyをいじることでCのソース読んだりruby書いたりと、mrubyは複数の言語学べてお得だなという印象で、
+libpam-mrubyを使うことで簡単にGithubのOrganization/Teamで連携認証が出来ました。
+ただし、pam_exec を使って外部ファイル認証できるよってことは内緒です。
 
 ### Reference
 
@@ -144,3 +175,5 @@ https://github.com/linyows/mruby-github
   http://blog.kentarok.org/entry/2015/12/22/231114
 - mrubyの拡張モジュールであるmrbgemのテンプレートを自動で生成するmrbgem作った  
   http://blog.matsumoto-r.jp/?p=3923
+- pam_exec(8) - Linux man page  
+  https://linux.die.net/man/8/pam_exec
