@@ -16,9 +16,13 @@ tags = ["mruby", "pam", "auth", "github"]
 ----------------------------
 
 僕はlinuxの認証まわりをLDAPじゃないもっとシンプルな何かに出来ないかなという考えがなんとなくあって、
-それを @pyama氏 が STNS という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
+それを [@pyama][pyama]氏 が STNS という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
 ただ、Githubのチームがそのまま認証になったらサーバレスかつ管理が楽でさらに良いなって考えを持っていたのでした。
-なので、@antipopさんや @udzuraさんが去年あたりにやってた libpam-mruby を使ってGithub認証をしてみます。
+なので、[@antipop][antipop]さんや [@udzura][udzura]さんが去年あたりにやってた libpam-mruby を使ってGithub認証をしてみます。
+
+[pyama]: https://twitter.com/pyama86
+[antipop]: https://twitter.com/kentaro
+[udzura]: https://twitter.com/udzura
 
 Use libpam-mruby
 ----------------
