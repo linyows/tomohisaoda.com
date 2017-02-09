@@ -33,7 +33,7 @@ About Octopass
 Githubに登録している公開鍵によってSSHDの認証とGithubのPersonal Access TokenでPAM認証をできるようにするプロダクトです。
 
 <figure id="octopass" align="center">
-<figcaption style="color:ccc;padding-bottom:10px;">Githubに依存するのでoctocatをモジってつけた名前、octopass</figcaption>
+<figcaption style="color:ccc;padding-bottom:10px;">Githubに依存するのでoctocatをモジってつけた名前、octopass。</figcaption>
 <img alt="OCTOPASS" src="https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true" width="200">
 </figure>
 
@@ -85,6 +85,12 @@ Conclusion
 自分たちの資産（コード）をGithubまたはGithub Enterpriseで管理している前提にはなりますが、
 それ（資産）にコミットする権限と同じように、*関係するサーバにしても同じように権限を管理できるようになります。*
 **なんてシンプル！**
+
+また、時代的にサーバに複数ロールは持たないので自ずと複雑なユーザ管理が不要になっているという流れではありますので、
+一見複雑なことができない小規模向けのような[octopass][octopass]が大規模なサーバ群に対応できるのかもしれません。
+時はすでにコンテナの時代に突入していますのでSSHをすることもだいぶ減ってきてはいます。
+
+[@matsumotory][matsumotory] 曰く、「マイクロセグメント！」
 
 Instration
 ----------
@@ -160,12 +166,19 @@ Next Ideas
 
 何かアイデアや要望をお持ちの方いれば、気軽にIssueに投げつけてくださいね！
 
+- - -
+
+最後に、[STNS][stns]について仕様の確認をSlackで[@pyama氏][pyama]としてたときに、いい話が出てきたのでぺたり。
+
+{{< figure src="/images/octopass-slack.png" title="Conversation on Slack" class="center" width="400" >}}
+
 [ldap]: http://www.openldap.org/
 [pyama]: https://twitter.com/pyama86
 [stns]: http://stns.jp
 [toml]: https://github.com/toml-lang/toml
 [ratelimit]: https://developer.github.com/v3/#rate-limiting
 [octopass]: https://github.com/linyows/octopass
+[matsumotory]: https://twitter.com/matsumotory
 [packagecloud]: https://packagecloud.io/linyows/octopass
 [conf]: https://github.com/linyows/octopass#configuration
 [token]: https://github.com/settings/tokens/new
