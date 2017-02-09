@@ -6,13 +6,17 @@ tags = ["C", "NSS", "Linux", "github"]
 +++
 
 昨年、libpam-mrubyを使って、Linux Serverにおける認証やその管理について思うところを書きました。
-{{< ref "posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.md" >}}
-LDAPだと専門の知識が必要だし、LDAP管理者でも触る頻度が低いとLDAPコマンドを毎回ググる事になり地味に面倒です。
+
+[libpam-mrubyを使ってGithubのチームで認証をする]({{< ref "posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.md" >}})
+
+Linuxのユーザ管理といったら主に[LDAP（OpenLDAP）][ldap]だと思いますが、[LDAP][ldap]だと専門の知識が必要だし、
+[LDAP][ldap]管理者でも触る頻度が低いと[LDAP][ldap]コマンドを毎回ググる事になり地味に面倒です。
 結構複雑なので忘れるんですね。
 
-また、LDAPっていろんな機能が盛りだくさんなんですが、自分たちがLDAPを通して解決したいことって意外とシンプルだったりします。
-それに気づかせてくれたのは、[STNS][stns]で、STNSはユーザや鍵の管理をTOMLで行うというプロダクトでした。
-TOML形式のファイルになるだけでgitで管理できますし、githubでpull-requestをすることもできます。
+また、[LDAP][ldap]っていろんな機能が盛りだくさんなんですが、
+自分たちが[LDAP][ldap]を通して解決したいことって意外とシンプルだったりします。
+それに気づかせてくれたのは[STNS][stns]で、[STNS][stns]はユーザや鍵の管理を[TOML][toml]で行うというプロダクトでした。
+[TOML][toml]形式のファイルになるだけでgitで管理できますし、githubでpull-requestをすることもできます。
 pull-requestが出来るということは、管理者は確認してマージするだけが作業となり、ホント面倒な処理から解放してくれる！そういうプロダクトです。
 
 ただ、いくつか課題があって
@@ -23,12 +27,16 @@ pull-requestが出来るということは、管理者は確認してマージ�
 
 みたいなことがあります。そこで [octopass][octopass] の登場です。
 
-### About octopass
-
-<img alt="OCTOPASS" src="https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true" width="300">
+About Octopass
+--------------
 
 [octopass][octopass]は、Github APIを使って、Github Organization/Team によってlinuxユーザの名前解決を行い、
 Githubに登録している公開鍵によってSSHDの認証とGithubのPersonal Access TokenでPAM認証をできるようにするプロダクトです。
+
+<figure id="octopass" align="center">
+<figcaption style="padding-bottom:10px;">Githubに依存するのでoctocatをモジってつけた名前、octopass</figcaption>
+<img alt="OCTOPASS" src="https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true" width="200">
+</figure>
 
 簡潔にまとめると
 
@@ -38,31 +46,51 @@ Githubに登録している公開鍵によってSSHDの認証とGithubのPersona
 
 のようなことをやってくれるので、Linuxの管理者の管理をGithubのOrg/Teamメンバーの管理を通じて行えるわけです。
 
+Questions
+---------
+
 ここで大体疑問に思うことはこんな感じでしょう。
 
-1. Github APIがDownしたらどうなるの？
-1. 海外のAPI越しに名前解決してたら遅いんでは？
-1. サーバ台数多いとAPIのRatelimit（制限）にかかるのでは？
+- Github APIがDownしたらどうなるの？
+- 海外のAPI越しに名前解決してたら遅いんでは？
+- サーバ台数多いとAPIのRatelimit（制限）にかかるのでは？
 
 はい。全部その通りです... ;-(
-しかし、1と2はキャッシュによって解決しています。
+しかし、*上の2つはキャッシュによって解決しています。*
+
+```
++------------------------+     +--------------------+
+|           +----------+ |     |                    |
+| +-------+ | Octopass | |     | Github API         |
+| |       | |          +-----> |                    |
+| | cache +-+ * NSS    | |     | * org/team members |
+| |       | | * SSHD   | <-----+ * user public keys |
+| +-------+ | * PAM    | |     | * basic auth       |
+|           +----------+ |     |                    |
++------------------------+     +--------------------+
+       Linux Server
+```
 
 [octopass][octopass]ではGithub APIのレスポンスボディをファイルキャッシュしていて、
 何かしらの原因でGithub APIへのリクエストが200で返らなかった場合はキャッシュタイムを超えていてもキャッシュを使う仕様になっています。
 また、キャッシュしているので名前解決に都度APIリクエストは投げません。
 
-3は、例えば、サーバ台数が10000台ある環境にoctopassを導入すると
+3つ目は、例えば、サーバ台数が10000台ある環境にoctopassを導入すると
 Github APIの[Rate Limit][ratelimit]は 5,000/hour なので、即刻API制限されてしまう可能性はあります。
 こういう場合は、Github APIにproxyを挟んでキャッシュしてもらうのがいいと思いますが、
-そもそも、大規模なのでLDAPその他のミドルウェアの方が向いていると言えます。
+そもそも、大規模なので[LDAP][ldap]その他のミドルウェアの方が向いていると言えます。
+
+Conclusion
+----------
 
 このように、[octopass][octopass]を使えば、
 自分たちの資産（コード）をGithubまたはGithub Enterpriseで管理している前提にはなりますが、
-それ（資産）にコミットする権限と同じように、関係するサーバにしても同じように権限を管理できるようになります。
+それ（資産）にコミットする権限と同じように、*関係するサーバにしても同じように権限を管理できるようになります。*
 
-それはとてもシンプルなこと！
+**なんてシンプル！**
 
-### Instration
+Instration
+----------
 
 インストールは、RHEL/7 のみパッケージを作っているので yum でインストールが可能です。
 （パッケージ置き場は[packagecloud][packagecloud]を利用しています）
@@ -73,7 +101,7 @@ $ sudo yum install octopass-0.1.0-1.x86_64
 ```
 
 他のバージョンや他のディストリビューションについては追々追加していきますが、
-手伝っていただける方がいれば非常に歓迎です！
+*手伝っていただける方がいれば非常に歓迎です！*
 
 ソースからビルドインストールするには以下の方法です。
 
@@ -129,9 +157,21 @@ group:      files octopass sss
 これでGithubのアカウントと鍵でSSHログインができるようになります。
 興味がある方は是非使ってみてください。バグ報告等お待ちしております！
 
-octopass: https://github.com/linyows/octopass
+Octopass: https://github.com/linyows/octopass
 
+Next Ideas
+----------
+
+ちなみに、考えている次の機能はこちらです。
+
+- 共有アカウント（デプロイ用のユーザなど
+- 複数チームの設定
+
+何かアイデアをお持ちの方も気軽に教えてくださいね。
+
+[ldap]: http://www.openldap.org/
 [stns]: http://stns.jp
+[toml]: https://github.com/toml-lang/toml
 [ratelimit]: https://developer.github.com/v3/#rate-limiting
 [octopass]: https://github.com/linyows/octopass
 [packagecloud]: https://packagecloud.io/linyows/octopass
