@@ -34,7 +34,7 @@ About Octopass
 Githubに登録している公開鍵によってSSHDの認証とGithubのPersonal Access TokenでPAM認証をできるようにするプロダクトです。
 
 <figure id="octopass" align="center">
-<figcaption style="padding-bottom:10px;">Githubに依存するのでoctocatをモジってつけた名前、octopass</figcaption>
+<figcaption style="color:ccc;padding-bottom:10px;">Githubに依存するのでoctocatをモジってつけた名前、octopass</figcaption>
 <img alt="OCTOPASS" src="https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true" width="200">
 </figure>
 
@@ -55,10 +55,9 @@ Questions
 - 海外のAPI越しに名前解決してたら遅いんでは？
 - サーバ台数多いとAPIのRatelimit（制限）にかかるのでは？
 
-はい。全部その通りです... ;-(
-しかし、*上の2つはキャッシュによって解決しています。*
+はい。全部その通りです... ;-( しかし、*上の2つはキャッシュによって解決しています。* :-)
 
-```
+<div style="margin:10px 0 30px;"><pre><code class="nohighlight" style="text-align:center;display:block;line-height:1">
 +------------------------+     +--------------------+
 |           +----------+ |     |                    |
 | +-------+ | Octopass | |     | Github API         |
@@ -68,8 +67,8 @@ Questions
 | +-------+ | * PAM    | |     | * basic auth       |
 |           +----------+ |     |                    |
 +------------------------+     +--------------------+
-       Linux Server
-```
+       Linux Server                                  
+</code></pre></div>
 
 [octopass][octopass]ではGithub APIのレスポンスボディをファイルキャッシュしていて、
 何かしらの原因でGithub APIへのリクエストが200で返らなかった場合はキャッシュタイムを超えていてもキャッシュを使う仕様になっています。
@@ -86,7 +85,6 @@ Conclusion
 このように、[octopass][octopass]を使えば、
 自分たちの資産（コード）をGithubまたはGithub Enterpriseで管理している前提にはなりますが、
 それ（資産）にコミットする権限と同じように、*関係するサーバにしても同じように権限を管理できるようになります。*
-
 **なんてシンプル！**
 
 Instration
@@ -131,24 +129,17 @@ EOF
 
 そして、各ファイルの項目に修正を加えます。
 
-/etc/ssh/sshd_config:
-
-```
+```sh
+# /etc/ssh/sshd_config:
 AuthorizedKeysCommand /usr/bin/octopass
 AuthorizedKeysCommandUser root
 UsePAM yes
 PasswordAuthentication no
-```
 
-/etc/pam.d/sshd:
-
-```
+# /etc/pam.d/sshd:
 session required pam_mkhomedir.so skel=/etc/skel/ umask=0022
-```
 
-/etc/nsswitch.conf:
-
-```
+# /etc/nsswitch.conf:
 passwd:     files octopass sss
 shadow:     files octopass sss
 group:      files octopass sss
