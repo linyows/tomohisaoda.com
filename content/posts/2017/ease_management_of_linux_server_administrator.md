@@ -1,7 +1,7 @@
 +++
 date = "2017-02-10T00:00:00+09:00"
 title = "Linux Server管理者の管理を楽にする"
-tags = ["C", "NSS", "Linux", "github"]
+tags = ["C", "nss", "linux", "github"]
 
 +++
 
