@@ -92,8 +92,8 @@ Conclusion
 
 [@matsumotory][matsumotory] 曰く、「マイクロセグメント！」
 
-Instration
-----------
+Installation
+------------
 
 インストールは、RHEL/7 のみパッケージを作っているので yum でインストールが可能です。
 （パッケージ置き場は[packagecloud][packagecloud]を利用しています）
