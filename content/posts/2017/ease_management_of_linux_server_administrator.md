@@ -56,18 +56,7 @@ Questions
 
 はい。全部その通りです... ;-( しかし、*上の2つはキャッシュによって解決しています。* :-)
 
-<div style="margin:10px 0 30px;"><pre><code class="nohighlight" style="text-align:center;display:block;line-height:1">
-+------------------------+     +--------------------+
-|           +----------+ |     |                    |
-| +-------+ | Octopass | |     | Github API         |
-| |       | |          +-----> |                    |
-| | cache +-+ * NSS    | |     | * org/team members |
-| |       | | * SSHD   | <-----+ * user public keys |
-| +-------+ | * PAM    | |     | * basic auth       |
-|           +----------+ |     |                    |
-+------------------------+     +--------------------+
-       Linux Server                                  
-</code></pre></div>
+{{< figure src="/images/architecture.png" title="Architecture" class="center" width="600" >}}
 
 [octopass][octopass]ではGithub APIのレスポンスボディをファイルキャッシュしていて、
 何かしらの原因でGithub APIへのリクエストが200で返らなかった場合はキャッシュタイムを超えていてもキャッシュを使う仕様になっています。
