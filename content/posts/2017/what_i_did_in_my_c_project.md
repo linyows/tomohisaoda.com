@@ -1,31 +1,67 @@
 +++
 date = "2017-03-01T10:20:20+09:00"
-draft = true
+draft = false
 title = "Cのプロダクトを作るためにやったこと"
+tags = [ "C", "OSS" ]
 
 +++
 
-今年に入って Octopass というプロダクトを公開しました。
+<style>.hatena-bookmark-button-frame { vertical-align: middle; }</style>
+
+今年に入って [Octopass][octopass]
+<iframe style="width:120px;vertical-align:middle;" src="https://ghbtns.com/github-btn.html?user=linyows&repo=octopass&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+<a href="http://b.hatena.ne.jp/entry/tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" data-hatena-bookmark-height="29" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+というプロダクトを公開しました。
 それは、Linuxのユーザや権限をGithubのTeamと連携して運用を楽にするというツールでした。
 
-OSS界隈で有名な@matumotoryさんやそのほかのtweetによって、はてぶの数やコメントを見る限り、
-ある程度必要そうな人の目に触れたのではないかと思っています。
-
-また、「すごく便利」「ぜひ導入したい」というフィードバックはとてもモチベーションにつながっています。
+色んな方々のご協力により、多くのRetweetやはてぶいただいたことで、ある程度、
+[Octopass][octopass] を必要としそうな人の目に触れたのではないかと思っています。
+（Githubのスター数が少ないのは今後の課題）
+その中で「すごく便利」「ぜひ導入したい」というフィードバックは、
+継続して機能追加していくというモチベーションにつながっていて、非常にありがたいです。
 
 さて、この Octopass は、Linuxユーザ名前解決をするためにの glibc の libnssモジュールをCで実装しています。
-cgoやその他の言語でShared Objectを吐き出しても良かったのですが、それだと技術的挑戦が足りないとして、
-触れてこなかったCに挑戦してみました。
+cgoやその他の言語でShared Objectを吐き出しても良かったのですが、それだと技術的挑戦が足りないとして、触れてこなかったCに挑戦しました。
+
+ただ、リリース当初、認証や公開鍵を取得する部分はgoで書いていて、１プロジェクトの中に２種類の言語を使って成り立っていましたが、
+管理が複雑になることと、同様の実装が2つ存在してしまうことが無駄であることを感じて、
+v0.2としてgoの部分をCに置き換えるという作業を行い純粋にCのプロダクトとしました。
+そのことで、CIをシンプルにでき、類似の実装をしなくて良くなりましたし、見通しがずいぶん良くなった気がします。
+
+今回、Cのプロダクトを作るにあたって、Cを勉強する以外にどんなことをやったか振り返ってみようと思います。
 
 Clang Format
 ------------
 
 まず、自分が作るのがlibnssのモジュールなので既存のものをgithubで検索してひたすら読んでみました。
-最初に気になったのが、coding styleがバラバラなこと。
+最初に気になったのが、coding styleがバラバラなこと！
+有名なプロダクトであっても、あまりこれがスタンダードというものがなく、さあ、どうしようという状態になっていました。
 
-これは @matumotory さんに `clang-format` という整形ツールがあるよという情報を得たので、
-早速適当にformatを定義し、vimと連携することで保存時にきれいに整形されるという感じになりました。
-また、もし、仮に PullRequestをもらった時のためにも CIで formatのdiffをチェックするようにもしました。
+これは [@matsumotory][matsumotory] さんに `clang-format` という整形ツールがあるよという情報を得ました。
+
+Clang-Format Style Options  
+https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+clang-formatを導入すると、基本スタイルというものがあって、
+LLVM・Google・Mozilla・Linux... といったそれぞれの流派を選択できる様になっていたのでとても便利でした。
+
+早速適当にformatを定義し（設定は下記）、vimと連携することで保存時にきれいに整形されるという感じになりました。
+
+```
+# requires clang-format >= 3.6
+BasedOnStyle: "LLVM"
+IndentWidth: 2
+ColumnLimit: 120
+BreakBeforeBraces: Linux
+AllowShortFunctionsOnASingleLine: None
+SortIncludes: false
+AlignConsecutiveAssignments: true
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: true
+```
+
+また、もし仮に Pull-Requestをもらった時に指定するフォーマットから外れていたら、
+私やPull-Requestをくれた方にわかる様、CIで formatのdiffをチェックするようにもしました。
 
 Criterion
 ---------
@@ -81,3 +117,15 @@ Cのプロダクトを作る際にやったことをまとめると以下です�
 
 これらを抽象化すると、Cスターターみたいなものが出来るなと思いつつ、
 もうしばらくは書くことないかなと思いました。
+
+ちなみに、Octopass v0.3では共有ユーザ機能を追加しています。
+指定したユーザをチームで共有し認証することができるというものです。
+ユースケーストしては、アプリなどの実行またはdeployのためのユーザを共有するのを想定しています。
+
+Octopassはキャッシュすることで、高速さとGithubというSPOFを避けていますが、サーバの台数が大規模になると、
+どうしてもGithubのAPI Ratelimitを超えAPIの手前にproxyを設置してリクエスト回数を減らすという施策が必要になってきます。
+今後は、そのキャッシュをOctopassクラスタ間で共有することでGithub APIのproxyを不要にしようと考えています。
+実際にキャッシュを共有するのは、EtcdやConsul KVとかを使う感じになるイメージです。
+
+[octopass]: https://github.com/linyows/octopass
+[matsumotory]: https://twitter.com/matsumotory
