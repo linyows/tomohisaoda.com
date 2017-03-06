@@ -75,7 +75,7 @@ Criterion
 - Unity
 - Criterion
 
-真面目に比較する時間はなかったのでexampleが多いものと出力が分かりやすいものをとりあえず使ってみようとCriterionを使い始めました。
+真面目に比較する時間はなかったのでexampleが多いものと出力が分かりやすいものをとりあえず使ってみようと [Criterion][criterion] を使い始めました。
 
 ```c
 #include <criterion/criterion.h>
@@ -89,12 +89,11 @@ Test(suite_1, passing) {
 }
 ```
 
-Criterionは結構便利で 色々な `assertion` が準備されてるのはもちろんですが、
+[Criterion][criterion] は結構便利で 色々な `assertion` が準備されてるのはもちろんですが、
 異常系のテストとして exit codeや signalを検証する仕組みもあります。
-これは、Criteirionがテストケースのプロセスを分離して実行結果をレポートする仕組みによるものです。
+これは、[Criterion][criterion] がテストケースのプロセスを分離して実行結果をレポートする仕組みによるものです。
 また、Theoryテストを簡単にやれたりテストスイートを楽に設定できるのもメリットなのかなと（他のフレームワークを使って比較してないので）想像しています。
 
-- https://github.com/Snaipe/Criterion
 - Test Examples  
   https://github.com/Snaipe/Criterion/tree/bleeding/samples
 - Assertion reference - Criterion 2.3.0 documentation  
@@ -104,30 +103,26 @@ Makefile
 --------
 
 次に、テストを頻繁に実行しだすとコンパイルしてテスト実行というのが面倒になってきます。
-そうするとGNU Makeの出番で、ビルドやビルドに必要な依存ライブラリ等をセットアップすることを定義していきます。
-そして、Makeの自己文書化という裏技があるようなので導入しました。簡単に言えばmakeで `rake -T` みたいなことができます。
+そうすると [GNU Make][make] の出番で、ビルドやビルドに必要な依存ライブラリ等をセットアップすることを定義していきます。
+そして、[Make][make] の自己文書化という裏技があるようなので導入しました。簡単に言えば [Make][make] で `rake -T` みたいなことができます。
 
 - Makefileを自己文書化する  
   http://postd.cc/auto-documented-makefile/
 
 ```make
-release: pkg ## Upload archives to Github Release on Mac
-	@echo "$(INFO_COLOR)==> $(RESET)$(BOLD)Releasing$(RESET)"
-	go get github.com/tcnksm/ghr
-	rm -rf builds/.keep && ghr v$(VERSION) builds && git checkout builds/.keep
-
 pkg: ## Create some distribution packages
 	rm -rf builds && mkdir builds
 	docker-compose up
 
-dist: ## Upload archives to Github Release on Mac
-	@test -z $(GITHUB_TOKEN) || $(MAKE) release
+dist: ## Upload archives on Mac
+	@test -z $(GITHUB_TOKEN) || $(MAKE) github_release
+	@test -z $(PACKAGECLOUD_TOKEN) || $(MAKE) packagecloud_release
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(INFO_COLOR)%-30s$(RESET) %s\n", $$1, $$2}'
 ```
 
-タスク名の後ろにコメントを書くことでそれらがタスクの一覧となるようにしている。
+ターゲット名の後ろにコメントを書くことでそれらがターゲットの一覧となるようにしています。
 
 Packaging
 ---------
@@ -150,11 +145,9 @@ deb:
   command: make deb
 ```
 
-また、作成済みパッケージをGithub Rereasesにアップロードするのはおなじみ `ghr` を使用します。
+また、作成済みパッケージをGithub Rereasesにアップロードするのはおなじみ `ghr` を使い、
+[PackageCloud][packagecloud] へのアップロードは `github.com/mlafeldt/pkgcloud` を使用しました。
 そうすることで、各ディストリビューションパッケージの作成公開を `make dist` というコマンドだけで完結してしまいます。
-新しいバージョンを公開することがものすごく手軽になりました。
-ただ、各パッケージの配布は packagecloud を使っていて、パッケージのアップロードにAPIが提供されているようですが、
-簡単に使えそうなクライアントが見つからなかったので今回はそこまではやっていません。
 
 Integration Test
 ----------------
@@ -186,7 +179,7 @@ run_test
 exit $ALL_PASSED
 ```
 
-今回は統合テストの検証項目が少ないためさっとbashで書いてしまいましたが、Criterionで出来たかもしれません。
+今回は統合テストの検証項目が少ないためさっとbashで書いてしまいましたが、[Criterion][criterion] で出来たかもしれません。
 
 Conclution
 ----------
@@ -200,7 +193,7 @@ Cのプロダクトを作る際にやったことをまとめると以下です�
 - Integration Test > bashで書いた..
 
 これらを抽象化すると、Cスターターみたいなものが出来るなと思いつつ、
-Criterionのような便利なツール使うだけで、Cの開発苦手だなーという意識が変わって、
+[Criterion][criterion] のような便利なツール使うだけで、Cの開発苦手だなーという意識が変わって、
 随分前向きで楽しくなるものだなというのを改めて思いました。
 
 Cは勉強始めたばかりなので、メモリの気持ちが理解できるようにやっていくぞ！
@@ -209,14 +202,19 @@ Cは勉強始めたばかりなので、メモリの気持ちが理解できる�
 
 ### おまけ
 
-ちなみに、Octopass v0.3では共有ユーザ機能を追加しています。
+ちなみに、[Octopass][octopass] v0.3では共有ユーザ機能を追加しています。
 指定したユーザをチームで共有し認証することができるというものです。
 ユースケーストしては、アプリなどの実行またはdeployのためのユーザを共有するのを想定しています。
 
-Octopassはキャッシュすることで、高速さとGithubというSPOFを避けていますが、サーバの台数が大規模になると、
-どうしてもGithubのAPI Ratelimitを超えAPIの手前にproxyを設置してリクエスト回数を減らすという施策が必要になってきます。
-今後は、そのキャッシュをOctopassクラスタ間で共有することでGithub APIのproxyを不要にしようと考えています。
-実際にキャッシュを共有するのは、EtcdやConsul KVとかを使う感じになるイメージです。
+[Octopass][octopass] はキャッシュすることで、高速さとGithubというSPOFを避けていますが、サーバの台数が大規模になると、
+どうしてもGithubのAPI Rate limitを超えAPIの手前にproxyを設置してリクエスト回数を減らすという施策が必要になってきます。
+今後は、そのキャッシュを[Octopass][octopass] クラスタ間で共有することでGithub APIのproxyを不要にしようと考えています。
+実際にキャッシュを共有するのは、[Etcd][etcd] や [Consul Key/Value Data][consul] とかを使う感じになるイメージです。
 
 [octopass]: https://github.com/linyows/octopass
 [matsumotory]: https://twitter.com/matsumotory
+[criterion]: https://github.com/Snaipe/Criterion
+[make]: https://www.gnu.org/software/make
+[packagecloud]: https://packagecloud.io/
+[etcd]: https://github.com/coreos/etcd
+[consul]: https://www.consul.io/intro/getting-started/kv.html
