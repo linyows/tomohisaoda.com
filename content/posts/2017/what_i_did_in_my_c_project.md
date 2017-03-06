@@ -39,8 +39,8 @@ Clang Format
 
 これは [@matsumotory][matsumotory] さんに `clang-format` という整形ツールがあるよという情報を得ました。
 
-Clang-Format Style Options  
-https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+- Clang-Format Style Options  
+  https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 
 clang-formatを導入すると、基本スタイルというものがあって、
 LLVM・Google・Mozilla・Linux... といったそれぞれの流派を選択できる様になっていたのでとても便利でした。
@@ -75,34 +75,118 @@ Criterion
 - Unity
 - Criterion
 
-真面目に比較する時間はなかったので
-exampleが多いものと出力が分かりやすいものをとりあえず使ってみようとCriterionを使い始めました。
-Criterion使うと結構便利で `assertion` もいろんなものがあって今の時点では困ることはありませんでした。
+真面目に比較する時間はなかったのでexampleが多いものと出力が分かりやすいものをとりあえず使ってみようとCriterionを使い始めました。
+
+```c
+#include <criterion/criterion.h>
+
+Test(suite_1, failing) {
+    cr_assert(0);
+}
+
+Test(suite_1, passing) {
+    cr_assert(1);
+}
+```
+
+Criterionは結構便利で 色々な `assertion` が準備されてるのはもちろんですが、
+異常系のテストとして exit codeや signalを検証する仕組みもあります。
+これは、Criteirionがテストケースのプロセスを分離して実行結果をレポートする仕組みによるものです。
+また、Theoryテストを簡単にやれたりテストスイートを楽に設定できるのもメリットなのかなと（他のフレームワークを使って比較してないので）想像しています。
+
+- https://github.com/Snaipe/Criterion
+- Test Examples  
+  https://github.com/Snaipe/Criterion/tree/bleeding/samples
+- Assertion reference - Criterion 2.3.0 documentation  
+  http://criterion.readthedocs.io/en/master/assert.html#base-assertions
 
 Makefile
 --------
 
 次に、テストを頻繁に実行しだすとコンパイルしてテスト実行というのが面倒になってきます。
-そうするとGNU Makeの出番で、ビルドやビルドに必要な依存ライブラリ等をセットアップ
-することを定義していきます。
-そして、Makeの自己文書化という裏技を見つけ導入していきます。そうやって、どんどん完成に近づいてきました。
+そうするとGNU Makeの出番で、ビルドやビルドに必要な依存ライブラリ等をセットアップすることを定義していきます。
+そして、Makeの自己文書化という裏技があるようなので導入しました。簡単に言えばmakeで `rake -T` みたいなことができます。
+
+- Makefileを自己文書化する  
+  http://postd.cc/auto-documented-makefile/
+
+```make
+release: pkg ## Upload archives to Github Release on Mac
+	@echo "$(INFO_COLOR)==> $(RESET)$(BOLD)Releasing$(RESET)"
+	go get github.com/tcnksm/ghr
+	rm -rf builds/.keep && ghr v$(VERSION) builds && git checkout builds/.keep
+
+pkg: ## Create some distribution packages
+	rm -rf builds && mkdir builds
+	docker-compose up
+
+dist: ## Upload archives to Github Release on Mac
+	@test -z $(GITHUB_TOKEN) || $(MAKE) release
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(INFO_COLOR)%-30s$(RESET) %s\n", $$1, $$2}'
+```
+
+タスク名の後ろにコメントを書くことでそれらがタスクの一覧となるようにしている。
 
 Packaging
 ---------
 
 プロダクトが完成すると、使いやすくするために、パッケージにしたくなってきます。
-そのパッケージ化を手でやってたら面倒なので docker-composeで、RPMやDEBのパッケー
-ジがさっと作成されてそのアーカイブがGithub Rereasesにアップロード出来たら便利と
-いうことで、これもまたMakefileでチマチマやりました。
-そうすることで、新しいバージョンを公開することがものすごく手軽になりました。
+そのパッケージ化を手でやってたら面倒なので `docker-compose up` で一気に作成されるようにします。
+
+```yml
+rpm:
+  dockerfile: dockerfiles/Dockerfile.centos
+  build: .
+  volumes:
+    - .:/octopass
+  command: make rpm
+deb:
+  dockerfile: dockerfiles/Dockerfile.ubuntu
+  build: .
+  volumes:
+    - .:/octopass
+  command: make deb
+```
+
+また、作成済みパッケージをGithub Rereasesにアップロードするのはおなじみ `ghr` を使用します。
+そうすることで、各ディストリビューションパッケージの作成公開を `make dist` というコマンドだけで完結してしまいます。
+新しいバージョンを公開することがものすごく手軽になりました。
+ただ、各パッケージの配布は packagecloud を使っていて、パッケージのアップロードにAPIが提供されているようですが、
+簡単に使えそうなクライアントが見つからなかったので今回はそこまではやっていません。
 
 Integration Test
 ----------------
 
-ユニットテストしか書いてなかったので、いざ作ったパッケージをインストールして試し
-たら `Segmentaion fault` とか出たりして統合テストが出来てなかったことに気づきます。
-ただし、今回の場合検証項目が少ないため、さっとbashで書いてしまいました。
-もしかしたら、Criterionで出来たかもしれません。
+ユニットテストしか書いてなかったので、いざ作ったパッケージをインストールして試したら
+`Segmentaion fault` とか出たりして統合テストが出来てなかったことに気づきBashで書きました。
+
+```sh
+function test_octopass_passwd() {
+  actual="$(/usr/bin/octopass passwd linyows)"
+  expected="linyows:x:74049:2000:managed by octopass:/home/linyows:/bin/bash"
+
+  if [ "x$actual" == "x$expected" ]; then
+    pass "${FUNCNAME[0]}"
+  else
+    fail "${FUNCNAME[0]}" "$expected" "$actual"
+  fi
+}
+
+function run_test() {
+  self=$(cd $(dirname $0) && pwd)/$(basename $0)
+  tests="$(grep "^function test_" $self | sed -E "s/function (.*)\(\) \{/\1/g")"
+  for t in $(echo $tests); do
+    $t
+  done
+}
+
+run_test
+exit $ALL_PASSED
+```
+
+今回は統合テストの検証項目が少ないためさっとbashで書いてしまいましたが、Criterionで出来たかもしれません。
 
 Conclution
 ----------
@@ -113,10 +197,17 @@ Cのプロダクトを作る際にやったことをまとめると以下です�
 - Unit Test > Criterion
 - 色々自動化 > Makefile
 - パッケージ作成 > Dokcer Compose と ghr
-- Integration Test > bashで書いた
+- Integration Test > bashで書いた..
 
 これらを抽象化すると、Cスターターみたいなものが出来るなと思いつつ、
-もうしばらくは書くことないかなと思いました。
+Criterionのような便利なツール使うだけで、Cの開発苦手だなーという意識が変わって、
+随分前向きで楽しくなるものだなというのを改めて思いました。
+
+Cは勉強始めたばかりなので、メモリの気持ちが理解できるようにやっていくぞ！
+
+- - -
+
+### おまけ
 
 ちなみに、Octopass v0.3では共有ユーザ機能を追加しています。
 指定したユーザをチームで共有し認証することができるというものです。
