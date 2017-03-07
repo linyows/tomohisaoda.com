@@ -178,7 +178,7 @@ exit $ALL_PASSED
 
 今回は統合テストの検証項目が少ないためさっとbashで書いてしまいましたが、[Criterion][criterion] で出来たかもしれません。
 
-Conclution
+Conclusion
 ----------
 
 Cのプロダクトを作る際にやったことをまとめると以下です。
