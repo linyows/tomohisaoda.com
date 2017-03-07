@@ -39,15 +39,14 @@ Clang Format
 
 これは [@matsumotory][matsumotory] さんに `clang-format` という整形ツールがあるよという情報を得ました。
 
-- Clang-Format Style Options  
-  https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+- [Clang-Format Style Options][clangformat]
 
 clang-formatを導入すると、基本スタイルというものがあって、
 LLVM・Google・Mozilla・Linux... といったそれぞれの流派を選択できる様になっていたのでとても便利でした。
 
 早速適当にformatを定義し（設定は下記）、vimと連携することで保存時にきれいに整形されるという感じになりました。
 
-```
+```conf
 # requires clang-format >= 3.6
 BasedOnStyle: "LLVM"
 IndentWidth: 2
@@ -94,10 +93,8 @@ Test(suite_1, passing) {
 これは、[Criterion][criterion] がテストケースのプロセスを分離して実行結果をレポートする仕組みによるものです。
 また、Theoryテストを簡単にやれたりテストスイートを楽に設定できるのもメリットなのかなと（他のフレームワークを使って比較してないので）想像しています。
 
-- Test Examples  
-  https://github.com/Snaipe/Criterion/tree/bleeding/samples
-- Assertion reference - Criterion 2.3.0 documentation  
-  http://criterion.readthedocs.io/en/master/assert.html#base-assertions
+- [Test Examples][example]
+- [Assertion reference - Criterion 2.3.0 documentation][assertion]
 
 Makefile
 --------
@@ -213,7 +210,10 @@ Cは勉強始めたばかりなので、メモリの気持ちが理解できる�
 
 [octopass]: https://github.com/linyows/octopass
 [matsumotory]: https://twitter.com/matsumotory
+[clangformat]: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 [criterion]: https://github.com/Snaipe/Criterion
+[example]: https://github.com/Snaipe/Criterion/tree/bleeding/samples
+[assertion]: http://criterion.readthedocs.io/en/master/assert.html#base-assertions
 [make]: https://www.gnu.org/software/make
 [packagecloud]: https://packagecloud.io/
 [etcd]: https://github.com/coreos/etcd
