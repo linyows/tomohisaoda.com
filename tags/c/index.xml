@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/c.html</link>
+    <description>Recent content in C on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Tue, 07 Mar 2017 00:38:00 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/c.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Cのプロダクトを作るためにやったこと</title>
+      <link>http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html</link>
+      <pubDate>Tue, 07 Mar 2017 00:38:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html</guid>
+      <description>
+
+&lt;p&gt;&lt;style&gt;.hatena-bookmark-button-frame { vertical-align: middle; }&lt;/style&gt;&lt;/p&gt;
+
+&lt;p&gt;今年に入って &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt;
+&lt;iframe style=&#34;width:120px;vertical-align:middle;&#34; src=&#34;https://ghbtns.com/github-btn.html?user=linyows&amp;repo=octopass&amp;type=star&amp;count=true&amp;size=large&#34; frameborder=&#34;0&#34; scrolling=&#34;0&#34; width=&#34;160px&#34; height=&#34;30px&#34;&gt;&lt;/iframe&gt;
+&lt;a href=&#34;http://b.hatena.ne.jp/entry/tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html&#34; class=&#34;hatena-bookmark-button&#34; data-hatena-bookmark-layout=&#34;basic-label-counter&#34; data-hatena-bookmark-lang=&#34;ja&#34; data-hatena-bookmark-height=&#34;29&#34; title=&#34;このエントリーをはてなブックマークに追加&#34;&gt;&lt;img src=&#34;https://b.st-hatena.com/images/entry-button/button-only@2x.png&#34; alt=&#34;このエントリーをはてなブックマークに追加&#34; width=&#34;20&#34; height=&#34;20&#34; style=&#34;border: none;&#34; /&gt;&lt;/a&gt;&lt;script type=&#34;text/javascript&#34; src=&#34;https://b.st-hatena.com/js/bookmark_button.js&#34; charset=&#34;utf-8&#34; async=&#34;async&#34;&gt;&lt;/script&gt;
+というプロダクトを公開しました。
+それは、Linuxのユーザや権限をGithubのTeamと連携して運用を楽にするというツールでした。&lt;/p&gt;
+
+&lt;p&gt;色んな方々のご協力により、多くのRetweetやはてぶいただいたことで、ある程度、
+&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; を必要としそうな人の目に触れたのではないかと思っています。
+（Githubのスター数が少ないのは今後の課題）
+その中で「すごく便利」「ぜひ導入したい」というフィードバックは、
+継続して機能追加していくというモチベーションにつながっていて、非常にありがたいです。&lt;/p&gt;
+
+&lt;p&gt;さて、この Octopass は、Linuxユーザ名前解決をするためにの glibc の libnssモジュールをCで実装しています。
+cgoやその他の言語でShared Objectを吐き出しても良かったのですが、それだと技術的挑戦が足りないとして、触れてこなかったCに挑戦しました。&lt;/p&gt;
+
+&lt;p&gt;ただ、リリース当初、認証や公開鍵を取得する部分はgoで書いていて、１プロジェクトの中に２種類の言語を使って成り立っていましたが、
+管理が複雑になることと、同様の実装が2つ存在してしまうことが無駄であることを感じて、
+v0.2としてgoの部分をCに置き換えるという作業を行い純粋にCのプロダクトとしました。
+そのことで、CIをシンプルにでき、類似の実装をしなくて良くなりましたし、見通しがずいぶん良くなった気がします。&lt;/p&gt;
+
+&lt;p&gt;今回、Cのプロダクトを作るにあたって、Cを勉強する以外にどんなことをやったか振り返ってみようと思います。&lt;/p&gt;
+
+&lt;h2 id=&#34;clang-format:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Clang Format&lt;/h2&gt;
+
+&lt;p&gt;まず、自分が作るのがlibnssのモジュールなので既存のものをgithubで検索してひたすら読んでみました。
+最初に気になったのが、coding styleがバラバラなこと！
+有名なプロダクトであっても、あまりこれがスタンダードというものがなく、さあ、どうしようという状態になっていました。&lt;/p&gt;
+
+&lt;p&gt;これは &lt;a href=&#34;https://twitter.com/matsumotory&#34;&gt;@matsumotory&lt;/a&gt; さんに &lt;code&gt;clang-format&lt;/code&gt; という整形ツールがあるよという情報を得ました。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://clang.llvm.org/docs/ClangFormatStyleOptions.html&#34;&gt;Clang-Format Style Options&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;clang-formatを導入すると、基本スタイルというものがあって、
+LLVM・Google・Mozilla・Linux&amp;hellip; といったそれぞれの流派を選択できる様になっていたのでとても便利でした。&lt;/p&gt;
+
+&lt;p&gt;早速適当にformatを定義し（設定は下記）、vimと連携することで保存時にきれいに整形されるという感じになりました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-conf&#34;&gt;# requires clang-format &amp;gt;= 3.6
+BasedOnStyle: &amp;quot;LLVM&amp;quot;
+IndentWidth: 2
+ColumnLimit: 120
+BreakBeforeBraces: Linux
+AllowShortFunctionsOnASingleLine: None
+SortIncludes: false
+AlignConsecutiveAssignments: true
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、もし仮に Pull-Requestをもらった時に指定するフォーマットから外れていたら、
+私やPull-Requestをくれた方にわかる様、CIで formatのdiffをチェックするようにもしました。&lt;/p&gt;
+
+&lt;h2 id=&#34;criterion:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Criterion&lt;/h2&gt;
+
+&lt;p&gt;次に、Unit Test。色々Cのプロジェクト見ていると、main書いて最低限のテストを書いてたり、
+自前でassertion作ってたりといて結構カオスです。
+何かしらtest frameworkはないかなと調べると良さそうなものがいくつかあります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CUnit&lt;/li&gt;
+&lt;li&gt;googletest&lt;/li&gt;
+&lt;li&gt;Unity&lt;/li&gt;
+&lt;li&gt;Criterion&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;真面目に比較する時間はなかったのでexampleが多いものと出力が分かりやすいものをとりあえず使ってみようと &lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; を使い始めました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include &amp;lt;criterion/criterion.h&amp;gt;
+
+Test(suite_1, failing) {
+    cr_assert(0);
+}
+
+Test(suite_1, passing) {
+    cr_assert(1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; は結構便利で 色々な &lt;code&gt;assertion&lt;/code&gt; が準備されてるのはもちろんですが、
+異常系のテストとして exit codeや signalを検証する仕組みもあります。
+これは、&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; がテストケースのプロセスを分離して実行結果をレポートする仕組みによるものです。
+また、Theoryテストを簡単にやれたりテストスイートを楽に設定できるのもメリットなのかなと（他のフレームワークを使って比較してないので）想像しています。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/Snaipe/Criterion/tree/bleeding/samples&#34;&gt;Test Examples&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://criterion.readthedocs.io/en/master/assert.html#base-assertions&#34;&gt;Assertion reference - Criterion 2.3.0 documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;makefile:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Makefile&lt;/h2&gt;
+
+&lt;p&gt;次に、テストを頻繁に実行しだすとコンパイルしてテスト実行というのが面倒になってきます。
+そうすると &lt;a href=&#34;https://www.gnu.org/software/make&#34;&gt;GNU Make&lt;/a&gt; の出番で、ビルドやビルドに必要な依存ライブラリ等をセットアップすることを定義していきます。
+そして、&lt;a href=&#34;https://www.gnu.org/software/make&#34;&gt;Make&lt;/a&gt; の自己文書化という裏技があるようなので導入しました。簡単に言えば &lt;a href=&#34;https://www.gnu.org/software/make&#34;&gt;Make&lt;/a&gt; で &lt;code&gt;rake -T&lt;/code&gt; みたいなことができます。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Makefileを自己文書化する&lt;br /&gt;
+&lt;a href=&#34;http://postd.cc/auto-documented-makefile/&#34;&gt;http://postd.cc/auto-documented-makefile/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-make&#34;&gt;pkg: ## Create some distribution packages
+	rm -rf builds &amp;amp;&amp;amp; mkdir builds
+	docker-compose up
+
+dist: ## Upload archives on Mac
+	@test -z $(GITHUB_TOKEN) || $(MAKE) github_release
+	@test -z $(PACKAGECLOUD_TOKEN) || $(MAKE) packagecloud_release
+
+help:
+	@grep -E &#39;^[a-zA-Z_-]+:.*?## .*$$&#39; $(MAKEFILE_LIST) | sort | awk &#39;BEGIN {FS = &amp;quot;:.*?## &amp;quot;}; {printf &amp;quot;$(INFO_COLOR)%-30s$(RESET) %s\n&amp;quot;, $$1, $$2}&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ターゲット名の後ろにコメントを書くことでそれらがターゲットの一覧となるようにしています。&lt;/p&gt;
+
+&lt;h2 id=&#34;packaging:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Packaging&lt;/h2&gt;
+
+&lt;p&gt;プロダクトが完成すると、使いやすくするために、パッケージにしたくなってきます。
+そのパッケージ化を手でやってたら面倒なので &lt;code&gt;docker-compose up&lt;/code&gt; で一気に作成されるようにします。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yml&#34;&gt;rpm:
+  dockerfile: dockerfiles/Dockerfile.centos
+  build: .
+  volumes:
+    - .:/octopass
+  command: make rpm
+deb:
+  dockerfile: dockerfiles/Dockerfile.ubuntu
+  build: .
+  volumes:
+    - .:/octopass
+  command: make deb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、作成済みパッケージをGithub Rereasesにアップロードするのはおなじみ &lt;code&gt;ghr&lt;/code&gt; を使い、
+&lt;a href=&#34;https://packagecloud.io/&#34;&gt;PackageCloud&lt;/a&gt; へのアップロードは &lt;code&gt;github.com/mlafeldt/pkgcloud&lt;/code&gt; を使用しました。
+そうすることで、各ディストリビューションパッケージの作成公開を &lt;code&gt;make dist&lt;/code&gt; というコマンドだけで完結してしまいます。&lt;/p&gt;
+
+&lt;h2 id=&#34;integration-test:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Integration Test&lt;/h2&gt;
+
+&lt;p&gt;ユニットテストしか書いてなかったので、いざ作ったパッケージをインストールして試したら
+&lt;code&gt;Segmentaion fault&lt;/code&gt; とか出たりして統合テストが出来てなかったことに気づきBashで書きました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;function test_octopass_passwd() {
+  actual=&amp;quot;$(/usr/bin/octopass passwd linyows)&amp;quot;
+  expected=&amp;quot;linyows:x:74049:2000:managed by octopass:/home/linyows:/bin/bash&amp;quot;
+
+  if [ &amp;quot;x$actual&amp;quot; == &amp;quot;x$expected&amp;quot; ]; then
+    pass &amp;quot;${FUNCNAME[0]}&amp;quot;
+  else
+    fail &amp;quot;${FUNCNAME[0]}&amp;quot; &amp;quot;$expected&amp;quot; &amp;quot;$actual&amp;quot;
+  fi
+}
+
+function run_test() {
+  self=$(cd $(dirname $0) &amp;amp;&amp;amp; pwd)/$(basename $0)
+  tests=&amp;quot;$(grep &amp;quot;^function test_&amp;quot; $self | sed -E &amp;quot;s/function (.*)\(\) \{/\1/g&amp;quot;)&amp;quot;
+  for t in $(echo $tests); do
+    $t
+  done
+}
+
+run_test
+exit $ALL_PASSED
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;今回は統合テストの検証項目が少ないためさっとbashで書いてしまいましたが、&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; で出来たかもしれません。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Cのプロダクトを作る際にやったことをまとめると以下です。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;スタイルフォーマット &amp;gt; Clang Format&lt;/li&gt;
+&lt;li&gt;Unit Test &amp;gt; Criterion&lt;/li&gt;
+&lt;li&gt;色々自動化 &amp;gt; Makefile&lt;/li&gt;
+&lt;li&gt;パッケージ作成 &amp;gt; Dokcer Compose と ghr&lt;/li&gt;
+&lt;li&gt;Integration Test &amp;gt; bashで書いた..&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;これらを抽象化すると、Cスターターみたいなものが出来るなと思いつつ、
+&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; のような便利なツール使うだけで、Cの開発苦手だなーという意識が変わって、
+随分前向きで楽しくなるものだなというのを改めて思いました。&lt;/p&gt;
+
+&lt;p&gt;Cは勉強始めたばかりなので、メモリの気持ちが理解できるようにやっていくぞ！&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;おまけ:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;おまけ&lt;/h3&gt;
+
+&lt;p&gt;ちなみに、&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; v0.3では共有ユーザ機能を追加しています。
+指定したユーザをチームで共有し認証することができるというものです。
+ユースケーストしては、アプリなどの実行またはdeployのためのユーザを共有するのを想定しています。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; はキャッシュすることで、高速さとGithubというSPOFを避けていますが、サーバの台数が大規模になると、
+どうしてもGithubのAPI Rate limitを超えAPIの手前にproxyを設置してリクエスト回数を減らすという施策が必要になってきます。
+今後は、そのキャッシュを&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; クラスタ間で共有することでGithub APIのproxyを不要にしようと考えています。
+実際にキャッシュを共有するのは、&lt;a href=&#34;https://github.com/coreos/etcd&#34;&gt;Etcd&lt;/a&gt; や &lt;a href=&#34;https://www.consul.io/intro/getting-started/kv.html&#34;&gt;Consul Key/Value Data&lt;/a&gt; とかを使う感じになるイメージです。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux Server管理者の管理を楽にする</title>
+      <link>http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html</link>
+      <pubDate>Fri, 10 Feb 2017 00:00:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html</guid>
+      <description>
+
+&lt;p&gt;昨年、libpam-mrubyを使って、Linux Serverにおける認証やその管理について思うところを書きました。今回はその続きです。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html&#34;&gt;libpam-mrubyを使ってGithubのチームで認証をする&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;OSSを使ってのLinuxユーザ管理といったら、一般的に&lt;a href=&#34;http://www.openldap.org/&#34;&gt;OpenLDAP&lt;/a&gt;を用いると思いますが、
+&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;って統合管理でやれること多いかわりにちゃんと使おうとしたら敷居が高い感じがするんです。
+&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;を触る頻度が低いと、&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;コマンドを毎回ググる事になり、地味に面倒というのは経験している人多いと思います。&lt;/p&gt;
+
+&lt;p&gt;そして、自分たちが&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;を通して解決したいことって単にsudo権限を持つ管理者かそうでないユーザの管理で意外とシンプルだったりします。
+それに気づかせてくれたのは、イケてる同僚の&lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama&lt;/a&gt;氏プロダクトの&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;というやつで、&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;はユーザや鍵の管理を&lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;TOML&lt;/a&gt;で行うというものでした。
+設定が&lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;TOML&lt;/a&gt;形式のファイルになることでgitで管理できますし、変更はGithubのPull-Requestを通じて行えるようになります。
+Pull-Requestが出来るということは、管理者は確認してマージするだけが作業となり、ホント面倒な作業から解放してくれる！そういうプロダクトです。&lt;/p&gt;
+
+&lt;p&gt;ただ、便利以外にいくつか課題があって&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;追加・削除は容易だが、最初の設定ファイル作るのが面倒&lt;/li&gt;
+&lt;li&gt;LDAPと同じくバックエンド（サーバなど）が必要&lt;/li&gt;
+&lt;li&gt;導入サーバによってはuidが被ってふがふが&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;みたいなことがあります。そこで &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt; の登場です（私が作ったんですが）。&lt;/p&gt;
+
+&lt;h2 id=&#34;about-octopass:e409e7237541bce9a15ddec379ece973&#34;&gt;About Octopass&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;は、Github APIを使って、Github Organization/Team によってlinuxユーザの名前解決を行い、
+Githubに登録している公開鍵によってSSHDの認証とGithubのPersonal Access TokenでPAM認証をできるようにするプロダクトです。&lt;/p&gt;
+
+&lt;figure id=&#34;octopass&#34; align=&#34;center&#34;&gt;
+&lt;figcaption style=&#34;color:ccc;padding-bottom:10px;&#34;&gt;Githubに依存するのでoctocatをモジってつけた名前、octopass。&lt;/figcaption&gt;
+&lt;img alt=&#34;OCTOPASS&#34; src=&#34;https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true&#34; width=&#34;200&#34;&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;簡潔にまとめると&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;octopass NSSモジュールが Github Org/Team メンバーを参照する&lt;/li&gt;
+&lt;li&gt;octopass コマンドによってGithubのpublic keysを取得する&lt;/li&gt;
+&lt;li&gt;octopass PAMヘルパーによって GithubのAuthorizationを得る&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;のようなことをやってくれるので、Linuxの管理者の管理をGithubのOrg/Teamメンバーの管理を通じて行えるわけです。&lt;/p&gt;
+
+&lt;h2 id=&#34;questions:e409e7237541bce9a15ddec379ece973&#34;&gt;Questions&lt;/h2&gt;
+
+&lt;p&gt;ここで大体疑問に思うことはこんな感じでしょう。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Github APIがDownしたらどうなるの？&lt;/li&gt;
+&lt;li&gt;海外のAPI越しに名前解決してたら遅いんでは？&lt;/li&gt;
+&lt;li&gt;サーバ台数多いとAPIのRatelimit（制限）にかかるのでは？&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;はい。全部その通りです&amp;hellip; ;-( しかし、&lt;em&gt;上の2つはキャッシュによって解決しています。&lt;/em&gt; :-)&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://tomohisaoda.com/images/architecture.png&#34; width=&#34;600&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Architecture&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;ではGithub APIのレスポンスボディをファイルキャッシュしていて、
+何かしらの原因でGithub APIへのリクエストが200で返らなかった場合はキャッシュタイムを超えていてもキャッシュを使う仕様になっています。
+また、キャッシュしているので名前解決に都度APIリクエストは投げません。&lt;/p&gt;
+
+&lt;p&gt;3つ目は、例えば、サーバ台数が10000台ある環境にoctopassを導入すると
+Github APIの&lt;a href=&#34;https://developer.github.com/v3/#rate-limiting&#34;&gt;Rate Limit&lt;/a&gt;は 5,000/hour なので、即刻API制限されてしまう可能性はあります。
+こういう場合は、Github APIにproxyを挟んでキャッシュしてもらうのがいいと思いますが、
+そもそも、大規模なので&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;その他のミドルウェアの方が向いていると言えます。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:e409e7237541bce9a15ddec379ece973&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;このように、&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;を使えば、
+自分たちの資産（コード）をGithubまたはGithub Enterpriseで管理している前提にはなりますが、
+それ（資産）にコミットする権限と同じように、&lt;em&gt;関係するサーバにしても同じように権限を管理できるようになります。&lt;/em&gt;
+&lt;strong&gt;なんてシンプル！&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;また、時代的にサーバに複数ロールは持たないので自ずと複雑なユーザ管理が不要になっているという流れではありますので、
+一見複雑なことができない小規模向けのような&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;が大規模なサーバ群に対応できるのかもしれません。
+時はすでにコンテナの時代に突入していますのでSSHをすることもだいぶ減ってきてはいます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/matsumotory&#34;&gt;@matsumotory&lt;/a&gt; 曰く、「マイクロセグメント！」&lt;/p&gt;
+
+&lt;h2 id=&#34;installation:e409e7237541bce9a15ddec379ece973&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;インストールは、RHEL/7 のみパッケージを作っているので yum でインストールが可能です。
+（パッケージ置き場は&lt;a href=&#34;https://packagecloud.io/linyows/octopass&#34;&gt;packagecloud&lt;/a&gt;を利用しています）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ curl -s https://packagecloud.io/install/repositories/linyows/octopass/script.rpm.sh | sudo bash
+$ sudo yum install octopass-0.1.0-1.x86_64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;他のバージョンや他のディストリビューションについては追々追加していきますが、
+&lt;em&gt;手伝っていただける方がいれば非常に歓迎です！&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;ソースからビルドインストールするには以下の方法です。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# 依存パッケージをディストリビューションに応じて入れてください
+# glibc, libcurl, jansson
+$ wget https://github.com/linyows/octopass/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip
+$ mv octopass /usr/bin/
+$ git clone https://github.com/linyows/octopass
+$ cd nss
+$ make &amp;amp;&amp;amp; make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;インストールがすんだら設定ファイルを作ります。基本的には、Github APIを叩くための
+&lt;a href=&#34;https://github.com/settings/tokens/new&#34;&gt;Personal Access Token&lt;/a&gt;をTokenとして記述し、OrganizationとTeamを設定するだけになります。
+ただ気をつけるのは、そのTokenは他のユーザから見えるのでGithub Organization Memberに対してread権限のみを持たせるのが吉です。
+設定項目は&lt;a href=&#34;https://github.com/linyows/octopass#configuration&#34;&gt;README.mdのConfiguration&lt;/a&gt;にあります。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/octopass.conf
+Token = &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+Organization = &amp;quot;hoge&amp;quot;
+Team = &amp;quot;fuga&amp;quot;
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;そして、各ファイルの項目に修正を加えます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# /etc/ssh/sshd_config:
+AuthorizedKeysCommand /usr/bin/octopass
+AuthorizedKeysCommandUser root
+UsePAM yes
+PasswordAuthentication no
+
+# /etc/pam.d/sshd:
+session required pam_mkhomedir.so skel=/etc/skel/ umask=0022
+
+# /etc/nsswitch.conf:
+passwd:     files octopass sss
+shadow:     files octopass sss
+group:      files octopass sss
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これでGithubのアカウントと鍵でSSHログインができるようになります。
+興味がある方は是非使ってみてください。バグ報告等はGithub Issueにてお待ちしております！&lt;/p&gt;
+
+&lt;p&gt;Octopass: &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;https://github.com/linyows/octopass&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;next-ideas:e409e7237541bce9a15ddec379ece973&#34;&gt;Next Ideas&lt;/h2&gt;
+
+&lt;p&gt;ちなみに、次の機能として考えているのはこちらです。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;共有アカウント（デプロイ用のユーザなど&lt;/li&gt;
+&lt;li&gt;複数ロール（チーム・グループ）の設定&lt;/li&gt;
+&lt;li&gt;Githubの認証をVault経由で行う&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;何かアイデアや要望をお持ちの方いれば、気軽にIssueに投げつけてくださいね！&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;最後に、&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;について仕様の確認をSlackで&lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama氏&lt;/a&gt;としてたときに、いい話が出てきたのでぺたり。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://tomohisaoda.com/images/octopass-slack.png&#34; width=&#34;400&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Conversation on Slack&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

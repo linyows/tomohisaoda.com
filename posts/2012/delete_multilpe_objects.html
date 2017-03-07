@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" S3のAPI&#34;Delete Multiple Objects&#34;をknoxに実装した &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2012-03-07T22:44:11&#43;09:00" />
+    <meta property="og:article:tag" content="knox" /><meta property="og:article:tag" content="node" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="S3のAPI&#34;Delete Multiple Objects&#34;をknoxに実装した" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html" />
+    <title> S3のAPI&#34;Delete Multiple Objects&#34;をknoxに実装した &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "S3のAPI\x22Delete Multiple Objects\x22をknoxに実装した",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2012-03-07",
+    "description": "",
+    "wordCount":  15 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">S3のAPI&#34;Delete Multiple Objects&#34;をknoxに実装した</h1>
+    <p>去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。</p>
+
+<ul>
+<li>AWS Documentation - Delete Multiple Objects <a href="http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html">http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html</a></li>
+<li>Knox <a href="https://github.com/LearnBoost/knox">https://github.com/LearnBoost/knox</a></li>
+</ul>
+
+<p>Delte Multiple Objects について後で追記する</p>
+
+    <div class="post-stamp">
+      <time datetime="2012-03-07T22:44:11&#43;09:00"> 7 Mar 2012 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/knox.html">knox</a> 
+        <a href="http://tomohisaoda.com/tags/node.html">node</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

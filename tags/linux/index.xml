@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/linux.html</link>
+    <description>Recent content in Linux on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Fri, 10 Feb 2017 00:00:00 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/linux.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux Server管理者の管理を楽にする</title>
+      <link>http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html</link>
+      <pubDate>Fri, 10 Feb 2017 00:00:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html</guid>
+      <description>
+
+&lt;p&gt;昨年、libpam-mrubyを使って、Linux Serverにおける認証やその管理について思うところを書きました。今回はその続きです。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html&#34;&gt;libpam-mrubyを使ってGithubのチームで認証をする&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;OSSを使ってのLinuxユーザ管理といったら、一般的に&lt;a href=&#34;http://www.openldap.org/&#34;&gt;OpenLDAP&lt;/a&gt;を用いると思いますが、
+&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;って統合管理でやれること多いかわりにちゃんと使おうとしたら敷居が高い感じがするんです。
+&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;を触る頻度が低いと、&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;コマンドを毎回ググる事になり、地味に面倒というのは経験している人多いと思います。&lt;/p&gt;
+
+&lt;p&gt;そして、自分たちが&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;を通して解決したいことって単にsudo権限を持つ管理者かそうでないユーザの管理で意外とシンプルだったりします。
+それに気づかせてくれたのは、イケてる同僚の&lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama&lt;/a&gt;氏プロダクトの&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;というやつで、&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;はユーザや鍵の管理を&lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;TOML&lt;/a&gt;で行うというものでした。
+設定が&lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;TOML&lt;/a&gt;形式のファイルになることでgitで管理できますし、変更はGithubのPull-Requestを通じて行えるようになります。
+Pull-Requestが出来るということは、管理者は確認してマージするだけが作業となり、ホント面倒な作業から解放してくれる！そういうプロダクトです。&lt;/p&gt;
+
+&lt;p&gt;ただ、便利以外にいくつか課題があって&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;追加・削除は容易だが、最初の設定ファイル作るのが面倒&lt;/li&gt;
+&lt;li&gt;LDAPと同じくバックエンド（サーバなど）が必要&lt;/li&gt;
+&lt;li&gt;導入サーバによってはuidが被ってふがふが&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;みたいなことがあります。そこで &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt; の登場です（私が作ったんですが）。&lt;/p&gt;
+
+&lt;h2 id=&#34;about-octopass:e409e7237541bce9a15ddec379ece973&#34;&gt;About Octopass&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;は、Github APIを使って、Github Organization/Team によってlinuxユーザの名前解決を行い、
+Githubに登録している公開鍵によってSSHDの認証とGithubのPersonal Access TokenでPAM認証をできるようにするプロダクトです。&lt;/p&gt;
+
+&lt;figure id=&#34;octopass&#34; align=&#34;center&#34;&gt;
+&lt;figcaption style=&#34;color:ccc;padding-bottom:10px;&#34;&gt;Githubに依存するのでoctocatをモジってつけた名前、octopass。&lt;/figcaption&gt;
+&lt;img alt=&#34;OCTOPASS&#34; src=&#34;https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true&#34; width=&#34;200&#34;&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;簡潔にまとめると&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;octopass NSSモジュールが Github Org/Team メンバーを参照する&lt;/li&gt;
+&lt;li&gt;octopass コマンドによってGithubのpublic keysを取得する&lt;/li&gt;
+&lt;li&gt;octopass PAMヘルパーによって GithubのAuthorizationを得る&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;のようなことをやってくれるので、Linuxの管理者の管理をGithubのOrg/Teamメンバーの管理を通じて行えるわけです。&lt;/p&gt;
+
+&lt;h2 id=&#34;questions:e409e7237541bce9a15ddec379ece973&#34;&gt;Questions&lt;/h2&gt;
+
+&lt;p&gt;ここで大体疑問に思うことはこんな感じでしょう。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Github APIがDownしたらどうなるの？&lt;/li&gt;
+&lt;li&gt;海外のAPI越しに名前解決してたら遅いんでは？&lt;/li&gt;
+&lt;li&gt;サーバ台数多いとAPIのRatelimit（制限）にかかるのでは？&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;はい。全部その通りです&amp;hellip; ;-( しかし、&lt;em&gt;上の2つはキャッシュによって解決しています。&lt;/em&gt; :-)&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://tomohisaoda.com/images/architecture.png&#34; width=&#34;600&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Architecture&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;ではGithub APIのレスポンスボディをファイルキャッシュしていて、
+何かしらの原因でGithub APIへのリクエストが200で返らなかった場合はキャッシュタイムを超えていてもキャッシュを使う仕様になっています。
+また、キャッシュしているので名前解決に都度APIリクエストは投げません。&lt;/p&gt;
+
+&lt;p&gt;3つ目は、例えば、サーバ台数が10000台ある環境にoctopassを導入すると
+Github APIの&lt;a href=&#34;https://developer.github.com/v3/#rate-limiting&#34;&gt;Rate Limit&lt;/a&gt;は 5,000/hour なので、即刻API制限されてしまう可能性はあります。
+こういう場合は、Github APIにproxyを挟んでキャッシュしてもらうのがいいと思いますが、
+そもそも、大規模なので&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;その他のミドルウェアの方が向いていると言えます。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:e409e7237541bce9a15ddec379ece973&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;このように、&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;を使えば、
+自分たちの資産（コード）をGithubまたはGithub Enterpriseで管理している前提にはなりますが、
+それ（資産）にコミットする権限と同じように、&lt;em&gt;関係するサーバにしても同じように権限を管理できるようになります。&lt;/em&gt;
+&lt;strong&gt;なんてシンプル！&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;また、時代的にサーバに複数ロールは持たないので自ずと複雑なユーザ管理が不要になっているという流れではありますので、
+一見複雑なことができない小規模向けのような&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;が大規模なサーバ群に対応できるのかもしれません。
+時はすでにコンテナの時代に突入していますのでSSHをすることもだいぶ減ってきてはいます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/matsumotory&#34;&gt;@matsumotory&lt;/a&gt; 曰く、「マイクロセグメント！」&lt;/p&gt;
+
+&lt;h2 id=&#34;installation:e409e7237541bce9a15ddec379ece973&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;インストールは、RHEL/7 のみパッケージを作っているので yum でインストールが可能です。
+（パッケージ置き場は&lt;a href=&#34;https://packagecloud.io/linyows/octopass&#34;&gt;packagecloud&lt;/a&gt;を利用しています）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ curl -s https://packagecloud.io/install/repositories/linyows/octopass/script.rpm.sh | sudo bash
+$ sudo yum install octopass-0.1.0-1.x86_64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;他のバージョンや他のディストリビューションについては追々追加していきますが、
+&lt;em&gt;手伝っていただける方がいれば非常に歓迎です！&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;ソースからビルドインストールするには以下の方法です。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# 依存パッケージをディストリビューションに応じて入れてください
+# glibc, libcurl, jansson
+$ wget https://github.com/linyows/octopass/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip
+$ mv octopass /usr/bin/
+$ git clone https://github.com/linyows/octopass
+$ cd nss
+$ make &amp;amp;&amp;amp; make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;インストールがすんだら設定ファイルを作ります。基本的には、Github APIを叩くための
+&lt;a href=&#34;https://github.com/settings/tokens/new&#34;&gt;Personal Access Token&lt;/a&gt;をTokenとして記述し、OrganizationとTeamを設定するだけになります。
+ただ気をつけるのは、そのTokenは他のユーザから見えるのでGithub Organization Memberに対してread権限のみを持たせるのが吉です。
+設定項目は&lt;a href=&#34;https://github.com/linyows/octopass#configuration&#34;&gt;README.mdのConfiguration&lt;/a&gt;にあります。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/octopass.conf
+Token = &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+Organization = &amp;quot;hoge&amp;quot;
+Team = &amp;quot;fuga&amp;quot;
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;そして、各ファイルの項目に修正を加えます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# /etc/ssh/sshd_config:
+AuthorizedKeysCommand /usr/bin/octopass
+AuthorizedKeysCommandUser root
+UsePAM yes
+PasswordAuthentication no
+
+# /etc/pam.d/sshd:
+session required pam_mkhomedir.so skel=/etc/skel/ umask=0022
+
+# /etc/nsswitch.conf:
+passwd:     files octopass sss
+shadow:     files octopass sss
+group:      files octopass sss
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これでGithubのアカウントと鍵でSSHログインができるようになります。
+興味がある方は是非使ってみてください。バグ報告等はGithub Issueにてお待ちしております！&lt;/p&gt;
+
+&lt;p&gt;Octopass: &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;https://github.com/linyows/octopass&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;next-ideas:e409e7237541bce9a15ddec379ece973&#34;&gt;Next Ideas&lt;/h2&gt;
+
+&lt;p&gt;ちなみに、次の機能として考えているのはこちらです。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;共有アカウント（デプロイ用のユーザなど&lt;/li&gt;
+&lt;li&gt;複数ロール（チーム・グループ）の設定&lt;/li&gt;
+&lt;li&gt;Githubの認証をVault経由で行う&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;何かアイデアや要望をお持ちの方いれば、気軽にIssueに投げつけてくださいね！&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;最後に、&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;について仕様の確認をSlackで&lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama氏&lt;/a&gt;としてたときに、いい話が出てきたのでぺたり。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://tomohisaoda.com/images/octopass-slack.png&#34; width=&#34;400&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Conversation on Slack&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>libpam-mrubyを使ってGithubのチームで認証をする</title>
+      <link>http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html</link>
+      <pubDate>Thu, 15 Dec 2016 00:00:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html</guid>
+      <description>
+
+&lt;p&gt;このエントリは &lt;a href=&#34;http://qiita.com/advent-calendar/2016/mruby&#34;&gt;mruby Advent Calendar 2016 - Qiita&lt;/a&gt; 15日目の記事です。&lt;/p&gt;
+
+&lt;p&gt;前日は d6rkaizさんの &lt;a href=&#34;https://blog.d6rkaiz.com/archives/2016/12/14/check-external-ip-and-geoip-with-ngx_mruby/&#34;&gt;check external ip and geoip with ngx_mruby&lt;/a&gt; でした。
+&lt;code&gt;mruby-geoip&lt;/code&gt; を使うことで手軽にアクセス制御を動的に出来ることがわかりました。&lt;/p&gt;
+
+&lt;p&gt;気がつけば、ブログをadvent calendar書く頻度でしか更新しておらず、
+もっとなんか書かなきゃなという気持ちで、&lt;em&gt;来年から頑張る&lt;/em&gt; という決意しております。
+これまでmrubyに触れてこなかったのでAdvent Calendar駆動でmrubyを触ってみようという流れです。&lt;/p&gt;
+
+&lt;h2 id=&#34;管理が楽でシンプルな認証とは:ae240268879c0d9f1a7641d39837058a&#34;&gt;管理が楽でシンプルな認証とは&lt;/h2&gt;
+
+&lt;p&gt;僕はlinuxの認証まわりをLDAPじゃないもっとシンプルな何かに出来ないかなという考えがなんとなくあって、
+それを &lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama&lt;/a&gt;氏 が STNS という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
+ただ、Githubのチームがそのまま認証になったらサーバレスかつ管理が楽でさらに良いなって考えを持っていたのでした。
+なので、&lt;a href=&#34;https://twitter.com/kentaro&#34;&gt;@antipop&lt;/a&gt;さんや &lt;a href=&#34;https://twitter.com/udzura&#34;&gt;@udzura&lt;/a&gt;さんが去年あたりにやってた libpam-mruby を使ってGithub認証をしてみます。&lt;/p&gt;
+
+&lt;h2 id=&#34;use-libpam-mruby:ae240268879c0d9f1a7641d39837058a&#34;&gt;Use libpam-mruby&lt;/h2&gt;
+
+&lt;p&gt;libpam-mrubyは、PAMにmrubyを組み込んで認証部分をrubyで書くというものです。
+なので、ビルドにmrubyのgemであるmgemを追加してあげれば大体やりたいことはできるし、
+無ければmgemチャンスといったとこでしょう。&lt;/p&gt;
+
+&lt;p&gt;では、Github APIを叩くのに便利そうな &lt;code&gt;mruby-httprequest&lt;/code&gt; と &lt;code&gt;mruby-polarssl&lt;/code&gt;、
+basic認証のために &lt;code&gt;mruby-base64&lt;/code&gt; を追加してlibpam-mrubyをビルドします。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat build_config.rb
+MRuby::Build.new do |conf|
+  toolchain :gcc
+  conf.gembox &#39;default&#39;
+  conf.gem :github =&amp;gt; &#39;luisbebop/mruby-polarssl&#39;
+  conf.gem :github =&amp;gt; &#39;matsumoto-r/mruby-httprequest&#39;
+  conf.gem :github =&amp;gt; &#39;mattn/mruby-base64&#39;
+
+  conf.cc do |cc|
+    cc.flags &amp;lt;&amp;lt; &#39;-fPIC&#39;
+  end
+end
+
+$ rake
+$ sudo install build/pam_mruby.so /usr/lib64/security/pam_mruby.so
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;そして、&lt;code&gt;/etc/pam.d/system-auth-ac&lt;/code&gt; の認証を &lt;code&gt;pam_unix.so&lt;/code&gt; から &lt;code&gt;pam_mruby.so&lt;/code&gt; に変更します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;auth  sufficient  pam_mruby.so rbfile=/etc/pam-mruby.rb debug try_first_pass
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;認証ロジックは以下のような感じで、チームメンバーであるかとパスワードの整合性をチェックしています。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt;EOL | sudo tee /etc/pam-mruby.rb
+def authenticate(username, password)
+  api = &#39;https://api.github.com&#39;
+  token = &#39;github token&#39;
+  # あらかじめIDをAPIで取得しておく
+  team_id = 1851462
+
+  http = HttpRequest.new
+  default_headers = {
+    &amp;quot;User-Agent&amp;quot; =&amp;gt; &amp;quot;mruby&amp;quot;,
+    &amp;quot;Authorization&amp;quot; =&amp;gt; &amp;quot;token #{token}&amp;quot;
+  }
+
+  # team member?
+  res = http.get(&amp;quot;#{api}/teams/#{team_id}/members/#{username}&amp;quot;,
+    nil, default_headers)
+  return false if res.code != 204
+
+  # password correct?
+  key = Base64::encode(&amp;quot;#{username}:#{password}&amp;quot;)
+  res = http.get(&amp;quot;#{api}/user&amp;quot;,
+    nil, default_headers.merge({&amp;quot;Authorization&amp;quot; =&amp;gt; &amp;quot;Basic #{key}&amp;quot;}))
+  res.code == 200
+end
+EOL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;もちろん、トークンが書かれてるのでread権限を制限しておきます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo chmod 600 /etc/pam-mruby.rb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これで &lt;code&gt;su &amp;lt;github username&amp;gt;&lt;/code&gt; するとパスワードにgithub tokenを入力して認証が成功するようになります。
+PAMなので、sshdに対しても同様に /etc/pam.d/sshd へ pam-mruby.so を追加するとsshログインに関してもmrubyでの認証が可能となります。
+ただし、存在しないユーザに対してはもちろん認証出来ないので &lt;em&gt;あらかじめuserを作っておく必要&lt;/em&gt; はあります。&lt;/p&gt;
+
+&lt;p&gt;ということで、「パスワード認証であること」「Githubに依存すること」はさておき、
+管理をGithubのOrganizationに作ったTeamに任せるだけで専用のサーバを立てたり、
+AWSでAPI GatewayやLambdaを準備する必要がないのは非常に手軽なのではないでしょうか。&lt;/p&gt;
+
+&lt;p&gt;公開鍵認証もsshdのAuthorizedKeysCommandからGithubから鍵取ってくればできるし、
+GithubがDownした時の案（default userでログインするなど）さえ準備できていれば十分な気はします。
+また、認証部分を直接GithubのAPIではなく、Hashicorpの&lt;a href=&#34;https://www.vaultproject.io/&#34;&gt;Vault&lt;/a&gt;のAPI（Github Backend）を叩くことでaudit loghとしても活用できるでしょう。&lt;/p&gt;
+
+&lt;p&gt;ネックなのは、httpまたぐので認証にもたつくことでしょうか。&lt;/p&gt;
+
+&lt;h2 id=&#34;use-libnss-ato:ae240268879c0d9f1a7641d39837058a&#34;&gt;Use libnss-ato&lt;/h2&gt;
+
+&lt;p&gt;ここで、面白そうなnssモジュールを見つけたのでご紹介します。
+名前解決できなかったuserを設定したユーザーに紐付けてしまうnssモジュールです。&lt;/p&gt;
+
+&lt;p&gt;Name Service Switch module All-To-One
+&lt;a href=&#34;https://github.com/donapieppo/libnss-ato&#34;&gt;https://github.com/donapieppo/libnss-ato&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;インストール・セットアップは、READMEにある通りですが、リポジトリにrpmのSPECファイルがあるので
+ビルドしてyumで入れることができます。
+あとは&lt;code&gt;nsswitch.conf&lt;/code&gt; の &lt;code&gt;/etc/passwd&lt;/code&gt; や &lt;code&gt;/etc/shadow&lt;/code&gt; に &lt;code&gt;ato&lt;/code&gt; を追加し、
+紐付けるユーザーを &lt;code&gt;/etc/libnss-ato.conf&lt;/code&gt; に定義するだけです。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git clone https://github.com/donapieppo/libnss-ato.git
+$ cd libnss-ato
+$ make rpm
+$ sudo yum install RPMS/x86_64/libnss-ato-0.2-1.x86_64.rpm
+$ cat &amp;lt;&amp;lt;EOL | sudo tee /etc/libnss-ato.conf
+vagrant:x:1000:1000:vagrant,,,:/home/vagrant:/bin/bash
+EOL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;すると、存在しないuserがあたかも存在するかのように名前が引ける様になります。
+uidやgidが紐づけたuserにすり替わっていて不思議な様子です。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ id foo
+uid=1000(vagrant) gid=1000(vagrant) groups=1000(vagrant)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然ですが、&lt;code&gt;useradd foo&lt;/code&gt; は既に存在するため作成できません。。。
+しかし、このモジュールを使えば、
+上記libpam-mrubyによって認証されたユーザは存在しなくても紐づけたユーザでログインできる様になります。&lt;/p&gt;
+
+&lt;h2 id=&#34;use-mruby-github:ae240268879c0d9f1a7641d39837058a&#34;&gt;Use mruby-github&lt;/h2&gt;
+
+&lt;p&gt;直接&lt;code&gt;mruby-httprequest&lt;/code&gt;を使ってもコード少ないですが、
+せっかくなのでmruby用のgithub clientを作ってみました。&lt;/p&gt;
+
+&lt;p&gt;linyows/mruby-github
+&lt;a href=&#34;https://github.com/linyows/mruby-github&#34;&gt;https://github.com/linyows/mruby-github&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;このmgemを一緒にlibpam-mrubyをビルドしてやると上述の認証scriptは以下の様になります。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt;EOL | sudo tee /etc/pam-mruby.rb
+def authenticate(username, password)
+  token = &#39;github token&#39;
+  org_name = &#39;foobar&#39;
+  team_name = &#39;zoo&#39;
+
+  client = Github::Client.new
+  client.token = token
+  team = client.org_teams(org_name).find { |t| t[&#39;name&#39;] == team_name }
+  client.team_member?(team[&#39;id&#39;], username) &amp;amp;&amp;amp;
+    client.basic_authenticated?(username, password)
+end
+EOL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Teamを名前で指定してますが、変更する場合を想定してIDのままがいいかもしれません。
+mruby-githubは、&lt;code&gt;mruby-mrbgem-template&lt;/code&gt; を使って作ったのですが、
+C言語のサンプルが出力されていて、mruby作法を知らない人には非常に勉強になります。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:ae240268879c0d9f1a7641d39837058a&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;mrubyをいじることでCのソース読んだりruby書いたりと、mrubyは複数の言語学べてお得だなという印象で、
+libpam-mrubyを使うことで簡単にGithubのOrganization/Teamで連携認証が出来ました。
+ただし、libpam-mruby を使わなくとも pam_exec を使って外部ファイル認証できるよってことは内緒です。&lt;/p&gt;
+
+&lt;p&gt;次は&lt;a href=&#34;http://qiita.com/drednote&#34;&gt;drednoteさん&lt;/a&gt;です。&lt;/p&gt;
+
+&lt;h3 id=&#34;reference:ae240268879c0d9f1a7641d39837058a&#34;&gt;Reference&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Linuxユーザーと公開鍵を統合管理するサーバ&amp;amp;クライアントを書いた&lt;br /&gt;
+&lt;a href=&#34;https://ten-snapon.com/archives/1228&#34;&gt;https://ten-snapon.com/archives/1228&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;libpam-mruby を試してみた&lt;br /&gt;
+&lt;a href=&#34;http://qiita.com/udzura/items/0817ac7cd703aaca6124&#34;&gt;http://qiita.com/udzura/items/0817ac7cd703aaca6124&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;libpam-mrubyによりmrubyでLinuxのログイン認証をする&lt;br /&gt;
+&lt;a href=&#34;http://blog.kentarok.org/entry/2015/12/22/231114&#34;&gt;http://blog.kentarok.org/entry/2015/12/22/231114&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;mrubyの拡張モジュールであるmrbgemのテンプレートを自動で生成するmrbgem作った&lt;br /&gt;
+&lt;a href=&#34;http://blog.matsumoto-r.jp/?p=3923&#34;&gt;http://blog.matsumoto-r.jp/?p=3923&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;pam_exec(8) - Linux man page&lt;br /&gt;
+&lt;a href=&#34;https://linux.die.net/man/8/pam_exec&#34;&gt;https://linux.die.net/man/8/pam_exec&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

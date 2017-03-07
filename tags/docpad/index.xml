@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docpad on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/docpad.html</link>
+    <description>Recent content in Docpad on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Thu, 01 Mar 2012 23:47:42 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/docpad.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>JekyllのNode版であるDocpadを使ってみる</title>
+      <link>http://tomohisaoda.com/posts/2012/using_docpad.html</link>
+      <pubDate>Thu, 01 Mar 2012 23:47:42 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/using_docpad.html</guid>
+      <description>
+
+&lt;p&gt;なんか巷では、&lt;a href=&#34;http://jekyllrb.com/&#34;&gt;jekyll&lt;/a&gt;, &lt;a href=&#34;http://octopress.org/&#34;&gt;octpress&lt;/a&gt; が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、&lt;a href=&#34;http://nodejs.org/&#34;&gt;node&lt;/a&gt;弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Docpad &lt;a href=&#34;https://github.com/bevry/docpad&#34;&gt;https://github.com/bevry/docpad&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Docpadを使ったサイト &lt;a href=&#34;https://github.com/bevry/docpad/wiki/Showcase&#34;&gt;https://github.com/bevry/docpad/wiki/Showcase&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install:c857c41bd1b4ac45231478eb13a0db9d&#34;&gt;Install&lt;/h2&gt;
+
+&lt;p&gt;docpadは、coffee-scriptで実装されていて、まずmacにcoffeeと一緒にインストールする。&lt;code&gt;-g&lt;/code&gt;オプションはgloballyで&lt;code&gt;/usr/local/bin/*&lt;/code&gt;にインストールする。&lt;/p&gt;
+
+&lt;pre&gt;
+$ npm install -g coffee-script docpad
+&lt;/pre&gt;
+
+&lt;p&gt;プロジェクト用のディレクトリに移動し、&lt;code&gt;run&lt;/code&gt;コマンドではじめる。&lt;code&gt;run&lt;/code&gt;コマンドは、全てのコマンドを実行してくれるみたいで、*2回目以降実行するとエラーが出る*。ドキュメントにある通り最初の1回用っぽい。&lt;/p&gt;
+
+&lt;p&gt;実行したらどのスケルトンを使うか聞かれるので選択する。Twitter&amp;rsquo;s Bootstrap使うと*それ臭さがにじみ出てキモイ*ので、何もスタイル無しの状態を選択。&lt;/p&gt;
+
+&lt;pre&gt;
+$ docpad run
+info: Welcome to DocPad v3.3.0
+You are about to create your new project inside your current directory. Below is a list of skeletons to bootstrap your new project:
+
+        canvas.docpad
+        The Blank Canvas Skeleton for DocPad. Your web development playground.
+
+        kitchensink.docpad
+        Kitchensink Skeleton for DocPad, based off Twitter&#39;s Bootstrap
+
+Which skeleton will you use?
+  1) canvas.docpad
+  2) kitchensink.docpad
+  :
+&lt;/pre&gt;
+
+&lt;p&gt;すると必要なモジュールがインストールされて、サーバーが&lt;code&gt;localhost:9778&lt;/code&gt;に起動する。記事書いて確認したりするには、&lt;code&gt;$ docpad cli&lt;/code&gt;が*便利かも*。docpadのコマンドをそのまま叩ける状態になるので、&lt;code&gt;server&lt;/code&gt;と&lt;code&gt;watch&lt;/code&gt;を叩く事で更新をlocalhostで確認しやすい。&lt;/p&gt;
+
+&lt;pre&gt;
+$ docpad cli
+info: Welcome to DocPad v3.3.0
+What would you like to do now?
+&gt; server
+info: DocPad listening to http://localhost:9778/ with directory /Users/foo/Projects/bar/out
+info: The action completed successfully
+
+What would you like to do now?
+&gt; watch
+info: Watching setup starting...
+info: Watching setup
+info: The action completed successfully
+
+What would you like to do now?
+&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;こんな風に対話式にコマンドを叩ける。&lt;code&gt;watch&lt;/code&gt;はファイルの更新を検知してずっとビルドしてくれる。&lt;/p&gt;
+
+&lt;h2 id=&#34;記事を書く:c857c41bd1b4ac45231478eb13a0db9d&#34;&gt;記事を書く&lt;/h2&gt;
+
+&lt;p&gt;以下は、ディレクトリ構成。&lt;/p&gt;
+
+&lt;pre&gt;
+├── README.md
+├── node_modules
+│   ├── coffee-script
+│   ├── docpad
+│   ├── express
+│   ├── moment
+│   └── underscore
+├── out
+│   ├── images
+│   ├── index.html
+│   ├── scripts
+│   ├── styles
+│   └── vendor
+├── package.json
+├── plugins
+└── src
+    ├── documents
+    │   ├── index.html.coffee
+    │   ├── posts
+    │   ├── scripts
+    │   └── styles
+    ├── layouts
+    │   └── default.html.coffee
+    └── public
+        ├── images
+        └── vendor
+&lt;/pre&gt;
+
+&lt;p&gt;outは、docpadが出力する静的ファイル群で、基本src配下を弄る。スクリプトを書くにはCoffee以外にRoyやMoveも使えるみたいで、Markupには、Markdown以外にEcoやJade, Hamlとかいけるみたい。Styleは、Stylus, Less, Sassなどが使える。とりあえず、記事はpostsディレクトリをほってそこにmarkdownファイルを作っていく事にし、レイアウトやフロントページは、記事一覧表示するのでCoffeeで書いた。Styleは、みんな知ってるLearnBoostのTJ Holowaychuk aka &lt;strong&gt;visionmedia製 Stylus&lt;/strong&gt;にしてみた。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CoffeeScript &lt;a href=&#34;http://coffeescript.org/&#34;&gt;http://coffeescript.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Markdown &lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;http://daringfireball.net/projects/markdown/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Stylus &lt;a href=&#34;http://learnboost.github.com/stylus/&#34;&gt;http://learnboost.github.com/stylus/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;deploy:c857c41bd1b4ac45231478eb13a0db9d&#34;&gt;Deploy&lt;/h2&gt;
+
+&lt;p&gt;GitHubをoriginリポジトリにして、*pushしたらwebhookでGitHubからpullするようにしてdeploy*するようにした。Deploy先にリモートリポジトリ作っても良かったけどそこにpushするのがめんどかったのでwebhookにしたけど、*もっといいやり方があれば誰か教えて欲しい*。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Github repository &lt;a href=&#34;https://github.com/linyows/tomohisaoda.com&#34;&gt;https://github.com/linyows/tomohisaoda.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;P.S. - April 3, 2012&lt;/p&gt;
+
+&lt;p&gt;DocpadのShowcaseで、この記事 と このサイト が紹介されてたみたい。
+&lt;a href=&#34;https://github.com/bevry/docpad/wiki/Showcase&#34;&gt;https://github.com/bevry/docpad/wiki/Showcase&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

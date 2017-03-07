@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Knox on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/knox.html</link>
+    <description>Recent content in Knox on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Wed, 07 Mar 2012 22:44:11 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/knox.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>S3のAPI&#34;Delete Multiple Objects&#34;をknoxに実装した</title>
+      <link>http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html</link>
+      <pubDate>Wed, 07 Mar 2012 22:44:11 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html</guid>
+      <description>&lt;p&gt;去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;AWS Documentation - Delete Multiple Objects &lt;a href=&#34;http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html&#34;&gt;http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Knox &lt;a href=&#34;https://github.com/LearnBoost/knox&#34;&gt;https://github.com/LearnBoost/knox&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Delte Multiple Objects について後で追記する&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

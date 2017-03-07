@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" libpam-mrubyを使ってGithubのチームで認証をする &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2016-12-15T00:00:00&#43;09:00" />
+    <meta property="og:article:tag" content="mruby" /><meta property="og:article:tag" content="pam" /><meta property="og:article:tag" content="linux" /><meta property="og:article:tag" content="github" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="libpam-mrubyを使ってGithubのチームで認証をする" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html" />
+    <title> libpam-mrubyを使ってGithubのチームで認証をする &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "libpam-mrubyを使ってGithubのチームで認証をする",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2016-12-15",
+    "description": "",
+    "wordCount":  339 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">libpam-mrubyを使ってGithubのチームで認証をする</h1>
+    
+
+<p>このエントリは <a href="http://qiita.com/advent-calendar/2016/mruby">mruby Advent Calendar 2016 - Qiita</a> 15日目の記事です。</p>
+
+<p>前日は d6rkaizさんの <a href="https://blog.d6rkaiz.com/archives/2016/12/14/check-external-ip-and-geoip-with-ngx_mruby/">check external ip and geoip with ngx_mruby</a> でした。
+<code>mruby-geoip</code> を使うことで手軽にアクセス制御を動的に出来ることがわかりました。</p>
+
+<p>気がつけば、ブログをadvent calendar書く頻度でしか更新しておらず、
+もっとなんか書かなきゃなという気持ちで、<em>来年から頑張る</em> という決意しております。
+これまでmrubyに触れてこなかったのでAdvent Calendar駆動でmrubyを触ってみようという流れです。</p>
+
+<h2 id="管理が楽でシンプルな認証とは:ae240268879c0d9f1a7641d39837058a">管理が楽でシンプルな認証とは</h2>
+
+<p>僕はlinuxの認証まわりをLDAPじゃないもっとシンプルな何かに出来ないかなという考えがなんとなくあって、
+それを <a href="https://twitter.com/pyama86">@pyama</a>氏 が STNS という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
+ただ、Githubのチームがそのまま認証になったらサーバレスかつ管理が楽でさらに良いなって考えを持っていたのでした。
+なので、<a href="https://twitter.com/kentaro">@antipop</a>さんや <a href="https://twitter.com/udzura">@udzura</a>さんが去年あたりにやってた libpam-mruby を使ってGithub認証をしてみます。</p>
+
+<h2 id="use-libpam-mruby:ae240268879c0d9f1a7641d39837058a">Use libpam-mruby</h2>
+
+<p>libpam-mrubyは、PAMにmrubyを組み込んで認証部分をrubyで書くというものです。
+なので、ビルドにmrubyのgemであるmgemを追加してあげれば大体やりたいことはできるし、
+無ければmgemチャンスといったとこでしょう。</p>
+
+<p>では、Github APIを叩くのに便利そうな <code>mruby-httprequest</code> と <code>mruby-polarssl</code>、
+basic認証のために <code>mruby-base64</code> を追加してlibpam-mrubyをビルドします。</p>
+
+<pre><code>$ cat build_config.rb
+MRuby::Build.new do |conf|
+  toolchain :gcc
+  conf.gembox 'default'
+  conf.gem :github =&gt; 'luisbebop/mruby-polarssl'
+  conf.gem :github =&gt; 'matsumoto-r/mruby-httprequest'
+  conf.gem :github =&gt; 'mattn/mruby-base64'
+
+  conf.cc do |cc|
+    cc.flags &lt;&lt; '-fPIC'
+  end
+end
+
+$ rake
+$ sudo install build/pam_mruby.so /usr/lib64/security/pam_mruby.so
+</code></pre>
+
+<p>そして、<code>/etc/pam.d/system-auth-ac</code> の認証を <code>pam_unix.so</code> から <code>pam_mruby.so</code> に変更します。</p>
+
+<pre><code>auth  sufficient  pam_mruby.so rbfile=/etc/pam-mruby.rb debug try_first_pass
+</code></pre>
+
+<p>認証ロジックは以下のような感じで、チームメンバーであるかとパスワードの整合性をチェックしています。</p>
+
+<pre><code>$ cat &lt;&lt;EOL | sudo tee /etc/pam-mruby.rb
+def authenticate(username, password)
+  api = 'https://api.github.com'
+  token = 'github token'
+  # あらかじめIDをAPIで取得しておく
+  team_id = 1851462
+
+  http = HttpRequest.new
+  default_headers = {
+    &quot;User-Agent&quot; =&gt; &quot;mruby&quot;,
+    &quot;Authorization&quot; =&gt; &quot;token #{token}&quot;
+  }
+
+  # team member?
+  res = http.get(&quot;#{api}/teams/#{team_id}/members/#{username}&quot;,
+    nil, default_headers)
+  return false if res.code != 204
+
+  # password correct?
+  key = Base64::encode(&quot;#{username}:#{password}&quot;)
+  res = http.get(&quot;#{api}/user&quot;,
+    nil, default_headers.merge({&quot;Authorization&quot; =&gt; &quot;Basic #{key}&quot;}))
+  res.code == 200
+end
+EOL
+</code></pre>
+
+<p>もちろん、トークンが書かれてるのでread権限を制限しておきます。</p>
+
+<pre><code>$ sudo chmod 600 /etc/pam-mruby.rb
+</code></pre>
+
+<p>これで <code>su &lt;github username&gt;</code> するとパスワードにgithub tokenを入力して認証が成功するようになります。
+PAMなので、sshdに対しても同様に /etc/pam.d/sshd へ pam-mruby.so を追加するとsshログインに関してもmrubyでの認証が可能となります。
+ただし、存在しないユーザに対してはもちろん認証出来ないので <em>あらかじめuserを作っておく必要</em> はあります。</p>
+
+<p>ということで、「パスワード認証であること」「Githubに依存すること」はさておき、
+管理をGithubのOrganizationに作ったTeamに任せるだけで専用のサーバを立てたり、
+AWSでAPI GatewayやLambdaを準備する必要がないのは非常に手軽なのではないでしょうか。</p>
+
+<p>公開鍵認証もsshdのAuthorizedKeysCommandからGithubから鍵取ってくればできるし、
+GithubがDownした時の案（default userでログインするなど）さえ準備できていれば十分な気はします。
+また、認証部分を直接GithubのAPIではなく、Hashicorpの<a href="https://www.vaultproject.io/">Vault</a>のAPI（Github Backend）を叩くことでaudit loghとしても活用できるでしょう。</p>
+
+<p>ネックなのは、httpまたぐので認証にもたつくことでしょうか。</p>
+
+<h2 id="use-libnss-ato:ae240268879c0d9f1a7641d39837058a">Use libnss-ato</h2>
+
+<p>ここで、面白そうなnssモジュールを見つけたのでご紹介します。
+名前解決できなかったuserを設定したユーザーに紐付けてしまうnssモジュールです。</p>
+
+<p>Name Service Switch module All-To-One
+<a href="https://github.com/donapieppo/libnss-ato">https://github.com/donapieppo/libnss-ato</a></p>
+
+<p>インストール・セットアップは、READMEにある通りですが、リポジトリにrpmのSPECファイルがあるので
+ビルドしてyumで入れることができます。
+あとは<code>nsswitch.conf</code> の <code>/etc/passwd</code> や <code>/etc/shadow</code> に <code>ato</code> を追加し、
+紐付けるユーザーを <code>/etc/libnss-ato.conf</code> に定義するだけです。</p>
+
+<pre><code>$ git clone https://github.com/donapieppo/libnss-ato.git
+$ cd libnss-ato
+$ make rpm
+$ sudo yum install RPMS/x86_64/libnss-ato-0.2-1.x86_64.rpm
+$ cat &lt;&lt;EOL | sudo tee /etc/libnss-ato.conf
+vagrant:x:1000:1000:vagrant,,,:/home/vagrant:/bin/bash
+EOL
+</code></pre>
+
+<p>すると、存在しないuserがあたかも存在するかのように名前が引ける様になります。
+uidやgidが紐づけたuserにすり替わっていて不思議な様子です。</p>
+
+<pre><code>$ id foo
+uid=1000(vagrant) gid=1000(vagrant) groups=1000(vagrant)
+</code></pre>
+
+<p>当然ですが、<code>useradd foo</code> は既に存在するため作成できません。。。
+しかし、このモジュールを使えば、
+上記libpam-mrubyによって認証されたユーザは存在しなくても紐づけたユーザでログインできる様になります。</p>
+
+<h2 id="use-mruby-github:ae240268879c0d9f1a7641d39837058a">Use mruby-github</h2>
+
+<p>直接<code>mruby-httprequest</code>を使ってもコード少ないですが、
+せっかくなのでmruby用のgithub clientを作ってみました。</p>
+
+<p>linyows/mruby-github
+<a href="https://github.com/linyows/mruby-github">https://github.com/linyows/mruby-github</a></p>
+
+<p>このmgemを一緒にlibpam-mrubyをビルドしてやると上述の認証scriptは以下の様になります。</p>
+
+<pre><code>$ cat &lt;&lt;EOL | sudo tee /etc/pam-mruby.rb
+def authenticate(username, password)
+  token = 'github token'
+  org_name = 'foobar'
+  team_name = 'zoo'
+
+  client = Github::Client.new
+  client.token = token
+  team = client.org_teams(org_name).find { |t| t['name'] == team_name }
+  client.team_member?(team['id'], username) &amp;&amp;
+    client.basic_authenticated?(username, password)
+end
+EOL
+</code></pre>
+
+<p>Teamを名前で指定してますが、変更する場合を想定してIDのままがいいかもしれません。
+mruby-githubは、<code>mruby-mrbgem-template</code> を使って作ったのですが、
+C言語のサンプルが出力されていて、mruby作法を知らない人には非常に勉強になります。</p>
+
+<h2 id="conclusion:ae240268879c0d9f1a7641d39837058a">Conclusion</h2>
+
+<p>mrubyをいじることでCのソース読んだりruby書いたりと、mrubyは複数の言語学べてお得だなという印象で、
+libpam-mrubyを使うことで簡単にGithubのOrganization/Teamで連携認証が出来ました。
+ただし、libpam-mruby を使わなくとも pam_exec を使って外部ファイル認証できるよってことは内緒です。</p>
+
+<p>次は<a href="http://qiita.com/drednote">drednoteさん</a>です。</p>
+
+<h3 id="reference:ae240268879c0d9f1a7641d39837058a">Reference</h3>
+
+<ul>
+<li>Linuxユーザーと公開鍵を統合管理するサーバ&amp;クライアントを書いた<br />
+<a href="https://ten-snapon.com/archives/1228">https://ten-snapon.com/archives/1228</a></li>
+<li>libpam-mruby を試してみた<br />
+<a href="http://qiita.com/udzura/items/0817ac7cd703aaca6124">http://qiita.com/udzura/items/0817ac7cd703aaca6124</a></li>
+<li>libpam-mrubyによりmrubyでLinuxのログイン認証をする<br />
+<a href="http://blog.kentarok.org/entry/2015/12/22/231114">http://blog.kentarok.org/entry/2015/12/22/231114</a></li>
+<li>mrubyの拡張モジュールであるmrbgemのテンプレートを自動で生成するmrbgem作った<br />
+<a href="http://blog.matsumoto-r.jp/?p=3923">http://blog.matsumoto-r.jp/?p=3923</a></li>
+<li>pam_exec(8) - Linux man page<br />
+<a href="https://linux.die.net/man/8/pam_exec">https://linux.die.net/man/8/pam_exec</a></li>
+</ul>
+
+    <div class="post-stamp">
+      <time datetime="2016-12-15T00:00:00&#43;09:00"> 15 Dec 2016 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/mruby.html">mruby</a> 
+        <a href="http://tomohisaoda.com/tags/pam.html">pam</a> 
+        <a href="http://tomohisaoda.com/tags/linux.html">linux</a> 
+        <a href="http://tomohisaoda.com/tags/github.html">github</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

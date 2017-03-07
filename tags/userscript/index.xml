@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Userscript on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/userscript.html</link>
+    <description>Recent content in Userscript on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Tue, 03 Apr 2012 22:47:45 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/userscript.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>GithubでWikiを検索するUserScript書いた</title>
+      <link>http://tomohisaoda.com/posts/2012/created_github_wiki_search.html</link>
+      <pubDate>Tue, 03 Apr 2012 22:47:45 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/created_github_wiki_search.html</guid>
+      <description>
+
+&lt;p&gt;Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？&lt;/p&gt;
+
+&lt;p&gt;最初は、&lt;a href=&#34;https://twitter.com/#!/morygonzalez&#34;&gt;@morygonzalez&lt;/a&gt;に「Wiki内って検索出来ないけどどうすんの？」って言われて、「cloneして&lt;code&gt;ack&lt;/code&gt;叩けば？」って言ったものの、ターミナルアレルギーなデザイナーは仕方ないとして、自分も他プロジェクトのをいちいちcloneして探すのは確かに面倒だなあと思ったわけ。
+なので、UserScriptを書いてみてGithub Wikiの全文検索がうまくいったのでお知らせしてみる。&lt;/p&gt;
+
+&lt;p&gt;Github Wiki Search - &lt;a href=&#34;https://github.com/linyows/github-wiki-search&#34;&gt;https://github.com/linyows/github-wiki-search&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、*Pull Request*お願いします。&lt;/p&gt;
+
+&lt;h2 id=&#34;screenshots:8cd41763e7c46500a635e97a0b9c89c3&#34;&gt;Screenshots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/linyows/github-wiki-search/raw/master/images/1.png&#34; alt=&#34;screenshot1&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;ページ右上に検索ボックス。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/linyows/github-wiki-search/raw/master/images/2.png&#34; alt=&#34;screenshot2&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;検索ワードを入力して&lt;code&gt;Enter&lt;/code&gt;したら検索開始。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/linyows/github-wiki-search/raw/master/images/3.png&#34; alt=&#34;screenshot3&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;検索結果は、非同期で見つかった順に表示。&lt;/p&gt;
+
+&lt;h2 id=&#34;logic:8cd41763e7c46500a635e97a0b9c89c3&#34;&gt;Logic&lt;/h2&gt;
+
+&lt;p&gt;生のjsガリガリ書くのは面倒だったのでjQueryを使った。&lt;/p&gt;
+
+&lt;p&gt;以下、コード中やってること。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;PagesタブにWikiの*全てのページのリンクがある*ので&lt;code&gt;GET&lt;/code&gt;してページのURLリストを作成。&lt;/li&gt;
+&lt;li&gt;URLリストからコンテンツを&lt;code&gt;GET&lt;/code&gt;して、検索文字をgrep。&lt;/li&gt;
+&lt;li&gt;grepしてmatchしたら結果表示しつつ、次のコンテンツを&lt;code&gt;GET&lt;/code&gt;してgrepを繰り返す。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;補足&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;１度全ページロードしたらキャッシュしてる。ロードの状態は、プログレスバーで視覚的に分かるようにした。&lt;/li&gt;
+&lt;li&gt;検索結果表示数が多いと もともと何のページか分からなくなるのであえて少なくしてる。（Wikiってそんなにページ数少ないし&amp;hellip;）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install:8cd41763e7c46500a635e97a0b9c89c3&#34;&gt;Install&lt;/h2&gt;
+
+&lt;p&gt;インストールは、&lt;strong&gt;userscripts.org&lt;/strong&gt;に登録してるので*Install*ボタンからどうぞ。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://userscripts.org/scripts/show/129930&#34;&gt;http://userscripts.org/scripts/show/129930&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;ブラウザは、以下で一通り動作するのを確認済み。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Chrome&lt;/li&gt;
+&lt;li&gt;Firefox - need &lt;a href=&#34;https://addons.mozilla.org/ja/firefox/addon/greasemonkey/&#34;&gt;Greasemonekey&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Safari - need &lt;a href=&#34;http://d.hatena.ne.jp/os0x/20100612/1276330696&#34;&gt;NinjaKit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

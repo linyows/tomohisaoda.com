@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" consul-templateをsystemdで動かすときの学び &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2015/use_systemd_with_consul-template.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2015-12-14T17:36:35&#43;09:00" />
+    <meta property="og:article:tag" content="systemd" /><meta property="og:article:tag" content="consul-template" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="consul-templateをsystemdで動かすときの学び" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2015/use_systemd_with_consul-template.html" />
+    <title> consul-templateをsystemdで動かすときの学び &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2015/use_systemd_with_consul-template.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "consul-templateをsystemdで動かすときの学び",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2015-12-14",
+    "description": "",
+    "wordCount":  118 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">consul-templateをsystemdで動かすときの学び</h1>
+    
+
+<p>このエントリは <a href="http://qiita.com/advent-calendar/2015/hashicorp">HashiCorp Advent Calendar 2015 - Qiita</a> 14日目の記事です。</p>
+
+<p><a href="https://github.com/hashicorp/consul-template">consul-template</a>は、<a href="https://www.consul.io/">consul</a>の様々なイベントをトリガーに指定したテンプレートファイルを元に指定したファイルを更新するためのデーモンです。
+ユースケースは、<a href="http://www.haproxy.org/">HAProxy</a> や <a href="http://nginx.org/">Nginx</a> などロードバランサやリバースプロキシのバックエンドを、
+状態に応じて動的にクラスタ（ロードバランサやリバースプロキシ）へ追加・削除し、可用性や拡張性を高めたい場合などです。</p>
+
+<p>今回、同様にnginxとconsul-templateを使って動的リバースプロキシを作ってみましたが、
+それぞれをsystemdで管理するという点で幾つか学ぶことがありました。</p>
+
+<p>私が最初に書いたconsul-templateのconfは以下です。commandによって、nginxのリロー
+ドとslackに通知をするスクリプトを呼び出しています。</p>
+
+<pre><code>...
+template {
+  source = &quot;/usr/lib/consul/templates/nginx.upstream_web.conf.ctmpl&quot;
+  destination = &quot;/etc/nginx/conf.d/upstream_web.conf&quot;
+  command = &quot;/bin/systemctl reload nginx.service &amp;&amp; /usr/lib/consul/bin/notify_changed&quot;
+}
+...
+</code></pre>
+
+<p>これで動かすと、consul-templateのイベントはロギングされ、nginxのリロードそして通知とあたかも正常に動いているようですが、nginxのconfは書き変わらないままです。
+何かconsul-templateの設定がおかしいのかと<a href="https://github.com/hashicorp/consul-template/blob/master/README.md">README.md</a>を読み直すと、テンプレートは<code>/tmp</code>に置いていることを見つけ、
+systemdはcgroupsでリソース制御しているのを思い出します。なので、次は <code>/tmp</code> を使ってプロセス間でファイルの共有をやってみます。</p>
+
+<pre><code>...
+template {
+  source = &quot;/tmp/nginx.upstream_web.conf.ctmpl&quot;
+  destination = &quot;/tmp/nginx.upstream_web.conf&quot;
+  command = &quot;/bin/systemctl reload nginx.service &amp;&amp; /usr/lib/consul/bin/notify_changed&quot;
+}
+...
+</code></pre>
+
+<p>すると、今度はconsul-templateからのnginxリロードに失敗するようになりました。</p>
+
+<pre><code>systemd[1]: PID file /run/nginx.pid not readable (yet?) after reload.
+</code></pre>
+
+<p>また、nginxのconfの書き換えが反映されません&hellip; なので、Nginxのsystemd service fileを眺めていると以下のオプションを見つけました。</p>
+
+<pre><code>PrivateTmp=true
+</code></pre>
+
+<p>これは、このサービス専用に独立した <code>/tmp</code> を使う設定のようで、これが機能しているた
+めに、confの書き換えができないのでした。PrivateTmpをコメントアウトしてやると、
+systemdでconsul-templateを動かすことができるようになりました。</p>
+
+<h2 id="conclusion:5a1c59779b8242f83427752a5013b508">Conclusion</h2>
+
+<p>systemdは管理下のプロセスをcgroupsによる分類を行うことで各サービスのリソースの制御を行っているわけですが、
+プロセス間で情報をやり取りする場合は <code>/tmp</code> を使います。ただ、<code>/tmp</code> はサービスと関係のないプロセスからも参照できるので
+各サービスのみが使う場合は <code>PrivateTmp=true</code> を使うことが望ましいでしょう。
+consul-templateはmiddlewareのconfを書き換えることになるのでsystemdを使う場合は、
+middlewareのsystemd service fileで <code>PrivateTmp=true</code> になっていないか注意する必要があります。</p>
+
+<h3 id="note:5a1c59779b8242f83427752a5013b508">Note</h3>
+
+<p>今回、Consul導入にあたってChefを使いました。既存のconsul-cookbookを利用しようと
+思ったんですが、シンプルじゃなくて使いにくい設計だったので作り直しました。もちろん、Consul WebUI・consul-templateに対応してあります。</p>
+
+<p><a href="https://github.com/linyows/consul-cookbook">https://github.com/linyows/consul-cookbook</a></p>
+
+<h3 id="reference:5a1c59779b8242f83427752a5013b508">Reference</h3>
+
+<ul>
+<li>Introducing Consul Template - HashiCorp<br />
+<a href="https://hashicorp.com/blog/introducing-consul-template.html">https://hashicorp.com/blog/introducing-consul-template.html</a></li>
+<li>Systemd入門(5) - PrivateTmpの実装を見る - めもめも<br />
+<a href="http://enakai00.hatenablog.com/entry/20130923/1379927579">http://enakai00.hatenablog.com/entry/20130923/1379927579</a></li>
+<li>systemd for Administrators, Part XII<br />
+<a href="http://0pointer.de/blog/projects/security.html">http://0pointer.de/blog/projects/security.html</a></li>
+</ul>
+
+    <div class="post-stamp">
+      <time datetime="2015-12-14T17:36:35&#43;09:00"> 14 Dec 2015 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/systemd.html">systemd</a> 
+        <a href="http://tomohisaoda.com/tags/consul-template.html">consul-template</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

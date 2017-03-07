@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/golang.html</link>
+    <description>Recent content in Golang on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Fri, 22 Jan 2016 09:30:00 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/golang.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>わたし、諦めない！commandの場合</title>
+      <link>http://tomohisaoda.com/posts/2016/retry_command_in_golang.html</link>
+      <pubDate>Fri, 22 Jan 2016 09:30:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2016/retry_command_in_golang.html</guid>
+      <description>
+
+&lt;p&gt;サービス監視をしてると、サービス構成によってはどうしても誤検知してしまうことがあります。
+みんな大好きなNagiosだと&lt;code&gt;check_interval&lt;/code&gt;, &lt;code&gt;retry_interval&lt;/code&gt;, &lt;code&gt;max_check_attempts&lt;/code&gt; というのを設定できて、
+同様にリトライすることで誤検知を防いでいます。&lt;/p&gt;
+
+&lt;p&gt;しかし、私はNagiosホストを立てるのが面倒なのとフェールオーバーがやりたいのでConsul（Atlas）やMackerelでサービス監視を行っていて、
+それらはNagiosのようなリトライ機能はありません。&lt;/p&gt;
+
+&lt;p&gt;Consulでは一定期間・一定回数リトライする機能を要望する issueが立っていて&lt;code&gt;thinking&lt;/code&gt; のラベルとなっているようですが、
+要望の返事としては「スクリプト側で頑張れます、問題ない」となっております。&lt;/p&gt;
+
+&lt;p&gt;Retry check interval · Issue #1268 · hashicorp/consul
+&lt;a href=&#34;https://github.com/hashicorp/consul/issues/1268&#34;&gt;https://github.com/hashicorp/consul/issues/1268&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;retry-command-in-bash:354930ee81775cd8a433576e69f20395&#34;&gt;Retry Command in Bash&lt;/h2&gt;
+
+&lt;p&gt;ということで、shell scriptでサッと書いてみました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+
+RETRY_COUNT=2
+RETRY_INTERVAL=5s
+COMMAND=&amp;quot;&amp;quot;
+
+usage() {
+  echo &amp;quot;Usage: `basename &amp;quot;$0&amp;quot;` [-n $RETRY_COUNT] [-i $RETRY_INTERVAL] [-c]&amp;quot; 1&amp;gt;&amp;amp;2
+  echo &amp;quot;  -n: retry count&amp;quot;
+  echo &amp;quot;  -i: retry interval&amp;quot;
+  echo &amp;quot;  -c: excute command&amp;quot;
+  exit 1
+}
+
+while getopts n:i:c: OPT; do
+  case $OPT in
+    &amp;quot;n&amp;quot; ) RETRY_COUNT=&amp;quot;$OPTARG&amp;quot; ;;
+    &amp;quot;i&amp;quot; ) RETRY_INTERVAL=&amp;quot;$OPTARG&amp;quot; ;;
+    &amp;quot;c&amp;quot; ) COMMAND=&amp;quot;$OPTARG&amp;quot; ;;
+      * ) usage ;;
+  esac
+done
+
+test &amp;quot;$COMMAND&amp;quot; = &amp;quot;&amp;quot; &amp;amp;&amp;amp; usage
+
+eval $COMMAND
+if [ $? -ne 0 ]; then
+  for i in $(seq 1 $RETRY_COUNT); do
+    sleep $RETRY_INTERVAL
+    eval $COMMAND
+    exit_status=$?
+    test $exit_status -eq 0 &amp;amp;&amp;amp; exit 0
+  done
+fi
+
+exit $exit_status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;シンプルでとても短いコードです。&lt;/p&gt;
+
+&lt;h2 id=&#34;retry-command-in-go:354930ee81775cd8a433576e69f20395&#34;&gt;Retry Command in Go&lt;/h2&gt;
+
+&lt;p&gt;さらに、遊びで同じ仕様のものをgolangで書いてみました。&lt;/p&gt;
+
+&lt;p&gt;linyows/go-retry
+&lt;a href=&#34;https://github.com/linyows/go-retry&#34;&gt;https://github.com/linyows/go-retry&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;usage:354930ee81775cd8a433576e69f20395&#34;&gt;Usage&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ retry -i 5s -c 2 &#39;/usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;install:354930ee81775cd8a433576e69f20395&#34;&gt;Install&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ go get -d github.com/linyows/go-retry
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ビルド済みのものをgithub releasesに上げてますので、実際監視で利用する場合はそちらからdownloadして使うのが便利です。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/go-retry/releases&#34;&gt;https://github.com/linyows/go-retry/releases&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ wget https://github.com/linyows/go-retry/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip &amp;amp;&amp;amp; rm linux_amd64.zip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、これは先日紹介した consul-cookbook の中にレシピを追加しているので consul使う人はこのcookbookを使うと大変便利じゃないでしょうか。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb&#34;&gt;https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;わたし、諦めない！&amp;rdquo; &amp;hellip; じゃないですが、誤検知でお困りの方は使うと便利なコマンドの紹介でした。&lt;/p&gt;
+
+&lt;h3 id=&#34;reference:354930ee81775cd8a433576e69f20395&#34;&gt;Reference&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;わたし、諦めない! - golangの場合 | おそらくはそれさえも平凡な日々&lt;br /&gt;
+&lt;a href=&#34;http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html&#34;&gt;http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;わたし、諦めない! - Sub::Retry - tokuhirom blog&lt;br /&gt;
+&lt;a href=&#34;http://blog.64p.org/entry/20110113/1294920074&#34;&gt;http://blog.64p.org/entry/20110113/1294920074&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;update-24-jan-2016:354930ee81775cd8a433576e69f20395&#34;&gt;Update - 24 Jan 2016&lt;/h2&gt;
+
+&lt;p&gt;@songmu さんや @mattn_jp さんから以下のtweetもらってほんとその通りだったので、文字列でなくそのまま渡せるように修正した。
+実は、実装後にキモいので直そうと思ってたのを忘れちゃってたというのが、言い訳になります&amp;hellip;&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+    &lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;go-retryコマンド、コマンド文字列指定なの嫌だな。&lt;/p&gt;
+    &amp;mdash; songmu (@songmu) &lt;a href=&#34;https://twitter.com/songmu/status/690367169012568065&#34;&gt;January 22, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+    &lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;
+    &lt;a href=&#34;https://twitter.com/songmu&#34;&gt;@songmu&lt;/a&gt; retry .. /bin/sh -c &amp;quot;foo bar baz&amp;quot; で行けそうですが直観的でないすな&lt;/p&gt; &amp;mdash; mattn (@mattn_jp) &lt;a href=&#34;https://twitter.com/mattn_jp/status/690373524700135425&#34;&gt;January 22, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;なので、以下のような使い方になります。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ retry -i 5s -c 2 /usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、コマンド実行をshell越しにやれるように &lt;code&gt;-shell&lt;/code&gt; オプションも追加しております。
+go-shellwords便利〜！こういうのを気軽にアドバイス頂けるのありがたいなぁ。ありがとうございます！&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

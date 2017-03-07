@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" GithubでWikiを検索するUserScript書いた &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2012/created_github_wiki_search.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2012-04-03T22:47:45&#43;09:00" />
+    <meta property="og:article:tag" content="github" /><meta property="og:article:tag" content="userscript" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="GithubでWikiを検索するUserScript書いた" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2012/created_github_wiki_search.html" />
+    <title> GithubでWikiを検索するUserScript書いた &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2012/created_github_wiki_search.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "GithubでWikiを検索するUserScript書いた",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2012-04-03",
+    "description": "",
+    "wordCount":  38 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">GithubでWikiを検索するUserScript書いた</h1>
+    
+
+<p>Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？</p>
+
+<p>最初は、<a href="https://twitter.com/#!/morygonzalez">@morygonzalez</a>に「Wiki内って検索出来ないけどどうすんの？」って言われて、「cloneして<code>ack</code>叩けば？」って言ったものの、ターミナルアレルギーなデザイナーは仕方ないとして、自分も他プロジェクトのをいちいちcloneして探すのは確かに面倒だなあと思ったわけ。
+なので、UserScriptを書いてみてGithub Wikiの全文検索がうまくいったのでお知らせしてみる。</p>
+
+<p>Github Wiki Search - <a href="https://github.com/linyows/github-wiki-search">https://github.com/linyows/github-wiki-search</a></p>
+
+<p>なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、*Pull Request*お願いします。</p>
+
+<h2 id="screenshots:8cd41763e7c46500a635e97a0b9c89c3">Screenshots</h2>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/1.png" alt="screenshot1" />
+</p>
+
+<p>ページ右上に検索ボックス。</p>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/2.png" alt="screenshot2" />
+</p>
+
+<p>検索ワードを入力して<code>Enter</code>したら検索開始。</p>
+
+<p><img src="https://github.com/linyows/github-wiki-search/raw/master/images/3.png" alt="screenshot3" />
+</p>
+
+<p>検索結果は、非同期で見つかった順に表示。</p>
+
+<h2 id="logic:8cd41763e7c46500a635e97a0b9c89c3">Logic</h2>
+
+<p>生のjsガリガリ書くのは面倒だったのでjQueryを使った。</p>
+
+<p>以下、コード中やってること。</p>
+
+<ol>
+<li>PagesタブにWikiの*全てのページのリンクがある*ので<code>GET</code>してページのURLリストを作成。</li>
+<li>URLリストからコンテンツを<code>GET</code>して、検索文字をgrep。</li>
+<li>grepしてmatchしたら結果表示しつつ、次のコンテンツを<code>GET</code>してgrepを繰り返す。</li>
+</ol>
+
+<p>補足</p>
+
+<ul>
+<li>１度全ページロードしたらキャッシュしてる。ロードの状態は、プログレスバーで視覚的に分かるようにした。</li>
+<li>検索結果表示数が多いと もともと何のページか分からなくなるのであえて少なくしてる。（Wikiってそんなにページ数少ないし&hellip;）</li>
+</ul>
+
+<h2 id="install:8cd41763e7c46500a635e97a0b9c89c3">Install</h2>
+
+<p>インストールは、<strong>userscripts.org</strong>に登録してるので*Install*ボタンからどうぞ。</p>
+
+<p><a href="http://userscripts.org/scripts/show/129930">http://userscripts.org/scripts/show/129930</a></p>
+
+<p>ブラウザは、以下で一通り動作するのを確認済み。</p>
+
+<ul>
+<li>Chrome</li>
+<li>Firefox - need <a href="https://addons.mozilla.org/ja/firefox/addon/greasemonkey/">Greasemonekey</a></li>
+<li>Safari - need <a href="http://d.hatena.ne.jp/os0x/20100612/1276330696">NinjaKit</a></li>
+</ul>
+
+    <div class="post-stamp">
+      <time datetime="2012-04-03T22:47:45&#43;09:00"> 3 Apr 2012 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/github.html">github</a> 
+        <a href="http://tomohisaoda.com/tags/userscript.html">userscript</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

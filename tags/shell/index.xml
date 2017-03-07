@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shell on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/shell.html</link>
+    <description>Recent content in Shell on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sun, 25 Mar 2012 22:40:31 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/shell.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>gitのtagをいい感じに削除するshell書いた</title>
+      <link>http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html</link>
+      <pubDate>Sun, 25 Mar 2012 22:40:31 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html</guid>
+      <description>
+
+&lt;p&gt;Git使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。
+どんないい感じにしてくれるかと言うと、&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;各マイナーマージョンの最新&lt;/strong&gt;と&lt;strong&gt;現バージョンの全て&lt;/strong&gt;を*残して削除*する感じ。&lt;/p&gt;
+
+&lt;p&gt;gist: &lt;a href=&#34;https://gist.github.com/2156669&#34;&gt;https://gist.github.com/2156669&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;usage:b075409110fc4f83b6038e3b3659def9&#34;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;dry-run。削除対象tagを確認することが出来る。&lt;/p&gt;
+
+&lt;pre&gt;
+$ ./git_tag test
+&lt;/pre&gt;
+
+&lt;p&gt;ローカルリポジトリもリモートも削除&amp;hellip;&lt;/p&gt;
+
+&lt;pre&gt;
+$ ./git_tag clean
+&lt;/pre&gt;
+
+&lt;h2 id=&#34;little-sucker:b075409110fc4f83b6038e3b3659def9&#34;&gt;Little Sucker&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;6.12.7&lt;/code&gt;みたいなフォーマットしか対応してない。&lt;code&gt;v2.3.12&lt;/code&gt;とかのprefixに対応してない。&lt;/li&gt;
+&lt;li&gt;ローカルもリモートも消してしまう&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;もっとスマートなやり方があるだろうし*shellで書かなくても&amp;hellip;*って言う気はするけど取り急ぎ書いた。ちゃんと書きたくなったらそのとき考よう。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

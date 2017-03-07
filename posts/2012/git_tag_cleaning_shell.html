@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" gitのtagをいい感じに削除するshell書いた &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2012-03-25T22:40:31&#43;09:00" />
+    <meta property="og:article:tag" content="git" /><meta property="og:article:tag" content="shell" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="gitのtagをいい感じに削除するshell書いた" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html" />
+    <title> gitのtagをいい感じに削除するshell書いた &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "gitのtagをいい感じに削除するshell書いた",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2012-03-25",
+    "description": "",
+    "wordCount":  19 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">gitのtagをいい感じに削除するshell書いた</h1>
+    
+
+<p>Git使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。
+どんないい感じにしてくれるかと言うと、</p>
+
+<p><strong>各マイナーマージョンの最新</strong>と<strong>現バージョンの全て</strong>を*残して削除*する感じ。</p>
+
+<p>gist: <a href="https://gist.github.com/2156669">https://gist.github.com/2156669</a></p>
+
+<h2 id="usage:b075409110fc4f83b6038e3b3659def9">Usage</h2>
+
+<p>dry-run。削除対象tagを確認することが出来る。</p>
+
+<pre>
+$ ./git_tag test
+</pre>
+
+<p>ローカルリポジトリもリモートも削除&hellip;</p>
+
+<pre>
+$ ./git_tag clean
+</pre>
+
+<h2 id="little-sucker:b075409110fc4f83b6038e3b3659def9">Little Sucker</h2>
+
+<ul>
+<li><code>6.12.7</code>みたいなフォーマットしか対応してない。<code>v2.3.12</code>とかのprefixに対応してない。</li>
+<li>ローカルもリモートも消してしまう</li>
+</ul>
+
+<p>もっとスマートなやり方があるだろうし*shellで書かなくても&hellip;*って言う気はするけど取り急ぎ書いた。ちゃんと書きたくなったらそのとき考よう。</p>
+
+    <div class="post-stamp">
+      <time datetime="2012-03-25T22:40:31&#43;09:00"> 25 Mar 2012 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/git.html">git</a> 
+        <a href="http://tomohisaoda.com/tags/shell.html">shell</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

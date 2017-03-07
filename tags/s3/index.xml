@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>S3 on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/tags/s3.html</link>
+    <description>Recent content in S3 on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Fri, 04 May 2012 22:46:03 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/tags/s3.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>S3 の画像をリアルタイムにリサイズするServer書いた</title>
+      <link>http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html</link>
+      <pubDate>Fri, 04 May 2012 22:46:03 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html</guid>
+      <description>
+
+&lt;p&gt;S3に配置した画像を&lt;strong&gt;URLから指定したサイズ&lt;/strong&gt;にリサイズできるリアルタイムリサイズサーバをnodeで書いた。&lt;/p&gt;
+
+&lt;h2 id=&#34;features:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;スケーラブルでハイパフォーマンス。&lt;/li&gt;
+&lt;li&gt;導入はとっても簡単。&lt;/li&gt;
+&lt;li&gt;複数のバケットが使える。&lt;/li&gt;
+&lt;li&gt;賢いキャッシュ。（ファイルサイズと更新日から304を返す）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;architecture:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;Architecture&lt;/h2&gt;
+
+&lt;p&gt;1台構成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-console&#34;&gt;+---------+      +------------+      +------------+      +----+
+| Browser | &amp;lt;--&amp;gt; | CloudFront | &amp;lt;--&amp;gt; | EC2 (hose) | &amp;lt;--&amp;gt; | S3 |
++---------+      +------------+      +------------+      +----+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;スケールアウト&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-console&#34;&gt;                                                  +------------+
+                                                  | EC2 (hose) |
++---------+      +------------+      +-----+      +------------+      +----+
+| Browser | &amp;lt;--&amp;gt; | CloudFront | &amp;lt;--&amp;gt; | ELB | &amp;lt;--&amp;gt;                &amp;lt;--&amp;gt; | S3 |
++---------+      +------------+      +-----+      +------------+      +----+
+                                                  | EC2 (hose) |
+                                                  +------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SSLに対応していないので、ELBとhoseの間に*NGINXなどを挟んだ方がいい*。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;url:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;Url&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-console&#34;&gt;//hose.com/bucket/key/100x50cq75/802a393d7247aa0caf9056223503bdf611d478ee.jpg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;bucketは、*configファイルに書けば*省略することができる。&lt;/li&gt;
+&lt;li&gt;keyは、拡張子ナシのS3のキーで、*指定バケットのファイルまでのパス*。&lt;/li&gt;
+&lt;li&gt;100x100cq75は、width x hight crop quality の組み合わせ。&lt;/li&gt;
+&lt;li&gt;最後のファイル名は、S3のプライベートキーで作成した*HMAC*と拡張子。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;this-is-called-hose:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;This is called &amp;ldquo;hose&amp;rdquo;&lt;/h2&gt;
+
+&lt;p&gt;プロジェクト名は&amp;rdquo;hose&amp;rdquo;。最近、&lt;a href=&#34;https://twitter.com/#!/gosukenator&#34;&gt;@gosukenator&lt;/a&gt;さんからこの&amp;rdquo;hose&amp;rdquo;にPull Requestもらって、一昨年に書いて放置してたのをリファクタリングしたのでブログで告知です。(テストをまだ書いてないのでまだ微妙) ほんと、*Pull Requestってモチベーションあがる*よね、すごいいい仕組み！自分もできるだけほかのプロジェクトにPull Requestしていこうと思う。&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;hose&amp;rdquo;はそもそもcookpad &lt;a href=&#34;https://twitter.com/#!/mirakui&#34;&gt;@mirakui&lt;/a&gt;さんの&lt;a href=&#34;http://www.slideshare.net/mirakui/ss-8150494&#34;&gt;tofuのスライド&lt;/a&gt;を見たのがきっかけ。Railsアプリケーションとかだと、&lt;a href=&#34;https://github.com/thoughtbot/paperclip&#34;&gt;Paperclip&lt;/a&gt;使うのがお手軽だったりするんだけど、画像サイズが固定だったりするから後でサイズを変更したいときは、バッチでリサイズ処理やったりと結構大変。また、Applicationサーバでリサイズ処理をやるのはそもそもリソースがもったいないよね。そこで&amp;rdquo;hose&amp;rdquo;なら全部解決できるってわけ。&lt;/p&gt;
+
+&lt;p&gt;特に、*AWS使うなら絶対に便利*だと思うので、たくさんの人に使ってもらいたい。&lt;/p&gt;
+
+&lt;p&gt;hose - &lt;a href=&#34;https://github.com/linyows/hose&#34;&gt;https://github.com/linyows/hose&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、*Pull Request*お願いします。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

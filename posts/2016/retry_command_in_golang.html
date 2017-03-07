@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" わたし、諦めない！commandの場合 &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2016/retry_command_in_golang.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2016-01-22T09:30:00&#43;09:00" />
+    <meta property="og:article:tag" content="monitoring" /><meta property="og:article:tag" content="golang" /><meta property="og:article:tag" content="consul" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="わたし、諦めない！commandの場合" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2016/retry_command_in_golang.html" />
+    <title> わたし、諦めない！commandの場合 &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2016/retry_command_in_golang.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "わたし、諦めない！commandの場合",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2016-01-22",
+    "description": "",
+    "wordCount":  237 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">わたし、諦めない！commandの場合</h1>
+    
+
+<p>サービス監視をしてると、サービス構成によってはどうしても誤検知してしまうことがあります。
+みんな大好きなNagiosだと<code>check_interval</code>, <code>retry_interval</code>, <code>max_check_attempts</code> というのを設定できて、
+同様にリトライすることで誤検知を防いでいます。</p>
+
+<p>しかし、私はNagiosホストを立てるのが面倒なのとフェールオーバーがやりたいのでConsul（Atlas）やMackerelでサービス監視を行っていて、
+それらはNagiosのようなリトライ機能はありません。</p>
+
+<p>Consulでは一定期間・一定回数リトライする機能を要望する issueが立っていて<code>thinking</code> のラベルとなっているようですが、
+要望の返事としては「スクリプト側で頑張れます、問題ない」となっております。</p>
+
+<p>Retry check interval · Issue #1268 · hashicorp/consul
+<a href="https://github.com/hashicorp/consul/issues/1268">https://github.com/hashicorp/consul/issues/1268</a></p>
+
+<h2 id="retry-command-in-bash:354930ee81775cd8a433576e69f20395">Retry Command in Bash</h2>
+
+<p>ということで、shell scriptでサッと書いてみました。</p>
+
+<pre><code class="language-sh">#!/bin/bash
+
+RETRY_COUNT=2
+RETRY_INTERVAL=5s
+COMMAND=&quot;&quot;
+
+usage() {
+  echo &quot;Usage: `basename &quot;$0&quot;` [-n $RETRY_COUNT] [-i $RETRY_INTERVAL] [-c]&quot; 1&gt;&amp;2
+  echo &quot;  -n: retry count&quot;
+  echo &quot;  -i: retry interval&quot;
+  echo &quot;  -c: excute command&quot;
+  exit 1
+}
+
+while getopts n:i:c: OPT; do
+  case $OPT in
+    &quot;n&quot; ) RETRY_COUNT=&quot;$OPTARG&quot; ;;
+    &quot;i&quot; ) RETRY_INTERVAL=&quot;$OPTARG&quot; ;;
+    &quot;c&quot; ) COMMAND=&quot;$OPTARG&quot; ;;
+      * ) usage ;;
+  esac
+done
+
+test &quot;$COMMAND&quot; = &quot;&quot; &amp;&amp; usage
+
+eval $COMMAND
+if [ $? -ne 0 ]; then
+  for i in $(seq 1 $RETRY_COUNT); do
+    sleep $RETRY_INTERVAL
+    eval $COMMAND
+    exit_status=$?
+    test $exit_status -eq 0 &amp;&amp; exit 0
+  done
+fi
+
+exit $exit_status
+</code></pre>
+
+<p>シンプルでとても短いコードです。</p>
+
+<h2 id="retry-command-in-go:354930ee81775cd8a433576e69f20395">Retry Command in Go</h2>
+
+<p>さらに、遊びで同じ仕様のものをgolangで書いてみました。</p>
+
+<p>linyows/go-retry
+<a href="https://github.com/linyows/go-retry">https://github.com/linyows/go-retry</a></p>
+
+<h3 id="usage:354930ee81775cd8a433576e69f20395">Usage</h3>
+
+<pre><code class="language-sh">$ retry -i 5s -c 2 '/usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost'
+</code></pre>
+
+<h3 id="install:354930ee81775cd8a433576e69f20395">Install</h3>
+
+<pre><code class="language-sh">$ go get -d github.com/linyows/go-retry
+</code></pre>
+
+<p>ビルド済みのものをgithub releasesに上げてますので、実際監視で利用する場合はそちらからdownloadして使うのが便利です。</p>
+
+<p><a href="https://github.com/linyows/go-retry/releases">https://github.com/linyows/go-retry/releases</a></p>
+
+<pre><code class="language-sh">$ wget https://github.com/linyows/go-retry/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip &amp;&amp; rm linux_amd64.zip
+</code></pre>
+
+<p>また、これは先日紹介した consul-cookbook の中にレシピを追加しているので consul使う人はこのcookbookを使うと大変便利じゃないでしょうか。</p>
+
+<p><a href="https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb">https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb</a></p>
+
+<p>&ldquo;わたし、諦めない！&rdquo; &hellip; じゃないですが、誤検知でお困りの方は使うと便利なコマンドの紹介でした。</p>
+
+<h3 id="reference:354930ee81775cd8a433576e69f20395">Reference</h3>
+
+<ul>
+<li>わたし、諦めない! - golangの場合 | おそらくはそれさえも平凡な日々<br />
+<a href="http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html">http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html</a></li>
+<li>わたし、諦めない! - Sub::Retry - tokuhirom blog<br />
+<a href="http://blog.64p.org/entry/20110113/1294920074">http://blog.64p.org/entry/20110113/1294920074</a></li>
+</ul>
+
+<hr />
+
+<h2 id="update-24-jan-2016:354930ee81775cd8a433576e69f20395">Update - 24 Jan 2016</h2>
+
+<p>@songmu さんや @mattn_jp さんから以下のtweetもらってほんとその通りだったので、文字列でなくそのまま渡せるように修正した。
+実は、実装後にキモいので直そうと思ってたのを忘れちゃってたというのが、言い訳になります&hellip;</p>
+
+<blockquote class="twitter-tweet" data-lang="en">
+    <p lang="ja" dir="ltr">go-retryコマンド、コマンド文字列指定なの嫌だな。</p>
+    &mdash; songmu (@songmu) <a href="https://twitter.com/songmu/status/690367169012568065">January 22, 2016</a>
+</blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-lang="en">
+    <p lang="ja" dir="ltr">
+    <a href="https://twitter.com/songmu">@songmu</a> retry .. /bin/sh -c &quot;foo bar baz&quot; で行けそうですが直観的でないすな</p> &mdash; mattn (@mattn_jp) <a href="https://twitter.com/mattn_jp/status/690373524700135425">January 22, 2016</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>なので、以下のような使い方になります。</p>
+
+<pre><code class="language-sh">$ retry -i 5s -c 2 /usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost
+</code></pre>
+
+<p>また、コマンド実行をshell越しにやれるように <code>-shell</code> オプションも追加しております。
+go-shellwords便利〜！こういうのを気軽にアドバイス頂けるのありがたいなぁ。ありがとうございます！</p>
+
+    <div class="post-stamp">
+      <time datetime="2016-01-22T09:30:00&#43;09:00"> 22 Jan 2016 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/monitoring.html">monitoring</a> 
+        <a href="http://tomohisaoda.com/tags/golang.html">golang</a> 
+        <a href="http://tomohisaoda.com/tags/consul.html">consul</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

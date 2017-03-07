@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" S3 の画像をリアルタイムにリサイズするServer書いた &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2012-05-04T22:46:03&#43;09:00" />
+    <meta property="og:article:tag" content="S3" /><meta property="og:article:tag" content="node" /><meta property="og:article:tag" content="AWS" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="S3 の画像をリアルタイムにリサイズするServer書いた" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html" />
+    <title> S3 の画像をリアルタイムにリサイズするServer書いた &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "S3 の画像をリアルタイムにリサイズするServer書いた",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2012-05-04",
+    "description": "",
+    "wordCount":  98 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">S3 の画像をリアルタイムにリサイズするServer書いた</h1>
+    
+
+<p>S3に配置した画像を<strong>URLから指定したサイズ</strong>にリサイズできるリアルタイムリサイズサーバをnodeで書いた。</p>
+
+<h2 id="features:98f9e2c748d13b64f0e5ab1147371b58">Features</h2>
+
+<ul>
+<li>スケーラブルでハイパフォーマンス。</li>
+<li>導入はとっても簡単。</li>
+<li>複数のバケットが使える。</li>
+<li>賢いキャッシュ。（ファイルサイズと更新日から304を返す）</li>
+</ul>
+
+<h2 id="architecture:98f9e2c748d13b64f0e5ab1147371b58">Architecture</h2>
+
+<p>1台構成</p>
+
+<pre><code class="language-console">+---------+      +------------+      +------------+      +----+
+| Browser | &lt;--&gt; | CloudFront | &lt;--&gt; | EC2 (hose) | &lt;--&gt; | S3 |
++---------+      +------------+      +------------+      +----+
+</code></pre>
+
+<p>スケールアウト</p>
+
+<pre><code class="language-console">                                                  +------------+
+                                                  | EC2 (hose) |
++---------+      +------------+      +-----+      +------------+      +----+
+| Browser | &lt;--&gt; | CloudFront | &lt;--&gt; | ELB | &lt;--&gt;                &lt;--&gt; | S3 |
++---------+      +------------+      +-----+      +------------+      +----+
+                                                  | EC2 (hose) |
+                                                  +------------+
+</code></pre>
+
+<ul>
+<li>SSLに対応していないので、ELBとhoseの間に*NGINXなどを挟んだ方がいい*。</li>
+</ul>
+
+<h2 id="url:98f9e2c748d13b64f0e5ab1147371b58">Url</h2>
+
+<pre><code class="language-console">//hose.com/bucket/key/100x50cq75/802a393d7247aa0caf9056223503bdf611d478ee.jpg
+</code></pre>
+
+<ul>
+<li>bucketは、*configファイルに書けば*省略することができる。</li>
+<li>keyは、拡張子ナシのS3のキーで、*指定バケットのファイルまでのパス*。</li>
+<li>100x100cq75は、width x hight crop quality の組み合わせ。</li>
+<li>最後のファイル名は、S3のプライベートキーで作成した*HMAC*と拡張子。</li>
+</ul>
+
+<h2 id="this-is-called-hose:98f9e2c748d13b64f0e5ab1147371b58">This is called &ldquo;hose&rdquo;</h2>
+
+<p>プロジェクト名は&rdquo;hose&rdquo;。最近、<a href="https://twitter.com/#!/gosukenator">@gosukenator</a>さんからこの&rdquo;hose&rdquo;にPull Requestもらって、一昨年に書いて放置してたのをリファクタリングしたのでブログで告知です。(テストをまだ書いてないのでまだ微妙) ほんと、*Pull Requestってモチベーションあがる*よね、すごいいい仕組み！自分もできるだけほかのプロジェクトにPull Requestしていこうと思う。</p>
+
+<p>&ldquo;hose&rdquo;はそもそもcookpad <a href="https://twitter.com/#!/mirakui">@mirakui</a>さんの<a href="http://www.slideshare.net/mirakui/ss-8150494">tofuのスライド</a>を見たのがきっかけ。Railsアプリケーションとかだと、<a href="https://github.com/thoughtbot/paperclip">Paperclip</a>使うのがお手軽だったりするんだけど、画像サイズが固定だったりするから後でサイズを変更したいときは、バッチでリサイズ処理やったりと結構大変。また、Applicationサーバでリサイズ処理をやるのはそもそもリソースがもったいないよね。そこで&rdquo;hose&rdquo;なら全部解決できるってわけ。</p>
+
+<p>特に、*AWS使うなら絶対に便利*だと思うので、たくさんの人に使ってもらいたい。</p>
+
+<p>hose - <a href="https://github.com/linyows/hose">https://github.com/linyows/hose</a></p>
+
+<p>なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、*Pull Request*お願いします。</p>
+
+    <div class="post-stamp">
+      <time datetime="2012-05-04T22:46:03&#43;09:00"> 4 May 2012 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/s3.html">S3</a> 
+        <a href="http://tomohisaoda.com/tags/node.html">node</a> 
+        <a href="http://tomohisaoda.com/tags/aws.html">AWS</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

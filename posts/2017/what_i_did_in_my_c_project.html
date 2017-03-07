@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" Cのプロダクトを作るためにやったこと &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2017-03-07T00:38:00&#43;09:00" />
+    <meta property="og:article:tag" content="C" /><meta property="og:article:tag" content="OSS" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="Cのプロダクトを作るためにやったこと" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html" />
+    <title> Cのプロダクトを作るためにやったこと &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Cのプロダクトを作るためにやったこと",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2017-03-07",
+    "description": "",
+    "wordCount":  337 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">Cのプロダクトを作るためにやったこと</h1>
+    
+
+<p><style>.hatena-bookmark-button-frame { vertical-align: middle; }</style></p>
+
+<p>今年に入って <a href="https://github.com/linyows/octopass">Octopass</a>
+<iframe style="width:120px;vertical-align:middle;" src="https://ghbtns.com/github-btn.html?user=linyows&repo=octopass&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+<a href="http://b.hatena.ne.jp/entry/tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" data-hatena-bookmark-height="29" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+というプロダクトを公開しました。
+それは、Linuxのユーザや権限をGithubのTeamと連携して運用を楽にするというツールでした。</p>
+
+<p>色んな方々のご協力により、多くのRetweetやはてぶいただいたことで、ある程度、
+<a href="https://github.com/linyows/octopass">Octopass</a> を必要としそうな人の目に触れたのではないかと思っています。
+（Githubのスター数が少ないのは今後の課題）
+その中で「すごく便利」「ぜひ導入したい」というフィードバックは、
+継続して機能追加していくというモチベーションにつながっていて、非常にありがたいです。</p>
+
+<p>さて、この Octopass は、Linuxユーザ名前解決をするためにの glibc の libnssモジュールをCで実装しています。
+cgoやその他の言語でShared Objectを吐き出しても良かったのですが、それだと技術的挑戦が足りないとして、触れてこなかったCに挑戦しました。</p>
+
+<p>ただ、リリース当初、認証や公開鍵を取得する部分はgoで書いていて、１プロジェクトの中に２種類の言語を使って成り立っていましたが、
+管理が複雑になることと、同様の実装が2つ存在してしまうことが無駄であることを感じて、
+v0.2としてgoの部分をCに置き換えるという作業を行い純粋にCのプロダクトとしました。
+そのことで、CIをシンプルにでき、類似の実装をしなくて良くなりましたし、見通しがずいぶん良くなった気がします。</p>
+
+<p>今回、Cのプロダクトを作るにあたって、Cを勉強する以外にどんなことをやったか振り返ってみようと思います。</p>
+
+<h2 id="clang-format:8211f41e4f9ea85cf5df99885fb1e5cf">Clang Format</h2>
+
+<p>まず、自分が作るのがlibnssのモジュールなので既存のものをgithubで検索してひたすら読んでみました。
+最初に気になったのが、coding styleがバラバラなこと！
+有名なプロダクトであっても、あまりこれがスタンダードというものがなく、さあ、どうしようという状態になっていました。</p>
+
+<p>これは <a href="https://twitter.com/matsumotory">@matsumotory</a> さんに <code>clang-format</code> という整形ツールがあるよという情報を得ました。</p>
+
+<ul>
+<li><a href="https://clang.llvm.org/docs/ClangFormatStyleOptions.html">Clang-Format Style Options</a></li>
+</ul>
+
+<p>clang-formatを導入すると、基本スタイルというものがあって、
+LLVM・Google・Mozilla・Linux&hellip; といったそれぞれの流派を選択できる様になっていたのでとても便利でした。</p>
+
+<p>早速適当にformatを定義し（設定は下記）、vimと連携することで保存時にきれいに整形されるという感じになりました。</p>
+
+<pre><code class="language-conf"># requires clang-format &gt;= 3.6
+BasedOnStyle: &quot;LLVM&quot;
+IndentWidth: 2
+ColumnLimit: 120
+BreakBeforeBraces: Linux
+AllowShortFunctionsOnASingleLine: None
+SortIncludes: false
+AlignConsecutiveAssignments: true
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: true
+</code></pre>
+
+<p>また、もし仮に Pull-Requestをもらった時に指定するフォーマットから外れていたら、
+私やPull-Requestをくれた方にわかる様、CIで formatのdiffをチェックするようにもしました。</p>
+
+<h2 id="criterion:8211f41e4f9ea85cf5df99885fb1e5cf">Criterion</h2>
+
+<p>次に、Unit Test。色々Cのプロジェクト見ていると、main書いて最低限のテストを書いてたり、
+自前でassertion作ってたりといて結構カオスです。
+何かしらtest frameworkはないかなと調べると良さそうなものがいくつかあります。</p>
+
+<ul>
+<li>CUnit</li>
+<li>googletest</li>
+<li>Unity</li>
+<li>Criterion</li>
+</ul>
+
+<p>真面目に比較する時間はなかったのでexampleが多いものと出力が分かりやすいものをとりあえず使ってみようと <a href="https://github.com/Snaipe/Criterion">Criterion</a> を使い始めました。</p>
+
+<pre><code class="language-c">#include &lt;criterion/criterion.h&gt;
+
+Test(suite_1, failing) {
+    cr_assert(0);
+}
+
+Test(suite_1, passing) {
+    cr_assert(1);
+}
+</code></pre>
+
+<p><a href="https://github.com/Snaipe/Criterion">Criterion</a> は結構便利で 色々な <code>assertion</code> が準備されてるのはもちろんですが、
+異常系のテストとして exit codeや signalを検証する仕組みもあります。
+これは、<a href="https://github.com/Snaipe/Criterion">Criterion</a> がテストケースのプロセスを分離して実行結果をレポートする仕組みによるものです。
+また、Theoryテストを簡単にやれたりテストスイートを楽に設定できるのもメリットなのかなと（他のフレームワークを使って比較してないので）想像しています。</p>
+
+<ul>
+<li><a href="https://github.com/Snaipe/Criterion/tree/bleeding/samples">Test Examples</a></li>
+<li><a href="http://criterion.readthedocs.io/en/master/assert.html#base-assertions">Assertion reference - Criterion 2.3.0 documentation</a></li>
+</ul>
+
+<h2 id="makefile:8211f41e4f9ea85cf5df99885fb1e5cf">Makefile</h2>
+
+<p>次に、テストを頻繁に実行しだすとコンパイルしてテスト実行というのが面倒になってきます。
+そうすると <a href="https://www.gnu.org/software/make">GNU Make</a> の出番で、ビルドやビルドに必要な依存ライブラリ等をセットアップすることを定義していきます。
+そして、<a href="https://www.gnu.org/software/make">Make</a> の自己文書化という裏技があるようなので導入しました。簡単に言えば <a href="https://www.gnu.org/software/make">Make</a> で <code>rake -T</code> みたいなことができます。</p>
+
+<ul>
+<li>Makefileを自己文書化する<br />
+<a href="http://postd.cc/auto-documented-makefile/">http://postd.cc/auto-documented-makefile/</a></li>
+</ul>
+
+<pre><code class="language-make">pkg: ## Create some distribution packages
+	rm -rf builds &amp;&amp; mkdir builds
+	docker-compose up
+
+dist: ## Upload archives on Mac
+	@test -z $(GITHUB_TOKEN) || $(MAKE) github_release
+	@test -z $(PACKAGECLOUD_TOKEN) || $(MAKE) packagecloud_release
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = &quot;:.*?## &quot;}; {printf &quot;$(INFO_COLOR)%-30s$(RESET) %s\n&quot;, $$1, $$2}'
+</code></pre>
+
+<p>ターゲット名の後ろにコメントを書くことでそれらがターゲットの一覧となるようにしています。</p>
+
+<h2 id="packaging:8211f41e4f9ea85cf5df99885fb1e5cf">Packaging</h2>
+
+<p>プロダクトが完成すると、使いやすくするために、パッケージにしたくなってきます。
+そのパッケージ化を手でやってたら面倒なので <code>docker-compose up</code> で一気に作成されるようにします。</p>
+
+<pre><code class="language-yml">rpm:
+  dockerfile: dockerfiles/Dockerfile.centos
+  build: .
+  volumes:
+    - .:/octopass
+  command: make rpm
+deb:
+  dockerfile: dockerfiles/Dockerfile.ubuntu
+  build: .
+  volumes:
+    - .:/octopass
+  command: make deb
+</code></pre>
+
+<p>また、作成済みパッケージをGithub Rereasesにアップロードするのはおなじみ <code>ghr</code> を使い、
+<a href="https://packagecloud.io/">PackageCloud</a> へのアップロードは <code>github.com/mlafeldt/pkgcloud</code> を使用しました。
+そうすることで、各ディストリビューションパッケージの作成公開を <code>make dist</code> というコマンドだけで完結してしまいます。</p>
+
+<h2 id="integration-test:8211f41e4f9ea85cf5df99885fb1e5cf">Integration Test</h2>
+
+<p>ユニットテストしか書いてなかったので、いざ作ったパッケージをインストールして試したら
+<code>Segmentaion fault</code> とか出たりして統合テストが出来てなかったことに気づきBashで書きました。</p>
+
+<pre><code class="language-sh">function test_octopass_passwd() {
+  actual=&quot;$(/usr/bin/octopass passwd linyows)&quot;
+  expected=&quot;linyows:x:74049:2000:managed by octopass:/home/linyows:/bin/bash&quot;
+
+  if [ &quot;x$actual&quot; == &quot;x$expected&quot; ]; then
+    pass &quot;${FUNCNAME[0]}&quot;
+  else
+    fail &quot;${FUNCNAME[0]}&quot; &quot;$expected&quot; &quot;$actual&quot;
+  fi
+}
+
+function run_test() {
+  self=$(cd $(dirname $0) &amp;&amp; pwd)/$(basename $0)
+  tests=&quot;$(grep &quot;^function test_&quot; $self | sed -E &quot;s/function (.*)\(\) \{/\1/g&quot;)&quot;
+  for t in $(echo $tests); do
+    $t
+  done
+}
+
+run_test
+exit $ALL_PASSED
+</code></pre>
+
+<p>今回は統合テストの検証項目が少ないためさっとbashで書いてしまいましたが、<a href="https://github.com/Snaipe/Criterion">Criterion</a> で出来たかもしれません。</p>
+
+<h2 id="conclusion:8211f41e4f9ea85cf5df99885fb1e5cf">Conclusion</h2>
+
+<p>Cのプロダクトを作る際にやったことをまとめると以下です。</p>
+
+<ul>
+<li>スタイルフォーマット &gt; Clang Format</li>
+<li>Unit Test &gt; Criterion</li>
+<li>色々自動化 &gt; Makefile</li>
+<li>パッケージ作成 &gt; Dokcer Compose と ghr</li>
+<li>Integration Test &gt; bashで書いた..</li>
+</ul>
+
+<p>これらを抽象化すると、Cスターターみたいなものが出来るなと思いつつ、
+<a href="https://github.com/Snaipe/Criterion">Criterion</a> のような便利なツール使うだけで、Cの開発苦手だなーという意識が変わって、
+随分前向きで楽しくなるものだなというのを改めて思いました。</p>
+
+<p>Cは勉強始めたばかりなので、メモリの気持ちが理解できるようにやっていくぞ！</p>
+
+<hr />
+
+<h3 id="おまけ:8211f41e4f9ea85cf5df99885fb1e5cf">おまけ</h3>
+
+<p>ちなみに、<a href="https://github.com/linyows/octopass">Octopass</a> v0.3では共有ユーザ機能を追加しています。
+指定したユーザをチームで共有し認証することができるというものです。
+ユースケーストしては、アプリなどの実行またはdeployのためのユーザを共有するのを想定しています。</p>
+
+<p><a href="https://github.com/linyows/octopass">Octopass</a> はキャッシュすることで、高速さとGithubというSPOFを避けていますが、サーバの台数が大規模になると、
+どうしてもGithubのAPI Rate limitを超えAPIの手前にproxyを設置してリクエスト回数を減らすという施策が必要になってきます。
+今後は、そのキャッシュを<a href="https://github.com/linyows/octopass">Octopass</a> クラスタ間で共有することでGithub APIのproxyを不要にしようと考えています。
+実際にキャッシュを共有するのは、<a href="https://github.com/coreos/etcd">Etcd</a> や <a href="https://www.consul.io/intro/getting-started/kv.html">Consul Key/Value Data</a> とかを使う感じになるイメージです。</p>
+
+    <div class="post-stamp">
+      <time datetime="2017-03-07T00:38:00&#43;09:00"> 7 Mar 2017 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/c.html">C</a> 
+        <a href="http://tomohisaoda.com/tags/oss.html">OSS</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

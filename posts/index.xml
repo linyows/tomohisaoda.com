@@ -1,0 +1,1142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Tomohisa Oda</title>
+    <link>http://tomohisaoda.com/posts.html</link>
+    <description>Recent content in Posts on Tomohisa Oda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Tue, 07 Mar 2017 00:38:00 +0900</lastBuildDate>
+    <atom:link href="http://tomohisaoda.com/posts.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Cのプロダクトを作るためにやったこと</title>
+      <link>http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html</link>
+      <pubDate>Tue, 07 Mar 2017 00:38:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html</guid>
+      <description>
+
+&lt;p&gt;&lt;style&gt;.hatena-bookmark-button-frame { vertical-align: middle; }&lt;/style&gt;&lt;/p&gt;
+
+&lt;p&gt;今年に入って &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt;
+&lt;iframe style=&#34;width:120px;vertical-align:middle;&#34; src=&#34;https://ghbtns.com/github-btn.html?user=linyows&amp;repo=octopass&amp;type=star&amp;count=true&amp;size=large&#34; frameborder=&#34;0&#34; scrolling=&#34;0&#34; width=&#34;160px&#34; height=&#34;30px&#34;&gt;&lt;/iframe&gt;
+&lt;a href=&#34;http://b.hatena.ne.jp/entry/tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html&#34; class=&#34;hatena-bookmark-button&#34; data-hatena-bookmark-layout=&#34;basic-label-counter&#34; data-hatena-bookmark-lang=&#34;ja&#34; data-hatena-bookmark-height=&#34;29&#34; title=&#34;このエントリーをはてなブックマークに追加&#34;&gt;&lt;img src=&#34;https://b.st-hatena.com/images/entry-button/button-only@2x.png&#34; alt=&#34;このエントリーをはてなブックマークに追加&#34; width=&#34;20&#34; height=&#34;20&#34; style=&#34;border: none;&#34; /&gt;&lt;/a&gt;&lt;script type=&#34;text/javascript&#34; src=&#34;https://b.st-hatena.com/js/bookmark_button.js&#34; charset=&#34;utf-8&#34; async=&#34;async&#34;&gt;&lt;/script&gt;
+というプロダクトを公開しました。
+それは、Linuxのユーザや権限をGithubのTeamと連携して運用を楽にするというツールでした。&lt;/p&gt;
+
+&lt;p&gt;色んな方々のご協力により、多くのRetweetやはてぶいただいたことで、ある程度、
+&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; を必要としそうな人の目に触れたのではないかと思っています。
+（Githubのスター数が少ないのは今後の課題）
+その中で「すごく便利」「ぜひ導入したい」というフィードバックは、
+継続して機能追加していくというモチベーションにつながっていて、非常にありがたいです。&lt;/p&gt;
+
+&lt;p&gt;さて、この Octopass は、Linuxユーザ名前解決をするためにの glibc の libnssモジュールをCで実装しています。
+cgoやその他の言語でShared Objectを吐き出しても良かったのですが、それだと技術的挑戦が足りないとして、触れてこなかったCに挑戦しました。&lt;/p&gt;
+
+&lt;p&gt;ただ、リリース当初、認証や公開鍵を取得する部分はgoで書いていて、１プロジェクトの中に２種類の言語を使って成り立っていましたが、
+管理が複雑になることと、同様の実装が2つ存在してしまうことが無駄であることを感じて、
+v0.2としてgoの部分をCに置き換えるという作業を行い純粋にCのプロダクトとしました。
+そのことで、CIをシンプルにでき、類似の実装をしなくて良くなりましたし、見通しがずいぶん良くなった気がします。&lt;/p&gt;
+
+&lt;p&gt;今回、Cのプロダクトを作るにあたって、Cを勉強する以外にどんなことをやったか振り返ってみようと思います。&lt;/p&gt;
+
+&lt;h2 id=&#34;clang-format:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Clang Format&lt;/h2&gt;
+
+&lt;p&gt;まず、自分が作るのがlibnssのモジュールなので既存のものをgithubで検索してひたすら読んでみました。
+最初に気になったのが、coding styleがバラバラなこと！
+有名なプロダクトであっても、あまりこれがスタンダードというものがなく、さあ、どうしようという状態になっていました。&lt;/p&gt;
+
+&lt;p&gt;これは &lt;a href=&#34;https://twitter.com/matsumotory&#34;&gt;@matsumotory&lt;/a&gt; さんに &lt;code&gt;clang-format&lt;/code&gt; という整形ツールがあるよという情報を得ました。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://clang.llvm.org/docs/ClangFormatStyleOptions.html&#34;&gt;Clang-Format Style Options&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;clang-formatを導入すると、基本スタイルというものがあって、
+LLVM・Google・Mozilla・Linux&amp;hellip; といったそれぞれの流派を選択できる様になっていたのでとても便利でした。&lt;/p&gt;
+
+&lt;p&gt;早速適当にformatを定義し（設定は下記）、vimと連携することで保存時にきれいに整形されるという感じになりました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-conf&#34;&gt;# requires clang-format &amp;gt;= 3.6
+BasedOnStyle: &amp;quot;LLVM&amp;quot;
+IndentWidth: 2
+ColumnLimit: 120
+BreakBeforeBraces: Linux
+AllowShortFunctionsOnASingleLine: None
+SortIncludes: false
+AlignConsecutiveAssignments: true
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、もし仮に Pull-Requestをもらった時に指定するフォーマットから外れていたら、
+私やPull-Requestをくれた方にわかる様、CIで formatのdiffをチェックするようにもしました。&lt;/p&gt;
+
+&lt;h2 id=&#34;criterion:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Criterion&lt;/h2&gt;
+
+&lt;p&gt;次に、Unit Test。色々Cのプロジェクト見ていると、main書いて最低限のテストを書いてたり、
+自前でassertion作ってたりといて結構カオスです。
+何かしらtest frameworkはないかなと調べると良さそうなものがいくつかあります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CUnit&lt;/li&gt;
+&lt;li&gt;googletest&lt;/li&gt;
+&lt;li&gt;Unity&lt;/li&gt;
+&lt;li&gt;Criterion&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;真面目に比較する時間はなかったのでexampleが多いものと出力が分かりやすいものをとりあえず使ってみようと &lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; を使い始めました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include &amp;lt;criterion/criterion.h&amp;gt;
+
+Test(suite_1, failing) {
+    cr_assert(0);
+}
+
+Test(suite_1, passing) {
+    cr_assert(1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; は結構便利で 色々な &lt;code&gt;assertion&lt;/code&gt; が準備されてるのはもちろんですが、
+異常系のテストとして exit codeや signalを検証する仕組みもあります。
+これは、&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; がテストケースのプロセスを分離して実行結果をレポートする仕組みによるものです。
+また、Theoryテストを簡単にやれたりテストスイートを楽に設定できるのもメリットなのかなと（他のフレームワークを使って比較してないので）想像しています。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/Snaipe/Criterion/tree/bleeding/samples&#34;&gt;Test Examples&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://criterion.readthedocs.io/en/master/assert.html#base-assertions&#34;&gt;Assertion reference - Criterion 2.3.0 documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;makefile:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Makefile&lt;/h2&gt;
+
+&lt;p&gt;次に、テストを頻繁に実行しだすとコンパイルしてテスト実行というのが面倒になってきます。
+そうすると &lt;a href=&#34;https://www.gnu.org/software/make&#34;&gt;GNU Make&lt;/a&gt; の出番で、ビルドやビルドに必要な依存ライブラリ等をセットアップすることを定義していきます。
+そして、&lt;a href=&#34;https://www.gnu.org/software/make&#34;&gt;Make&lt;/a&gt; の自己文書化という裏技があるようなので導入しました。簡単に言えば &lt;a href=&#34;https://www.gnu.org/software/make&#34;&gt;Make&lt;/a&gt; で &lt;code&gt;rake -T&lt;/code&gt; みたいなことができます。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Makefileを自己文書化する&lt;br /&gt;
+&lt;a href=&#34;http://postd.cc/auto-documented-makefile/&#34;&gt;http://postd.cc/auto-documented-makefile/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-make&#34;&gt;pkg: ## Create some distribution packages
+	rm -rf builds &amp;amp;&amp;amp; mkdir builds
+	docker-compose up
+
+dist: ## Upload archives on Mac
+	@test -z $(GITHUB_TOKEN) || $(MAKE) github_release
+	@test -z $(PACKAGECLOUD_TOKEN) || $(MAKE) packagecloud_release
+
+help:
+	@grep -E &#39;^[a-zA-Z_-]+:.*?## .*$$&#39; $(MAKEFILE_LIST) | sort | awk &#39;BEGIN {FS = &amp;quot;:.*?## &amp;quot;}; {printf &amp;quot;$(INFO_COLOR)%-30s$(RESET) %s\n&amp;quot;, $$1, $$2}&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ターゲット名の後ろにコメントを書くことでそれらがターゲットの一覧となるようにしています。&lt;/p&gt;
+
+&lt;h2 id=&#34;packaging:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Packaging&lt;/h2&gt;
+
+&lt;p&gt;プロダクトが完成すると、使いやすくするために、パッケージにしたくなってきます。
+そのパッケージ化を手でやってたら面倒なので &lt;code&gt;docker-compose up&lt;/code&gt; で一気に作成されるようにします。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yml&#34;&gt;rpm:
+  dockerfile: dockerfiles/Dockerfile.centos
+  build: .
+  volumes:
+    - .:/octopass
+  command: make rpm
+deb:
+  dockerfile: dockerfiles/Dockerfile.ubuntu
+  build: .
+  volumes:
+    - .:/octopass
+  command: make deb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、作成済みパッケージをGithub Rereasesにアップロードするのはおなじみ &lt;code&gt;ghr&lt;/code&gt; を使い、
+&lt;a href=&#34;https://packagecloud.io/&#34;&gt;PackageCloud&lt;/a&gt; へのアップロードは &lt;code&gt;github.com/mlafeldt/pkgcloud&lt;/code&gt; を使用しました。
+そうすることで、各ディストリビューションパッケージの作成公開を &lt;code&gt;make dist&lt;/code&gt; というコマンドだけで完結してしまいます。&lt;/p&gt;
+
+&lt;h2 id=&#34;integration-test:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Integration Test&lt;/h2&gt;
+
+&lt;p&gt;ユニットテストしか書いてなかったので、いざ作ったパッケージをインストールして試したら
+&lt;code&gt;Segmentaion fault&lt;/code&gt; とか出たりして統合テストが出来てなかったことに気づきBashで書きました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;function test_octopass_passwd() {
+  actual=&amp;quot;$(/usr/bin/octopass passwd linyows)&amp;quot;
+  expected=&amp;quot;linyows:x:74049:2000:managed by octopass:/home/linyows:/bin/bash&amp;quot;
+
+  if [ &amp;quot;x$actual&amp;quot; == &amp;quot;x$expected&amp;quot; ]; then
+    pass &amp;quot;${FUNCNAME[0]}&amp;quot;
+  else
+    fail &amp;quot;${FUNCNAME[0]}&amp;quot; &amp;quot;$expected&amp;quot; &amp;quot;$actual&amp;quot;
+  fi
+}
+
+function run_test() {
+  self=$(cd $(dirname $0) &amp;amp;&amp;amp; pwd)/$(basename $0)
+  tests=&amp;quot;$(grep &amp;quot;^function test_&amp;quot; $self | sed -E &amp;quot;s/function (.*)\(\) \{/\1/g&amp;quot;)&amp;quot;
+  for t in $(echo $tests); do
+    $t
+  done
+}
+
+run_test
+exit $ALL_PASSED
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;今回は統合テストの検証項目が少ないためさっとbashで書いてしまいましたが、&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; で出来たかもしれません。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Cのプロダクトを作る際にやったことをまとめると以下です。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;スタイルフォーマット &amp;gt; Clang Format&lt;/li&gt;
+&lt;li&gt;Unit Test &amp;gt; Criterion&lt;/li&gt;
+&lt;li&gt;色々自動化 &amp;gt; Makefile&lt;/li&gt;
+&lt;li&gt;パッケージ作成 &amp;gt; Dokcer Compose と ghr&lt;/li&gt;
+&lt;li&gt;Integration Test &amp;gt; bashで書いた..&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;これらを抽象化すると、Cスターターみたいなものが出来るなと思いつつ、
+&lt;a href=&#34;https://github.com/Snaipe/Criterion&#34;&gt;Criterion&lt;/a&gt; のような便利なツール使うだけで、Cの開発苦手だなーという意識が変わって、
+随分前向きで楽しくなるものだなというのを改めて思いました。&lt;/p&gt;
+
+&lt;p&gt;Cは勉強始めたばかりなので、メモリの気持ちが理解できるようにやっていくぞ！&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;おまけ:8211f41e4f9ea85cf5df99885fb1e5cf&#34;&gt;おまけ&lt;/h3&gt;
+
+&lt;p&gt;ちなみに、&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; v0.3では共有ユーザ機能を追加しています。
+指定したユーザをチームで共有し認証することができるというものです。
+ユースケーストしては、アプリなどの実行またはdeployのためのユーザを共有するのを想定しています。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; はキャッシュすることで、高速さとGithubというSPOFを避けていますが、サーバの台数が大規模になると、
+どうしてもGithubのAPI Rate limitを超えAPIの手前にproxyを設置してリクエスト回数を減らすという施策が必要になってきます。
+今後は、そのキャッシュを&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;Octopass&lt;/a&gt; クラスタ間で共有することでGithub APIのproxyを不要にしようと考えています。
+実際にキャッシュを共有するのは、&lt;a href=&#34;https://github.com/coreos/etcd&#34;&gt;Etcd&lt;/a&gt; や &lt;a href=&#34;https://www.consul.io/intro/getting-started/kv.html&#34;&gt;Consul Key/Value Data&lt;/a&gt; とかを使う感じになるイメージです。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux Server管理者の管理を楽にする</title>
+      <link>http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html</link>
+      <pubDate>Fri, 10 Feb 2017 00:00:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html</guid>
+      <description>
+
+&lt;p&gt;昨年、libpam-mrubyを使って、Linux Serverにおける認証やその管理について思うところを書きました。今回はその続きです。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html&#34;&gt;libpam-mrubyを使ってGithubのチームで認証をする&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;OSSを使ってのLinuxユーザ管理といったら、一般的に&lt;a href=&#34;http://www.openldap.org/&#34;&gt;OpenLDAP&lt;/a&gt;を用いると思いますが、
+&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;って統合管理でやれること多いかわりにちゃんと使おうとしたら敷居が高い感じがするんです。
+&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;を触る頻度が低いと、&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;コマンドを毎回ググる事になり、地味に面倒というのは経験している人多いと思います。&lt;/p&gt;
+
+&lt;p&gt;そして、自分たちが&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;を通して解決したいことって単にsudo権限を持つ管理者かそうでないユーザの管理で意外とシンプルだったりします。
+それに気づかせてくれたのは、イケてる同僚の&lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama&lt;/a&gt;氏プロダクトの&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;というやつで、&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;はユーザや鍵の管理を&lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;TOML&lt;/a&gt;で行うというものでした。
+設定が&lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;TOML&lt;/a&gt;形式のファイルになることでgitで管理できますし、変更はGithubのPull-Requestを通じて行えるようになります。
+Pull-Requestが出来るということは、管理者は確認してマージするだけが作業となり、ホント面倒な作業から解放してくれる！そういうプロダクトです。&lt;/p&gt;
+
+&lt;p&gt;ただ、便利以外にいくつか課題があって&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;追加・削除は容易だが、最初の設定ファイル作るのが面倒&lt;/li&gt;
+&lt;li&gt;LDAPと同じくバックエンド（サーバなど）が必要&lt;/li&gt;
+&lt;li&gt;導入サーバによってはuidが被ってふがふが&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;みたいなことがあります。そこで &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt; の登場です（私が作ったんですが）。&lt;/p&gt;
+
+&lt;h2 id=&#34;about-octopass:e409e7237541bce9a15ddec379ece973&#34;&gt;About Octopass&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;は、Github APIを使って、Github Organization/Team によってlinuxユーザの名前解決を行い、
+Githubに登録している公開鍵によってSSHDの認証とGithubのPersonal Access TokenでPAM認証をできるようにするプロダクトです。&lt;/p&gt;
+
+&lt;figure id=&#34;octopass&#34; align=&#34;center&#34;&gt;
+&lt;figcaption style=&#34;color:ccc;padding-bottom:10px;&#34;&gt;Githubに依存するのでoctocatをモジってつけた名前、octopass。&lt;/figcaption&gt;
+&lt;img alt=&#34;OCTOPASS&#34; src=&#34;https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true&#34; width=&#34;200&#34;&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;簡潔にまとめると&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;octopass NSSモジュールが Github Org/Team メンバーを参照する&lt;/li&gt;
+&lt;li&gt;octopass コマンドによってGithubのpublic keysを取得する&lt;/li&gt;
+&lt;li&gt;octopass PAMヘルパーによって GithubのAuthorizationを得る&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;のようなことをやってくれるので、Linuxの管理者の管理をGithubのOrg/Teamメンバーの管理を通じて行えるわけです。&lt;/p&gt;
+
+&lt;h2 id=&#34;questions:e409e7237541bce9a15ddec379ece973&#34;&gt;Questions&lt;/h2&gt;
+
+&lt;p&gt;ここで大体疑問に思うことはこんな感じでしょう。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Github APIがDownしたらどうなるの？&lt;/li&gt;
+&lt;li&gt;海外のAPI越しに名前解決してたら遅いんでは？&lt;/li&gt;
+&lt;li&gt;サーバ台数多いとAPIのRatelimit（制限）にかかるのでは？&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;はい。全部その通りです&amp;hellip; ;-( しかし、&lt;em&gt;上の2つはキャッシュによって解決しています。&lt;/em&gt; :-)&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://tomohisaoda.com/images/architecture.png&#34; width=&#34;600&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Architecture&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;ではGithub APIのレスポンスボディをファイルキャッシュしていて、
+何かしらの原因でGithub APIへのリクエストが200で返らなかった場合はキャッシュタイムを超えていてもキャッシュを使う仕様になっています。
+また、キャッシュしているので名前解決に都度APIリクエストは投げません。&lt;/p&gt;
+
+&lt;p&gt;3つ目は、例えば、サーバ台数が10000台ある環境にoctopassを導入すると
+Github APIの&lt;a href=&#34;https://developer.github.com/v3/#rate-limiting&#34;&gt;Rate Limit&lt;/a&gt;は 5,000/hour なので、即刻API制限されてしまう可能性はあります。
+こういう場合は、Github APIにproxyを挟んでキャッシュしてもらうのがいいと思いますが、
+そもそも、大規模なので&lt;a href=&#34;http://www.openldap.org/&#34;&gt;LDAP&lt;/a&gt;その他のミドルウェアの方が向いていると言えます。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:e409e7237541bce9a15ddec379ece973&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;このように、&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;を使えば、
+自分たちの資産（コード）をGithubまたはGithub Enterpriseで管理している前提にはなりますが、
+それ（資産）にコミットする権限と同じように、&lt;em&gt;関係するサーバにしても同じように権限を管理できるようになります。&lt;/em&gt;
+&lt;strong&gt;なんてシンプル！&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;また、時代的にサーバに複数ロールは持たないので自ずと複雑なユーザ管理が不要になっているという流れではありますので、
+一見複雑なことができない小規模向けのような&lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;octopass&lt;/a&gt;が大規模なサーバ群に対応できるのかもしれません。
+時はすでにコンテナの時代に突入していますのでSSHをすることもだいぶ減ってきてはいます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/matsumotory&#34;&gt;@matsumotory&lt;/a&gt; 曰く、「マイクロセグメント！」&lt;/p&gt;
+
+&lt;h2 id=&#34;installation:e409e7237541bce9a15ddec379ece973&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;インストールは、RHEL/7 のみパッケージを作っているので yum でインストールが可能です。
+（パッケージ置き場は&lt;a href=&#34;https://packagecloud.io/linyows/octopass&#34;&gt;packagecloud&lt;/a&gt;を利用しています）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ curl -s https://packagecloud.io/install/repositories/linyows/octopass/script.rpm.sh | sudo bash
+$ sudo yum install octopass-0.1.0-1.x86_64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;他のバージョンや他のディストリビューションについては追々追加していきますが、
+&lt;em&gt;手伝っていただける方がいれば非常に歓迎です！&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;ソースからビルドインストールするには以下の方法です。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# 依存パッケージをディストリビューションに応じて入れてください
+# glibc, libcurl, jansson
+$ wget https://github.com/linyows/octopass/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip
+$ mv octopass /usr/bin/
+$ git clone https://github.com/linyows/octopass
+$ cd nss
+$ make &amp;amp;&amp;amp; make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;インストールがすんだら設定ファイルを作ります。基本的には、Github APIを叩くための
+&lt;a href=&#34;https://github.com/settings/tokens/new&#34;&gt;Personal Access Token&lt;/a&gt;をTokenとして記述し、OrganizationとTeamを設定するだけになります。
+ただ気をつけるのは、そのTokenは他のユーザから見えるのでGithub Organization Memberに対してread権限のみを持たせるのが吉です。
+設定項目は&lt;a href=&#34;https://github.com/linyows/octopass#configuration&#34;&gt;README.mdのConfiguration&lt;/a&gt;にあります。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/octopass.conf
+Token = &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+Organization = &amp;quot;hoge&amp;quot;
+Team = &amp;quot;fuga&amp;quot;
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;そして、各ファイルの項目に修正を加えます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# /etc/ssh/sshd_config:
+AuthorizedKeysCommand /usr/bin/octopass
+AuthorizedKeysCommandUser root
+UsePAM yes
+PasswordAuthentication no
+
+# /etc/pam.d/sshd:
+session required pam_mkhomedir.so skel=/etc/skel/ umask=0022
+
+# /etc/nsswitch.conf:
+passwd:     files octopass sss
+shadow:     files octopass sss
+group:      files octopass sss
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これでGithubのアカウントと鍵でSSHログインができるようになります。
+興味がある方は是非使ってみてください。バグ報告等はGithub Issueにてお待ちしております！&lt;/p&gt;
+
+&lt;p&gt;Octopass: &lt;a href=&#34;https://github.com/linyows/octopass&#34;&gt;https://github.com/linyows/octopass&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;next-ideas:e409e7237541bce9a15ddec379ece973&#34;&gt;Next Ideas&lt;/h2&gt;
+
+&lt;p&gt;ちなみに、次の機能として考えているのはこちらです。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;共有アカウント（デプロイ用のユーザなど&lt;/li&gt;
+&lt;li&gt;複数ロール（チーム・グループ）の設定&lt;/li&gt;
+&lt;li&gt;Githubの認証をVault経由で行う&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;何かアイデアや要望をお持ちの方いれば、気軽にIssueに投げつけてくださいね！&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;最後に、&lt;a href=&#34;http://stns.jp&#34;&gt;STNS&lt;/a&gt;について仕様の確認をSlackで&lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama氏&lt;/a&gt;としてたときに、いい話が出てきたのでぺたり。&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;center&#34;&gt;
+    
+        &lt;img src=&#34;http://tomohisaoda.com/images/octopass-slack.png&#34; width=&#34;400&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Conversation on Slack&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>libpam-mrubyを使ってGithubのチームで認証をする</title>
+      <link>http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html</link>
+      <pubDate>Thu, 15 Dec 2016 00:00:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html</guid>
+      <description>
+
+&lt;p&gt;このエントリは &lt;a href=&#34;http://qiita.com/advent-calendar/2016/mruby&#34;&gt;mruby Advent Calendar 2016 - Qiita&lt;/a&gt; 15日目の記事です。&lt;/p&gt;
+
+&lt;p&gt;前日は d6rkaizさんの &lt;a href=&#34;https://blog.d6rkaiz.com/archives/2016/12/14/check-external-ip-and-geoip-with-ngx_mruby/&#34;&gt;check external ip and geoip with ngx_mruby&lt;/a&gt; でした。
+&lt;code&gt;mruby-geoip&lt;/code&gt; を使うことで手軽にアクセス制御を動的に出来ることがわかりました。&lt;/p&gt;
+
+&lt;p&gt;気がつけば、ブログをadvent calendar書く頻度でしか更新しておらず、
+もっとなんか書かなきゃなという気持ちで、&lt;em&gt;来年から頑張る&lt;/em&gt; という決意しております。
+これまでmrubyに触れてこなかったのでAdvent Calendar駆動でmrubyを触ってみようという流れです。&lt;/p&gt;
+
+&lt;h2 id=&#34;管理が楽でシンプルな認証とは:ae240268879c0d9f1a7641d39837058a&#34;&gt;管理が楽でシンプルな認証とは&lt;/h2&gt;
+
+&lt;p&gt;僕はlinuxの認証まわりをLDAPじゃないもっとシンプルな何かに出来ないかなという考えがなんとなくあって、
+それを &lt;a href=&#34;https://twitter.com/pyama86&#34;&gt;@pyama&lt;/a&gt;氏 が STNS という一元管理しやすいソリューションツールを作って「すごいなー」「便利だなー」と賞賛しておりました。
+ただ、Githubのチームがそのまま認証になったらサーバレスかつ管理が楽でさらに良いなって考えを持っていたのでした。
+なので、&lt;a href=&#34;https://twitter.com/kentaro&#34;&gt;@antipop&lt;/a&gt;さんや &lt;a href=&#34;https://twitter.com/udzura&#34;&gt;@udzura&lt;/a&gt;さんが去年あたりにやってた libpam-mruby を使ってGithub認証をしてみます。&lt;/p&gt;
+
+&lt;h2 id=&#34;use-libpam-mruby:ae240268879c0d9f1a7641d39837058a&#34;&gt;Use libpam-mruby&lt;/h2&gt;
+
+&lt;p&gt;libpam-mrubyは、PAMにmrubyを組み込んで認証部分をrubyで書くというものです。
+なので、ビルドにmrubyのgemであるmgemを追加してあげれば大体やりたいことはできるし、
+無ければmgemチャンスといったとこでしょう。&lt;/p&gt;
+
+&lt;p&gt;では、Github APIを叩くのに便利そうな &lt;code&gt;mruby-httprequest&lt;/code&gt; と &lt;code&gt;mruby-polarssl&lt;/code&gt;、
+basic認証のために &lt;code&gt;mruby-base64&lt;/code&gt; を追加してlibpam-mrubyをビルドします。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat build_config.rb
+MRuby::Build.new do |conf|
+  toolchain :gcc
+  conf.gembox &#39;default&#39;
+  conf.gem :github =&amp;gt; &#39;luisbebop/mruby-polarssl&#39;
+  conf.gem :github =&amp;gt; &#39;matsumoto-r/mruby-httprequest&#39;
+  conf.gem :github =&amp;gt; &#39;mattn/mruby-base64&#39;
+
+  conf.cc do |cc|
+    cc.flags &amp;lt;&amp;lt; &#39;-fPIC&#39;
+  end
+end
+
+$ rake
+$ sudo install build/pam_mruby.so /usr/lib64/security/pam_mruby.so
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;そして、&lt;code&gt;/etc/pam.d/system-auth-ac&lt;/code&gt; の認証を &lt;code&gt;pam_unix.so&lt;/code&gt; から &lt;code&gt;pam_mruby.so&lt;/code&gt; に変更します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;auth  sufficient  pam_mruby.so rbfile=/etc/pam-mruby.rb debug try_first_pass
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;認証ロジックは以下のような感じで、チームメンバーであるかとパスワードの整合性をチェックしています。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt;EOL | sudo tee /etc/pam-mruby.rb
+def authenticate(username, password)
+  api = &#39;https://api.github.com&#39;
+  token = &#39;github token&#39;
+  # あらかじめIDをAPIで取得しておく
+  team_id = 1851462
+
+  http = HttpRequest.new
+  default_headers = {
+    &amp;quot;User-Agent&amp;quot; =&amp;gt; &amp;quot;mruby&amp;quot;,
+    &amp;quot;Authorization&amp;quot; =&amp;gt; &amp;quot;token #{token}&amp;quot;
+  }
+
+  # team member?
+  res = http.get(&amp;quot;#{api}/teams/#{team_id}/members/#{username}&amp;quot;,
+    nil, default_headers)
+  return false if res.code != 204
+
+  # password correct?
+  key = Base64::encode(&amp;quot;#{username}:#{password}&amp;quot;)
+  res = http.get(&amp;quot;#{api}/user&amp;quot;,
+    nil, default_headers.merge({&amp;quot;Authorization&amp;quot; =&amp;gt; &amp;quot;Basic #{key}&amp;quot;}))
+  res.code == 200
+end
+EOL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;もちろん、トークンが書かれてるのでread権限を制限しておきます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo chmod 600 /etc/pam-mruby.rb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これで &lt;code&gt;su &amp;lt;github username&amp;gt;&lt;/code&gt; するとパスワードにgithub tokenを入力して認証が成功するようになります。
+PAMなので、sshdに対しても同様に /etc/pam.d/sshd へ pam-mruby.so を追加するとsshログインに関してもmrubyでの認証が可能となります。
+ただし、存在しないユーザに対してはもちろん認証出来ないので &lt;em&gt;あらかじめuserを作っておく必要&lt;/em&gt; はあります。&lt;/p&gt;
+
+&lt;p&gt;ということで、「パスワード認証であること」「Githubに依存すること」はさておき、
+管理をGithubのOrganizationに作ったTeamに任せるだけで専用のサーバを立てたり、
+AWSでAPI GatewayやLambdaを準備する必要がないのは非常に手軽なのではないでしょうか。&lt;/p&gt;
+
+&lt;p&gt;公開鍵認証もsshdのAuthorizedKeysCommandからGithubから鍵取ってくればできるし、
+GithubがDownした時の案（default userでログインするなど）さえ準備できていれば十分な気はします。
+また、認証部分を直接GithubのAPIではなく、Hashicorpの&lt;a href=&#34;https://www.vaultproject.io/&#34;&gt;Vault&lt;/a&gt;のAPI（Github Backend）を叩くことでaudit loghとしても活用できるでしょう。&lt;/p&gt;
+
+&lt;p&gt;ネックなのは、httpまたぐので認証にもたつくことでしょうか。&lt;/p&gt;
+
+&lt;h2 id=&#34;use-libnss-ato:ae240268879c0d9f1a7641d39837058a&#34;&gt;Use libnss-ato&lt;/h2&gt;
+
+&lt;p&gt;ここで、面白そうなnssモジュールを見つけたのでご紹介します。
+名前解決できなかったuserを設定したユーザーに紐付けてしまうnssモジュールです。&lt;/p&gt;
+
+&lt;p&gt;Name Service Switch module All-To-One
+&lt;a href=&#34;https://github.com/donapieppo/libnss-ato&#34;&gt;https://github.com/donapieppo/libnss-ato&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;インストール・セットアップは、READMEにある通りですが、リポジトリにrpmのSPECファイルがあるので
+ビルドしてyumで入れることができます。
+あとは&lt;code&gt;nsswitch.conf&lt;/code&gt; の &lt;code&gt;/etc/passwd&lt;/code&gt; や &lt;code&gt;/etc/shadow&lt;/code&gt; に &lt;code&gt;ato&lt;/code&gt; を追加し、
+紐付けるユーザーを &lt;code&gt;/etc/libnss-ato.conf&lt;/code&gt; に定義するだけです。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git clone https://github.com/donapieppo/libnss-ato.git
+$ cd libnss-ato
+$ make rpm
+$ sudo yum install RPMS/x86_64/libnss-ato-0.2-1.x86_64.rpm
+$ cat &amp;lt;&amp;lt;EOL | sudo tee /etc/libnss-ato.conf
+vagrant:x:1000:1000:vagrant,,,:/home/vagrant:/bin/bash
+EOL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;すると、存在しないuserがあたかも存在するかのように名前が引ける様になります。
+uidやgidが紐づけたuserにすり替わっていて不思議な様子です。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ id foo
+uid=1000(vagrant) gid=1000(vagrant) groups=1000(vagrant)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然ですが、&lt;code&gt;useradd foo&lt;/code&gt; は既に存在するため作成できません。。。
+しかし、このモジュールを使えば、
+上記libpam-mrubyによって認証されたユーザは存在しなくても紐づけたユーザでログインできる様になります。&lt;/p&gt;
+
+&lt;h2 id=&#34;use-mruby-github:ae240268879c0d9f1a7641d39837058a&#34;&gt;Use mruby-github&lt;/h2&gt;
+
+&lt;p&gt;直接&lt;code&gt;mruby-httprequest&lt;/code&gt;を使ってもコード少ないですが、
+せっかくなのでmruby用のgithub clientを作ってみました。&lt;/p&gt;
+
+&lt;p&gt;linyows/mruby-github
+&lt;a href=&#34;https://github.com/linyows/mruby-github&#34;&gt;https://github.com/linyows/mruby-github&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;このmgemを一緒にlibpam-mrubyをビルドしてやると上述の認証scriptは以下の様になります。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt;EOL | sudo tee /etc/pam-mruby.rb
+def authenticate(username, password)
+  token = &#39;github token&#39;
+  org_name = &#39;foobar&#39;
+  team_name = &#39;zoo&#39;
+
+  client = Github::Client.new
+  client.token = token
+  team = client.org_teams(org_name).find { |t| t[&#39;name&#39;] == team_name }
+  client.team_member?(team[&#39;id&#39;], username) &amp;amp;&amp;amp;
+    client.basic_authenticated?(username, password)
+end
+EOL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Teamを名前で指定してますが、変更する場合を想定してIDのままがいいかもしれません。
+mruby-githubは、&lt;code&gt;mruby-mrbgem-template&lt;/code&gt; を使って作ったのですが、
+C言語のサンプルが出力されていて、mruby作法を知らない人には非常に勉強になります。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:ae240268879c0d9f1a7641d39837058a&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;mrubyをいじることでCのソース読んだりruby書いたりと、mrubyは複数の言語学べてお得だなという印象で、
+libpam-mrubyを使うことで簡単にGithubのOrganization/Teamで連携認証が出来ました。
+ただし、libpam-mruby を使わなくとも pam_exec を使って外部ファイル認証できるよってことは内緒です。&lt;/p&gt;
+
+&lt;p&gt;次は&lt;a href=&#34;http://qiita.com/drednote&#34;&gt;drednoteさん&lt;/a&gt;です。&lt;/p&gt;
+
+&lt;h3 id=&#34;reference:ae240268879c0d9f1a7641d39837058a&#34;&gt;Reference&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Linuxユーザーと公開鍵を統合管理するサーバ&amp;amp;クライアントを書いた&lt;br /&gt;
+&lt;a href=&#34;https://ten-snapon.com/archives/1228&#34;&gt;https://ten-snapon.com/archives/1228&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;libpam-mruby を試してみた&lt;br /&gt;
+&lt;a href=&#34;http://qiita.com/udzura/items/0817ac7cd703aaca6124&#34;&gt;http://qiita.com/udzura/items/0817ac7cd703aaca6124&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;libpam-mrubyによりmrubyでLinuxのログイン認証をする&lt;br /&gt;
+&lt;a href=&#34;http://blog.kentarok.org/entry/2015/12/22/231114&#34;&gt;http://blog.kentarok.org/entry/2015/12/22/231114&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;mrubyの拡張モジュールであるmrbgemのテンプレートを自動で生成するmrbgem作った&lt;br /&gt;
+&lt;a href=&#34;http://blog.matsumoto-r.jp/?p=3923&#34;&gt;http://blog.matsumoto-r.jp/?p=3923&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;pam_exec(8) - Linux man page&lt;br /&gt;
+&lt;a href=&#34;https://linux.die.net/man/8/pam_exec&#34;&gt;https://linux.die.net/man/8/pam_exec&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>わたし、諦めない！commandの場合</title>
+      <link>http://tomohisaoda.com/posts/2016/retry_command_in_golang.html</link>
+      <pubDate>Fri, 22 Jan 2016 09:30:00 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2016/retry_command_in_golang.html</guid>
+      <description>
+
+&lt;p&gt;サービス監視をしてると、サービス構成によってはどうしても誤検知してしまうことがあります。
+みんな大好きなNagiosだと&lt;code&gt;check_interval&lt;/code&gt;, &lt;code&gt;retry_interval&lt;/code&gt;, &lt;code&gt;max_check_attempts&lt;/code&gt; というのを設定できて、
+同様にリトライすることで誤検知を防いでいます。&lt;/p&gt;
+
+&lt;p&gt;しかし、私はNagiosホストを立てるのが面倒なのとフェールオーバーがやりたいのでConsul（Atlas）やMackerelでサービス監視を行っていて、
+それらはNagiosのようなリトライ機能はありません。&lt;/p&gt;
+
+&lt;p&gt;Consulでは一定期間・一定回数リトライする機能を要望する issueが立っていて&lt;code&gt;thinking&lt;/code&gt; のラベルとなっているようですが、
+要望の返事としては「スクリプト側で頑張れます、問題ない」となっております。&lt;/p&gt;
+
+&lt;p&gt;Retry check interval · Issue #1268 · hashicorp/consul
+&lt;a href=&#34;https://github.com/hashicorp/consul/issues/1268&#34;&gt;https://github.com/hashicorp/consul/issues/1268&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;retry-command-in-bash:354930ee81775cd8a433576e69f20395&#34;&gt;Retry Command in Bash&lt;/h2&gt;
+
+&lt;p&gt;ということで、shell scriptでサッと書いてみました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#!/bin/bash
+
+RETRY_COUNT=2
+RETRY_INTERVAL=5s
+COMMAND=&amp;quot;&amp;quot;
+
+usage() {
+  echo &amp;quot;Usage: `basename &amp;quot;$0&amp;quot;` [-n $RETRY_COUNT] [-i $RETRY_INTERVAL] [-c]&amp;quot; 1&amp;gt;&amp;amp;2
+  echo &amp;quot;  -n: retry count&amp;quot;
+  echo &amp;quot;  -i: retry interval&amp;quot;
+  echo &amp;quot;  -c: excute command&amp;quot;
+  exit 1
+}
+
+while getopts n:i:c: OPT; do
+  case $OPT in
+    &amp;quot;n&amp;quot; ) RETRY_COUNT=&amp;quot;$OPTARG&amp;quot; ;;
+    &amp;quot;i&amp;quot; ) RETRY_INTERVAL=&amp;quot;$OPTARG&amp;quot; ;;
+    &amp;quot;c&amp;quot; ) COMMAND=&amp;quot;$OPTARG&amp;quot; ;;
+      * ) usage ;;
+  esac
+done
+
+test &amp;quot;$COMMAND&amp;quot; = &amp;quot;&amp;quot; &amp;amp;&amp;amp; usage
+
+eval $COMMAND
+if [ $? -ne 0 ]; then
+  for i in $(seq 1 $RETRY_COUNT); do
+    sleep $RETRY_INTERVAL
+    eval $COMMAND
+    exit_status=$?
+    test $exit_status -eq 0 &amp;amp;&amp;amp; exit 0
+  done
+fi
+
+exit $exit_status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;シンプルでとても短いコードです。&lt;/p&gt;
+
+&lt;h2 id=&#34;retry-command-in-go:354930ee81775cd8a433576e69f20395&#34;&gt;Retry Command in Go&lt;/h2&gt;
+
+&lt;p&gt;さらに、遊びで同じ仕様のものをgolangで書いてみました。&lt;/p&gt;
+
+&lt;p&gt;linyows/go-retry
+&lt;a href=&#34;https://github.com/linyows/go-retry&#34;&gt;https://github.com/linyows/go-retry&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;usage:354930ee81775cd8a433576e69f20395&#34;&gt;Usage&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ retry -i 5s -c 2 &#39;/usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;install:354930ee81775cd8a433576e69f20395&#34;&gt;Install&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ go get -d github.com/linyows/go-retry
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ビルド済みのものをgithub releasesに上げてますので、実際監視で利用する場合はそちらからdownloadして使うのが便利です。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/go-retry/releases&#34;&gt;https://github.com/linyows/go-retry/releases&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ wget https://github.com/linyows/go-retry/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip &amp;amp;&amp;amp; rm linux_amd64.zip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、これは先日紹介した consul-cookbook の中にレシピを追加しているので consul使う人はこのcookbookを使うと大変便利じゃないでしょうか。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb&#34;&gt;https://github.com/linyows/consul-cookbook/blob/master/recipes/retry.rb&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;わたし、諦めない！&amp;rdquo; &amp;hellip; じゃないですが、誤検知でお困りの方は使うと便利なコマンドの紹介でした。&lt;/p&gt;
+
+&lt;h3 id=&#34;reference:354930ee81775cd8a433576e69f20395&#34;&gt;Reference&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;わたし、諦めない! - golangの場合 | おそらくはそれさえも平凡な日々&lt;br /&gt;
+&lt;a href=&#34;http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html&#34;&gt;http://www.songmu.jp/riji/entry/2015-07-06-go-retry.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;わたし、諦めない! - Sub::Retry - tokuhirom blog&lt;br /&gt;
+&lt;a href=&#34;http://blog.64p.org/entry/20110113/1294920074&#34;&gt;http://blog.64p.org/entry/20110113/1294920074&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;update-24-jan-2016:354930ee81775cd8a433576e69f20395&#34;&gt;Update - 24 Jan 2016&lt;/h2&gt;
+
+&lt;p&gt;@songmu さんや @mattn_jp さんから以下のtweetもらってほんとその通りだったので、文字列でなくそのまま渡せるように修正した。
+実は、実装後にキモいので直そうと思ってたのを忘れちゃってたというのが、言い訳になります&amp;hellip;&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+    &lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;go-retryコマンド、コマンド文字列指定なの嫌だな。&lt;/p&gt;
+    &amp;mdash; songmu (@songmu) &lt;a href=&#34;https://twitter.com/songmu/status/690367169012568065&#34;&gt;January 22, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+    &lt;p lang=&#34;ja&#34; dir=&#34;ltr&#34;&gt;
+    &lt;a href=&#34;https://twitter.com/songmu&#34;&gt;@songmu&lt;/a&gt; retry .. /bin/sh -c &amp;quot;foo bar baz&amp;quot; で行けそうですが直観的でないすな&lt;/p&gt; &amp;mdash; mattn (@mattn_jp) &lt;a href=&#34;https://twitter.com/mattn_jp/status/690373524700135425&#34;&gt;January 22, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;なので、以下のような使い方になります。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ retry -i 5s -c 2 /usr/lib64/nagios/plugins/check_http -w 10 -c 15 -H localhost
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、コマンド実行をshell越しにやれるように &lt;code&gt;-shell&lt;/code&gt; オプションも追加しております。
+go-shellwords便利〜！こういうのを気軽にアドバイス頂けるのありがたいなぁ。ありがとうございます！&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>consul-templateをsystemdで動かすときの学び</title>
+      <link>http://tomohisaoda.com/posts/2015/use_systemd_with_consul-template.html</link>
+      <pubDate>Mon, 14 Dec 2015 17:36:35 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2015/use_systemd_with_consul-template.html</guid>
+      <description>
+
+&lt;p&gt;このエントリは &lt;a href=&#34;http://qiita.com/advent-calendar/2015/hashicorp&#34;&gt;HashiCorp Advent Calendar 2015 - Qiita&lt;/a&gt; 14日目の記事です。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/hashicorp/consul-template&#34;&gt;consul-template&lt;/a&gt;は、&lt;a href=&#34;https://www.consul.io/&#34;&gt;consul&lt;/a&gt;の様々なイベントをトリガーに指定したテンプレートファイルを元に指定したファイルを更新するためのデーモンです。
+ユースケースは、&lt;a href=&#34;http://www.haproxy.org/&#34;&gt;HAProxy&lt;/a&gt; や &lt;a href=&#34;http://nginx.org/&#34;&gt;Nginx&lt;/a&gt; などロードバランサやリバースプロキシのバックエンドを、
+状態に応じて動的にクラスタ（ロードバランサやリバースプロキシ）へ追加・削除し、可用性や拡張性を高めたい場合などです。&lt;/p&gt;
+
+&lt;p&gt;今回、同様にnginxとconsul-templateを使って動的リバースプロキシを作ってみましたが、
+それぞれをsystemdで管理するという点で幾つか学ぶことがありました。&lt;/p&gt;
+
+&lt;p&gt;私が最初に書いたconsul-templateのconfは以下です。commandによって、nginxのリロー
+ドとslackに通知をするスクリプトを呼び出しています。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+template {
+  source = &amp;quot;/usr/lib/consul/templates/nginx.upstream_web.conf.ctmpl&amp;quot;
+  destination = &amp;quot;/etc/nginx/conf.d/upstream_web.conf&amp;quot;
+  command = &amp;quot;/bin/systemctl reload nginx.service &amp;amp;&amp;amp; /usr/lib/consul/bin/notify_changed&amp;quot;
+}
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これで動かすと、consul-templateのイベントはロギングされ、nginxのリロードそして通知とあたかも正常に動いているようですが、nginxのconfは書き変わらないままです。
+何かconsul-templateの設定がおかしいのかと&lt;a href=&#34;https://github.com/hashicorp/consul-template/blob/master/README.md&#34;&gt;README.md&lt;/a&gt;を読み直すと、テンプレートは&lt;code&gt;/tmp&lt;/code&gt;に置いていることを見つけ、
+systemdはcgroupsでリソース制御しているのを思い出します。なので、次は &lt;code&gt;/tmp&lt;/code&gt; を使ってプロセス間でファイルの共有をやってみます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+template {
+  source = &amp;quot;/tmp/nginx.upstream_web.conf.ctmpl&amp;quot;
+  destination = &amp;quot;/tmp/nginx.upstream_web.conf&amp;quot;
+  command = &amp;quot;/bin/systemctl reload nginx.service &amp;amp;&amp;amp; /usr/lib/consul/bin/notify_changed&amp;quot;
+}
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;すると、今度はconsul-templateからのnginxリロードに失敗するようになりました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;systemd[1]: PID file /run/nginx.pid not readable (yet?) after reload.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;また、nginxのconfの書き換えが反映されません&amp;hellip; なので、Nginxのsystemd service fileを眺めていると以下のオプションを見つけました。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;PrivateTmp=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;これは、このサービス専用に独立した &lt;code&gt;/tmp&lt;/code&gt; を使う設定のようで、これが機能しているた
+めに、confの書き換えができないのでした。PrivateTmpをコメントアウトしてやると、
+systemdでconsul-templateを動かすことができるようになりました。&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:5a1c59779b8242f83427752a5013b508&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;systemdは管理下のプロセスをcgroupsによる分類を行うことで各サービスのリソースの制御を行っているわけですが、
+プロセス間で情報をやり取りする場合は &lt;code&gt;/tmp&lt;/code&gt; を使います。ただ、&lt;code&gt;/tmp&lt;/code&gt; はサービスと関係のないプロセスからも参照できるので
+各サービスのみが使う場合は &lt;code&gt;PrivateTmp=true&lt;/code&gt; を使うことが望ましいでしょう。
+consul-templateはmiddlewareのconfを書き換えることになるのでsystemdを使う場合は、
+middlewareのsystemd service fileで &lt;code&gt;PrivateTmp=true&lt;/code&gt; になっていないか注意する必要があります。&lt;/p&gt;
+
+&lt;h3 id=&#34;note:5a1c59779b8242f83427752a5013b508&#34;&gt;Note&lt;/h3&gt;
+
+&lt;p&gt;今回、Consul導入にあたってChefを使いました。既存のconsul-cookbookを利用しようと
+思ったんですが、シンプルじゃなくて使いにくい設計だったので作り直しました。もちろん、Consul WebUI・consul-templateに対応してあります。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/linyows/consul-cookbook&#34;&gt;https://github.com/linyows/consul-cookbook&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;reference:5a1c59779b8242f83427752a5013b508&#34;&gt;Reference&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Introducing Consul Template - HashiCorp&lt;br /&gt;
+&lt;a href=&#34;https://hashicorp.com/blog/introducing-consul-template.html&#34;&gt;https://hashicorp.com/blog/introducing-consul-template.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Systemd入門(5) - PrivateTmpの実装を見る - めもめも&lt;br /&gt;
+&lt;a href=&#34;http://enakai00.hatenablog.com/entry/20130923/1379927579&#34;&gt;http://enakai00.hatenablog.com/entry/20130923/1379927579&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;systemd for Administrators, Part XII&lt;br /&gt;
+&lt;a href=&#34;http://0pointer.de/blog/projects/security.html&#34;&gt;http://0pointer.de/blog/projects/security.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>S3 の画像をリアルタイムにリサイズするServer書いた</title>
+      <link>http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html</link>
+      <pubDate>Fri, 04 May 2012 22:46:03 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html</guid>
+      <description>
+
+&lt;p&gt;S3に配置した画像を&lt;strong&gt;URLから指定したサイズ&lt;/strong&gt;にリサイズできるリアルタイムリサイズサーバをnodeで書いた。&lt;/p&gt;
+
+&lt;h2 id=&#34;features:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;スケーラブルでハイパフォーマンス。&lt;/li&gt;
+&lt;li&gt;導入はとっても簡単。&lt;/li&gt;
+&lt;li&gt;複数のバケットが使える。&lt;/li&gt;
+&lt;li&gt;賢いキャッシュ。（ファイルサイズと更新日から304を返す）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;architecture:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;Architecture&lt;/h2&gt;
+
+&lt;p&gt;1台構成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-console&#34;&gt;+---------+      +------------+      +------------+      +----+
+| Browser | &amp;lt;--&amp;gt; | CloudFront | &amp;lt;--&amp;gt; | EC2 (hose) | &amp;lt;--&amp;gt; | S3 |
++---------+      +------------+      +------------+      +----+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;スケールアウト&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-console&#34;&gt;                                                  +------------+
+                                                  | EC2 (hose) |
++---------+      +------------+      +-----+      +------------+      +----+
+| Browser | &amp;lt;--&amp;gt; | CloudFront | &amp;lt;--&amp;gt; | ELB | &amp;lt;--&amp;gt;                &amp;lt;--&amp;gt; | S3 |
++---------+      +------------+      +-----+      +------------+      +----+
+                                                  | EC2 (hose) |
+                                                  +------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SSLに対応していないので、ELBとhoseの間に*NGINXなどを挟んだ方がいい*。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;url:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;Url&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-console&#34;&gt;//hose.com/bucket/key/100x50cq75/802a393d7247aa0caf9056223503bdf611d478ee.jpg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;bucketは、*configファイルに書けば*省略することができる。&lt;/li&gt;
+&lt;li&gt;keyは、拡張子ナシのS3のキーで、*指定バケットのファイルまでのパス*。&lt;/li&gt;
+&lt;li&gt;100x100cq75は、width x hight crop quality の組み合わせ。&lt;/li&gt;
+&lt;li&gt;最後のファイル名は、S3のプライベートキーで作成した*HMAC*と拡張子。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;this-is-called-hose:98f9e2c748d13b64f0e5ab1147371b58&#34;&gt;This is called &amp;ldquo;hose&amp;rdquo;&lt;/h2&gt;
+
+&lt;p&gt;プロジェクト名は&amp;rdquo;hose&amp;rdquo;。最近、&lt;a href=&#34;https://twitter.com/#!/gosukenator&#34;&gt;@gosukenator&lt;/a&gt;さんからこの&amp;rdquo;hose&amp;rdquo;にPull Requestもらって、一昨年に書いて放置してたのをリファクタリングしたのでブログで告知です。(テストをまだ書いてないのでまだ微妙) ほんと、*Pull Requestってモチベーションあがる*よね、すごいいい仕組み！自分もできるだけほかのプロジェクトにPull Requestしていこうと思う。&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;hose&amp;rdquo;はそもそもcookpad &lt;a href=&#34;https://twitter.com/#!/mirakui&#34;&gt;@mirakui&lt;/a&gt;さんの&lt;a href=&#34;http://www.slideshare.net/mirakui/ss-8150494&#34;&gt;tofuのスライド&lt;/a&gt;を見たのがきっかけ。Railsアプリケーションとかだと、&lt;a href=&#34;https://github.com/thoughtbot/paperclip&#34;&gt;Paperclip&lt;/a&gt;使うのがお手軽だったりするんだけど、画像サイズが固定だったりするから後でサイズを変更したいときは、バッチでリサイズ処理やったりと結構大変。また、Applicationサーバでリサイズ処理をやるのはそもそもリソースがもったいないよね。そこで&amp;rdquo;hose&amp;rdquo;なら全部解決できるってわけ。&lt;/p&gt;
+
+&lt;p&gt;特に、*AWS使うなら絶対に便利*だと思うので、たくさんの人に使ってもらいたい。&lt;/p&gt;
+
+&lt;p&gt;hose - &lt;a href=&#34;https://github.com/linyows/hose&#34;&gt;https://github.com/linyows/hose&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、*Pull Request*お願いします。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GithubでWikiを検索するUserScript書いた</title>
+      <link>http://tomohisaoda.com/posts/2012/created_github_wiki_search.html</link>
+      <pubDate>Tue, 03 Apr 2012 22:47:45 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/created_github_wiki_search.html</guid>
+      <description>
+
+&lt;p&gt;Githubをがっつり使ってると、Wikiに仕様書いたりFAQや依存するModule書いたりと、Wikiを利用する機会は結構あって、Issueやソースコードには検索機能があるのに、Wikiには何故かないんだよね。Github内での優先順位が低いのかな？&lt;/p&gt;
+
+&lt;p&gt;最初は、&lt;a href=&#34;https://twitter.com/#!/morygonzalez&#34;&gt;@morygonzalez&lt;/a&gt;に「Wiki内って検索出来ないけどどうすんの？」って言われて、「cloneして&lt;code&gt;ack&lt;/code&gt;叩けば？」って言ったものの、ターミナルアレルギーなデザイナーは仕方ないとして、自分も他プロジェクトのをいちいちcloneして探すのは確かに面倒だなあと思ったわけ。
+なので、UserScriptを書いてみてGithub Wikiの全文検索がうまくいったのでお知らせしてみる。&lt;/p&gt;
+
+&lt;p&gt;Github Wiki Search - &lt;a href=&#34;https://github.com/linyows/github-wiki-search&#34;&gt;https://github.com/linyows/github-wiki-search&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;なんか、バグ見っけたらGithubにIssue登録お願いします。もしくは、*Pull Request*お願いします。&lt;/p&gt;
+
+&lt;h2 id=&#34;screenshots:8cd41763e7c46500a635e97a0b9c89c3&#34;&gt;Screenshots&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/linyows/github-wiki-search/raw/master/images/1.png&#34; alt=&#34;screenshot1&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;ページ右上に検索ボックス。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/linyows/github-wiki-search/raw/master/images/2.png&#34; alt=&#34;screenshot2&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;検索ワードを入力して&lt;code&gt;Enter&lt;/code&gt;したら検索開始。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://github.com/linyows/github-wiki-search/raw/master/images/3.png&#34; alt=&#34;screenshot3&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;検索結果は、非同期で見つかった順に表示。&lt;/p&gt;
+
+&lt;h2 id=&#34;logic:8cd41763e7c46500a635e97a0b9c89c3&#34;&gt;Logic&lt;/h2&gt;
+
+&lt;p&gt;生のjsガリガリ書くのは面倒だったのでjQueryを使った。&lt;/p&gt;
+
+&lt;p&gt;以下、コード中やってること。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;PagesタブにWikiの*全てのページのリンクがある*ので&lt;code&gt;GET&lt;/code&gt;してページのURLリストを作成。&lt;/li&gt;
+&lt;li&gt;URLリストからコンテンツを&lt;code&gt;GET&lt;/code&gt;して、検索文字をgrep。&lt;/li&gt;
+&lt;li&gt;grepしてmatchしたら結果表示しつつ、次のコンテンツを&lt;code&gt;GET&lt;/code&gt;してgrepを繰り返す。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;補足&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;１度全ページロードしたらキャッシュしてる。ロードの状態は、プログレスバーで視覚的に分かるようにした。&lt;/li&gt;
+&lt;li&gt;検索結果表示数が多いと もともと何のページか分からなくなるのであえて少なくしてる。（Wikiってそんなにページ数少ないし&amp;hellip;）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install:8cd41763e7c46500a635e97a0b9c89c3&#34;&gt;Install&lt;/h2&gt;
+
+&lt;p&gt;インストールは、&lt;strong&gt;userscripts.org&lt;/strong&gt;に登録してるので*Install*ボタンからどうぞ。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://userscripts.org/scripts/show/129930&#34;&gt;http://userscripts.org/scripts/show/129930&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;ブラウザは、以下で一通り動作するのを確認済み。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Chrome&lt;/li&gt;
+&lt;li&gt;Firefox - need &lt;a href=&#34;https://addons.mozilla.org/ja/firefox/addon/greasemonkey/&#34;&gt;Greasemonekey&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Safari - need &lt;a href=&#34;http://d.hatena.ne.jp/os0x/20100612/1276330696&#34;&gt;NinjaKit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>gitのtagをいい感じに削除するshell書いた</title>
+      <link>http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html</link>
+      <pubDate>Sun, 25 Mar 2012 22:40:31 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html</guid>
+      <description>
+
+&lt;p&gt;Git使ってたらリリースの度にtagをきるんだけどいつの間にかtagの量がスゴいことになってくる。んで、増えすぎたtagを必要なものを残して削除するわけだけど手動で管理してたら面倒だからshell書いた。
+どんないい感じにしてくれるかと言うと、&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;各マイナーマージョンの最新&lt;/strong&gt;と&lt;strong&gt;現バージョンの全て&lt;/strong&gt;を*残して削除*する感じ。&lt;/p&gt;
+
+&lt;p&gt;gist: &lt;a href=&#34;https://gist.github.com/2156669&#34;&gt;https://gist.github.com/2156669&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;usage:b075409110fc4f83b6038e3b3659def9&#34;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;dry-run。削除対象tagを確認することが出来る。&lt;/p&gt;
+
+&lt;pre&gt;
+$ ./git_tag test
+&lt;/pre&gt;
+
+&lt;p&gt;ローカルリポジトリもリモートも削除&amp;hellip;&lt;/p&gt;
+
+&lt;pre&gt;
+$ ./git_tag clean
+&lt;/pre&gt;
+
+&lt;h2 id=&#34;little-sucker:b075409110fc4f83b6038e3b3659def9&#34;&gt;Little Sucker&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;6.12.7&lt;/code&gt;みたいなフォーマットしか対応してない。&lt;code&gt;v2.3.12&lt;/code&gt;とかのprefixに対応してない。&lt;/li&gt;
+&lt;li&gt;ローカルもリモートも消してしまう&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;もっとスマートなやり方があるだろうし*shellで書かなくても&amp;hellip;*って言う気はするけど取り急ぎ書いた。ちゃんと書きたくなったらそのとき考よう。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>S3のAPI&#34;Delete Multiple Objects&#34;をknoxに実装した</title>
+      <link>http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html</link>
+      <pubDate>Wed, 07 Mar 2012 22:44:11 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html</guid>
+      <description>&lt;p&gt;去年末、AWS S3にオブジェクトの一括削除APIが実装されたので、使用しようとおもったらKnoxは未実装だったので対応してpull-request送った。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;AWS Documentation - Delete Multiple Objects &lt;a href=&#34;http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html&#34;&gt;http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Knox &lt;a href=&#34;https://github.com/LearnBoost/knox&#34;&gt;https://github.com/LearnBoost/knox&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Delte Multiple Objects について後で追記する&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>JekyllのNode版であるDocpadを使ってみる</title>
+      <link>http://tomohisaoda.com/posts/2012/using_docpad.html</link>
+      <pubDate>Thu, 01 Mar 2012 23:47:42 +0900</pubDate>
+      
+      <guid>http://tomohisaoda.com/posts/2012/using_docpad.html</guid>
+      <description>
+
+&lt;p&gt;なんか巷では、&lt;a href=&#34;http://jekyllrb.com/&#34;&gt;jekyll&lt;/a&gt;, &lt;a href=&#34;http://octopress.org/&#34;&gt;octpress&lt;/a&gt; が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、&lt;a href=&#34;http://nodejs.org/&#34;&gt;node&lt;/a&gt;弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Docpad &lt;a href=&#34;https://github.com/bevry/docpad&#34;&gt;https://github.com/bevry/docpad&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Docpadを使ったサイト &lt;a href=&#34;https://github.com/bevry/docpad/wiki/Showcase&#34;&gt;https://github.com/bevry/docpad/wiki/Showcase&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install:c857c41bd1b4ac45231478eb13a0db9d&#34;&gt;Install&lt;/h2&gt;
+
+&lt;p&gt;docpadは、coffee-scriptで実装されていて、まずmacにcoffeeと一緒にインストールする。&lt;code&gt;-g&lt;/code&gt;オプションはgloballyで&lt;code&gt;/usr/local/bin/*&lt;/code&gt;にインストールする。&lt;/p&gt;
+
+&lt;pre&gt;
+$ npm install -g coffee-script docpad
+&lt;/pre&gt;
+
+&lt;p&gt;プロジェクト用のディレクトリに移動し、&lt;code&gt;run&lt;/code&gt;コマンドではじめる。&lt;code&gt;run&lt;/code&gt;コマンドは、全てのコマンドを実行してくれるみたいで、*2回目以降実行するとエラーが出る*。ドキュメントにある通り最初の1回用っぽい。&lt;/p&gt;
+
+&lt;p&gt;実行したらどのスケルトンを使うか聞かれるので選択する。Twitter&amp;rsquo;s Bootstrap使うと*それ臭さがにじみ出てキモイ*ので、何もスタイル無しの状態を選択。&lt;/p&gt;
+
+&lt;pre&gt;
+$ docpad run
+info: Welcome to DocPad v3.3.0
+You are about to create your new project inside your current directory. Below is a list of skeletons to bootstrap your new project:
+
+        canvas.docpad
+        The Blank Canvas Skeleton for DocPad. Your web development playground.
+
+        kitchensink.docpad
+        Kitchensink Skeleton for DocPad, based off Twitter&#39;s Bootstrap
+
+Which skeleton will you use?
+  1) canvas.docpad
+  2) kitchensink.docpad
+  :
+&lt;/pre&gt;
+
+&lt;p&gt;すると必要なモジュールがインストールされて、サーバーが&lt;code&gt;localhost:9778&lt;/code&gt;に起動する。記事書いて確認したりするには、&lt;code&gt;$ docpad cli&lt;/code&gt;が*便利かも*。docpadのコマンドをそのまま叩ける状態になるので、&lt;code&gt;server&lt;/code&gt;と&lt;code&gt;watch&lt;/code&gt;を叩く事で更新をlocalhostで確認しやすい。&lt;/p&gt;
+
+&lt;pre&gt;
+$ docpad cli
+info: Welcome to DocPad v3.3.0
+What would you like to do now?
+&gt; server
+info: DocPad listening to http://localhost:9778/ with directory /Users/foo/Projects/bar/out
+info: The action completed successfully
+
+What would you like to do now?
+&gt; watch
+info: Watching setup starting...
+info: Watching setup
+info: The action completed successfully
+
+What would you like to do now?
+&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;こんな風に対話式にコマンドを叩ける。&lt;code&gt;watch&lt;/code&gt;はファイルの更新を検知してずっとビルドしてくれる。&lt;/p&gt;
+
+&lt;h2 id=&#34;記事を書く:c857c41bd1b4ac45231478eb13a0db9d&#34;&gt;記事を書く&lt;/h2&gt;
+
+&lt;p&gt;以下は、ディレクトリ構成。&lt;/p&gt;
+
+&lt;pre&gt;
+├── README.md
+├── node_modules
+│   ├── coffee-script
+│   ├── docpad
+│   ├── express
+│   ├── moment
+│   └── underscore
+├── out
+│   ├── images
+│   ├── index.html
+│   ├── scripts
+│   ├── styles
+│   └── vendor
+├── package.json
+├── plugins
+└── src
+    ├── documents
+    │   ├── index.html.coffee
+    │   ├── posts
+    │   ├── scripts
+    │   └── styles
+    ├── layouts
+    │   └── default.html.coffee
+    └── public
+        ├── images
+        └── vendor
+&lt;/pre&gt;
+
+&lt;p&gt;outは、docpadが出力する静的ファイル群で、基本src配下を弄る。スクリプトを書くにはCoffee以外にRoyやMoveも使えるみたいで、Markupには、Markdown以外にEcoやJade, Hamlとかいけるみたい。Styleは、Stylus, Less, Sassなどが使える。とりあえず、記事はpostsディレクトリをほってそこにmarkdownファイルを作っていく事にし、レイアウトやフロントページは、記事一覧表示するのでCoffeeで書いた。Styleは、みんな知ってるLearnBoostのTJ Holowaychuk aka &lt;strong&gt;visionmedia製 Stylus&lt;/strong&gt;にしてみた。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CoffeeScript &lt;a href=&#34;http://coffeescript.org/&#34;&gt;http://coffeescript.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Markdown &lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;http://daringfireball.net/projects/markdown/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Stylus &lt;a href=&#34;http://learnboost.github.com/stylus/&#34;&gt;http://learnboost.github.com/stylus/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;deploy:c857c41bd1b4ac45231478eb13a0db9d&#34;&gt;Deploy&lt;/h2&gt;
+
+&lt;p&gt;GitHubをoriginリポジトリにして、*pushしたらwebhookでGitHubからpullするようにしてdeploy*するようにした。Deploy先にリモートリポジトリ作っても良かったけどそこにpushするのがめんどかったのでwebhookにしたけど、*もっといいやり方があれば誰か教えて欲しい*。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Github repository &lt;a href=&#34;https://github.com/linyows/tomohisaoda.com&#34;&gt;https://github.com/linyows/tomohisaoda.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;P.S. - April 3, 2012&lt;/p&gt;
+
+&lt;p&gt;DocpadのShowcaseで、この記事 と このサイト が紹介されてたみたい。
+&lt;a href=&#34;https://github.com/bevry/docpad/wiki/Showcase&#34;&gt;https://github.com/bevry/docpad/wiki/Showcase&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Thanks!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

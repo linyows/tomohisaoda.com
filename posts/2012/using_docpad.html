@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" JekyllのNode版であるDocpadを使ってみる &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2012/using_docpad.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2012-03-01T23:47:42&#43;09:00" />
+    <meta property="og:article:tag" content="javascript" /><meta property="og:article:tag" content="docpad" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="JekyllのNode版であるDocpadを使ってみる" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2012/using_docpad.html" />
+    <title> JekyllのNode版であるDocpadを使ってみる &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2012/using_docpad.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "JekyllのNode版であるDocpadを使ってみる",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2012-03-01",
+    "description": "",
+    "wordCount":  241 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">JekyllのNode版であるDocpadを使ってみる</h1>
+    
+
+<p>なんか巷では、<a href="http://jekyllrb.com/">jekyll</a>, <a href="http://octopress.org/">octpress</a> が流行っているっぽい。完全に乗り遅れたので、いや乗るつもりも無かったけど、<a href="http://nodejs.org/">node</a>弄るのが比較的楽しいので、node.js版 jekyll の Docpadを使ってブログをはじめてみる。</p>
+
+<ul>
+<li>Docpad <a href="https://github.com/bevry/docpad">https://github.com/bevry/docpad</a></li>
+<li>Docpadを使ったサイト <a href="https://github.com/bevry/docpad/wiki/Showcase">https://github.com/bevry/docpad/wiki/Showcase</a></li>
+</ul>
+
+<h2 id="install:c857c41bd1b4ac45231478eb13a0db9d">Install</h2>
+
+<p>docpadは、coffee-scriptで実装されていて、まずmacにcoffeeと一緒にインストールする。<code>-g</code>オプションはgloballyで<code>/usr/local/bin/*</code>にインストールする。</p>
+
+<pre>
+$ npm install -g coffee-script docpad
+</pre>
+
+<p>プロジェクト用のディレクトリに移動し、<code>run</code>コマンドではじめる。<code>run</code>コマンドは、全てのコマンドを実行してくれるみたいで、*2回目以降実行するとエラーが出る*。ドキュメントにある通り最初の1回用っぽい。</p>
+
+<p>実行したらどのスケルトンを使うか聞かれるので選択する。Twitter&rsquo;s Bootstrap使うと*それ臭さがにじみ出てキモイ*ので、何もスタイル無しの状態を選択。</p>
+
+<pre>
+$ docpad run
+info: Welcome to DocPad v3.3.0
+You are about to create your new project inside your current directory. Below is a list of skeletons to bootstrap your new project:
+
+        canvas.docpad
+        The Blank Canvas Skeleton for DocPad. Your web development playground.
+
+        kitchensink.docpad
+        Kitchensink Skeleton for DocPad, based off Twitter's Bootstrap
+
+Which skeleton will you use?
+  1) canvas.docpad
+  2) kitchensink.docpad
+  :
+</pre>
+
+<p>すると必要なモジュールがインストールされて、サーバーが<code>localhost:9778</code>に起動する。記事書いて確認したりするには、<code>$ docpad cli</code>が*便利かも*。docpadのコマンドをそのまま叩ける状態になるので、<code>server</code>と<code>watch</code>を叩く事で更新をlocalhostで確認しやすい。</p>
+
+<pre>
+$ docpad cli
+info: Welcome to DocPad v3.3.0
+What would you like to do now?
+> server
+info: DocPad listening to http://localhost:9778/ with directory /Users/foo/Projects/bar/out
+info: The action completed successfully
+
+What would you like to do now?
+> watch
+info: Watching setup starting...
+info: Watching setup
+info: The action completed successfully
+
+What would you like to do now?
+>
+</pre>
+
+<p>こんな風に対話式にコマンドを叩ける。<code>watch</code>はファイルの更新を検知してずっとビルドしてくれる。</p>
+
+<h2 id="記事を書く:c857c41bd1b4ac45231478eb13a0db9d">記事を書く</h2>
+
+<p>以下は、ディレクトリ構成。</p>
+
+<pre>
+├── README.md
+├── node_modules
+│   ├── coffee-script
+│   ├── docpad
+│   ├── express
+│   ├── moment
+│   └── underscore
+├── out
+│   ├── images
+│   ├── index.html
+│   ├── scripts
+│   ├── styles
+│   └── vendor
+├── package.json
+├── plugins
+└── src
+    ├── documents
+    │   ├── index.html.coffee
+    │   ├── posts
+    │   ├── scripts
+    │   └── styles
+    ├── layouts
+    │   └── default.html.coffee
+    └── public
+        ├── images
+        └── vendor
+</pre>
+
+<p>outは、docpadが出力する静的ファイル群で、基本src配下を弄る。スクリプトを書くにはCoffee以外にRoyやMoveも使えるみたいで、Markupには、Markdown以外にEcoやJade, Hamlとかいけるみたい。Styleは、Stylus, Less, Sassなどが使える。とりあえず、記事はpostsディレクトリをほってそこにmarkdownファイルを作っていく事にし、レイアウトやフロントページは、記事一覧表示するのでCoffeeで書いた。Styleは、みんな知ってるLearnBoostのTJ Holowaychuk aka <strong>visionmedia製 Stylus</strong>にしてみた。</p>
+
+<ul>
+<li>CoffeeScript <a href="http://coffeescript.org/">http://coffeescript.org/</a></li>
+<li>Markdown <a href="http://daringfireball.net/projects/markdown/">http://daringfireball.net/projects/markdown/</a></li>
+<li>Stylus <a href="http://learnboost.github.com/stylus/">http://learnboost.github.com/stylus/</a></li>
+</ul>
+
+<h2 id="deploy:c857c41bd1b4ac45231478eb13a0db9d">Deploy</h2>
+
+<p>GitHubをoriginリポジトリにして、*pushしたらwebhookでGitHubからpullするようにしてdeploy*するようにした。Deploy先にリモートリポジトリ作っても良かったけどそこにpushするのがめんどかったのでwebhookにしたけど、*もっといいやり方があれば誰か教えて欲しい*。</p>
+
+<ul>
+<li>Github repository <a href="https://github.com/linyows/tomohisaoda.com">https://github.com/linyows/tomohisaoda.com</a></li>
+</ul>
+
+<hr />
+
+<p>P.S. - April 3, 2012</p>
+
+<p>DocpadのShowcaseで、この記事 と このサイト が紹介されてたみたい。
+<a href="https://github.com/bevry/docpad/wiki/Showcase">https://github.com/bevry/docpad/wiki/Showcase</a></p>
+
+<p>Thanks!</p>
+
+    <div class="post-stamp">
+      <time datetime="2012-03-01T23:47:42&#43;09:00"> 1 Mar 2012 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/javascript.html">javascript</a> 
+        <a href="http://tomohisaoda.com/tags/docpad.html">docpad</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+

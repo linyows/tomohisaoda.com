@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://tomohisaoda.com/</loc>
+    <lastmod>2017-03-07T00:38:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2017/what_i_did_in_my_c_project.html</loc>
+    <lastmod>2017-03-07T00:38:00+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html</loc>
+    <lastmod>2017-02-10T00:00:00+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html</loc>
+    <lastmod>2016-12-15T00:00:00+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2016/retry_command_in_golang.html</loc>
+    <lastmod>2016-01-22T09:30:00+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2015/use_systemd_with_consul-template.html</loc>
+    <lastmod>2015-12-14T17:36:35+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2012/created_realtime_resizing_image_server.html</loc>
+    <lastmod>2012-05-04T22:46:03+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2012/created_github_wiki_search.html</loc>
+    <lastmod>2012-04-03T22:47:45+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2012/git_tag_cleaning_shell.html</loc>
+    <lastmod>2012-03-25T22:40:31+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2012/delete_multilpe_objects.html</loc>
+    <lastmod>2012-03-07T22:44:11+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tomohisaoda.com/posts/2012/using_docpad.html</loc>
+    <lastmod>2012-03-01T23:47:42+09:00</lastmod>
+  </url>
+  
+</urlset>

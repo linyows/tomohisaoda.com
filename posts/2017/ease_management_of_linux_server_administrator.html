@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta property="og:title" content=" Linux Server管理者の管理を楽にする &middot;  Tomohisa Oda" />
+    <meta property="og:site_name" content="Tomohisa Oda" />
+    <meta property="og:url" content="http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2017-02-10T00:00:00&#43;09:00" />
+    <meta property="og:article:tag" content="C" /><meta property="og:article:tag" content="nss" /><meta property="og:article:tag" content="linux" /><meta property="og:article:tag" content="github" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@linyows" />
+    <meta name="twitter:creator" content="@linyows" />
+    <meta name="twitter:title" content="Linux Server管理者の管理を楽にする" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:url" content="http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html" />
+    <title> Linux Server管理者の管理を楽にする &middot;  Tomohisa Oda</title>
+    <meta name="description" content="Programming, Tech and Life." /> 
+    <meta name="p:domain_verify" content=""/>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|League+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://tomohisaoda.com/css/style.css" media="screen, projection" />
+    <link rel="canonical" href="http://tomohisaoda.com/posts/2017/ease_management_of_linux_server_administrator.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Linux Server管理者の管理を楽にする",
+    "author": {
+      "@type": "Person",
+      "name": "http://profiles.google.com/?rel=author"
+    },
+    "datePublished": "2017-02-10",
+    "description": "",
+    "wordCount":  197 
+  }
+  </script>
+  </head>
+  <body>
+    <header id="header">
+      <h1 class="site-name"> <a href="http://tomohisaoda.com/"><span class="intro">My name is...</span> Tomohisa Oda <span class="site-description">Programming, Tech and Life.</span> </a> </h1>
+      <p class="dark-flag"><span class="text">Made with ♥ in Fukuoka.</span><span class="flag"></span></p>
+    </header>
+
+
+<main id="content">
+  <article id="" class="posts">
+    <h1 class="post-title">Linux Server管理者の管理を楽にする</h1>
+    
+
+<p>昨年、libpam-mrubyを使って、Linux Serverにおける認証やその管理について思うところを書きました。今回はその続きです。</p>
+
+<p><a href="http://tomohisaoda.com/posts/2016/authenticate_user_by_team_on_github_with_libpam-mruby.html">libpam-mrubyを使ってGithubのチームで認証をする</a></p>
+
+<p>OSSを使ってのLinuxユーザ管理といったら、一般的に<a href="http://www.openldap.org/">OpenLDAP</a>を用いると思いますが、
+<a href="http://www.openldap.org/">LDAP</a>って統合管理でやれること多いかわりにちゃんと使おうとしたら敷居が高い感じがするんです。
+<a href="http://www.openldap.org/">LDAP</a>を触る頻度が低いと、<a href="http://www.openldap.org/">LDAP</a>コマンドを毎回ググる事になり、地味に面倒というのは経験している人多いと思います。</p>
+
+<p>そして、自分たちが<a href="http://www.openldap.org/">LDAP</a>を通して解決したいことって単にsudo権限を持つ管理者かそうでないユーザの管理で意外とシンプルだったりします。
+それに気づかせてくれたのは、イケてる同僚の<a href="https://twitter.com/pyama86">@pyama</a>氏プロダクトの<a href="http://stns.jp">STNS</a>というやつで、<a href="http://stns.jp">STNS</a>はユーザや鍵の管理を<a href="https://github.com/toml-lang/toml">TOML</a>で行うというものでした。
+設定が<a href="https://github.com/toml-lang/toml">TOML</a>形式のファイルになることでgitで管理できますし、変更はGithubのPull-Requestを通じて行えるようになります。
+Pull-Requestが出来るということは、管理者は確認してマージするだけが作業となり、ホント面倒な作業から解放してくれる！そういうプロダクトです。</p>
+
+<p>ただ、便利以外にいくつか課題があって</p>
+
+<ul>
+<li>追加・削除は容易だが、最初の設定ファイル作るのが面倒</li>
+<li>LDAPと同じくバックエンド（サーバなど）が必要</li>
+<li>導入サーバによってはuidが被ってふがふが</li>
+</ul>
+
+<p>みたいなことがあります。そこで <a href="https://github.com/linyows/octopass">octopass</a> の登場です（私が作ったんですが）。</p>
+
+<h2 id="about-octopass:e409e7237541bce9a15ddec379ece973">About Octopass</h2>
+
+<p><a href="https://github.com/linyows/octopass">octopass</a>は、Github APIを使って、Github Organization/Team によってlinuxユーザの名前解決を行い、
+Githubに登録している公開鍵によってSSHDの認証とGithubのPersonal Access TokenでPAM認証をできるようにするプロダクトです。</p>
+
+<figure id="octopass" align="center">
+<figcaption style="color:ccc;padding-bottom:10px;">Githubに依存するのでoctocatをモジってつけた名前、octopass。</figcaption>
+<img alt="OCTOPASS" src="https://github.com/linyows/octopass/blob/master/misc/octopass.png?raw=true" width="200">
+</figure>
+
+<p>簡潔にまとめると</p>
+
+<ul>
+<li>octopass NSSモジュールが Github Org/Team メンバーを参照する</li>
+<li>octopass コマンドによってGithubのpublic keysを取得する</li>
+<li>octopass PAMヘルパーによって GithubのAuthorizationを得る</li>
+</ul>
+
+<p>のようなことをやってくれるので、Linuxの管理者の管理をGithubのOrg/Teamメンバーの管理を通じて行えるわけです。</p>
+
+<h2 id="questions:e409e7237541bce9a15ddec379ece973">Questions</h2>
+
+<p>ここで大体疑問に思うことはこんな感じでしょう。</p>
+
+<ul>
+<li>Github APIがDownしたらどうなるの？</li>
+<li>海外のAPI越しに名前解決してたら遅いんでは？</li>
+<li>サーバ台数多いとAPIのRatelimit（制限）にかかるのでは？</li>
+</ul>
+
+<p>はい。全部その通りです&hellip; ;-( しかし、<em>上の2つはキャッシュによって解決しています。</em> :-)</p>
+
+<p>
+<figure class="center">
+    
+        <img src="/images/architecture.png" width="600" />
+    
+    
+    <figcaption>
+        <h4>Architecture</h4>
+        
+    </figcaption>
+    
+</figure>
+</p>
+
+<p><a href="https://github.com/linyows/octopass">octopass</a>ではGithub APIのレスポンスボディをファイルキャッシュしていて、
+何かしらの原因でGithub APIへのリクエストが200で返らなかった場合はキャッシュタイムを超えていてもキャッシュを使う仕様になっています。
+また、キャッシュしているので名前解決に都度APIリクエストは投げません。</p>
+
+<p>3つ目は、例えば、サーバ台数が10000台ある環境にoctopassを導入すると
+Github APIの<a href="https://developer.github.com/v3/#rate-limiting">Rate Limit</a>は 5,000/hour なので、即刻API制限されてしまう可能性はあります。
+こういう場合は、Github APIにproxyを挟んでキャッシュしてもらうのがいいと思いますが、
+そもそも、大規模なので<a href="http://www.openldap.org/">LDAP</a>その他のミドルウェアの方が向いていると言えます。</p>
+
+<h2 id="conclusion:e409e7237541bce9a15ddec379ece973">Conclusion</h2>
+
+<p>このように、<a href="https://github.com/linyows/octopass">octopass</a>を使えば、
+自分たちの資産（コード）をGithubまたはGithub Enterpriseで管理している前提にはなりますが、
+それ（資産）にコミットする権限と同じように、<em>関係するサーバにしても同じように権限を管理できるようになります。</em>
+<strong>なんてシンプル！</strong></p>
+
+<p>また、時代的にサーバに複数ロールは持たないので自ずと複雑なユーザ管理が不要になっているという流れではありますので、
+一見複雑なことができない小規模向けのような<a href="https://github.com/linyows/octopass">octopass</a>が大規模なサーバ群に対応できるのかもしれません。
+時はすでにコンテナの時代に突入していますのでSSHをすることもだいぶ減ってきてはいます。</p>
+
+<p><a href="https://twitter.com/matsumotory">@matsumotory</a> 曰く、「マイクロセグメント！」</p>
+
+<h2 id="installation:e409e7237541bce9a15ddec379ece973">Installation</h2>
+
+<p>インストールは、RHEL/7 のみパッケージを作っているので yum でインストールが可能です。
+（パッケージ置き場は<a href="https://packagecloud.io/linyows/octopass">packagecloud</a>を利用しています）</p>
+
+<pre><code class="language-sh">$ curl -s https://packagecloud.io/install/repositories/linyows/octopass/script.rpm.sh | sudo bash
+$ sudo yum install octopass-0.1.0-1.x86_64
+</code></pre>
+
+<p>他のバージョンや他のディストリビューションについては追々追加していきますが、
+<em>手伝っていただける方がいれば非常に歓迎です！</em></p>
+
+<p>ソースからビルドインストールするには以下の方法です。</p>
+
+<pre><code class="language-sh"># 依存パッケージをディストリビューションに応じて入れてください
+# glibc, libcurl, jansson
+$ wget https://github.com/linyows/octopass/releases/download/v0.1.0/linux_amd64.zip
+$ unzip linux_amd64.zip
+$ mv octopass /usr/bin/
+$ git clone https://github.com/linyows/octopass
+$ cd nss
+$ make &amp;&amp; make install
+</code></pre>
+
+<p>インストールがすんだら設定ファイルを作ります。基本的には、Github APIを叩くための
+<a href="https://github.com/settings/tokens/new">Personal Access Token</a>をTokenとして記述し、OrganizationとTeamを設定するだけになります。
+ただ気をつけるのは、そのTokenは他のユーザから見えるのでGithub Organization Memberに対してread権限のみを持たせるのが吉です。
+設定項目は<a href="https://github.com/linyows/octopass#configuration">README.mdのConfiguration</a>にあります。</p>
+
+<pre><code class="language-sh">$ cat &lt;&lt;EOF &gt; /etc/octopass.conf
+Token = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;
+Organization = &quot;hoge&quot;
+Team = &quot;fuga&quot;
+EOF
+</code></pre>
+
+<p>そして、各ファイルの項目に修正を加えます。</p>
+
+<pre><code class="language-sh"># /etc/ssh/sshd_config:
+AuthorizedKeysCommand /usr/bin/octopass
+AuthorizedKeysCommandUser root
+UsePAM yes
+PasswordAuthentication no
+
+# /etc/pam.d/sshd:
+session required pam_mkhomedir.so skel=/etc/skel/ umask=0022
+
+# /etc/nsswitch.conf:
+passwd:     files octopass sss
+shadow:     files octopass sss
+group:      files octopass sss
+</code></pre>
+
+<p>これでGithubのアカウントと鍵でSSHログインができるようになります。
+興味がある方は是非使ってみてください。バグ報告等はGithub Issueにてお待ちしております！</p>
+
+<p>Octopass: <a href="https://github.com/linyows/octopass">https://github.com/linyows/octopass</a></p>
+
+<h2 id="next-ideas:e409e7237541bce9a15ddec379ece973">Next Ideas</h2>
+
+<p>ちなみに、次の機能として考えているのはこちらです。</p>
+
+<ul>
+<li>共有アカウント（デプロイ用のユーザなど</li>
+<li>複数ロール（チーム・グループ）の設定</li>
+<li>Githubの認証をVault経由で行う</li>
+</ul>
+
+<p>何かアイデアや要望をお持ちの方いれば、気軽にIssueに投げつけてくださいね！</p>
+
+<hr />
+
+<p>最後に、<a href="http://stns.jp">STNS</a>について仕様の確認をSlackで<a href="https://twitter.com/pyama86">@pyama氏</a>としてたときに、いい話が出てきたのでぺたり。</p>
+
+<p>
+<figure class="center">
+    
+        <img src="/images/octopass-slack.png" width="400" />
+    
+    
+    <figcaption>
+        <h4>Conversation on Slack</h4>
+        
+    </figcaption>
+    
+</figure>
+</p>
+
+    <div class="post-stamp">
+      <time datetime="2017-02-10T00:00:00&#43;09:00"> 10 Feb 2017 </time>
+      <span class="taglist"> 
+        &middot; 
+        <a href="http://tomohisaoda.com/tags/c.html">C</a> 
+        <a href="http://tomohisaoda.com/tags/nss.html">nss</a> 
+        <a href="http://tomohisaoda.com/tags/linux.html">linux</a> 
+        <a href="http://tomohisaoda.com/tags/github.html">github</a>  
+      </span>
+    </div>
+  </article>
+</main>
+
+    <footer id="footer">
+      <section id="footer-message">
+        &copy; Tomohisa Oda.  Powered by <a href="http://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://github.com/linyows/hugo-theme-flag" target="_blank">Flag</a> theme by <a href="http://github.com/linyows" target="_blank">linyows</a>.
+      </section>
+    </footer>
+
+    <script>
+      (function(c,f){asyncLoader=function(i,h){i.foreach(function(k,j){e(j,d(j),h)});if(typeof h.callback=="function"){var g=setInterval(function(){if(f.readyState==="complete"){clearInterval(g);h.callback()}},10)}};var d=function(g){var h=g.split(".");return h[h.length-1]},e=function(h,i,g){switch(i){case"js":a(h,g);break;case"css":b(h);break;default:break}},a=function(i,h){var g=document.createElement("script");g.type="text/javascript";g.async=true;g.src=i;document.getElementsByTagName("head")[0].appendChild(g)},b=function(g){var h=document.createElement("link");h.type="text/css";h.rel="stylesheet";h.href=g;document.getElementsByTagName("head")[0].appendChild(h)};Array.prototype.foreach=function(h){for(var g=0;g<this.length;g++){h(g,this[g])}}})(this,document);
+
+      var WebFontConfig={google:{families:["Open Sans:300italic,700italic,300,700","Bree+Serif"]}};
+      asyncLoader([
+        "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css",
+        "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js",
+        "//cdnjs.cloudflare.com/ajax/libs/webfont/1.5.16/webfontloader.js",
+        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"
+      ],{
+        callback:function(){
+          asyncLoader([
+            "http:\/\/tomohisaoda.com\/js/gist.min.js", 
+            "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css"
+          ], { callback:function() {
+              hljs.initHighlighting();
+          }});
+        }
+      });
+    </script>
+  
+  </body>
+</html>
+
