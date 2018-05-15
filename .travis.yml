@@ -13,6 +13,7 @@ deploy:
   acl: public_read
   region: ap-northeast-1
   local_dir: public
+  skip_cleanup: true
   on:
     branch: master
 notifications:
