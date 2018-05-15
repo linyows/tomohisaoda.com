@@ -1,0 +1,19 @@
+language: go
+script:
+  - go get -v github.com/gohugoio/hugo
+  - git clone https://github.com/linyows/hugo-theme-flag themes/flag
+  - git add .
+  - git commit -m "deploy from "
+  - git push -f origin deploy
+deploy:
+  provider: s3
+  access_key_id: $S3_KEY
+  secret_access_key: $S3_SECRET
+  bucket: $S3_BUCKET
+  acl: public_read
+  region: ap-northeast-1
+  on:
+    branch: master
+notifications:
+  slack: linyows:2oeZ2qcLnaMjbnEYodwEXKTr
+  email: false
