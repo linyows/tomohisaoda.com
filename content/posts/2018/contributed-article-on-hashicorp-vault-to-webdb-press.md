@@ -2,10 +2,10 @@
 date = "2018-05-16T09:45:00+09:00"
 title = "WEB+DB PRESSにHashicorp Vaultの記事を寄稿した"
 tags = ["vault", "security", "nodejs"]
-
+eyecatch = "images/vault.png"
 +++
 
-[WEB+DB PRESS][wdpress]の「実践！先進的インフラ運用」という連載の最後として、[Hashicorp Vault][vault]の記事を[Vol.104][wdpress]に寄稿しました。記事には、[Hashicorp Vault][vault]（以下、Vault）を用いた「秘密情報の一括管理」として、秘密情報の管理の必要性をはじめ、秘密情報の管理の大変さ、そして[Vault][vault]は何を解決して何ができるのか を書きました。
+[WEB+DB PRESS][wdpress]の「実践！先進的インフラ運用」という連載の最後として、[Hashicorp Vault][vault]の記事を[Vol.104][wdpress]に寄稿しました。記事には、[Hashicorp Vault][vault]（以下、Vault）を用いた「秘密情報の一括管理」として、秘密情報の管理の必要性をはじめ、秘密情報の管理の大変さ、そして[Vault][vault]は何を解決して何ができるのか を書きました。<!--more-->
 
 <figure id="WEB+DB PRESS Vol.104" align="center"><figcaption style="color:ccc;padding-bottom:10px;">WEB+DB PRESS Vol.104: 嬉しいことに表紙に見出し</figcaption> <a href="https://www.amazon.co.jp/gp/product/4774196886/ref=as_li_tl?ie=UTF8&tag=linyows-22&camp=247&creative=1211&linkCode=as2&creativeASIN=4774196886&linkId=290fe95e6d3a4406ab3dde986b101f55"><img alt="WEB+DB PRESS Vol.104" src="https://user-images.githubusercontent.com/35430/38539611-dabfe508-3cd3-11e8-82a9-44818bf44a5d.jpg" width="200"></a> </figure>
 
