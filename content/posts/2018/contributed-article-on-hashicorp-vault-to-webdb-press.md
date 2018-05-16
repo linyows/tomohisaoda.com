@@ -1,7 +1,7 @@
 +++
 date = "2018-05-16T09:45:00+09:00"
 title = "WEB+DB PRESSにHashicorp Vaultの記事を寄稿した"
-tags = ["vault", "security", "wdpress"]
+tags = ["vault", "security", "nodejs"]
 
 +++
 
