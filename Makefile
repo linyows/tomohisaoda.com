@@ -1,3 +1,5 @@
+default: build
+
 theme:
 	git clone git@github.com:linyows/hugo-theme-flag.git themes/flag
 
