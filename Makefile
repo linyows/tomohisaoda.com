@@ -1,5 +1,5 @@
 theme:
-	git clone https://github.com/linyows/hugo-theme-flag themes/flag
+	git clone git@github.com:linyows/hugo-theme-flag.git themes/flag
 
 hugo:
 	go get -v github.com/spf13/hugo
