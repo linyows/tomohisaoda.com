@@ -3,7 +3,6 @@ title: "Semantic Versioningをアプリケーション開発でやっていく"
 date: 2018-11-29T10:00:00+09:00
 tags: ["semver", "development", "go"]
 eyecatch: "images/semver.png"
-draft: true
 ---
 
 Semantic Versioningは、ソフトウェアのバージョン管理というかつて曖昧なものだったことを明確に定義し文書化したものです（TOMLやGitHub創設者で有名なTom Preston-Wernerのプロジェクト）。これにより、OSS界隈の人々はバージョニングの意味を共通認識可能なものとして、早くから導入していました。最近では、Goの標準モジュール管理としてもSemantic Versioningが利用されることになり、Goのライブラリ開発者は否が応でもSemantic Versioningを考える必要があります。
@@ -16,7 +15,7 @@ Semantic Versioningは、ソフトウェアのバージョン管理というか�
 >
 > <cite>セマンティック バージョニング 2.0.0 概要 https://semver.org/</cite>
 
-[Semantic Versioningの詳細な仕様](https://semver.org/)については、オフィシャル文書をご覧いただくとして、私は、このバージョニングの重要なエッセンスは「*互換性を壊すものを明確にしなさい*」だと思っています。なので、あるソフトウェアでSemantic Versioningの仕様（ルール）が守られているから、ソフトウェア利用者は安心して導入できます。私は、この共通認識可能で便利なバージョニングをアプリケーション開発にも導入していきたいと思ったのでした。
+[Semantic Versioningの詳細な仕様](https://semver.org/)については、オフィシャル文書をご覧いただくとして、私は、このバージョニングの重要なエッセンスは *「互換性を壊すものを明確にしなさい」* だと思っています。なので、あるソフトウェアでSemantic Versioningの仕様（ルール）が守られているから、ソフトウェア利用者は安心して導入できます。私は、この共通認識可能で便利なバージョニングをアプリケーション開発にも導入していきたいと思ったのでした。
 
 ## アプリケーション開発におけるバージョン管理
 
@@ -24,7 +23,7 @@ Semantic Versioningは、ソフトウェアのバージョン管理というか�
 
 ## Semantic Versioningの導入
 
-アプリケーション開発は、ライブラリやモジュールなどの開発とそもそも粒度がちがうので、データベースや関連するサービスをプロダクションに近いものを開発環境に用意した状態でも、ステージングでbotまたは人による検証が必要だったりします。この場合、バージョニングに`pre-release`を使用します。また、`pre-release`は、並列で発生することもあるので、`build`としてメタ情報をバージョンに付加します。これにより、一般的な*Continuous Deliveryのフローに、Semantic Versioningを乗せる*ことができます。
+アプリケーション開発は、ライブラリやモジュールなどの開発とそもそも粒度がちがうので、データベースや関連するサービスをプロダクションに近いものを開発環境に用意した状態でも、ステージングでbotまたは人による検証が必要だったりします。この場合、バージョニングに`pre-release`を使用します。また、`pre-release`は、並列で発生することもあるので、`build`としてメタ情報をバージョンに付加します。これにより、一般的な *Continuous Deliveryのフローに、Semantic Versioningを乗せる* ことができます。
 
 ```
 # pre-releaseの例
@@ -55,8 +54,7 @@ v1.2.0
 
 そこで、私は`git tag`のSemantic Versioningを対応すべく、Gitサブコマンドを作りました。リポジトリと使用方法は以下です。
 
-git-semv
-https://github.com/linyows/git-semv
+git-semv: https://github.com/linyows/git-semv
 
 ### Semantic Versioningに沿っている一覧の表示
 
@@ -131,15 +129,15 @@ Bumped version to v1.1.2
 
 ## 類似ソフトウェアとの違い
 
-https://github.com/motemen/gobump
+gobump: https://github.com/motemen/gobump
 
-`git-semv`のような、Sematic Versioning管理を楽にするソフトウエアとして他に`gobump`が挙げられます。`gobump`は、ソースコード中に定義したバージョンをインクリメントしてくれますが、`git-semv`はソースコードに対して*何もしません*。
+`git-semv`のような、Sematic Versioning管理を楽にするソフトウエアとして他に`gobump`が挙げられます。`gobump`は、ソースコード中に定義したバージョンをインクリメントしてくれますが、`git-semv`はソースコードに対して *何もしません* 。
 
 これは、必要な機能を最低限にする目的もありますが、Goのようにコンパイルが必要な言語だと、ビルド時に必要な情報を付与できるので、あえてソースコード中で管理する必要がないためです。他の言語においても、ソースコード中のバージョンを変更したければ、`sed` などのコマンドと組み合わせることで簡単に行えます。また、`pre-release`や`build`にも対応しているので、`git-semv`は言語にとらわれず、ユーザ数が多いOSSやアプリケーション向きといえるでしょう。
 
 ## 他のソフトウェアとの組み合わせ
 
-https://github.com/goreleaser/goreleaser
+goreleaser: https://github.com/goreleaser/goreleaser
 
 Goに限定すると、`git-semv`は`goreleaser`というソフトウェアと組み合わせることを想定しています。`goreleaser`は、GoのコンパイルとGitHub Releasesの作成を直前のタグにより作成してくれます。これをCIと組み合わせると、`git-semv`で作成したタグからCIがフックされ自動的にGitHub Releasesが作成されるというフローになります。
 
