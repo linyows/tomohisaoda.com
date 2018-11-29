@@ -5,7 +5,7 @@ tags: ["semver", "development", "go"]
 eyecatch: "images/semver.png"
 ---
 
-Semantic Versioningは、ソフトウェアのバージョン管理というかつて曖昧なものだったことを明確に定義し文書化したものです（TOMLやGitHub創設者で有名なTom Preston-Wernerのプロジェクト）。これにより、OSS界隈の人々はバージョニングの意味を共通認識可能なものとして、早くから導入していました。最近では、Goの標準モジュール管理としてもSemantic Versioningが利用されることになり、Goのライブラリ開発者は否が応でもSemantic Versioningを考える必要があります。
+ソフトウェアのバージョン管理は、かつて曖昧なものでした。Semantic Versioningは、バージョニングを明確に定義し文書化したものです（TOMLやGitHub創設者で有名なTom Preston-Wernerのプロジェクト）。これにより、OSS界隈の人々はバージョニングの意味を共通認識可能なものとして、早くから導入していました。最近では、Goの標準モジュール管理としてもSemantic Versioningが利用されることになり、Goのライブラリ開発者は否が応でもSemantic Versioningを考える必要があります。
 
 > 1. APIの変更に互換性のない場合はメジャーバージョンを、
 > 1. 後方互換性があり機能性を追加した場合はマイナーバージョンを、
