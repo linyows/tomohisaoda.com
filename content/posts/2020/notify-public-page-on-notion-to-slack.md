@@ -1,6 +1,6 @@
 ---
 title: "NotionのPublicページ一覧を継続的にSlackへ通知する"
-date: 2020-06-02T00:09:00+09:00
+date: 2020-06-03T00:09:00+09:00
 tags: ["typescript", "notion"]
 eyecatch: "images/notion.png"
 ---
