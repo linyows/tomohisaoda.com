@@ -78,6 +78,8 @@ https://github.com/linyows/notion-agent
 
 以下のような通知になります。
 
+![Notion Agent Capture](/images/notion-agent-capture.png)
+
 ## Conclusion
 
 Browserの挙動からリバースエンジニアリングで、NotionのPublicページ一覧を継続的にSlackへ通知できるようにしました。難しいことは一つもありません、気合だけです。 この ~クソ~ スクリプトが誰かのお役に立てれば幸いです。
