@@ -81,7 +81,7 @@ Root以外の全てのページには、 `parent_id` というのを持ってお
 **Notion Agent**  
 https://github.com/linyows/notion-agent
 
-以下のような通知になります。
+以下のような通知になります。  
 <img alt="Notion Agent Capture" src="/images/notion-agent-capture.png" width="400px">
 
 ## Conclusion
