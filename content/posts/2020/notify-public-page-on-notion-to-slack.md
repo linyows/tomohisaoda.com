@@ -75,12 +75,11 @@ Root以外の全てのページには、 `parent_id` というのを持ってお
 
 さて、これらは定期的に実行し、結果をSlackに通知させたいので、Google App Scriptで走らせます。スクリプトは、TypeScriptで実装しました。出来たのは以下です。
 
-*Notion Agent*  
+**Notion Agent**  
 https://github.com/linyows/notion-agent
 
 以下のような通知になります。
-
-![Notion Agent Capture](/images/notion-agent-capture.png)
+<img alt="Notion Agent Capture" src="/images/notion-agent-capture.png" width="400px">
 
 ## Conclusion
 
