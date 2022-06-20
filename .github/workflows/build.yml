@@ -29,6 +29,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.ref != 'refs/heads/main'
+    env:
+      NOTION_CACHE: true
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_INTRO_PAGE_ID: ${{ secrets.NOTION_INTRO_PAGE_ID }}
+      NOTION_CONTACT_PAGE_ID: ${{ secrets.NOTION_CONTACT_PAGE_ID }}
+      NOTION_BLOG_DB_ID: ${{ secrets.NOTION_BLOG_DB_ID }}
+      NOTION_ACTIVITY_DB_ID: ${{ secrets.NOTION_ACTIVITY_DB_ID }}
+      NOTION_PROJECT_DB_ID: ${{ secrets.NOTION_PROJECT_DB_ID }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -53,6 +61,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.ref == 'refs/heads/main'
+    env:
+      NOTION_CACHE: true
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_INTRO_PAGE_ID: ${{ secrets.NOTION_INTRO_PAGE_ID }}
+      NOTION_CONTACT_PAGE_ID: ${{ secrets.NOTION_CONTACT_PAGE_ID }}
+      NOTION_BLOG_DB_ID: ${{ secrets.NOTION_BLOG_DB_ID }}
+      NOTION_ACTIVITY_DB_ID: ${{ secrets.NOTION_ACTIVITY_DB_ID }}
+      NOTION_PROJECT_DB_ID: ${{ secrets.NOTION_PROJECT_DB_ID }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
