@@ -46,7 +46,7 @@ jobs:
     - name: Run next export
       run: |
         yarn install
-        yarn build
+        yarn export
     - name: deploy by scp
       uses: appleboy/scp-action@master
       with:
@@ -78,7 +78,7 @@ jobs:
     - name: Run next export
       run: |
         yarn install
-        yarn build
+        yarn export
     - name: deploy by scp
       uses: appleboy/scp-action@master
       with:
