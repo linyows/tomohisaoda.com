@@ -3,6 +3,7 @@ const notion = require('notionate')
 
 module.exports = {
   reactStrictMode: true,
+  trailingSlash: true,
   build: {
     extend(c, ctx) {
       c.node = {
