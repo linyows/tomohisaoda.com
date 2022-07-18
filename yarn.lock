@@ -1568,6 +1568,11 @@ next@12.1.0:
     "@next/swc-win32-ia32-msvc" "12.1.0"
     "@next/swc-win32-x64-msvc" "12.1.0"
 
+nextjs@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/nextjs/-/nextjs-0.0.3.tgz#4f4d1d6a257be920d9b9649d4d9522c724a4e543"
+  integrity sha512-mYbDUo4/sRAZ8TqK63PCpYnFiLg7BICG/ot9+guOrUKd4/Fo71ZmEQ41IZbH6nqbQvG7SXTBuofJXAIWfNho0w==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
@@ -1585,13 +1590,14 @@ normalize.css@^8.0.1:
   resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
   integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
 
-notionate@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/notionate/-/notionate-0.1.1.tgz#59e812a71c0cbf36e96ff433a846b2dab68f3dee"
-  integrity sha512-9O1BA+DzttFWRuCxH5F2DE0H/V+nzOXFsAlVsipEOYnyvnFwIHzguU98m5PUUTfd2zBxiYpvkRnIaBZ63J5uow==
+notionate@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/notionate/-/notionate-0.2.0.tgz#734f090d754ac425bfd90d9dab69d7c8dc0209f6"
+  integrity sha512-RxU234uaEJyAwcwSNWzawdIa0b+uHCcW6CODxLawDFTexetOzBtKo7cNO6UMY7tFRzRDsW4D2RlICpxMnqp/yQ==
   dependencies:
     "@notionhq/client" "^0.4.4"
     "@types/prismjs" "^1.26.0"
+    nextjs "^0.0.3"
     prismjs "^1.25.0"
 
 npm-run-path@^2.0.0:
