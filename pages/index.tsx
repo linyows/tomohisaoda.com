@@ -13,8 +13,6 @@ import {
   Blocks,
   DBList,
 } from 'notionate/dist/components'
-//import Blocks from '../src/components/page/blocks'
-//import DBList from '../src/components/db/list'
 
 type Props = {
   about: ListBlockChildrenResponseEx
