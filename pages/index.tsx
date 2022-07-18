@@ -144,6 +144,25 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
           background: #fff;
           color: #000;
         }
+        .view-all {
+          text-align: right;
+          margin: 0;
+        }
+        .view-all-button {
+          margin-top: var(--spacing-6);
+          font-size: var(--fontSize-0);
+          text-decoration: none;
+          display: inline-block;
+          padding: var(--spacing-1) var(--spacing-8) var(--spacing-2);
+          background: #e0e0e0;
+          border-radius: 30px;
+          font-family: var(--fontFamily-sans);
+          color: #555;
+        }
+        .view-all-button:hover {
+          background: #fff;
+          color: #000;
+        }
       `}</style>
     </>
   )
