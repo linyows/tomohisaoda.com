@@ -24,10 +24,11 @@ type Props = {
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const about = await FetchBlocks(process.env.NOTION_INTRO_PAGE_ID as string)
-  const blog = await FetchDatabase(process.env.NOTION_BLOG_DB_ID as string)
-  const activity = await FetchDatabase(process.env.NOTION_ACTIVITY_DB_ID as string)
-  const project = await FetchDatabase(process.env.NOTION_PROJECT_DB_ID as string)
   const aboutPage = await FetchPage(process.env.NOTION_INTRO_PAGE_ID as string)
+
+  const project = await FetchDatabase(process.env.NOTION_PROJECT_DB_ID as string, 5)
+  const blog = await FetchDatabase(process.env.NOTION_BLOG_DB_ID as string, 7)
+  const activity = await FetchDatabase(process.env.NOTION_ACTIVITY_DB_ID as string, 15)
 
   return {
     props: {
