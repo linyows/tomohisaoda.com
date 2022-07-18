@@ -182,7 +182,7 @@ const Contact: NextPage<Props> = ({ contact }) => {
           <div className="form-button grider">
             <span></span>
             <div className="form-body">
-            {formStatus ? (<p>Thanks for your message!</p>) : lockStatus ? (<MutatingDots color="#999" secondaryColor="#fff" height={100} width={100} />) : (<button className="neumorphism-h" type="submit" disabled={lockStatus}>Submit</button>)}
+            {formStatus ? (<p>Thanks for your message!</p>) : lockStatus ? (<MutatingDots color="#999" secondaryColor="#fff" height={100} width={100} />) : (<button className="neumorphism-h" type="submit" disabled={lockStatus}>Submit 🚀</button>)}
             </div>
           </div>
         </form>
