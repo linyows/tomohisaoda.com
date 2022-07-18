@@ -38,7 +38,8 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       activity,
       project,
     },
-    revalidate: 10
+    // ISR
+    //revalidate: 10
   }
 }
 
