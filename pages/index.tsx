@@ -53,31 +53,46 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
         <div className="recently-box">
           {Blocks({ blocks: about })}
           <div className="about-footer">
-            <Link href="/contact" passHref>
+            <Link href="/contact">
               <a className="to-contact">Contact</a>
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="blog grider">
-        <h2><span className="neumorphism-h">Blog</span></h2>
-        <div className="recently-box">
-          {DBList({ keys: ['Name', 'spacer', 'Tags', 'Date'], db: blog })}
-        </div>
-      </section>
-
       <section className="project grider">
         <h2><span className="neumorphism-h">Projects</span></h2>
         <div className="recently-box">
-          {DBList({ keys: ['Name', 'spacer', 'URL', 'Tags', 'Date'], db: project })}
+          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={project} link={'/projects/[Slug]'} />
+          <p className="view-all">
+            <Link href="/projects">
+              <a className="view-all-button">View all <span role="img" aria-label="home">🎪</span></a>
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <section className="blog grider">
+        <h2><span className="neumorphism-h">Blog</span></h2>
+        <div className="recently-box">
+          <DBList keys={['Name', 'spacer', 'Tags', 'Date']} db={blog} link={'/blog/[Slug]'} />
+          <p className="view-all">
+            <Link href="/blog">
+              <a className="view-all-button">View all <span role="img" aria-label="surf">🏄‍♂️</span></a>
+            </Link>
+          </p>
         </div>
       </section>
 
       <section className="activity grider">
         <h2><span className="neumorphism-h">Activities</span></h2>
         <div className="recently-box">
-          {DBList({ keys: ['Name', 'spacer', 'URL', 'Tags', 'Date'], db: activity })}
+          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={activity} link={'/activities/[id]'} />
+          <p className="view-all">
+            <Link href="/activities">
+              <a className="view-all-button">View all <span role="img" aria-label="bike">🚴‍♂️</span></a>
+            </Link>
+          </p>
         </div>
       </section>
 
