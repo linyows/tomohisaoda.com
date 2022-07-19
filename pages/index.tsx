@@ -54,7 +54,7 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
           {Blocks({ blocks: about })}
           <div className="about-footer">
             <Link href="/contact">
-              <a className="to-contact">Contact</a>
+              <a className="flat-button to-contact">Contact <span role="img" aria-label="contact">🤙</span></a>
             </Link>
           </div>
         </div>
@@ -66,7 +66,7 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
           <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={project} link={'/projects/[Slug]'} />
           <p className="view-all">
             <Link href="/projects">
-              <a className="view-all-button">View all <span role="img" aria-label="home">🎪</span></a>
+              <a className="flat-button view-all-button">View all <span role="img" aria-label="home">🎪</span></a>
             </Link>
           </p>
         </div>
@@ -78,7 +78,7 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
           <DBList keys={['Name', 'spacer', 'Tags', 'Date']} db={blog} link={'/blog/[Slug]'} />
           <p className="view-all">
             <Link href="/blog">
-              <a className="view-all-button">View all <span role="img" aria-label="surf">🏄‍♂️</span></a>
+              <a className="flat-button view-all-button">View all <span role="img" aria-label="surf">🏄‍♂️</span></a>
             </Link>
           </p>
         </div>
@@ -90,7 +90,7 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
           <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={activity} link={'/activities/[id]'} />
           <p className="view-all">
             <Link href="/activities">
-              <a className="view-all-button">View all <span role="img" aria-label="bike">🚴‍♂️</span></a>
+              <a className="flat-button view-all-button">View all <span role="img" aria-label="bike">🚴‍♂️</span></a>
             </Link>
           </p>
         </div>
@@ -130,33 +130,21 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
         .portrait {
           padding-top: var(--spacing-4);
         }
+        .about-footer {
+          text-align: right;
+        }
         .to-contact {
           font-size: var(--fontSize-1);
-          text-decoration: none;
-          display: inline-block;
-          padding: var(--spacing-2) var(--spacing-8) var(--spacing-3);
-          background: #e0e0e0;
-          border-radius: 30px;
-          font-family: var(--fontFamily-sans);
           color: #555;
-        }
-        .to-contact:hover {
-          background: #fff;
-          color: #000;
         }
         .view-all {
           text-align: right;
-          margin: 0;
+          margin: 0 0 var(--spacing-10);
         }
         .view-all-button {
-          margin-top: var(--spacing-6);
           font-size: var(--fontSize-0);
-          text-decoration: none;
-          display: inline-block;
+          margin-top: var(--spacing-6);
           padding: var(--spacing-1) var(--spacing-8) var(--spacing-2);
-          background: #e0e0e0;
-          border-radius: 30px;
-          font-family: var(--fontFamily-sans);
           color: #555;
         }
         .view-all-button:hover {
