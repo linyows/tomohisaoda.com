@@ -313,3 +313,9 @@ a:focus {
 .category-header h1 {
   margin-bottom: var(--spacing-2);
 }
+
+@media (max-width: 1220px) {
+  .grider {
+    display: block;
+  }
+}

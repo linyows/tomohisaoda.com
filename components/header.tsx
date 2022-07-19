@@ -14,11 +14,11 @@ const Header: React.FC<Props> = ({ children }) => {
         <h1 className="site-name neumorphism-h"><Link href="/">{name}</Link></h1>
         <nav>
           <ul>
-            <li> <Link href="/blog" passHref>
-              <a><span role="img" aria-label="surf">🏄‍♂️</span> Blog</a>
-            </Link> </li>
             <li> <Link href="/projects" passHref>
               <a><span role="img" aria-label="home">🎪</span> Projects</a>
+            </Link> </li>
+            <li> <Link href="/blog" passHref>
+              <a><span role="img" aria-label="surf">🏄‍♂️</span> Blog</a>
             </Link> </li>
             <li> <Link href="/activities" passHref>
               <a><span role="img" aria-label="bike">🚴‍♂️</span> Activities</a>

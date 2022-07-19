@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 //import Image from 'next/image'
 import { Activity, GetActivities } from '../../src/lib/activity'
-import { UsePagination } from '../../src/lib/pagination'
+import { UsePagination } from 'notionate/dist/components'
 
 type Props = {
   pages: Activity[]

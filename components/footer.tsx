@@ -8,26 +8,20 @@ type Props = {
 const Footer: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <footer>
+      <footer className="grider">
         <span></span>
         <p className="site-license">
-          &copy; <Link href="/">Tomohisa Oda</Link>. Powered by Next.js, Notion and {` `}
+          &copy; <Link href="/">Tomohisa Oda</Link>. Powered by Next.js, Notion, GitHub, Cloudflare and {` `}
           <a href="https://lolipop.jp/" target="_blank" rel="noopener noreferrer">Lolipop</a>.
         </p>
       </footer>
 
       <style jsx>{`
         footer {
-          display: grid;
-          grid-template-columns: 180px 1fr;
-          gap: var(--spacing-10);
           margin-top: var(--spacing-5);
-          margin-left: var(--spacing-20);
-          margin-right: var(--spacing-20);
-          padding: var(--spacing-20) 0 var(--spacing-10);
-          font-family: var(--fontFamily-sans);
         }
         .site-license {
+          font-family: var(--fontFamily-sans);
           font-size: var(--fontSize-0);
           margin: 0;
         }
