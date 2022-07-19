@@ -11,7 +11,7 @@ const Footer: React.FC<Props> = ({ children }) => {
       <footer>
         <span></span>
         <p className="site-license">
-          &copy; <Link href="/">Tomohisa Oda</Link>. Powered by Next.js, Notion and {` `}
+          &copy; <Link href="/">Tomohisa Oda</Link>. Powered by Next.js, Notion, GitHub, Cloudflare and {` `}
           <a href="https://lolipop.jp/" target="_blank" rel="noopener noreferrer">Lolipop</a>.
         </p>
       </footer>
