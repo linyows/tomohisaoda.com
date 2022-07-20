@@ -314,6 +314,22 @@ a:focus {
   margin-bottom: var(--spacing-2);
 }
 
+.dl {
+  font-family: var(--fontFamily-sans);
+  margin: 0 0 var(--spacing-3);
+  padding: var(--spacing-3) 0 var(--spacing-10);
+  display: grid;
+  grid-template: auto / 10rem 1fr;
+  color: #555;
+}
+.dl dt {
+  grid-column: 1;
+  padding-bottom: var(--spacing-3);
+}
+.dl dd {
+  grid-column: 2;
+}
+
 @media (max-width: 1220px) {
   .grider {
     display: block;
