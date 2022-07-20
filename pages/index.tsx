@@ -13,6 +13,7 @@ import {
   Blocks,
   DBList,
 } from 'notionate/dist/components'
+import GenFeed from '../src/lib/feed'
 
 type Props = {
   about: ListBlockChildrenResponseEx
@@ -29,6 +30,8 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const project = await FetchDatabase(process.env.NOTION_PROJECT_DB_ID as string, 5)
   const blog = await FetchDatabase(process.env.NOTION_BLOG_DB_ID as string, 7)
   const activity = await FetchDatabase(process.env.NOTION_ACTIVITY_DB_ID as string, 15)
+
+  await GenFeed()
 
   return {
     props: {
