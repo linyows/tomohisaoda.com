@@ -38,3 +38,5 @@ yarn-error.log*
 
 # notionate
 /public/images
+# rss
+/public/index.xml

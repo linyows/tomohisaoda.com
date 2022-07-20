@@ -1597,10 +1597,10 @@ normalize.css@^8.0.1:
   resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
   integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
 
-notionate@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/notionate/-/notionate-0.2.0.tgz#734f090d754ac425bfd90d9dab69d7c8dc0209f6"
-  integrity sha512-RxU234uaEJyAwcwSNWzawdIa0b+uHCcW6CODxLawDFTexetOzBtKo7cNO6UMY7tFRzRDsW4D2RlICpxMnqp/yQ==
+notionate@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/notionate/-/notionate-0.3.0.tgz#f3c1c61b638a87cecb122f9250c9b93406fb0a5e"
+  integrity sha512-4/92H78nPfg8+493vtq2xS0o/ZvJH17QvYt2B+ZJ5lkui6KpL4AA2sX37A2RngheN9lGu0kGbzQi6RKMDA9Dlg==
   dependencies:
     "@notionhq/client" "^0.4.4"
     "@types/prismjs" "^1.26.0"

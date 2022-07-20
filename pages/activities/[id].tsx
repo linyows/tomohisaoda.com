@@ -60,7 +60,21 @@ const Activity: NextPage<Props> = (context) => {
           }
         </div>
         <div>
-          <h1 className="post-title gradation-text"><Link href="/activities/[id]" as={`/${page.id}`}>{page.title}</Link></h1>
+          <h1 className="post-title gradation-text">
+            <Link href="/activities/[id]" as={`/${page.id}`}>
+              <a>{page.title}</a>
+            </Link>
+          </h1>
+
+          <dl className="dl">
+            <dt>Authors</dt>
+            <dd>{page.authors}</dd>
+            <dt>Host</dt>
+            <dd>{page.host}</dd>
+            <dt>URL</dt>
+            <dd> <a href={page.url} rel="noreferrer" target="_blank">{page.url}</a> </dd>
+          </dl>
+
           <div className="post-body">
             {Blocks({ blocks })}
           </div>
