@@ -107,9 +107,6 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
         }
       `}</style>
       <style jsx>{`
-        hr {
-          height: 1px;
-        }
         section {
           padding: 0;
           max-width: var(--maxWidth-full);
@@ -153,6 +150,16 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
         .view-all-button:hover {
           background: #fff;
           color: #000;
+        }
+        @media (max-width: 1220px) {
+          .about {
+            margin-top: 0;
+          }
+          .portrait {
+            padding-top: 0;
+            padding-right: var(--spacing-8);
+            float: left;
+          }
         }
       `}</style>
     </>
