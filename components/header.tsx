@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useRef, useEffect } from 'react'
+import React, { ReactNode, useState, useRef, useEffect, MutableRefObject } from 'react'
 import Link from 'next/link'
 
 type Props = {
@@ -8,10 +8,11 @@ type Props = {
 const Header: React.FC<Props> = ({ children }) => {
   const [open, setOpen] = useState(false)
 
-  const useOnClickOutside = (ref, handler) => {
+  const useOnClickOutside = (ref: MutableRefObject<HTMLElement | null>, handler: Function) => {
     useEffect(() => {
-      const listener = event => {
-        if (!ref.current || ref.current.contains(event.target)) {
+      const listener = (event: MouseEvent) => {
+        const el = ref?.current
+        if (!el || el.contains(event.target as Node)) {
           return
         }
         handler(event)
@@ -23,7 +24,7 @@ const Header: React.FC<Props> = ({ children }) => {
     }, [ref, handler])
   }
 
-  const node = useRef()
+  const node = useRef<HTMLDivElement | null>(null)
   useOnClickOutside(node, () => setOpen(false))
 
   return (
