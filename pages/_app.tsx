@@ -27,13 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </div>
 
       <style jsx>{`
-        .container {
-          margin: var(--spacing-20) auto;
-          max-width: 1800px;
-        }
-        .content {
-          margin: 0 auto;
-        }
       `}</style>
     </div>
   )

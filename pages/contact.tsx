@@ -118,8 +118,8 @@ const Contact: NextPage<Props> = ({ contact }) => {
   }
 
   return (
-    <>
-      <header className="grider category-header">
+    <div className="page-root">
+      <header className="grider page-root-header">
         <span></span>
         <div>
           <h1>Contact</h1>
@@ -127,7 +127,7 @@ const Contact: NextPage<Props> = ({ contact }) => {
         </div>
       </header>
 
-      <section>
+      <section className="page-root-body">
         <form onSubmit={handleSubmit}>
           <legend className="form-name grider">
             <label htmlFor="name" className="form-label">
@@ -220,8 +220,14 @@ const Contact: NextPage<Props> = ({ contact }) => {
           margin-top: var(--spacing-5);
           font-family: var(--fontFamily-sans);
         }
+        @media (max-width: 1220px) {
+          .form-body {
+            margin-top: var(--spacing-2);
+            margin-bottom: var(--spacing-10);
+          }
+        }
       `}</style>
-    </>
+    </div>
   )
 }
 

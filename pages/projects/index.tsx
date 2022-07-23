@@ -19,8 +19,8 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 const ProjectIndex: NextPage<Props> = ({ pages }) => {
   return (
-    <>
-      <header className="grider category-header">
+    <div className="page-list">
+      <header className="grider page-list-header">
         <span></span>
         <div>
           <h1>Project</h1>
@@ -28,7 +28,7 @@ const ProjectIndex: NextPage<Props> = ({ pages }) => {
         </div>
       </header>
 
-      <div className="post-list">
+      <div className="page-list-body">
         {pages.map((v, i) => (
           <section key={`${v.title}-content`} className="post grider">
             <p className="post-date"><span className="post-date-inner">{v.date}</span></p>
@@ -45,42 +45,9 @@ const ProjectIndex: NextPage<Props> = ({ pages }) => {
           </section>
         ))}
       </div>
-
       <style jsx>{`
-        .post-list {
-          padding-top: var(--spacing-5);
-        }
-        .post {
-          padding: var(--spacing-5) var(--spacing-10) 0 0;
-        }
-        .post-title {
-          margin: 0;
-          padding: 0;
-        }
-        .post-date {
-          font-family: var(--fontFamily-sans);
-          font-size: var(--fontSize-0);
-          text-align: right;
-          margin-top: var(--spacing-1);
-        }
-        .post-date-inner {
-          display: inline-block;
-          padding: var(--spacing-1) var(--spacing-4);
-          background: #e0e0e0;
-          border-radius: 30px;
-        }
-        .post-tags {
-          display: block;
-          margin: 0;
-          padding: var(--spacing-1);
-        }
-        .post-tags li {
-          font-size: var(--fontSize-0);
-          display: inline-block;
-          padding-right: var(--spacing-3);
-        }
       `}</style>
-    </>
+    </div>
   )
 }
 
