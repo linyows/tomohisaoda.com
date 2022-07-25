@@ -36,7 +36,7 @@ const formError = (msg: string) => {
 }
 
 const Contact: NextPage<Props> = ({ contact }) => {
-  const endpoint = `https://linyows.lolipop.jp/contact.tomohisaoda.com/`
+  const endpoint = `https://contact.tomohisaoda.com/`
   const initQuery = {
     name: ``,
     email: ``,
