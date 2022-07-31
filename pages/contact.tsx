@@ -167,6 +167,7 @@ const Contact: NextPage<Props> = ({ contact }) => {
             <label htmlFor="message" className="form-label">
               Message
             </label>
+
             <div className="form-body">
               <textarea
                 name="message"
@@ -193,6 +194,7 @@ const Contact: NextPage<Props> = ({ contact }) => {
           font-family: var(--fontFamily-sans);
           font-size: var(--fontSize-3);
           border: none;
+          padding: var(--spacing-1);
         }
         button {
           padding: var(--spacing-4) var(--spacing-8);
@@ -221,6 +223,12 @@ const Contact: NextPage<Props> = ({ contact }) => {
           font-family: var(--fontFamily-sans);
         }
         @media (max-width: 1220px) {
+          .form-name input {
+            width: 100%;
+          }
+          .form-email input {
+            width: 100%;
+          }
           .form-body {
             margin-top: var(--spacing-2);
             margin-bottom: var(--spacing-10);

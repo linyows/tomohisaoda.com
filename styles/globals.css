@@ -440,11 +440,20 @@ a:focus {
 
 @media (max-width: 480px) {
   .container {
-    margin-top: var(--spacing-10);
+    margin: var(--spacing-10) auto;
   }
   .grider {
     margin-left: var(--spacing-10);
     margin-right: var(--spacing-10);
+  }
+  .page-root-header {
+    margin-top: var(--spacing-10);
+  }
+  .page-list-header {
+    margin-top: var(--spacing-10);
+  }
+  .page-list .post-title {
+    font-size: var(--fontSize-2);
   }
 }
 
