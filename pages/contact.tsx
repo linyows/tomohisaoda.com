@@ -109,11 +109,9 @@ const Contact: NextPage<Props> = ({ contact }) => {
         setLockStatus(false)
         setFormStatus(true)
         setQuery(initQuery)
-        console.log(res)
       })
       .catch(err => {
         setLockStatus(false)
-        console.log(err)
       })
   }
 
