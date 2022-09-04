@@ -478,3 +478,18 @@ a:focus {
     padding-right: var(--spacing-8);
   }
 }
+
+.about .notionate-blocks-text-p {
+  font-family: var(--fontFamily-serif);
+  line-height: 1.85;
+  padding: 0 0 2rem;
+}
+.recently-box .notionate-db-list-record {
+  padding: 4px;
+  font-family: var(--fontFamily-sans);
+  margin-left: -4px;
+}
+.recently-box .notionate-db-list-record:hover {
+  background-color: #ddd;
+  border-radius: 3px;
+}
