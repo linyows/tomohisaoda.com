@@ -69,7 +69,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
     <>
       <section className="about grider">
         <div className="portrait">
-          <img src={aboutPage.icon.src} />
+          <img src={aboutPage.icon.src} alt="tomohisaoda" />
         </div>
         <div className="recently-box">
           {Blocks({ blocks: about })}
