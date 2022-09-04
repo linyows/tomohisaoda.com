@@ -72,7 +72,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
           <img src={aboutPage.icon.src} alt="tomohisaoda" />
         </div>
         <div className="recently-box">
-          {Blocks({ blocks: about })}
+          <Blocks blocks={about} />
           <div className="about-footer">
             <Link href="/contact">
               <a className="flat-button to-contact">Contact <span role="img" aria-label="contact">🤙</span></a>
