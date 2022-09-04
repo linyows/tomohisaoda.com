@@ -7,29 +7,47 @@ import {
   FetchPage,
   ListBlockChildrenResponseEx,
   GetPageResponseEx,
-  QueryDatabaseResponse,
+  QueryDatabaseResponseEx,
+  QueryDatabaseParameters,
 } from 'notionate'
 import {
-  Blocks,
   DBList,
+  Blocks,
 } from 'notionate/dist/components'
 import GenFeed from '../src/lib/feed'
 
 type Props = {
-  about: ListBlockChildrenResponseEx
   aboutPage: GetPageResponseEx
-  blog: QueryDatabaseResponse
-  activity: QueryDatabaseResponse
-  project: QueryDatabaseResponse
+  about: ListBlockChildrenResponseEx
+  project: QueryDatabaseResponseEx
+  blog: QueryDatabaseResponseEx
+  activity: QueryDatabaseResponseEx
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const about = await FetchBlocks(process.env.NOTION_INTRO_PAGE_ID as string)
   const aboutPage = await FetchPage(process.env.NOTION_INTRO_PAGE_ID as string)
 
-  const project = await FetchDatabase(process.env.NOTION_PROJECT_DB_ID as string, 5)
-  const blog = await FetchDatabase(process.env.NOTION_BLOG_DB_ID as string, 7)
-  const activity = await FetchDatabase(process.env.NOTION_ACTIVITY_DB_ID as string, 15)
+  const project = await FetchDatabase({
+    database_id: process.env.NOTION_PROJECT_DB_ID as string,
+    filter: { property: 'Published', checkbox: { equals: true }, },
+    sorts: [ { property: 'Date', direction: 'descending' }, ],
+    limit: 5,
+  } as QueryDatabaseParameters)
+  
+  const blog = await FetchDatabase({
+    database_id: process.env.NOTION_BLOG_DB_ID as string,
+    filter: { property: 'Published', checkbox: { equals: true }, },
+    sorts: [ { property: 'Date', direction: 'descending' }, ],
+    limit: 7,
+  } as QueryDatabaseParameters) 
+
+  const activity = await FetchDatabase({
+    database_id: process.env.NOTION_ACTIVITY_DB_ID as string,
+    filter: { property: 'Published', checkbox: { equals: true }, },
+    sorts: [ { property: 'Date', direction: 'descending' }, ],
+    limit: 15,
+  } as QueryDatabaseParameters)
 
   await GenFeed()
 
@@ -37,16 +55,16 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     props: {
       about,
       aboutPage,
+      project,
       blog,
       activity,
-      project,
     },
     // ISR
     //revalidate: 10
   }
 }
 
-const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) => {
+const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) => {
   return (
     <>
       <section className="about grider">
@@ -66,7 +84,7 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
       <section className="project grider">
         <h2><span className="neumorphism-h">Projects</span></h2>
         <div className="recently-box">
-          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={project} link={'/projects/[Slug]'} />
+          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={project} link={'/projects/[Slug]'} LinkComp={Link} />
           <p className="view-all">
             <Link href="/projects">
               <a className="flat-button view-all-button">View all <span role="img" aria-label="home">🎪</span></a>
@@ -78,7 +96,7 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
       <section className="blog grider">
         <h2><span className="neumorphism-h">Blog</span></h2>
         <div className="recently-box">
-          <DBList keys={['Name', 'spacer', 'Tags', 'Date']} db={blog} link={'/blog/[Slug]'} />
+          <DBList keys={['Name', 'spacer', 'Tags', 'Date']} db={blog} link={'/blog/[Slug]'} LinkComp={Link} />
           <p className="view-all">
             <Link href="/blog">
               <a className="flat-button view-all-button">View all <span role="img" aria-label="surf">🏄‍♂️</span></a>
@@ -90,7 +108,7 @@ const Home: NextPage<Props> = ({ about, aboutPage, blog, activity, project }) =>
       <section className="activity grider">
         <h2><span className="neumorphism-h">Activities</span></h2>
         <div className="recently-box">
-          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={activity} link={'/activities/[id]'} />
+          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={activity} link={'/activities/[id]'} LinkComp={Link} />
           <p className="view-all">
             <Link href="/activities">
               <a className="flat-button view-all-button">View all <span role="img" aria-label="bike">🚴‍♂️</span></a>

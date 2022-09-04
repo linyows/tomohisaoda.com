@@ -2,10 +2,9 @@ import '../styles/globals.css'
 import 'normalize.css/normalize.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import Link from 'next/link'
 import Header from '../components/header'
 import Footer from '../components/footer'
-//import 'prismjs/themes/prism-tomorrow.css'
+import 'notionate/dist/styles/notionate.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -30,9 +29,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <div className="footer">
           <Footer />
         </div>
-
-        <style jsx>{`
-        `}</style>
       </div>
     </>
   )

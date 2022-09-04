@@ -1,9 +1,10 @@
 import {
   FetchDatabase,
   DBPageBase,
-  RichText,
+  RichTextItemResponse,
   DateResponse,
   SelectPropertyResponse,
+  QueryDatabaseParameters,
 } from 'notionate'
 import { FormatDateMdY } from './date'
 
@@ -24,12 +25,12 @@ export type DBPage = DBPageBase & {
   properties: {
     Name: {
       type: "title"
-      title: Array<RichText>
+      title: Array<RichTextItemResponse>
       id: string
     }
     Slug: {
       type: "rich_text"
-      rich_text: Array<RichText>
+      rich_text: Array<RichTextItemResponse>
       id: string
     }
     Date: {
@@ -44,7 +45,7 @@ export type DBPage = DBPageBase & {
     }
     Description: {
       type: "rich_text"
-      rich_text: Array<RichText>
+      rich_text: Array<RichTextItemResponse>
       id: string
     }
     URL: {
@@ -60,45 +61,59 @@ export type DBPage = DBPageBase & {
   }
 }
 
-const dbId = process.env.NOTION_PROJECT_DB_ID as string
+const query = {
+  database_id: process.env.NOTION_PROJECT_DB_ID as string,
+  filter: {
+    property: 'Published',
+    checkbox: {
+      equals: true
+    },
+  },
+  sorts: [
+    {
+      property: 'Date',
+      direction: 'descending'
+    },
+  ]
+} as QueryDatabaseParameters
 
 const build = (page: DBPage): Project => {
   const props = page.properties
   return {
     id: page.id,
-    title: props.Name.title.map(v => v.text.content).join(',') || '',
-    slug: props.Slug.rich_text.map(v => v.text.content).join(',') || '',
+    title: props.Name.title.map(v => v.plain_text).join(',') || '',
+    slug: props.Slug.rich_text.map(v => v.plain_text).join(',') || '',
     date: FormatDateMdY(props.Date.date?.start),
     edited: FormatDateMdY(page.last_edited_time),
     createdTs: Date.parse(page.created_time),
     lastEditedTs: Date.parse(page.last_edited_time),
     tags: props.Tags.multi_select.map(v => v.name) || [],
-    desc: props.Description.rich_text.map(v => v.text.content).join(',') || '',
+    desc: props.Description.rich_text.map(v => v.plain_text).join(',') || '',
     url: props.URL.url as string,
   }
 }
 
 export const GetProject = async (slug: string): Promise<Project | undefined> => {
-  const db = await FetchDatabase(dbId)
+  const db = await FetchDatabase(query)
   const page = db.results.find(v => {
     const p = v as unknown as DBPage
-    return p.properties.Slug.rich_text.map(v => v.text.content).join(',') === slug
+    return p.properties.Slug.rich_text.map(v => v.plain_text).join(',') === slug
   })
   return (page) ? build(page as unknown as DBPage) : page
 }
 
 export const GetProjects = async (): Promise<Project[]> => {
-  const db = await FetchDatabase(dbId)
+  const db = await FetchDatabase(query)
   return db.results.map(v => {
     return build(v as unknown as DBPage)
   })
 }
 
 export const GetPaths = async () => {
-  const db = await FetchDatabase(dbId)
+  const db = await FetchDatabase(query)
   return db.results.map(v => {
     const p = v as DBPage
-    const slug = p.properties.Slug.rich_text.map(v => v.text.content).join(',')
+    const slug = p.properties.Slug.rich_text.map(v => v.plain_text).join(',')
     return { params: { slug } }
   })
 }
