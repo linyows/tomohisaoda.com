@@ -15,24 +15,21 @@
     "serve": "next export && serve ./out"
   },
   "dependencies": {
-    "@notionhq/client": "^0.4.4",
-    "@types/prismjs": "^1.26.0",
     "feed": "^4.2.2",
-    "next": "12.1.0",
+    "next": "^12.2.5",
     "normalize.css": "^8.0.1",
-    "notionate": "^0.3.0",
-    "prismjs": "^1.27.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "notionate": "^3.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-loader-spinner": "^5.1.3"
   },
   "devDependencies": {
-    "@types/node": "16.11.6",
-    "@types/react": "17.0.33",
-    "eslint": "7.32.0",
-    "eslint-config-next": "12.0.1",
-    "serve": "^13.0.2",
-    "typescript": "4.4.4"
+    "@types/node": "^18.7.14",
+    "@types/react": "^18.0.18",
+    "eslint": "^8.23.0",
+    "eslint-config-next": "^12.2.5",
+    "serve": "^14.0.1",
+    "typescript": "^4.8.2"
   }
 }
