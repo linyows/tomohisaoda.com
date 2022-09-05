@@ -493,3 +493,18 @@ a:focus {
   background-color: #ddd;
   border-radius: 3px;
 }
+
+.post-body .notionate-blocks-text-p {
+  font-family: var(--fontFamily-serif);
+  line-height: 1.85;
+}
+.post-body .notionate-blocks-list-ul {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  font-family: var(--fontFamily-sans);
+}
+.post-body .notionate-blocks-text-li {
+  padding-top: .3rem;
+  padding-bottom: .3rem;
+  color: #000;
+}
