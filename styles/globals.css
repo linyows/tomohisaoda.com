@@ -485,9 +485,7 @@ a:focus {
   padding: 0 0 2rem;
 }
 .recently-box .notionate-db-list-record {
-  padding: 4px;
   font-family: var(--fontFamily-sans);
-  margin-left: -4px;
 }
 .recently-box .notionate-db-list-record:hover {
   background-color: #ddd;
@@ -506,5 +504,19 @@ a:focus {
 .post-body .notionate-blocks-text-li {
   padding-top: .3rem;
   padding-bottom: .3rem;
-  color: #000;
+}
+.post-body .notionate-blocks-embed-twitter {
+  margin-top: 2rem;
+}
+.post-body .notionate-blocks-image {
+  margin-top: 2rem;
+}
+.blog .post-body .notionate-blocks-image img {
+  max-width: 600px;
+}
+.post-body .notionate-blocks-image-caption {
+  margin-top: 1rem;
+}
+.post-body .notionate-blocks-code {
+  margin: 2rem 0;
 }

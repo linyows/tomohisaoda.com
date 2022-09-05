@@ -84,7 +84,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
       <section className="project grider">
         <h2><span className="neumorphism-h">Projects</span></h2>
         <div className="recently-box">
-          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={project} link={'/projects/[Slug]'} LinkComp={Link} />
+          <DBList keys={['Name', 'Description', 'spacer', 'URL', 'Tags', 'Date']} db={project} link={'/projects/[Slug]'} LinkComp={Link} />
           <p className="view-all">
             <Link href="/projects">
               <a className="flat-button view-all-button">View all <span role="img" aria-label="home">🎪</span></a>

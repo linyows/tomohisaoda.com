@@ -47,7 +47,7 @@ const Post: NextPage<Props> = (context) => {
   const page = context.page!
   const blocks = context.blocks!
   return (
-    <article className="grider page-detail">
+    <article className="grider page-detail project">
       <div className="post-meta">
         <p className="post-date">Posted: <span className="post-meta-inner">{page.date}</span></p>
         <p className="post-edited">Edited: <span className="post-meta-inner">{page.edited}</span></p>
