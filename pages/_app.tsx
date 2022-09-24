@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <title>Tomohisa Oda</title>
         </Head>
 
-        <div className="header">
+        <div>
           <Header />
         </div>
 
@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </div>
 
-        <div className="footer">
+        <div>
           <Footer />
         </div>
       </div>

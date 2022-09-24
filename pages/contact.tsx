@@ -20,19 +20,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 }
 
 const formError = (msg: string) => {
-  return (
-    <>
-      <p className="error">{msg}</p>
-      <style jsx>{`
-        .error {
-          color: #FF0000;
-          position: absolute;
-          font-size: var(--fontSize-0);
-          font-family: var(--fontFamily-sans);
-        }
-      `}</style>
-    </>
-  )
+  return <p className="error">{msg}</p>
 }
 
 const Contact: NextPage<Props> = ({ contact }) => {
@@ -186,53 +174,6 @@ const Contact: NextPage<Props> = ({ contact }) => {
           </div>
         </form>
       </section>
-
-      <style jsx>{`
-        input, textarea {
-          font-family: var(--fontFamily-sans);
-          font-size: var(--fontSize-3);
-          border: none;
-          padding: var(--spacing-1);
-        }
-        button {
-          padding: var(--spacing-4) var(--spacing-8);
-          cursor: pointer;
-        }
-        .form-label {
-          text-align: right;
-          font-family: var(--fontFamily-sans);
-          margin-top: var(--spacing-10);
-        }
-        .form-body {
-          margin-top: var(--spacing-8);
-        }
-        .form-name input {
-          min-width: 60%;
-        }
-        .form-email input {
-          min-width: 60%;
-        }
-        .form-message textarea {
-          width: 100%;
-          height: 15rem;
-        }
-        .form-button {
-          margin-top: var(--spacing-5);
-          font-family: var(--fontFamily-sans);
-        }
-        @media (max-width: 1220px) {
-          .form-name input {
-            width: 100%;
-          }
-          .form-email input {
-            width: 100%;
-          }
-          .form-body {
-            margin-top: var(--spacing-2);
-            margin-bottom: var(--spacing-10);
-          }
-        }
-      `}</style>
     </div>
   )
 }

@@ -55,6 +55,7 @@
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
   --color-primary: #005b99;
+  --color-primary-dark: #0086e0;
   --color-text: #2e353f;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
@@ -120,13 +121,11 @@ h4,
 h5,
 h6 {
   font-weight: var(--fontWeight-bold);
-  color: var(--color-heading);
 }
 
 h1 {
   font-weight: var(--fontWeight-black);
   font-size: var(--fontSize-6);
-  color: var(--color-heading-black);
 }
 
 h2 {
@@ -519,4 +518,301 @@ a:focus {
 }
 .post-body .notionate-blocks-code {
   margin: 2rem 0;
+}
+
+/* CONTACT */
+.form-body input, .form-body textarea {
+  font-family: var(--fontFamily-sans);
+  font-size: var(--fontSize-3);
+  border: none;
+  padding: var(--spacing-1);
+}
+.form-body button {
+  padding: var(--spacing-4) var(--spacing-8);
+  cursor: pointer;
+  margin-bottom: var(--spacing-10);
+}
+.form-label {
+  text-align: right;
+  font-family: var(--fontFamily-sans);
+  margin-top: var(--spacing-10);
+  padding-top: 3px;
+  opacity: 0.5;
+}
+.form-body {
+  margin-top: var(--spacing-8);
+}
+.form-name input {
+  min-width: 60%;
+}
+.form-email input {
+  min-width: 60%;
+}
+.form-message textarea {
+  width: 100%;
+  height: 15rem;
+}
+.form-button {
+  margin-top: var(--spacing-5);
+  font-family: var(--fontFamily-sans);
+}
+.error {
+  color: #FF0000;
+  position: absolute;
+  font-size: var(--fontSize-0);
+  font-family: var(--fontFamily-sans);
+}
+@media (max-width: 1220px) {
+  .form-name input {
+    width: 100%;
+  }
+  .form-email input {
+    width: 100%;
+  }
+  .form-body {
+    margin-top: var(--spacing-2);
+    margin-bottom: var(--spacing-10);
+  }
+}
+
+/* HEADER */
+.header {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr;
+  gap: var(--spacing-10);
+  margin-left: var(--spacing-20);
+  margin-right: var(--spacing-20);
+  margin-bottom: var(--spacing-10);
+}
+.site-name {
+  width: 160px;
+  font-size: var(--fontSize-0);
+  margin: 0;
+  text-align: center;
+}
+.global-nav {
+  margin: 0;
+}
+.global-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: var(--spacing-10);
+}
+.global-nav li {
+  font-family: var(--fontFamily-sans);
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+.global-nav a {
+  text-decoration: none;
+  display: block;
+  margin: 0;
+  padding: var(--spacing-2) var(--spacing-5);
+  color: #555;
+}
+.global-nav a:hover {
+  background: #e0e0e0;
+  border-radius: 30px;
+}
+.global-nav span {
+  padding-right: var(--spacing-2);
+}
+.burger {
+  display: none;
+}
+.burger-nav {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .header {
+    display: block;
+  }
+  .global-nav {
+    display: none;
+  }
+  .burger {
+    display: flex;
+    position: fixed;
+    top: var(--spacing-20);
+    right: var(--spacing-20);
+    flex-direction: column;
+    justify-content: space-around;
+    width: var(--spacing-6);
+    height: var(--spacing-8);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+  }
+  .burger span {
+    width: var(--spacing-8);
+    height: var(--spacing-1);
+    background: var(--color-text-light);
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+  }
+  .burger span:nth-child(2) {
+    width: var(--spacing-6);
+  }
+  .burger-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+    height: 100vh;
+    text-align: left;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    z-index: 5;
+    transition: transform 0.3s ease-in-out;
+  }
+  .burger-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: var(--spacing-10);
+  }
+  .burger-nav li {
+    margin: 0;
+    padding: 0;
+  }
+  .burger-nav a {
+    display: block;
+    font-size: var(--fontSize-3);
+    font-family: var(--fontFamily-sans);
+    font-weight: bold;
+    text-decoration: none;
+    padding: var(--spacing-10);
+    margin: 0;
+    transition: color 0.3s linear;
+    background: #fff;
+    color: #555;
+  }
+}
+@media (max-width: 480px) {
+  .header {
+    margin-left: var(--spacing-10);
+    margin-right: var(--spacing-10);
+  }
+  .burger {
+    top: var(--spacing-10);
+    right: var(--spacing-12);
+  }
+  .burger-nav ul {
+    padding: 0;
+  }
+  .burger-nav a {
+    font-size: var(--fontSize-1);
+  }
+}
+
+/* FOOTER */
+.footer {
+  margin-top: var(--spacing-5);
+}
+.site-license {
+  font-family: var(--fontFamily-sans);
+  font-size: var(--fontSize-0);
+  margin: 0;
+}
+
+/* 404 */
+.home {
+  margin-top: var(--spacing-20);
+}
+.to-home {
+  text-align: center;
+  font-size: var(--fontSize-1);
+  text-decoration: none;
+  display: inline-block;
+  padding: var(--spacing-2) var(--spacing-8) var(--spacing-3);
+  border-radius: 30px;
+  font-family: var(--fontFamily-sans);
+  margin: 0 auto;
+  margin-bottom: var(--spacing-20);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: rgba(255, 255, 255);
+    background: #3d3d3d;
+  }
+  a {
+    color: var(--color-primary-dark);
+  }
+  .dl {
+    color: #999;
+  }
+  input, textarea {
+    background-color: #393939;
+  }
+  input:focus, textarea:focus {
+    background-color: #333;
+  }
+  .neumorphism-h {
+    background: #393939;
+    box-shadow:  6px 6px 12px #313131, -6px -6px 12px #2f2f2f;
+    color: #aaa;
+    border: 1px solid #383838;
+  }
+  .neumorphism-h:hover {
+    border: 1px solid #000;
+  }
+  .neumorphism-l {
+    background: #393939;
+    box-shadow:  inset 6px 6px 9px #313131, inset -6px -6px 9px #2f2f2f;
+    color: #aaa;
+    border: 1px solid #383838;
+  }
+  .neumorphism-l:hover {
+    border: 1px solid #000;
+  }
+
+  .flat-button {
+    background: #313131;
+    color: #aaa;
+  }
+  .flat-button:hover {
+    background: #212121;
+    color: #eee;
+  }
+
+  .global-nav a {
+    color: #aaa;
+  }
+  .global-nav a:hover {
+    background: #393939;
+  }
+
+  .burger span {
+    background: #aaa;
+  }
+  .burger-nav {
+    background: #393939;
+  }
+  .burger-nav a {
+    background: #393939;
+    color: #aaa;
+  }
+
+  .page-list .post-date-inner,
+  .page-detail .post-meta-inner {
+    background: #393939;
+    color: #aaa;
+  }
+  .page-detail .post-meta {
+    color: #777;
+  }
 }

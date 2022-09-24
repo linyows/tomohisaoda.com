@@ -45,8 +45,6 @@ const ProjectIndex: NextPage<Props> = ({ pages }) => {
           </section>
         ))}
       </div>
-      <style jsx>{`
-      `}</style>
     </div>
   )
 }

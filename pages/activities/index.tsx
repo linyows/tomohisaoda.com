@@ -62,9 +62,6 @@ const ActivityIndex: NextPage<Props> = ({ pages }) => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-      `}</style>
     </div>
   )
 }

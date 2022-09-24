@@ -60,7 +60,7 @@ const Activity: NextPage<Props> = (context) => {
       </div>
       <div>
         <h1 className="post-title gradation-text">
-          <Link href="/activities/[id]" as={`/${page.id}`}>
+          <Link href="/activities/[id]" as={`/activities/${page.id}`}>
             <a>{page.title}</a>
           </Link>
         </h1>
@@ -78,9 +78,6 @@ const Activity: NextPage<Props> = (context) => {
           {Blocks({ blocks })}
         </div>
       </div>
-
-      <style jsx>{`
-      `}</style>
     </article>
   )
 }

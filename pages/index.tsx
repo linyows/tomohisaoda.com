@@ -1,3 +1,4 @@
+import { ReactElement } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 //import Image from 'next/image'
@@ -11,10 +12,11 @@ import {
   QueryDatabaseParameters,
 } from 'notionate'
 import {
-  DBList,
+  List,
   Blocks,
 } from 'notionate/dist/components'
 import GenFeed from '../src/lib/feed'
+import Styles from '../styles/Home.module.css'
 
 type Props = {
   aboutPage: GetPageResponseEx
@@ -67,130 +69,78 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
 const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) => {
   return (
     <>
-      <section className="about grider">
-        <div className="portrait">
-          <img src={aboutPage.icon.src} alt="tomohisaoda" />
+      <section className={`${Styles.section} ${Styles.about} grider`}>
+        <div className={Styles.portrait}>
+          <img className={Styles.icon} src={aboutPage.icon.src} alt="tomohisaoda" />
         </div>
-        <div className="recently-box">
+        <div className={Styles.aboutBody}>
           <Blocks blocks={about} />
-          <div className="about-footer">
+          <div className={Styles.aboutFooter}>
             <Link href="/contact">
-              <a className="flat-button to-contact">Contact <span role="img" aria-label="contact">🤙</span></a>
+              <a className={`flat-button ${Styles.toContact}`}>
+                Contact <span role="img" aria-label="contact">🤙</span>
+              </a>
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="project grider">
-        <h2><span className="neumorphism-h">Projects</span></h2>
-        <div className="recently-box">
-          <DBList keys={['Name', 'Description', 'spacer', 'URL', 'Tags', 'Date']} db={project} link={'/projects/[Slug]'} LinkComp={Link} />
-          <p className="view-all">
+      <section className={`${Styles.section} grider`}>
+        <h2 className={Styles.title}><span className="neumorphism-h">Projects</span></h2>
+        <div className={Styles.recent}>
+          <List
+            keys={['Name', 'Description', 'spacer', 'URL', 'Tags', 'Date']}
+            db={project}
+            href={'/projects/[Slug]'}
+            link={Link as React.FC<{ children: ReactElement<'a'>, href: string}>}
+          />
+          <p className={Styles.viewall}>
             <Link href="/projects">
-              <a className="flat-button view-all-button">View all <span role="img" aria-label="home">🎪</span></a>
+              <a className={`flat-button ${Styles.viewallButton}`}>
+                View all <span role="img" aria-label="home">🎪</span>
+              </a>
             </Link>
           </p>
         </div>
       </section>
 
-      <section className="blog grider">
-        <h2><span className="neumorphism-h">Blog</span></h2>
-        <div className="recently-box">
-          <DBList keys={['Name', 'spacer', 'Tags', 'Date']} db={blog} link={'/blog/[Slug]'} LinkComp={Link} />
-          <p className="view-all">
+      <section className={`${Styles.section} grider`}>
+        <h2 className={Styles.title}><span className="neumorphism-h">Blog</span></h2>
+        <div className={Styles.recent}>
+          <List
+            keys={['Name', 'spacer', 'Tags', 'Date']}
+            db={blog}
+            href={'/blog/[Slug]'}
+            link={Link as React.FC<{ children: ReactElement<'a'>, href: string}>}
+          />
+          <p className={Styles.viewall}>
             <Link href="/blog">
-              <a className="flat-button view-all-button">View all <span role="img" aria-label="surf">🏄‍♂️</span></a>
+              <a className={`flat-button ${Styles.viewallButton}`}>
+                View all <span role="img" aria-label="surf">🏄‍♂️</span>
+              </a>
             </Link>
           </p>
         </div>
       </section>
 
-      <section className="activity grider">
-        <h2><span className="neumorphism-h">Activities</span></h2>
-        <div className="recently-box">
-          <DBList keys={['Name', 'spacer', 'URL', 'Tags', 'Date']} db={activity} link={'/activities/[id]'} LinkComp={Link} />
-          <p className="view-all">
+      <section className={`${Styles.section} grider`}>
+        <h2 className={Styles.title}><span className="neumorphism-h">Activities</span></h2>
+        <div className={Styles.recent}>
+          <List
+            keys={['Name', 'spacer', 'URL', 'Tags', 'Date']}
+            db={activity}
+            href={'/activities/[id]'}
+            link={Link as React.FC<{ children: ReactElement<'a'>, href: string}>}
+          />
+          <p className={Styles.viewall}>
             <Link href="/activities">
-              <a className="flat-button view-all-button">View all <span role="img" aria-label="bike">🚴‍♂️</span></a>
+              <a className={`flat-button ${Styles.viewallButton}`}>
+                View all <span role="img" aria-label="bike">🚴‍♂️</span>
+              </a>
             </Link>
           </p>
         </div>
       </section>
-
-      <style jsx global>{`
-        .about img {
-          margin-top: var(--spacing-10);
-          width: 160px;
-          border-radius: 20px;
-        }
-        @media (max-width: 480px) {
-          .about img {
-            margin-top: 0;
-          }
-        }
-      `}</style>
-      <style jsx>{`
-        section {
-          padding: 0;
-          max-width: var(--maxWidth-full);
-          font-size: var(--fontSize-1);
-          font-faimly: var(--fontFamily-sans);
-        }
-        h2 {
-          text-align: right;
-          font-size: var(--fontSize-0);
-          display: inline;
-        }
-        .recently-box {
-          margin: var(--spacing-12) auto var(--spacing-2);
-          width: 100%;
-        }
-        .about {
-          font-size: var(--fontSize-3);
-          padding-top: var(--spacing-8);
-          margin-bottom: var(--spacing-16);
-        }
-        .portrait {
-          padding-top: var(--spacing-4);
-        }
-        .about-footer {
-          text-align: right;
-        }
-        .to-contact {
-          font-size: var(--fontSize-1);
-          color: #555;
-        }
-        .view-all {
-          text-align: right;
-          margin: 0 0 var(--spacing-10);
-        }
-        .view-all-button {
-          font-size: var(--fontSize-0);
-          margin-top: var(--spacing-6);
-          padding: var(--spacing-1) var(--spacing-8) var(--spacing-2);
-          color: #555;
-        }
-        .view-all-button:hover {
-          background: #fff;
-          color: #000;
-        }
-        @media (max-width: 480px) {
-          .about {
-            font-size: var(--fontSize-2);
-            padding-top: 0;
-          }
-        }
-        @media (max-width: 1220px) {
-          .about {
-            margin-top: 0;
-          }
-          .portrait {
-            padding-top: 0;
-            padding-right: var(--spacing-8);
-            float: left;
-          }
-        }
-      `}</style>
     </>
   )
 }

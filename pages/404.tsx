@@ -59,23 +59,6 @@ const Notfound: NextPage<Props> = ({}) => {
           </p>
         </div>
       </section>
-
-      <style jsx>{`
-        .home {
-          margin-top: var(--spacing-20);
-        }
-        .to-home {
-          text-align: center;
-          font-size: var(--fontSize-1);
-          text-decoration: none;
-          display: inline-block;
-          padding: var(--spacing-2) var(--spacing-8) var(--spacing-3);
-          border-radius: 30px;
-          font-family: var(--fontFamily-sans);
-          margin: 0 auto;
-          margin-bottom: var(--spacing-20);
-        }
-      `}</style>
     </>
   )
 }
