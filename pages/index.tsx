@@ -10,6 +10,7 @@ import {
   GetPageResponseEx,
   QueryDatabaseResponseEx,
   QueryDatabaseParameters,
+  Link as NLink,
 } from 'notionate'
 import {
   List,
@@ -92,7 +93,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
             keys={['Name', 'Description', 'spacer', 'URL', 'Tags', 'Date']}
             db={project}
             href={'/projects/[Slug]'}
-            link={Link as React.FC<{ children: ReactElement<'a'>, href: string}>}
+            link={Link as NLink}
           />
           <p className={Styles.viewall}>
             <Link href="/projects">
@@ -111,7 +112,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
             keys={['Name', 'spacer', 'Tags', 'Date']}
             db={blog}
             href={'/blog/[Slug]'}
-            link={Link as React.FC<{ children: ReactElement<'a'>, href: string}>}
+            link={Link as NLink}
           />
           <p className={Styles.viewall}>
             <Link href="/blog">
@@ -130,7 +131,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
             keys={['Name', 'spacer', 'URL', 'Tags', 'Date']}
             db={activity}
             href={'/activities/[id]'}
-            link={Link as React.FC<{ children: ReactElement<'a'>, href: string}>}
+            link={Link as NLink}
           />
           <p className={Styles.viewall}>
             <Link href="/activities">
