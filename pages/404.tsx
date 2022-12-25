@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
+import Hed from '../components/hed'
 
 type Props = {
 }
@@ -34,13 +35,16 @@ _  +[_[_+_]P/    _    |_       ____      _=--|-~
 `
 
 const Notfound: NextPage<Props> = ({}) => {
+  const title = '404'
+  const desc = 'Looks like this page is unavailable.'
   return (
     <>
+      <Hed title={title} desc={desc} />
       <header className="grider category-header">
         <span></span>
         <div>
-          <h1>404</h1>
-          <p>Looks like this page is unavailable.</p>
+          <h1>{title}</h1>
+          <p>{desc}</p>
         </div>
       </header>
 

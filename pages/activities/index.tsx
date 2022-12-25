@@ -3,6 +3,7 @@ import Link from 'next/link'
 //import Image from 'next/image'
 import { Activity, GetActivities } from '../../src/lib/activity'
 import { UsePagination } from 'notionate/dist/components'
+import Hed from '../../components/hed'
 
 type Props = {
   pages: Activity[]
@@ -21,14 +22,17 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 const ActivityIndex: NextPage<Props> = ({ pages }) => {
   const { next, currentPage, currentData, maxPage } = UsePagination<Activity>(pages, 10)
   const currentPosts = currentData()
+  const title = 'Activities'
+  const desc = 'I will write about the presentation materials and interview articles.'
 
   return (
     <div className="page-list">
+      <Hed title={title} desc={desc} />
       <header className="grider page-list-header">
         <span></span>
         <div>
-          <h1>Activities</h1>
-          <p>I will write about the presentation materials and interview articles.</p>
+          <h1>{title}</h1>
+          <p>{desc}</p>
         </div>
       </header>
 

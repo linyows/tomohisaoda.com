@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
 import { Activity, GetActivity, GetPaths } from '../../src/lib/activity'
+import Hed from '../../components/hed'
 
 type Props = {
   page?: Activity
@@ -47,6 +48,7 @@ const Activity: NextPage<Props> = (context) => {
   const blocks = context.blocks!
   return (
     <article className="grider page-detail activity">
+      <Hed title={page.title} desc="" />
       <div className="post-meta">
         <p className="post-date">Posted: <span className="post-meta-inner">{page.date}</span></p>
         <p className="post-edited">Edited: <span className="post-meta-inner">{page.edited}</span></p>

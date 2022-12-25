@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
 import { MutatingDots } from 'react-loader-spinner'
+import Hed from '../components/hed'
 
 type Props = {
   contact: ListBlockChildrenResponseEx
@@ -102,13 +103,16 @@ const Contact: NextPage<Props> = ({ contact }) => {
         setLockStatus(false)
       })
   }
+  const title = 'Contact'
+  const desc = ''
 
   return (
     <div className="page-root">
+      <Hed title={title} desc={desc} />
       <header className="grider page-root-header">
         <span></span>
         <div>
-          <h1>Contact</h1>
+          <h1>{title}</h1>
           {Blocks({ blocks: contact })}
         </div>
       </header>

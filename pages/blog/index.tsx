@@ -4,6 +4,7 @@ import Link from 'next/link'
 //import Image from 'next/image'
 import { Blog, GetBlogs } from '../../src/lib/blog'
 import { UsePagination } from 'notionate/dist/components'
+import Hed from '../../components/hed'
 
 type Props = {
   pages: Blog[]
@@ -22,14 +23,17 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 const PostIndex: NextPage<Props> = ({ pages }) => {
   const { next, currentPage, currentData, maxPage } = UsePagination<Blog>(pages, 10)
   const currentPosts = currentData()
+  const title = 'Blog'
+  const desc = 'I will write about software development and engineering.'
 
   return (
     <div className="page-list">
+      <Hed title={title} desc={desc} />
       <header className="grider page-list-header">
         <span></span>
         <div>
-          <h1>Blog</h1>
-          <p>I will write about software development and engineering.</p>
+          <h1>{title}</h1>
+          <p>{desc}</p>
         </div>
       </header>
 

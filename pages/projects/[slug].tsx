@@ -4,6 +4,7 @@ import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
 import { GetProject, Project, GetPaths } from '../../src/lib/project'
 import { ParsedUrlQuery } from 'node:querystring'
+import Hed from '../../components/hed'
 
 type Props = {
   page?: Project
@@ -48,6 +49,7 @@ const Post: NextPage<Props> = (context) => {
   const blocks = context.blocks!
   return (
     <article className="grider page-detail project">
+      <Hed title={page.title} desc={page.desc} />
       <div className="post-meta">
         <p className="post-date">Posted: <span className="post-meta-inner">{page.date}</span></p>
         <p className="post-edited">Edited: <span className="post-meta-inner">{page.edited}</span></p>

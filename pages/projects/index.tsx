@@ -2,6 +2,7 @@ import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 //import Image from 'next/image'
 import { Project, GetProjects } from '../../src/lib/project'
+import Hed from '../../components/hed'
 
 type Props = {
   pages: Project[]
@@ -18,13 +19,16 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 }
 
 const ProjectIndex: NextPage<Props> = ({ pages }) => {
+  const title = 'Project'
+  const desc = 'These are software engineering projects with me and my colleagues.'
   return (
     <div className="page-list">
+      <Hed title={title} desc={desc} />
       <header className="grider page-list-header">
         <span></span>
         <div>
-          <h1>Project</h1>
-          <p>These are software engineering projects with me and my colleagues.</p>
+          <h1>{title}</h1>
+          <p>{desc}</p>
         </div>
       </header>
 
