@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { Feed } from 'feed'
+import { Feed, Item } from 'feed'
 import { FetchBlocks } from 'notionate'
 import { GetBlogs } from './blog'
 import { Blocks } from 'notionate/dist/components'
@@ -22,8 +22,8 @@ export default async function GenFeed() {
     description,
     id: url,
     link: url,
-    image: `${url}/favicon.ico`,
-    favicon: `${url}/favicon.ico`,
+    //image: `${url}/favicon.ico`,
+    //favicon: `${url}/favicon.ico`,
     copyright: `${date.getFullYear()} ${name}, All rights reserved.`,
     updated: date,
     generator: 'Feed',
@@ -33,24 +33,29 @@ export default async function GenFeed() {
     author,
   })
 
+  const items: Item[] = []
+
   await Promise.all(
     blogs.map(async (v) => {
       const blocks = await FetchBlocks(v.id)
       const html = ReactDOMServer.renderToString(Blocks({ blocks }))
       const link = `${url}/blog/${v.slug}`
 
-      feed.addItem({
+      items.push({
         title: v.title,
         id: link,
         link,
-        description: html,
-        content: html,
+        content: html.replaceAll(/\n/ig, ' '),
         author: [author],
         contributor: [author],
         date: new Date(v.date),
       })
     }),
   )
+
+  items.sort((a: Item, b: Item) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime()
+  }).forEach(i => feed.addItem(i))
 
   fs.mkdirSync('./public/rss', { recursive: true })
   fs.writeFileSync('./public/index.xml', feed.rss2())
