@@ -36,21 +36,21 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     database_id: process.env.NOTION_PROJECT_DB_ID as string,
     filter: { property: 'Published', checkbox: { equals: true }, },
     sorts: [ { property: 'Date', direction: 'descending' }, ],
-    limit: 5,
+    page_size: 5,
   } as QueryDatabaseParameters)
   
   const blog = await FetchDatabase({
     database_id: process.env.NOTION_BLOG_DB_ID as string,
     filter: { property: 'Published', checkbox: { equals: true }, },
     sorts: [ { property: 'Date', direction: 'descending' }, ],
-    limit: 7,
+    page_size: 7,
   } as QueryDatabaseParameters) 
 
   const activity = await FetchDatabase({
     database_id: process.env.NOTION_ACTIVITY_DB_ID as string,
     filter: { property: 'Published', checkbox: { equals: true }, },
     sorts: [ { property: 'Date', direction: 'descending' }, ],
-    limit: 15,
+    page_size: 15,
   } as QueryDatabaseParameters)
 
   await GenFeed()
