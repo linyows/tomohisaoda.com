@@ -16,6 +16,7 @@ import {
   List,
   Blocks,
 } from 'notionate/dist/components'
+import Hed from '../components/hed'
 import GenFeed from '../src/lib/feed'
 import Styles from '../styles/Home.module.css'
 
@@ -70,6 +71,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
 const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) => {
   return (
     <>
+      <Hed />
       <section className={`${Styles.section} ${Styles.about} grider`}>
         <div className={Styles.portrait}>
           <img className={Styles.icon} src={aboutPage.icon.src} alt="tomohisaoda" />

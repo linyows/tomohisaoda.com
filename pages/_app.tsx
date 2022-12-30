@@ -15,10 +15,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <div className="container">
-        <Head>
-          <title>Tomohisa Oda</title>
-        </Head>
-
         <div>
           <Header />
         </div>

@@ -2,17 +2,18 @@ import type { FC, ReactNode } from 'react'
 import Head from 'next/head'
 
 type Props = {
-  title: string
-  desc: string
+  title?: string
+  desc?: string
   children?: ReactNode
 }
 
 const Hed: FC<Props> = ({ title, desc, children }) => {
-  const suffix = ` – Tomohisa Oda`
+  const defaultTitle = 'Tomohisa Oda'
+  const t = title === '' || title === undefined ? defaultTitle : `${title} - ${defaultTitle}`
   return (
     <Head>
-      <title>{`${title}${suffix}`}</title>
-      <meta name="description" content={desc} />
+      <title>{t}</title>
+      {desc && <meta name="description" content={desc} />}
       {children}
     </Head>
   )
