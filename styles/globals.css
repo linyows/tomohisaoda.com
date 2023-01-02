@@ -437,13 +437,31 @@ a:focus {
   max-width: var(--maxWidth-4xl);
 }
 
+.page-detail .post-body .notionate-blocks-bookmark-inner,
+.page-detail .post-body .notionate-blocks-linkpreview-a {
+  border-color: #bbb;
+  border-radius: 5px;
+  font-family: var(--fontFamily-sans);
+}
+.page-detail .post-body .notionate-blocks-bookmark-url {
+  line-height: inherit;
+  margin-bottom: auto;
+  height: auto;
+  margin-top: 8px;
+}
+.page-detail .post-body .notionate-blocks-code {
+  border: 1px solid #ddd;
+  box-shadow: 0 0 3px #ddd;
+  border-radius: 5px;
+}
+
 @media (max-width: 480px) {
   .container {
     margin: var(--spacing-10) auto;
   }
   .grider {
-    margin-left: var(--spacing-10);
-    margin-right: var(--spacing-10);
+    margin-left: var(--spacing-5);
+    margin-right: var(--spacing-5);
   }
   .page-root-header {
     margin-top: var(--spacing-10);
@@ -453,6 +471,12 @@ a:focus {
   }
   .page-list .post-title {
     font-size: var(--fontSize-2);
+  }
+  .page-detail .post-body .notionate-blocks-text-p {
+    font-size: var(--fontSize-1);
+  }
+  .page-detail .post-body .notionate-blocks-text-h1 {
+    font-size: var(--fontSize-3);
   }
 }
 
@@ -518,6 +542,9 @@ a:focus {
 }
 .post-body .notionate-blocks-code {
   margin: 2rem 0;
+}
+.post-body .notionate-blocks-text-blockquote {
+  font-family: var(--fontFamily-sans);
 }
 
 /* CONTACT */
@@ -814,5 +841,16 @@ a:focus {
   }
   .page-detail .post-meta {
     color: #777;
+  }
+
+  .page-detail .post-body .notionate-blocks-code {
+    border: 1px solid #333;
+    box-shadow: 0 0 3px #333;
+  }
+  .post-body .notionate-blocks-text-blockquote {
+    color: var(--color-primary-dark);
+  }
+  .post-body .notionate-blocks-text-hr {
+    border-top-color: #555;
   }
 }
