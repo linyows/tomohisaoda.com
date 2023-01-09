@@ -35,9 +35,17 @@ const ProjectIndex: NextPage<Props> = ({ pages }) => {
       <div className="page-list-body">
         {pages.map((v, i) => (
           <section key={`${v.title}-content`} className="post grider">
-            <p className="post-date"><span className="post-date-inner">{v.date}</span></p>
+            <p className="post-date">
+              <span className="post-date-inner">
+                {v.date}
+              </span>
+            </p>
             <div>
-              <h3 className="post-title gradation-text"> <Link href="/projects/[slug]" as={`/projects/${v.slug}`}>{v.title}</Link> </h3>
+              <h3 className="post-title gradation-text">
+                <Link href="/projects/[slug]" as={`/projects/${v.slug}`}>
+                  {v.title}
+                </Link>
+              </h3>
               {v.tags.length > 0 &&
                 <ul className="post-tags">
                   {v.tags.map(tag => (

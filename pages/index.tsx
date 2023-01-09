@@ -79,10 +79,8 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
         <div className={Styles.aboutBody}>
           <Blocks blocks={about} />
           <div className={Styles.aboutFooter}>
-            <Link href="/contact">
-              <a className={`flat-button ${Styles.toContact}`}>
-                Contact <span role="img" aria-label="contact">🤙</span>
-              </a>
+            <Link className={`flat-button ${Styles.toContact}`} href="/contact">
+              Contact <span role="img" aria-label="contact">🤙</span>
             </Link>
           </div>
         </div>
@@ -98,10 +96,8 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
             link={Link as NLink}
           />
           <p className={Styles.viewall}>
-            <Link href="/projects">
-              <a className={`flat-button ${Styles.viewallButton}`}>
-                View all <span role="img" aria-label="home">🎪</span>
-              </a>
+            <Link className={`flat-button ${Styles.viewallButton}`} href="/projects">
+              View all <span role="img" aria-label="home">🎪</span>
             </Link>
           </p>
         </div>
@@ -117,10 +113,8 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
             link={Link as NLink}
           />
           <p className={Styles.viewall}>
-            <Link href="/blog">
-              <a className={`flat-button ${Styles.viewallButton}`}>
-                View all <span role="img" aria-label="surf">🏄‍♂️</span>
-              </a>
+            <Link className={`flat-button ${Styles.viewallButton}`} href="/blog">
+              View all <span role="img" aria-label="surf">🏄‍♂️</span>
             </Link>
           </p>
         </div>
@@ -136,10 +130,8 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) =>
             link={Link as NLink}
           />
           <p className={Styles.viewall}>
-            <Link href="/activities">
-              <a className={`flat-button ${Styles.viewallButton}`}>
-                View all <span role="img" aria-label="bike">🚴‍♂️</span>
-              </a>
+            <Link className={`flat-button ${Styles.viewallButton}`}href="/activities">
+              View all <span role="img" aria-label="bike">🚴‍♂️</span>
             </Link>
           </p>
         </div>

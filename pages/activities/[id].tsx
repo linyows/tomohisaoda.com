@@ -63,7 +63,7 @@ const Activity: NextPage<Props> = (context) => {
       <div>
         <h1 className="post-title gradation-text">
           <Link href="/activities/[id]" as={`/activities/${page.id}`}>
-            <a>{page.title}</a>
+            {page.title}
           </Link>
         </h1>
 

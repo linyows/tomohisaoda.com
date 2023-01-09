@@ -32,24 +32,32 @@ const Header: React.FC<Props> = ({ children }) => {
       <header className="header">
         <h1 className="site-name neumorphism-h">
           <Link href="/">
-            <a>Tomohisa Oda</a>
+            Tomohisa Oda
           </Link>
         </h1>
 
         <nav className="global-nav">
           <ul>
-            <li> <Link href="/projects">
-              <a><span role="img" aria-label="home">🎪</span> Projects</a>
-            </Link> </li>
-            <li> <Link href="/blog">
-              <a><span role="img" aria-label="surf">🏄‍♂️</span> Blog</a>
-            </Link> </li>
-            <li> <Link href="/activities">
-              <a><span role="img" aria-label="bike">🚴‍♂️</span> Activities</a>
-            </Link> </li>
-            <li> <Link href="/contact">
-              <a><span role="img" aria-label="contact">🤙</span> Contact</a>
-            </Link> </li>
+            <li>
+              <Link href="/projects">
+                <span role="img" aria-label="home">🎪</span> Projects
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog">
+                <span role="img" aria-label="surf">🏄‍♂️</span> Blog
+              </Link>
+            </li>
+            <li>
+              <Link href="/activities">
+                <span role="img" aria-label="bike">🚴‍♂️</span> Activities
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact">
+                <span role="img" aria-label="contact">🤙</span> Contact
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -61,18 +69,26 @@ const Header: React.FC<Props> = ({ children }) => {
           </button>
           <nav className="burger-nav" aria-hidden={!open} onClick={() => setOpen(!open)}>
             <ul>
-              <li> <Link href="/projects">
-                <a><span role="img" aria-label="home">🎪</span> Projects</a>
-              </Link> </li>
-              <li> <Link href="/blog">
-                <a><span role="img" aria-label="surf">🏄‍♂️</span> Blog</a>
-              </Link> </li>
-              <li> <Link href="/activities">
-                <a><span role="img" aria-label="bike">🚴‍♂️</span> Activities</a>
-              </Link> </li>
-              <li> <Link href="/contact">
-                <a><span role="img" aria-label="contact">🤙</span> Contact</a>
-              </Link> </li>
+              <li>
+                <Link href="/projects">
+                  <span role="img" aria-label="home">🎪</span> Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog">
+                  <span role="img" aria-label="surf">🏄‍♂️</span> Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/activities">
+                  <span role="img" aria-label="bike">🚴‍♂️</span> Activities
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact">
+                  <span role="img" aria-label="contact">🤙</span> Contact
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

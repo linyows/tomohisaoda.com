@@ -57,8 +57,8 @@ const Notfound: NextPage<Props> = ({}) => {
             </code>
           </pre>
           <p className="home">
-            <Link href="/">
-              <a className="to-home neumorphism-h">Go back to 🏠</a>
+            <Link className="to-home neumorphism-h" href="/">
+              Go back to 🏠
             </Link>
           </p>
         </div>

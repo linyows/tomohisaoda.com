@@ -64,7 +64,7 @@ const Post: NextPage<Props> = (context) => {
       <div>
         <h1 className="post-title gradation-text">
           <Link href="/projects/[slug]" as={`/projects/${page.slug}`}>
-            <a>{page.title}</a>
+            {page.title}
           </Link>
         </h1>
 
