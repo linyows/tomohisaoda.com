@@ -15,8 +15,9 @@
     "serve": "next export && serve ./out"
   },
   "dependencies": {
+    "@next/font": "^13.1.1",
     "feed": "^4.2.2",
-    "next": "^12.2.5",
+    "next": "^13.1.1",
     "normalize.css": "^8.0.1",
     "notionate": "^7.1.0",
     "react": "^18.2.0",
@@ -25,11 +26,11 @@
     "react-loader-spinner": "^5.1.3"
   },
   "devDependencies": {
-    "@types/node": "^18.7.14",
-    "@types/react": "^18.0.18",
-    "eslint": "^8.23.0",
-    "eslint-config-next": "^12.2.5",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "eslint": "^8.31.0",
+    "eslint-config-next": "^13.1.1",
     "serve": "^14.0.1",
-    "typescript": "^4.8.2"
+    "typescript": "^4.9.4"
   }
 }
