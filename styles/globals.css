@@ -120,7 +120,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: var(--fontWeight-bold);
+  font-weight: var(--fontWeight-black);
 }
 
 h1 {
@@ -246,7 +246,7 @@ a:focus {
 }
 
 .neumorphism-h {
-  font-weight: var(--fontWeight-bold);
+  font-weight: var(--fontWeight-black);
   border-radius: 30px;
   display: inline-block;
   padding: var(--spacing-2) var(--spacing-5);
@@ -260,7 +260,7 @@ a:focus {
 }
 
 .neumorphism-l {
-  font-weight: var(--fontWeight-bold);
+  font-weight: var(--fontWeight-black);
   border-radius: 30px;
   display: block;
   padding: var(--spacing-2) var(--spacing-5);
@@ -727,8 +727,8 @@ a:focus {
 }
 @media (max-width: 480px) {
   .header {
-    margin-left: var(--spacing-10);
-    margin-right: var(--spacing-10);
+    margin-left: var(--spacing-5);
+    margin-right: var(--spacing-5);
   }
   .burger {
     top: var(--spacing-10);

@@ -83,4 +83,7 @@
   .icon {
     margin-top: 0;
   }
+  .aboutBody {
+    text-align: left;
+  }
 }
