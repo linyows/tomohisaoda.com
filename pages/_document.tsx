@@ -14,10 +14,6 @@ class MyDocument extends Document {
           <meta property="og:site_name" content={name} />
           <meta name="description" content={desc}></meta>
           <link rel="icon" href="/favicon.ico" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Raleway&display=optional"
-            rel="stylesheet"
-          />
         </Head>
         <body>
           <Main />

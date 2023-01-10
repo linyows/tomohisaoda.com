@@ -12,15 +12,41 @@ import 'notionate/dist/styles/notionate-dark.css'
 const notosans = Noto_Sans_JP({
   weight: ['400', '900'],
   subsets: ['japanese'],
+  fallback: [
+    'Noto Sans JP',
+    'Montserrat',
+    'system-ui',
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Helvetica Neue',
+    'Arial',
+    'Noto Sans',
+    'sans-serif',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji',
+  ],
 })
 const notoserif = Noto_Serif_JP({
   weight: ['400', '900'],
   subsets: ['japanese'],
+  fallback: [
+    'Noto Serif JP',
+    'Merriweather',
+    'Georgia',
+    'Cambria',
+    'Times New Roman',
+    'Times',
+    'serif',
+  ],
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${notosans.className} ${notoserif.className}`}>
+    <>
       <Head>
         <link rel="alternate" type="application/rss+xml" href="/index.xml" title="RSS2.0" />
       </Head>
@@ -40,7 +66,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Footer />
         </div>
       </div>
-    </main>
+
+      <style jsx global>{`
+        :root {
+          --fontFamily-sans: ${notosans.style.fontFamily};
+          --fontFamily-serif: ${notoserif.style.fontFamily};
+        }
+      `}</style>
+    </>
   )
 }
 
