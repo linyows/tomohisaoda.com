@@ -2,16 +2,26 @@ import '../styles/globals.css'
 import 'normalize.css/normalize.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Noto_Sans_JP, Noto_Serif_JP } from '@next/font/google'
+import localFont from '@next/font/local'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import GA from '../components/ga'
 import 'notionate/dist/styles/notionate.css'
 import 'notionate/dist/styles/notionate-dark.css'
 
-const notosans = Noto_Sans_JP({
-  weight: ['400', '900'],
-  subsets: ['japanese'],
+const notosans = localFont({
+  src: [
+    {
+      path: './src/fonts/NotoSansJP-Black.woff2',
+      weight: '900',
+      style: 'normal',
+    },
+    {
+      path: './src/fonts/NotoSansJP-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
   fallback: [
     'Noto Sans JP',
     'Montserrat',
@@ -28,11 +38,21 @@ const notosans = Noto_Sans_JP({
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     'Noto Color Emoji',
-  ],
+  ]
 })
-const notoserif = Noto_Serif_JP({
-  weight: ['400', '900'],
-  subsets: ['japanese'],
+const notoserif = localFont({
+  src: [
+    {
+      path: './src/fonts/NotoSerifJP-Black.woff2',
+      weight: '900',
+      style: 'normal',
+    },
+    {
+      path: './src/fonts/NotoSerifJP-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
   fallback: [
     'Noto Serif JP',
     'Merriweather',
@@ -41,7 +61,7 @@ const notoserif = Noto_Serif_JP({
     'Times New Roman',
     'Times',
     'serif',
-  ],
+  ]
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
