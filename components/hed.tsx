@@ -22,7 +22,7 @@ const Hed: FC<Props> = ({ title, desc, ogimage, path, children }) => {
       {d && <meta name="description" content={d} />}
       <meta property="og:site_name" content={t} />
       {d && <meta property="og:description" content={d} />}
-      {ogimage && <meta property="og:image" content={`${url}/${ogimage}`} />}
+      {ogimage && <meta property="og:image" content={`${defaultUrl}/${ogimage}`} />}
       {ogimage && <meta property="og:image:width" content="1600" />}
       {ogimage && <meta property="og:image:height" content="630" />}
       <meta property="og:url" content={url} />
