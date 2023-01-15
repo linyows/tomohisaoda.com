@@ -2,13 +2,21 @@ import { useState } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import Hed from '../components/hed'
+import { MakeOgImage } from '../src/lib/ogimage'
 
 type Props = {
+  ogimage?: string
 }
 
+const title = '404'
+const desc = 'Looks like this page is unavailable.'
+
 export const getStaticProps: GetStaticProps<Props> = async () => {
+  const ogimage = await MakeOgImage(`${title}: ${desc}`, '404')
   return {
-    props: {},
+    props: {
+      ogimage,
+    },
     revalidate: 10
   }
 }
@@ -34,12 +42,10 @@ _  +[_[_+_]P/    _    |_       ____      _=--|-~
 
 `
 
-const Notfound: NextPage<Props> = ({}) => {
-  const title = '404'
-  const desc = 'Looks like this page is unavailable.'
+const Notfound: NextPage<Props> = ({ ogimage }) => {
   return (
     <>
-      <Hed title={title} desc={desc} />
+      <Hed title={title} desc={desc} ogimage={ogimage} />
       <header className="grider category-header">
         <span></span>
         <div>

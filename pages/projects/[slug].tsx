@@ -5,10 +5,12 @@ import { Blocks } from 'notionate/dist/components'
 import { GetProject, Project, GetPaths } from '../../src/lib/project'
 import { ParsedUrlQuery } from 'node:querystring'
 import Hed from '../../components/hed'
+import { MakeOgImage } from '../../src/lib/ogimage'
 
 type Props = {
   page?: Project
   blocks?: ListBlockChildrenResponseEx
+  ogimage?: string
 }
 
 type Params = ParsedUrlQuery & {
@@ -25,12 +27,15 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
   const page = await GetProject(params!.slug)
+
   if (page) {
     const blocks = await FetchBlocks(page.id)
+    const ogimage = await MakeOgImage(page!.title, `projects-${page!.slug}`)
     return {
       props: {
         page,
         blocks,
+        ogimage,
       },
       revalidate: 60,
     }
@@ -49,7 +54,7 @@ const Post: NextPage<Props> = (context) => {
   const blocks = context.blocks!
   return (
     <article className="grider page-detail project">
-      <Hed title={page.title} desc={page.desc} />
+      <Hed title={page.title} desc={page.desc} ogimage={context.ogimage} />
       <div className="post-meta">
         <p className="post-date">Posted: <span className="post-meta-inner">{page.date}</span></p>
         <p className="post-edited">Edited: <span className="post-meta-inner">{page.edited}</span></p>

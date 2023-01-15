@@ -4,10 +4,12 @@ import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
 import { Activity, GetActivity, GetPaths } from '../../src/lib/activity'
 import Hed from '../../components/hed'
+import { MakeOgImage } from '../../src/lib/ogimage'
 
 type Props = {
   page?: Activity
   blocks?: ListBlockChildrenResponseEx
+  ogimage?: string
 }
 
 type Params = {
@@ -26,10 +28,12 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   const page = await GetActivity(params!.id)
   if (page) {
     const blocks = await FetchBlocks(page.id)
+    const ogimage = await MakeOgImage(page!.title, `activities-${page!.id}`)
     return {
       props: {
         page,
         blocks,
+        ogimage,
       },
       revalidate: 60,
     }
@@ -48,7 +52,7 @@ const Activity: NextPage<Props> = (context) => {
   const blocks = context.blocks!
   return (
     <article className="grider page-detail activity">
-      <Hed title={page.title} desc="" />
+      <Hed title={page.title} desc="" ogimage={context.ogimage} />
       <div className="post-meta">
         <p className="post-date">Posted: <span className="post-meta-inner">{page.date}</span></p>
         <p className="post-edited">Edited: <span className="post-meta-inner">{page.edited}</span></p>

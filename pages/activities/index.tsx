@@ -4,13 +4,19 @@ import Link from 'next/link'
 import { Activity, GetActivities } from '../../src/lib/activity'
 import { UsePagination } from 'notionate/dist/components'
 import Hed from '../../components/hed'
+import { MakeOgImage } from '../../src/lib/ogimage'
 
 type Props = {
   pages: Activity[]
+  ogimage?: string
 }
+
+const title = 'Activities'
+const desc = 'I will write about the presentation materials and interview articles.'
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const pages = await GetActivities()
+  const ogimage = await MakeOgImage(`${title}: ${desc}`, 'activities')
   return {
     props: {
       pages,
@@ -19,15 +25,13 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   }
 }
 
-const ActivityIndex: NextPage<Props> = ({ pages }) => {
+const ActivityIndex: NextPage<Props> = ({ pages, ogimage }) => {
   const { next, currentPage, currentData, maxPage } = UsePagination<Activity>(pages, 10)
   const currentPosts = currentData()
-  const title = 'Activities'
-  const desc = 'I will write about the presentation materials and interview articles.'
 
   return (
     <div className="page-list">
-      <Hed title={title} desc={desc} />
+      <Hed title={title} desc={desc} ogimage={ogimage} />
       <header className="grider page-list-header">
         <span></span>
         <div>

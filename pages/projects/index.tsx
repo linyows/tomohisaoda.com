@@ -3,27 +3,32 @@ import Link from 'next/link'
 //import Image from 'next/image'
 import { Project, GetProjects } from '../../src/lib/project'
 import Hed from '../../components/hed'
+import { MakeOgImage } from '../../src/lib/ogimage'
 
 type Props = {
   pages: Project[]
+  ogimage: string
 }
+
+const title = 'Project'
+const desc = 'These are software engineering projects with me and my colleagues.'
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const pages = await GetProjects()
+  const ogimage = await MakeOgImage(`${title}: ${desc}`, `projects`)
   return {
     props: {
       pages,
+      ogimage,
     },
     revalidate: 10
   }
 }
 
-const ProjectIndex: NextPage<Props> = ({ pages }) => {
-  const title = 'Project'
-  const desc = 'These are software engineering projects with me and my colleagues.'
+const ProjectIndex: NextPage<Props> = ({ pages, ogimage }) => {
   return (
     <div className="page-list">
-      <Hed title={title} desc={desc} />
+      <Hed title={title} desc={desc} ogimage={ogimage} />
       <header className="grider page-list-header">
         <span></span>
         <div>

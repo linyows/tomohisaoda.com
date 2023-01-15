@@ -5,30 +5,35 @@ import Link from 'next/link'
 import { Blog, GetBlogs } from '../../src/lib/blog'
 import { UsePagination } from 'notionate/dist/components'
 import Hed from '../../components/hed'
+import { MakeOgImage } from '../../src/lib/ogimage'
 
 type Props = {
   pages: Blog[]
+  ogimage: string
 }
+
+const title = 'Blog'
+const desc = 'I will write about software development and engineering.'
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const pages = await GetBlogs()
+  const ogimage = await MakeOgImage(`${title}: ${desc}`, 'blog')
   return {
     props: {
       pages,
+      ogimage,
     },
     revalidate: 10
   }
 }
 
-const PostIndex: NextPage<Props> = ({ pages }) => {
+const PostIndex: NextPage<Props> = ({ pages, ogimage }) => {
   const { next, currentPage, currentData, maxPage } = UsePagination<Blog>(pages, 10)
   const currentPosts = currentData()
-  const title = 'Blog'
-  const desc = 'I will write about software development and engineering.'
 
   return (
     <div className="page-list">
-      <Hed title={title} desc={desc} />
+      <Hed title={title} desc={desc} ogimage={ogimage} />
       <header className="grider page-list-header">
         <span></span>
         <div>

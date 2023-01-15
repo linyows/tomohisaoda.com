@@ -18,6 +18,7 @@ import {
 } from 'notionate/dist/components'
 import Hed from '../components/hed'
 import GenFeed from '../src/lib/feed'
+import { MakeOgImage } from '../src/lib/ogimage'
 import Styles from '../styles/Home.module.css'
 
 type Props = {
@@ -26,6 +27,7 @@ type Props = {
   project: QueryDatabaseResponseEx
   blog: QueryDatabaseResponseEx
   activity: QueryDatabaseResponseEx
+  ogimage: string
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
@@ -54,6 +56,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   } as QueryDatabaseParameters)
 
   await GenFeed()
+  const ogimage = await MakeOgImage('', 'home')
 
   return {
     props: {
@@ -62,16 +65,17 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       project,
       blog,
       activity,
+      ogimage,
     },
     // ISR
     //revalidate: 10
   }
 }
 
-const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity }) => {
+const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogimage }) => {
   return (
     <>
-      <Hed />
+      <Hed ogimage={ogimage} />
       <section className={`${Styles.section} ${Styles.about} grider`}>
         <div className={Styles.portrait}>
           <img className={Styles.icon} src={aboutPage.icon.src} alt="tomohisaoda" />

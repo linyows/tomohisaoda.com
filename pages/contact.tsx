@@ -5,13 +5,19 @@ import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
 import { MutatingDots } from 'react-loader-spinner'
 import Hed from '../components/hed'
+import { MakeOgImage } from '../src/lib/ogimage'
 
 type Props = {
   contact: ListBlockChildrenResponseEx
+  ogimage?: string
 }
+
+const title = `Contact`
+const desc = ``
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const contact = await FetchBlocks(process.env.NOTION_CONTACT_PAGE_ID as string)
+  const ogimage = await MakeOgImage(`${title}`, `contact`)
   return {
     props: {
       contact,
@@ -24,7 +30,7 @@ const formError = (msg: string) => {
   return <p className="error">{msg}</p>
 }
 
-const Contact: NextPage<Props> = ({ contact }) => {
+const Contact: NextPage<Props> = ({ contact, ogimage }) => {
   const endpoint = `https://contact.tomohisaoda.com/`
   const initQuery = {
     name: ``,
@@ -103,12 +109,10 @@ const Contact: NextPage<Props> = ({ contact }) => {
         setLockStatus(false)
       })
   }
-  const title = 'Contact'
-  const desc = ''
 
   return (
     <div className="page-root">
-      <Hed title={title} desc={desc} />
+      <Hed title={title} desc={desc} ogimage={ogimage} />
       <header className="grider page-root-header">
         <span></span>
         <div>
