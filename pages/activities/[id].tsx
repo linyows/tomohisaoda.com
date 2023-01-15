@@ -52,7 +52,7 @@ const Activity: NextPage<Props> = (context) => {
   const blocks = context.blocks!
   return (
     <article className="grider page-detail activity">
-      <Hed title={page.title} desc="" ogimage={context.ogimage} />
+      <Hed title={page.title} desc="" ogimage={context.ogimage} path={`/activities/${page.id}`} />
       <div className="post-meta">
         <p className="post-date">Posted: <span className="post-meta-inner">{page.date}</span></p>
         <p className="post-edited">Edited: <span className="post-meta-inner">{page.edited}</span></p>

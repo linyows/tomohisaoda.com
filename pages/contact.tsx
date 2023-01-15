@@ -112,7 +112,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 
   return (
     <div className="page-root">
-      <Hed title={title} desc={desc} ogimage={ogimage} />
+      <Hed title={title} desc={desc} ogimage={ogimage} path="/contact" />
       <header className="grider page-root-header">
         <span></span>
         <div>

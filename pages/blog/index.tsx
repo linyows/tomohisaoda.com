@@ -33,7 +33,7 @@ const PostIndex: NextPage<Props> = ({ pages, ogimage }) => {
 
   return (
     <div className="page-list">
-      <Hed title={title} desc={desc} ogimage={ogimage} />
+      <Hed title={title} desc={desc} ogimage={ogimage} path="/blog" />
       <header className="grider page-list-header">
         <span></span>
         <div>

@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
 const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogimage }) => {
   return (
     <>
-      <Hed ogimage={ogimage} />
+      <Hed ogimage={ogimage} path="/" />
       <section className={`${Styles.section} ${Styles.about} grider`}>
         <div className={Styles.portrait}>
           <img className={Styles.icon} src={aboutPage.icon.src} alt="tomohisaoda" />

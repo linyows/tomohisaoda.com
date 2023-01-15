@@ -45,7 +45,7 @@ _  +[_[_+_]P/    _    |_       ____      _=--|-~
 const Notfound: NextPage<Props> = ({ ogimage }) => {
   return (
     <>
-      <Hed title={title} desc={desc} ogimage={ogimage} />
+      <Hed title={title} desc={desc} ogimage={ogimage} path="/404" />
       <header className="grider category-header">
         <span></span>
         <div>

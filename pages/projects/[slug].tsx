@@ -49,12 +49,12 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   }
 }
 
-const Post: NextPage<Props> = (context) => {
+const Project: NextPage<Props> = (context) => {
   const page = context.page!
   const blocks = context.blocks!
   return (
     <article className="grider page-detail project">
-      <Hed title={page.title} desc={page.desc} ogimage={context.ogimage} />
+      <Hed title={page.title} desc={page.desc} ogimage={context.ogimage} path={`/projects/${page.slug}`} />
       <div className="post-meta">
         <p className="post-date">Posted: <span className="post-meta-inner">{page.date}</span></p>
         <p className="post-edited">Edited: <span className="post-meta-inner">{page.edited}</span></p>
@@ -88,4 +88,4 @@ const Post: NextPage<Props> = (context) => {
   )
 }
 
-export default Post
+export default Project
