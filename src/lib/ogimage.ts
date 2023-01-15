@@ -16,7 +16,7 @@ export const MakeOgImage = async (title: string, id: string): Promise<string> =>
   const src = `ogimages/${id}.svg`
   const path = `public/${src}`
 
-  if (existsSync(path)) {
+  if (process.env.NODE_ENV !== 'development' && existsSync(path)) {
     return src
   }
 
