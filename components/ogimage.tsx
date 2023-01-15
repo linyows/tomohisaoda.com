@@ -35,11 +35,9 @@ const OgImage: FC<Props> = ({ title }) => {
   if (title === '') {
     return (
       <div style={divStyle} >
-        <p style={{ fontSize: 40 }} >
-          <img width="100" height="100" style={iconStyle} src={iconSrc} alt="icon" />
-          <span style={{ marginTop: '20px' }} > 
-            {name}
-          </span>
+        <img width="200" height="200" style={iconStyle} src={iconSrc} alt="icon" />
+        <p style={{ marginTop: '20px', marginRight: '30px', fontSize: 50 }} >
+          {name}
         </p>
       </div>
     )
@@ -50,10 +48,13 @@ const OgImage: FC<Props> = ({ title }) => {
       <p style={{ fontSize: 40, width: '80%', }} >
         {title}
       </p>
-      <p style={{ marginTop: '20px', fontSize: 20, }} >
-        <img width="50" height="50" style={footerIconStyle} src={iconSrc} alt="icon" />
-        <span style={{ marginTop: '10px' }} >
+      <p style={{ marginTop: '30px', fontSize: 20, }} >
+        <img width="70" height="70" style={footerIconStyle} src={iconSrc} alt="icon" />
+        <span style={{ marginTop: '20px' }} >
           {name}
+        </span>
+        <span style={{ marginTop: '20px', marginLeft: '10px', fontWeight: 'normal' }} >
+          - https://tomohisaoda.com
         </span>
       </p>
     </div>
