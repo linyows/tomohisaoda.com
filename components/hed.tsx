@@ -17,9 +17,9 @@ const Hed: FC<Props> = ({ title, desc, ogimage, children }) => {
   return (
     <Head>
       <title>{t}</title>
-      {desc && <meta name="description" content={d} />}
+      {d && <meta name="description" content={d} />}
       <meta property="og:site_name" content={t} />
-      {desc && <meta property="og:description" content={d} />}
+      {d && <meta property="og:description" content={d} />}
       {ogimage && <meta property="og:image" content={`${url}/${ogimage}`} />}
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
