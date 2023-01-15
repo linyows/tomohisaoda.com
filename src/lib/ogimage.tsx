@@ -86,6 +86,6 @@ export const MakeOgImage = async (title: string, id: string): Promise<string> =>
   )
 
   writeFileSync(path, svg)
-  console.log(`saved ${path}`)
+  console.log(`saved ogimage -- path: ${path}`)
   return src
 }
