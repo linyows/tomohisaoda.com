@@ -4,8 +4,8 @@ import twemoji from 'twemoji'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import OgImage from '../../components/ogimage'
 
-const notosansBold = readFileSync('./src/fonts/NotoSansJP-Black.otf')
-const notosansRegular = readFileSync('./src/fonts/NotoSansJP-Regular.otf')
+const notosansBold = readFileSync('./src/fonts/NotoSansJP-Black.woff')
+const notosansRegular = readFileSync('./src/fonts/NotoSansJP-Regular.woff')
 
 const getIconUrl = (s: string): string => {
   const codePoint = twemoji.convert.toCodePoint(s)
