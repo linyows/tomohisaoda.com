@@ -1,8 +1,9 @@
-
 import satori, { SatoriOptions } from 'satori'
 import twemoji from 'twemoji'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import OgImage from '../../components/ogimage'
+import { Buffer } from 'buffer'
+import sharp from 'sharp'
 
 const notosansBold = readFileSync('./src/fonts/NotoSansJP-Black.woff')
 const notosansRegular = readFileSync('./src/fonts/NotoSansJP-Regular.woff')
@@ -13,7 +14,7 @@ const getIconUrl = (s: string): string => {
 }
 
 export const MakeOgImage = async (title: string, id: string): Promise<string> => {
-  const src = `ogimages/${id}.svg`
+  const src = `ogimages/${id}.png`
   const path = `public/${src}`
 
   if (process.env.NODE_ENV !== 'development' && existsSync(path)) {
@@ -44,8 +45,9 @@ export const MakeOgImage = async (title: string, id: string): Promise<string> =>
   }
 
   const svg = await satori(OgImage({ title }), options)
+  const png = await sharp(Buffer.from(svg)).png().toBuffer()
 
-  writeFileSync(path, svg)
+  writeFileSync(path, png)
   console.log(`saved ogimage -- path: ${path}`)
   return src
 }

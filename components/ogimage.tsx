@@ -1,6 +1,5 @@
 
-import type { CSSProperties, FC, ReactNode } from 'react'
-import Head from 'next/head'
+import type { CSSProperties, FC } from 'react'
 
 type Props = {
   title: string
@@ -12,7 +11,10 @@ const OgImage: FC<Props> = ({ title }) => {
   const divStyle: CSSProperties = {
     display: 'flex',
     color: '#fff',
-    background: '#3d3d3d',
+    backgroundColor: '#3d3d3d',
+    backgroundImage: 'url(https://raw.githubusercontent.com/linyows/tomohisaoda.com/main/public/ogibg.png)',
+    backgroundRepeat:  'no-repeat',
+    backgroundPosition: '0 0',
     width: '100%',
     height: '100%',
     textAlign: 'center',
@@ -48,12 +50,12 @@ const OgImage: FC<Props> = ({ title }) => {
       <p style={{ fontSize: 40, width: '80%', }} >
         {title}
       </p>
-      <p style={{ marginTop: '30px', fontSize: 20, }} >
+      <p style={{ marginTop: '16px', fontSize: 24, }} >
         <img width="70" height="70" style={footerIconStyle} src={iconSrc} alt="icon" />
-        <span style={{ marginTop: '20px' }} >
+        <span style={{ marginTop: '14px' }} >
           {name}
         </span>
-        <span style={{ marginTop: '20px', marginLeft: '10px', fontWeight: 'normal' }} >
+        <span style={{ marginTop: '14px', marginLeft: '10px', fontWeight: 'normal' }} >
           - https://tomohisaoda.com
         </span>
       </p>
