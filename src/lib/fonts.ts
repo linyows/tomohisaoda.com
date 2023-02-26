@@ -29,7 +29,8 @@ export const notosans = localFont({
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     'Noto Color Emoji',
-  ]
+  ],
+  display: 'block',
 })
 
 export const notoserif = localFont({
@@ -53,5 +54,6 @@ export const notoserif = localFont({
     'Times New Roman',
     'Times',
     'serif',
-  ]
+  ],
+  display: 'block',
 })

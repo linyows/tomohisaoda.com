@@ -18,6 +18,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <GA />
 
+      <div className="accent"></div>
+
       <div className="container">
         <div>
           <Header />
