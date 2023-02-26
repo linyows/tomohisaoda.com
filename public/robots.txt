@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://tomohisaoda.com
+
+# Sitemaps
+Sitemap: https://tomohisaoda.com/sitemap.xml
