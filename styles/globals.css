@@ -875,3 +875,8 @@ a:focus {
     height: 100%;
   }
 }
+@media (max-width: 600px) {
+  .accent {
+    display: none;
+  }
+}
