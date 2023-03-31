@@ -475,7 +475,7 @@ a:focus {
   }
 }
 
-@media (max-width: 1220px) {
+@media (max-width: 1560px) {
   .grider {
     display: block;
   }
@@ -584,7 +584,7 @@ a:focus {
   font-size: var(--fontSize-0);
   font-family: var(--fontFamily-sans);
 }
-@media (max-width: 1220px) {
+@media (max-width: 1560px) {
   .form-name input {
     width: 100%;
   }
