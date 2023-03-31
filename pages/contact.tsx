@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
+import Script from 'next/script'
 import Link from 'next/link'
 import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
@@ -14,6 +15,7 @@ type Props = {
 
 const title = `Contact`
 const desc = ``
+const turnstileSitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const contact = await FetchBlocks(process.env.NOTION_CONTACT_PAGE_ID as string)
@@ -112,6 +114,11 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 
   return (
     <div className="page-root">
+      {process.env.NODE_ENV !== 'development' && <Script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async={true}
+        defer={true}
+      />}
       <Hed title={title} desc={desc} ogimage={ogimage} path="/contact" />
       <header className="grider page-root-header">
         <span></span>
@@ -177,7 +184,8 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
           <div className="form-button grider">
             <span></span>
             <div className="form-body">
-            {formStatus ? (<p>Thanks for your message!</p>) : lockStatus ? (<MutatingDots color="#999" secondaryColor="#fff" height={100} width={100} />) : (<button className="neumorphism-h" type="submit" disabled={lockStatus}>Submit 🚀</button>)}
+              <div className="cf-turnstile" data-sitekey={turnstileSitekey}></div> 
+              {formStatus ? (<p>Thanks for your message!</p>) : lockStatus ? (<MutatingDots color="#999" secondaryColor="#fff" height={100} width={100} />) : (<button className="neumorphism-h" type="submit" disabled={lockStatus}>Submit 🚀</button>)}
             </div>
           </div>
         </form>
