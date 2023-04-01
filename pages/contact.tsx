@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Script from 'next/script'
-import Link from 'next/link'
 import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
 import { MutatingDots } from 'react-loader-spinner'
@@ -13,9 +12,23 @@ type Props = {
   ogimage?: string
 }
 
-const title = `Contact`
-const desc = ``
+const title = 'Contact'
+const desc = 'Say Hello'
 const turnstileSitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY
+
+type RenderParameters = {
+  sitekey: string
+  callback?(token: string): void
+}
+
+declare global {
+  interface Window {
+    onloadTurnstileCallback(): void
+    turnstile: {
+      render(container: string | HTMLElement, params: RenderParameters): void
+    }
+  }
+}
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const contact = await FetchBlocks(process.env.NOTION_CONTACT_PAGE_ID as string)
@@ -35,9 +48,10 @@ const formError = (msg: string) => {
 const Contact: NextPage<Props> = ({ contact, ogimage }) => {
   const endpoint = `https://contact.tomohisaoda.com/`
   const initQuery = {
-    name: ``,
-    email: ``,
-    message: ``,
+    name: '',
+    email: '',
+    message: '',
+    'cf-turnstile-response': '',
   }
   const [formStatus, setFormStatus] = useState(false)
   const [lockStatus, setLockStatus] = useState(false)
@@ -114,11 +128,6 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 
   return (
     <div className="page-root">
-      {process.env.NODE_ENV !== 'development' && <Script
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        async={true}
-        defer={true}
-      />}
       <Hed title={title} desc={desc} ogimage={ogimage} path="/contact" />
       <header className="grider page-root-header">
         <span></span>
@@ -184,7 +193,19 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
           <div className="form-button grider">
             <span></span>
             <div className="form-body">
-              <div className="cf-turnstile" data-sitekey={turnstileSitekey}></div> 
+              <Script id="cf-turnstile-callback">
+                {`window.onloadTurnstileCallback = function () {
+                  window.turnstile.render('#turnstile-widget', {
+                    sitekey: '${turnstileSitekey}',
+                  })
+                }`}
+              </Script>
+              <Script
+                src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
+                async={true}
+                defer={true}
+              />
+              <div id="turnstile-widget" className="checkbox" />
               {formStatus ? (<p>Thanks for your message!</p>) : lockStatus ? (<MutatingDots color="#999" secondaryColor="#fff" height={100} width={100} />) : (<button className="neumorphism-h" type="submit" disabled={lockStatus}>Submit 🚀</button>)}
             </div>
           </div>
