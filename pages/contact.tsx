@@ -76,7 +76,9 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
     let isValid = true
 
     Object.entries(query).forEach(([k, v]) => {
-      if (v.length === 0) {
+      if (k === 'cf-turnstile-response') {
+        // Skip
+      } else if (v.length === 0) {
         isValid = false
         setErrors((prevState) => ({
           ...prevState,
