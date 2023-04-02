@@ -15,6 +15,7 @@ type Props = {
 const title = 'Contact'
 const desc = 'Say Hello'
 const turnstileSitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY
+const elementKey = 'cf-turnstile-response'
 
 type RenderParameters = {
   sitekey: string
@@ -51,7 +52,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
     name: '',
     email: '',
     message: '',
-    'cf-turnstile-response': '',
+    "cf-turnstile-response": '',
   }
   const [formStatus, setFormStatus] = useState(false)
   const [lockStatus, setLockStatus] = useState(false)
@@ -76,7 +77,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
     let isValid = true
 
     Object.entries(query).forEach(([k, v]) => {
-      if (k === 'cf-turnstile-response') {
+      if (k === elementKey) {
         // Skip
       } else if (v.length === 0) {
         isValid = false
@@ -114,7 +115,16 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 
     const formData = new FormData()
     Object.entries(query).forEach(([key, value]) => {
-      formData.append(key, value)
+      if (key === elementKey) {
+        // @ts-ignore
+        for (const el of e.currentTarget) {
+          if (el.name === elementKey) {
+            formData.append(key, el.value)
+          }
+        }
+      } else {
+        formData.append(key, value)
+      }
     })
 
     fetch(endpoint, { method: 'POST', body: formData })
