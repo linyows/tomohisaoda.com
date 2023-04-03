@@ -575,7 +575,7 @@ a:focus {
   height: 15rem;
 }
 .form-button {
-  margin-top: var(--spacing-5);
+  margin-top: var(--spacing-3);
   font-family: var(--fontFamily-sans);
 }
 .error {
@@ -585,7 +585,14 @@ a:focus {
   font-family: var(--fontFamily-sans);
 }
 #turnstile-widget {
-  margin-bottom: var(--spacing-10);
+  padding-bottom: var(--spacing-20);
+}
+.captcha-error {
+  color: #FF0000;
+  margin-top: -5rem;
+  margin-bottom: 3.5rem;
+  font-size: var(--fontSize-0);
+  font-family: var(--fontFamily-sans);
 }
 @media (max-width: 1560px) {
   .form-name input {
