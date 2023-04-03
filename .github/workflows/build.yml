@@ -24,28 +24,39 @@ jobs:
       run: |
         npm i && npm run lint
 
-  deploy-to-stag:
+  staging:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.ref != 'refs/heads/main'
     env:
-      NOTION_CACHE: true
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-      NOTION_INTRO_PAGE_ID: ${{ secrets.NOTION_INTRO_PAGE_ID }}
-      NOTION_CONTACT_PAGE_ID: ${{ secrets.NOTION_CONTACT_PAGE_ID }}
-      NOTION_BLOG_DB_ID: ${{ secrets.NOTION_BLOG_DB_ID }}
-      NOTION_ACTIVITY_DB_ID: ${{ secrets.NOTION_ACTIVITY_DB_ID }}
-      NOTION_PROJECT_DB_ID: ${{ secrets.NOTION_PROJECT_DB_ID }}
+      NOTIONATE_INCREMENTAL_CACHE: true
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: '18'
         cache: 'npm'
+    - name: Restore next cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          .next/cache
+        key: nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+        restore-keys: |
+          nextjs-${{ hashFiles('**/package-lock.json') }}-
+    - name: Restore notionate cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          .cache
+          public/images
+        key: notionate
+        restore-keys: notionate
     - name: Run next export
       run: |
         npm i && npm run export
-    - name: deploy by scp
+    - name: Deploy by SCP
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -55,28 +66,39 @@ jobs:
         source: "out/*"
         target: "web/stag.tomohisaoda.com"
 
-  deploy-to-prod:
+  release:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.ref == 'refs/heads/main'
     env:
-      NOTION_CACHE: true
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-      NOTION_INTRO_PAGE_ID: ${{ secrets.NOTION_INTRO_PAGE_ID }}
-      NOTION_CONTACT_PAGE_ID: ${{ secrets.NOTION_CONTACT_PAGE_ID }}
-      NOTION_BLOG_DB_ID: ${{ secrets.NOTION_BLOG_DB_ID }}
-      NOTION_ACTIVITY_DB_ID: ${{ secrets.NOTION_ACTIVITY_DB_ID }}
-      NOTION_PROJECT_DB_ID: ${{ secrets.NOTION_PROJECT_DB_ID }}
+      NOTIONATE_INCREMENTAL_CACHE: true
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: '18'
         cache: 'npm'
+    - name: Restore next cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          .next/cache
+        key: nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+        restore-keys: |
+          nextjs-${{ hashFiles('**/package-lock.json') }}-
+    - name: Restore notionate cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          .cache
+          public/images
+        key: notionate
+        restore-keys: notionate
     - name: Run next export
       run: |
         npm i && npm run export
-    - name: deploy by scp
+    - name: Deploy by SCP
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.HOST }}
