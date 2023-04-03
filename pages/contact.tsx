@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Script from 'next/script'
 import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
@@ -138,6 +138,25 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
       })
   }
 
+  const scriptId = 'cf-turnstile-script'
+  const isScriptInjected = () => !!document.querySelector(`#${scriptId}`)
+  const removeScript = () => {
+    const el = document.getElementById(scriptId)
+    if (el) {
+      el.remove()
+    }
+  }
+
+  useEffect(() => {
+    if (isScriptInjected() || window.turnstile) {
+      removeScript()
+    }
+    const script = document.createElement('script')
+    script.id = scriptId
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback'
+    document.getElementsByTagName('head')[0].appendChild(script)
+  }, [])
+
   return (
     <div className="page-root">
       <Hed title={title} desc={desc} ogimage={ogimage} path="/contact" />
@@ -212,11 +231,6 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
                   })
                 }`}
               </Script>
-              <Script
-                src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
-                async={true}
-                defer={true}
-              />
               <div id="turnstile-widget" className="checkbox" />
               {formStatus ? (<p>Thanks for your message!</p>) : lockStatus ? (<MutatingDots color="#999" secondaryColor="#fff" height={100} width={100} />) : (<button className="neumorphism-h" type="submit" disabled={lockStatus}>Submit 🚀</button>)}
             </div>
