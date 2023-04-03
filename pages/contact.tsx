@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
-import Script from 'next/script'
 import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
 import { Blocks } from 'notionate/dist/components'
 import { MutatingDots } from 'react-loader-spinner'
@@ -14,19 +13,19 @@ type Props = {
 
 const title = 'Contact'
 const desc = 'Say Hello'
-const turnstileSitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY
-const elementKey = 'cf-turnstile-response'
 
+const turnstileSitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY as string
 type RenderParameters = {
   sitekey: string
   callback?(token: string): void
+  'error-callback'?(): void
 }
-
 declare global {
   interface Window {
     onloadTurnstileCallback(): void
     turnstile: {
-      render(container: string | HTMLElement, params: RenderParameters): void
+      render(container: string | HTMLElement, params: RenderParameters): string
+      reset(widgetId: string): void
     }
   }
 }
@@ -37,6 +36,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   return {
     props: {
       contact,
+      ogimage,
     },
     revalidate: 10
   }
@@ -46,18 +46,23 @@ const formError = (msg: string) => {
   return <p className="error">{msg}</p>
 }
 
+const captchaError = (msg: string) => {
+  return <p className="captcha-error">{msg}</p>
+}
+
 const Contact: NextPage<Props> = ({ contact, ogimage }) => {
   const endpoint = `https://contact.tomohisaoda.com/`
   const initQuery = {
     name: '',
     email: '',
     message: '',
-    "cf-turnstile-response": '',
+    token: '',
   }
   const [formStatus, setFormStatus] = useState(false)
   const [lockStatus, setLockStatus] = useState(false)
   const [query, setQuery] = useState(initQuery)
   const [errors, setErrors] = useState(initQuery)
+  const [turnstileError, setTurnstileError] = useState('')
 
   const handleChange = () => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const name = e.target.name
@@ -77,8 +82,11 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
     let isValid = true
 
     Object.entries(query).forEach(([k, v]) => {
-      if (k === elementKey) {
-        // Skip
+      if (k === 'token') {
+        if (v.length === 0) {
+          isValid = false
+        }
+        setTurnstileError(v.length === 0 ? '* Please check for CAPTCHA.' : '')
       } else if (v.length === 0) {
         isValid = false
         setErrors((prevState) => ({
@@ -115,16 +123,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 
     const formData = new FormData()
     Object.entries(query).forEach(([key, value]) => {
-      if (key === elementKey) {
-        // @ts-ignore
-        for (const el of e.currentTarget) {
-          if (el.name === elementKey) {
-            formData.append(key, el.value)
-          }
-        }
-      } else {
-        formData.append(key, value)
-      }
+      formData.append(key, value)
     })
 
     fetch(endpoint, { method: 'POST', body: formData })
@@ -138,6 +137,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
       })
   }
 
+  const [widgetId, setWidgetId] = useState('')
   const scriptId = 'cf-turnstile-script'
   const isScriptInjected = () => !!document.querySelector(`#${scriptId}`)
   const removeScript = () => {
@@ -146,15 +146,38 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
       el.remove()
     }
   }
+  const onSuccess = (token: string) => {
+    setQuery((prevState) => ({
+      ...prevState,
+      ['token']: token
+    }))
+    setTurnstileError('')
+  }
+  const onError = () => {
+    setTurnstileError('* Network error.')
+  }
 
   useEffect(() => {
-    if (isScriptInjected() || window.turnstile) {
-      removeScript()
+    window.onloadTurnstileCallback = () => {
+      const id = window.turnstile.render('#turnstile-widget', {
+        sitekey: turnstileSitekey,
+        callback: onSuccess,
+        'error-callback': onError,
+      })
+      setWidgetId(id)
     }
-    const script = document.createElement('script')
-    script.id = scriptId
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback'
-    document.getElementsByTagName('head')[0].appendChild(script)
+    const { turnstile } = window
+    if (turnstile && widgetId !== '') {
+      turnstile.reset(widgetId)
+    } else {
+      if (isScriptInjected()) {
+        removeScript()
+      }
+      const script = document.createElement('script')
+      script.id = scriptId
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback'
+      document.getElementsByTagName('head')[0].appendChild(script)
+    }
   }, [])
 
   return (
@@ -224,14 +247,8 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
           <div className="form-button grider">
             <span></span>
             <div className="form-body">
-              <Script id="cf-turnstile-callback">
-                {`window.onloadTurnstileCallback = function () {
-                  window.turnstile.render('#turnstile-widget', {
-                    sitekey: '${turnstileSitekey}',
-                  })
-                }`}
-              </Script>
               <div id="turnstile-widget" className="checkbox" />
+              {turnstileError !== '' && captchaError(turnstileError)}
               {formStatus ? (<p>Thanks for your message!</p>) : lockStatus ? (<MutatingDots color="#999" secondaryColor="#fff" height={100} width={100} />) : (<button className="neumorphism-h" type="submit" disabled={lockStatus}>Submit 🚀</button>)}
             </div>
           </div>
