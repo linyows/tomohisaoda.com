@@ -1,4 +1,4 @@
 tomohisaoda.com
 ==
 
-This is a @linyows 's portfolio site.
+This is a portfolio site for @linyows.
