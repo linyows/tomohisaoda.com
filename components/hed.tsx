@@ -19,14 +19,19 @@ const Hed: FC<Props> = ({ title, desc, ogimage, path, children }) => {
   return (
     <Head>
       <title>{t}</title>
-      {d && <meta name="description" content={d} />}
+      <meta name="description" content={d} />
+      {ogimage && <meta name="twitter:card" content="summary_large_image" />}
+      {ogimage && <meta name="twitter:site" content="@linyows" />}
+      {ogimage && <meta name="twitter:title" content={t} />}
+      {ogimage && <meta name="twitter:description" content={d} />}
+      {ogimage && <meta name="twitter:image" content={`${defaultUrl}/${ogimage}`} />}
       <meta property="og:site_name" content={t} />
-      {d && <meta property="og:description" content={d} />}
+      <meta property="og:description" content={d} />
+      <meta property="og:url" content={url} />
+      <meta property="og:type" content="website" />
       {ogimage && <meta property="og:image" content={`${defaultUrl}/${ogimage}`} />}
       {ogimage && <meta property="og:image:width" content="1600" />}
       {ogimage && <meta property="og:image:height" content="630" />}
-      <meta property="og:url" content={url} />
-      <meta property="og:type" content="website" />
       <link rel="canonical" href={url} />
       {children}
     </Head>
