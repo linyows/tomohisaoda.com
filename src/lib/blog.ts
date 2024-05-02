@@ -5,7 +5,7 @@ import {
   SelectPropertyResponse,
   DBPageBase,
   QueryDatabaseParameters,
-} from 'notionate'
+} from 'rotion'
 import { FormatDateMdY } from './date'
 
 export type Blog = {

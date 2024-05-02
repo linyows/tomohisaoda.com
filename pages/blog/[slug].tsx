@@ -1,8 +1,8 @@
 import { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
-import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
+import { FetchBlocks, ListBlockChildrenResponseEx } from 'rotion'
 import { Blog, GetBlog, GetPaths } from '../../src/lib/blog'
-import { Blocks } from 'notionate/dist/components'
+import { Page } from 'rotion/ui'
 import Hed from '../../components/hed'
 import { MakeOgImage } from '../../src/lib/ogimage'
 
@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   const page = await GetBlog(params!.slug)
 
   if (page) {
-    const blocks = await FetchBlocks(page.id)
+    const blocks = await FetchBlocks({ block_id: page.id })
     const ogimage = await MakeOgImage(page!.title, `blog-${page!.slug}`)
     return {
       props: {
@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   }
 }
 
-const Blog: NextPage<Props> = (context) => {
+const BlogPage: NextPage<Props> = (context) => {
   const page = context.page!
   const blocks = context.blocks!
   return (
@@ -72,11 +72,11 @@ const Blog: NextPage<Props> = (context) => {
           </Link>
         </h1>
         <div className="post-body">
-          <Blocks blocks={blocks} />
+          <Page blocks={blocks} />
         </div>
       </div>
     </article>
   )
 }
 
-export default Blog
+export default BlogPage

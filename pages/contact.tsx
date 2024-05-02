@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
-import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
-import { Blocks } from 'notionate/dist/components'
+import { FetchBlocks, ListBlockChildrenResponseEx } from 'rotion'
+import { Page } from 'rotion/ui'
 import { MutatingDots } from 'react-loader-spinner'
 import Hed from '../components/hed'
 import { MakeOgImage } from '../src/lib/ogimage'
@@ -31,7 +31,7 @@ declare global {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const contact = await FetchBlocks(process.env.NOTION_CONTACT_PAGE_ID as string)
+  const contact = await FetchBlocks({ block_id: process.env.NOTION_CONTACT_PAGE_ID as string })
   const ogimage = await MakeOgImage(`${title}`, `contact`)
   return {
     props: {
@@ -187,7 +187,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
         <span></span>
         <div>
           <h1>{title}</h1>
-          {Blocks({ blocks: contact })}
+          <Page blocks={contact} />
         </div>
       </header>
 

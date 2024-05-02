@@ -1,8 +1,8 @@
 import fs from 'fs'
 import { Feed, Item } from 'feed'
-import { FetchBlocks } from 'notionate'
+import { FetchBlocks } from 'rotion'
 import { GetBlogs } from './blog'
-import { Blocks } from 'notionate/dist/components'
+import { Page } from 'rotion/ui'
 //import * as ReactDOMServer from 'react-dom/server'
 var ReactDOMServer = require('react-dom/server')
 
@@ -37,8 +37,8 @@ export default async function GenFeed() {
 
   await Promise.all(
     blogs.map(async (v) => {
-      const blocks = await FetchBlocks(v.id)
-      const html = ReactDOMServer.renderToString(Blocks({ blocks }))
+      const blocks = await FetchBlocks({ block_id: v.id })
+      const html = ReactDOMServer.renderToString(Page({ blocks }))
       const link = `${url}/blog/${v.slug}`
 
       items.push({

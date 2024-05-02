@@ -40,22 +40,22 @@ const Header: React.FC<Props> = ({ children }) => {
           <ul>
             <li>
               <Link href="/projects">
-                <span role="img" aria-label="home">🎪</span> Projects
+                Projects
               </Link>
             </li>
             <li>
               <Link href="/blog">
-                <span role="img" aria-label="surf">🏄‍♂️</span> Blog
+                Blog
               </Link>
             </li>
             <li>
               <Link href="/activities">
-                <span role="img" aria-label="bike">🚴‍♂️</span> Activities
+                Activities
               </Link>
             </li>
             <li>
               <Link href="/contact">
-                <span role="img" aria-label="contact">🤙</span> Contact
+                Contact
               </Link>
             </li>
           </ul>

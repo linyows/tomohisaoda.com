@@ -5,7 +5,7 @@ import {
   DateResponse,
   SelectPropertyResponse,
   QueryDatabaseParameters,
-} from 'notionate'
+} from 'rotion'
 import { FormatDateMdY } from './date'
 
 export type Activity = {

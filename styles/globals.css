@@ -56,6 +56,15 @@
   --color-heading: #1a202c;
   --color-heading-black: black;
   --color-accent: #d1dce5;
+
+  /* ROTION OVERRIDE */
+  --rotion-font-family: var(--fontFamily-sans);
+  --rotion-border-color: rgba(180, 180, 180, 0.8);
+  --rotion-dark-border-color: rgba(100, 100, 100, 0.8);
+  --rotion-secondary-text: rgb(110, 110, 110);
+  --rotion-dark-secondary-text: rgb(180, 180, 180);
+  --rotion-tertiary-text: rgb(130, 130, 130);
+  --rotion-dark-tertiary-text: rgb(130, 130, 130);
 }
 
 /* HTML elements */
@@ -273,16 +282,17 @@ a:focus {
   text-decoration: none;
   display: inline-block;
   padding: var(--spacing-2) var(--spacing-8) var(--spacing-3);
-  background: #e0e0e0;
   border-radius: 30px;
   font-family: var(--fontFamily-sans);
   color: #666;
+  background: rgba(180, 180, 180, 0.2);
   border: none;
+  line-height: 1;
 }
 
 .flat-button:hover {
-  background: #fff;
-  color: #000;
+  background: rgba(180, 180, 180, 0.4);
+  color: #444;
 }
 
 .gradation-text {
@@ -432,24 +442,6 @@ a:focus {
   max-width: var(--maxWidth-4xl);
 }
 
-.page-detail .post-body .notionate-blocks-bookmark-inner,
-.page-detail .post-body .notionate-blocks-linkpreview-a {
-  border-color: #bbb;
-  border-radius: 5px;
-  font-family: var(--fontFamily-sans);
-}
-.page-detail .post-body .notionate-blocks-bookmark-url {
-  line-height: inherit;
-  margin-bottom: auto;
-  height: auto;
-  margin-top: 8px;
-}
-.page-detail .post-body .notionate-blocks-code {
-  border: 1px solid #ddd;
-  box-shadow: 0 0 3px #ddd;
-  border-radius: 5px;
-}
-
 @media (max-width: 480px) {
   .container {
     margin: var(--spacing-10) auto;
@@ -467,10 +459,12 @@ a:focus {
   .page-list .post-title {
     font-size: var(--fontSize-2);
   }
-  .page-detail .post-body .notionate-blocks-text-p {
+
+  /* ROTION OVERRIDE */
+  .page-detail .post-body .rotion-text-p {
     font-size: var(--fontSize-1);
   }
-  .page-detail .post-body .notionate-blocks-text-h1 {
+  .page-detail .post-body .rotion-text-h1 {
     font-size: var(--fontSize-3);
   }
 }
@@ -497,48 +491,49 @@ a:focus {
   }
 }
 
-.about .notionate-blocks-text-p {
+/* ROTION OVERRIDE */
+.about .rotion-text-p {
   font-family: var(--fontFamily-serif);
   line-height: 1.85;
   padding: 0 0 2rem;
 }
-.recently-box .notionate-db-list-record {
+.recently-box .rotion-db-list-record {
   font-family: var(--fontFamily-sans);
 }
-.recently-box .notionate-db-list-record:hover {
+.recently-box .rotion-db-list-record:hover {
   background-color: #ddd;
   border-radius: 3px;
 }
 
-.post-body .notionate-blocks-text-p {
+.post-body .rotion-text-p {
   font-family: var(--fontFamily-serif);
   line-height: 1.85;
 }
-.post-body .notionate-blocks-list-ul {
+.post-body .rotion-text-p .rotion-richtext-annot {
+  font-family: var(--fontFamily-serif);
+}
+.post-body .rotion-list-ul {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   font-family: var(--fontFamily-sans);
 }
-.post-body .notionate-blocks-text-li {
+.post-body .rotion-text-li {
   padding-top: .3rem;
   padding-bottom: .3rem;
 }
-.post-body .notionate-blocks-embed-twitter {
+.post-body .rotion-image {
   margin-top: 2rem;
 }
-.post-body .notionate-blocks-image {
-  margin-top: 2rem;
-}
-.blog .post-body .notionate-blocks-image img {
+.blog .post-body .rotion-image img {
   max-width: 600px;
 }
-.post-body .notionate-blocks-image-caption {
+.post-body .rotion-image-caption {
   margin-top: 1rem;
 }
-.post-body .notionate-blocks-code {
+.post-body .rotion-code {
   margin: 2rem 0;
 }
-.post-body .notionate-blocks-text-blockquote {
+.post-body .rotion-text-blockquote {
   font-family: var(--fontFamily-sans);
 }
 
@@ -643,12 +638,12 @@ a:focus {
   text-decoration: none;
   display: block;
   margin: 0;
-  padding: var(--spacing-2) var(--spacing-5);
+  padding: var(--spacing-2) var(--spacing-5) var(--spacing-3);
   color: #555;
+  border-radius: 30px;
 }
 .global-nav a:hover {
-  background: #e0e0e0;
-  border-radius: 30px;
+  background: rgba(180, 180, 180, 0.2);
 }
 .global-nav span {
   padding-right: var(--spacing-2);
@@ -813,11 +808,12 @@ a:focus {
   }
 
   .flat-button {
-    background: #313131;
+    /* background: #313131; */
     color: #aaa;
   }
   .flat-button:hover {
-    background: #212121;
+    /* background: #212121; */
+    border-color: #eee;
     color: #eee;
   }
 
@@ -846,17 +842,6 @@ a:focus {
   }
   .page-detail .post-meta {
     color: #777;
-  }
-
-  .page-detail .post-body .notionate-blocks-code {
-    border: 1px solid #333;
-    box-shadow: 0 0 3px #333;
-  }
-  .post-body .notionate-blocks-text-blockquote {
-    color: var(--color-primary-dark);
-  }
-  .post-body .notionate-blocks-text-hr {
-    border-top-color: #555;
   }
 }
 

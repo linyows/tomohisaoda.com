@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
-import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
-import { Blocks } from 'notionate/dist/components'
+import { FetchBlocks, ListBlockChildrenResponseEx } from 'rotion'
+import { Page } from 'rotion/ui'
 import { Activity, GetActivity, GetPaths } from '../../src/lib/activity'
 import Hed from '../../components/hed'
 import { MakeOgImage } from '../../src/lib/ogimage'
@@ -27,7 +27,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
   const page = await GetActivity(params!.id)
   if (page) {
-    const blocks = await FetchBlocks(page.id)
+    const blocks = await FetchBlocks({ block_id: page.id })
     const ogimage = await MakeOgImage(page!.title, `activities-${page!.id}`)
     return {
       props: {
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   }
 }
 
-const Activity: NextPage<Props> = (context) => {
+const ActivityPage: NextPage<Props> = (context) => {
   const page = context.page!
   const blocks = context.blocks!
   return (
@@ -81,11 +81,11 @@ const Activity: NextPage<Props> = (context) => {
         </dl>
 
         <div className="post-body">
-          {Blocks({ blocks })}
+          <Page blocks={blocks} />
         </div>
       </div>
     </article>
   )
 }
 
-export default Activity
+export default ActivityPage

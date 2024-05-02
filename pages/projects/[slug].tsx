@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, NextPage, PreviewData } from 'next'
 import Link from 'next/link'
-import { FetchBlocks, ListBlockChildrenResponseEx } from 'notionate'
-import { Blocks } from 'notionate/dist/components'
+import { FetchBlocks, ListBlockChildrenResponseEx } from 'rotion'
+import { Page } from 'rotion/ui'
 import { GetProject, Project, GetPaths } from '../../src/lib/project'
 import { ParsedUrlQuery } from 'node:querystring'
 import Hed from '../../components/hed'
@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   const page = await GetProject(params!.slug)
 
   if (page) {
-    const blocks = await FetchBlocks(page.id)
+    const blocks = await FetchBlocks({ block_id: page.id })
     const ogimage = await MakeOgImage(page!.title, `projects-${page!.slug}`)
     return {
       props: {
@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   }
 }
 
-const Project: NextPage<Props> = (context) => {
+const ProjectPage: NextPage<Props> = (context) => {
   const page = context.page!
   const blocks = context.blocks!
   return (
@@ -81,11 +81,11 @@ const Project: NextPage<Props> = (context) => {
         </dl>
 
         <div className="post-body">
-          {Blocks({ blocks })}
+          <Page blocks={blocks} />
         </div>
       </div>
     </article>
   )
 }
 
-export default Project
+export default ProjectPage

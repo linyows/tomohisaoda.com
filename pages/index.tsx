@@ -9,12 +9,12 @@ import {
   GetPageResponseEx,
   QueryDatabaseResponseEx,
   QueryDatabaseParameters,
-  Link as NLink,
-} from 'notionate'
+} from 'rotion'
 import {
   List,
-  Blocks,
-} from 'notionate/dist/components'
+  Page,
+  Link as NLink,
+} from 'rotion/ui'
 import Hed from '../components/hed'
 import GenFeed from '../src/lib/feed'
 import { MakeOgImage } from '../src/lib/ogimage'
@@ -30,8 +30,8 @@ type Props = {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
-  const about = await FetchBlocks(process.env.NOTION_INTRO_PAGE_ID as string)
-  const aboutPage = await FetchPage(process.env.NOTION_INTRO_PAGE_ID as string)
+  const aboutPage = await FetchPage({ page_id: process.env.NOTION_INTRO_PAGE_ID as string })
+  const about = await FetchBlocks({ block_id: process.env.NOTION_INTRO_PAGE_ID as string, last_edited_time: aboutPage.last_edited_time })
 
   const project = await FetchDatabase({
     database_id: process.env.NOTION_PROJECT_DB_ID as string,
@@ -77,13 +77,13 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
       <Hed ogimage={ogimage} path="/" />
       <section className={`${Styles.section} ${Styles.about} grider`}>
         <div className={Styles.portrait}>
-          <img className={Styles.icon} src={aboutPage.icon.src} alt="tomohisaoda" />
+          <img className={Styles.icon} src={aboutPage.icon!.src} alt="tomohisaoda" />
         </div>
         <div className={Styles.aboutBody}>
-          <Blocks blocks={about} />
+          <Page blocks={about} />
           <div className={Styles.aboutFooter}>
             <Link className={`flat-button ${Styles.toContact}`} href="/contact">
-              Contact <span role="img" aria-label="contact">🤙</span>
+              Contact
             </Link>
           </div>
         </div>
@@ -93,14 +93,14 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
         <h2 className={Styles.title}><span className="neumorphism-h">Projects</span></h2>
         <div className={Styles.recent}>
           <List
-            keys={['Name', 'Description', 'spacer', 'URL', 'Tags', 'Date']}
+            keys={['Name', 'Description', 'dashed', 'URL', 'Tags', 'Date']}
             db={project}
             href={'/projects/[Slug]'}
             link={Link as NLink}
           />
           <p className={Styles.viewall}>
             <Link className={`flat-button ${Styles.viewallButton}`} href="/projects">
-              View all <span role="img" aria-label="home">🎪</span>
+              View all
             </Link>
           </p>
         </div>
@@ -110,14 +110,14 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
         <h2 className={Styles.title}><span className="neumorphism-h">Blog</span></h2>
         <div className={Styles.recent}>
           <List
-            keys={['Name', 'spacer', 'Tags', 'Date']}
+            keys={['Name', 'dashed', 'Tags', 'Date']}
             db={blog}
             href={'/blog/[Slug]'}
             link={Link as NLink}
           />
           <p className={Styles.viewall}>
             <Link className={`flat-button ${Styles.viewallButton}`} href="/blog">
-              View all <span role="img" aria-label="surf">🏄‍♂️</span>
+              View all
             </Link>
           </p>
         </div>
@@ -127,14 +127,14 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
         <h2 className={Styles.title}><span className="neumorphism-h">Activities</span></h2>
         <div className={Styles.recent}>
           <List
-            keys={['Name', 'spacer', 'URL', 'Tags', 'Date']}
+            keys={['Name', 'dashed', 'URL', 'Tags', 'Date']}
             db={activity}
             href={'/activities/[id]'}
             link={Link as NLink}
           />
           <p className={Styles.viewall}>
             <Link className={`flat-button ${Styles.viewallButton}`}href="/activities">
-              View all <span role="img" aria-label="bike">🚴‍♂️</span>
+              View all
             </Link>
           </p>
         </div>

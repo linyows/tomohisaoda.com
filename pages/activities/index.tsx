@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 //import Image from 'next/image'
 import { Activity, GetActivities } from '../../src/lib/activity'
-import { UsePagination } from 'notionate/dist/components'
+import { UsePagination } from 'rotion/ui'
 import Hed from '../../components/hed'
 import { MakeOgImage } from '../../src/lib/ogimage'
 
