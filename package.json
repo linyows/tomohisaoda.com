@@ -37,6 +37,6 @@
     "serve": "^14.0.1",
     "sharp": "^0.32.0",
     "twemoji": "^14.0.2",
-    "typescript": "^4.9.4"
+    "typescript": "^5.4.5"
   }
 }
