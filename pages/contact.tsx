@@ -178,7 +178,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
       script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback'
       document.getElementsByTagName('head')[0].appendChild(script)
     }
-  }, [])
+  }, [widgetId])
 
   return (
     <div className="page-root">
