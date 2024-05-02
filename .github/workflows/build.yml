@@ -53,9 +53,9 @@ jobs:
           public/images
         key: rotion
         restore-keys: rotion
-    - name: Run next export
+    - name: Run next build
       run: |
-        npm i && npm run export
+        npm i && npm run build
     - name: Deploy by SCP
       uses: appleboy/scp-action@master
       with:
@@ -95,9 +95,9 @@ jobs:
           public/images
         key: rotion
         restore-keys: rotion
-    - name: Run next export
+    - name: Run next build
       run: |
-        npm i && npm run export
+        npm i && npm run build
     - name: Deploy by SCP
       uses: appleboy/scp-action@master
       with:
