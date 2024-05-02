@@ -23,7 +23,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       pages,
       ogimage,
     },
-    revalidate: 10
   }
 }
 

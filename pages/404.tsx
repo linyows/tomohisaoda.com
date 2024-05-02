@@ -17,7 +17,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     props: {
       ogimage,
     },
-    revalidate: 10
   }
 }
 

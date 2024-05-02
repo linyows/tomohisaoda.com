@@ -37,7 +37,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
         blocks,
         ogimage,
       },
-      revalidate: 60,
     }
   }
 

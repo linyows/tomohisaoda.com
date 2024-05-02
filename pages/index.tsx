@@ -70,8 +70,6 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       activity,
       ogimage,
     },
-    // ISR
-    //revalidate: 10
   }
 }
 
