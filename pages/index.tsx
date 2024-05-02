@@ -93,7 +93,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
 
       <section className={`${Styles.section} grider`}>
         <h2 className={Styles.title}><span className="neumorphism-h">Projects</span></h2>
-        <div className={Styles.recent}>
+        <div className={`${Styles.recent} recent-project`}>
           <List
             keys={['Name', 'Description', 'dashed', 'URL', 'Tags', 'Date']}
             db={project}

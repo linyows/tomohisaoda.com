@@ -180,9 +180,9 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
   }, [widgetId])
 
   return (
-    <div className="page-root">
+    <div className="page-list">
       <Hed title={title} desc={desc} ogimage={ogimage} path="/contact" />
-      <header className="grider page-root-header">
+      <header className="grider page-list-header">
         <span></span>
         <div>
           <h1>{title}</h1>
@@ -190,7 +190,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
         </div>
       </header>
 
-      <section className="page-root-body">
+      <section className="page-list-body">
         <form onSubmit={handleSubmit}>
           <legend className="form-name grider">
             <label htmlFor="name" className="form-label">
