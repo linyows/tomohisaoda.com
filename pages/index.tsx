@@ -10,11 +10,13 @@ import {
   QueryDatabaseResponseEx,
   QueryDatabaseParameters,
 } from 'rotion'
+
 import {
   List,
   Page,
   Link as NLink,
 } from 'rotion/ui'
+
 import Hed from '../components/hed'
 import GenFeed from '../src/lib/feed'
 import { MakeOgImage } from '../src/lib/ogimage'
@@ -30,8 +32,10 @@ type Props = {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
-  const aboutPage = await FetchPage({ page_id: process.env.NOTION_INTRO_PAGE_ID as string })
-  const about = await FetchBlocks({ block_id: process.env.NOTION_INTRO_PAGE_ID as string, last_edited_time: aboutPage.last_edited_time })
+  const page_id = process.env.NOTION_INTRO_PAGE_ID as string
+  const block_id = process.env.NOTION_INTRO_PAGE_ID as string
+  const aboutPage = await FetchPage({ page_id })
+  const about = await FetchBlocks({ block_id, last_edited_time: aboutPage.last_edited_time })
 
   const project = await FetchDatabase({
     database_id: process.env.NOTION_PROJECT_DB_ID as string,
