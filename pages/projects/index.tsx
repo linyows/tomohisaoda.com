@@ -45,11 +45,11 @@ const ProjectIndex: NextPage<Props> = ({ pages, ogimage }) => {
               </span>
             </p>
             <div>
-              <h3 className="post-title gradation-text">
+              <h2 className="post-title gradation-text">
                 <Link href="/projects/[slug]" as={`/projects/${v.slug}`}>
                   {v.title}
                 </Link>
-              </h3>
+              </h2>
               {v.tags.length > 0 &&
                 <ul className="post-tags">
                   {v.tags.map(tag => (

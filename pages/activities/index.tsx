@@ -44,11 +44,11 @@ const ActivityIndex: NextPage<Props> = ({ pages, ogimage }) => {
           <section key={`${v.title}-content`} className="post grider">
             <p className="post-date"><span className="post-date-inner">{v.date}</span></p>
             <div>
-              <h3 className="post-title gradation-text">
+              <h2 className="post-title gradation-text">
                 <Link href="/activities/[id]" as={`/activities/${v.id}`}>
                   {v.title}
                 </Link>
-              </h3>
+              </h2>
               {v.tags.length > 0 &&
                 <ul className="post-tags">
                   {v.tags.map(tag => (
@@ -65,7 +65,7 @@ const ActivityIndex: NextPage<Props> = ({ pages, ogimage }) => {
           <div className="content-loader">
           {currentPage !== maxPage ? (
             <button onClick={next} className="neumorphism-h">
-              👆 Load More
+              Load More
             </button>
           ) : (
             <p className="no-content">No more posts available</p>
