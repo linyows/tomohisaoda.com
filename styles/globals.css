@@ -65,6 +65,7 @@
   --rotion-dark-secondary-text: rgb(180, 180, 180);
   --rotion-tertiary-text: rgb(130, 130, 130);
   --rotion-dark-tertiary-text: rgb(130, 130, 130);
+  --rotion-annot-bg-default: rgba(255,255,255,0.7);
 }
 
 /* HTML elements */
@@ -772,6 +773,13 @@ a:focus {
   }
   .burger-nav a {
     font-size: var(--fontSize-1);
+  }
+  .page-detail {
+    margin-top: 2rem;
+  }
+  .post-tags::before {
+    content: ' ';
+    display: block;
   }
 }
 
