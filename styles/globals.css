@@ -209,12 +209,10 @@ li > ul {
 
 blockquote {
   color: var(--color-text-light);
-  margin-left: calc(-1 * var(--spacing-6));
   margin-right: var(--spacing-8);
-  padding: var(--spacing-0) var(--spacing-0) var(--spacing-0) var(--spacing-6);
+  padding-left: var(--spacing-4);
   border-left: var(--spacing-1) solid var(--color-primary);
-  font-size: var(--fontSize-2);
-  font-style: italic;
+  margin-top: var(--spacing-6);
   margin-bottom: var(--spacing-8);
 }
 
@@ -448,6 +446,24 @@ a:focus {
   max-width: var(--maxWidth-4xl);
 }
 
+/* ROTION OVERRIDE */
+.page-detail .rotion-text-h1 {
+  font-size: var(--fontSize-4);
+}
+.page-detail .rotion-text-h2 {
+  font-size: var(--fontSize-3);
+}
+.page-detail .rotion-text-h3 {
+  font-size: var(--fontSize-2);
+}
+.page-detail .rotion-text-quote {
+  color: var(--color-text-light);
+  padding-left: var(--spacing-5);
+  font-size: var(--fontSize-1);
+  font-family: var(--fontFamily-sans);
+  line-height: var(--lineHeight-relaxed);
+}
+
 @media (max-width: 1560px) {
   .grider {
     display: block;
@@ -518,6 +534,12 @@ a:focus {
   }
   .page-detail .post-body .rotion-text-h1 {
     font-size: var(--fontSize-3);
+  }
+  .page-detail .post-body .rotion-text-h2 {
+    font-size: var(--fontSize-2);
+  }
+  .page-detail .post-body .rotion-text-h3 {
+    font-size: var(--fontSize-1);
   }
 }
 
