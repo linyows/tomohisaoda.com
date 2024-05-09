@@ -45,7 +45,7 @@ const Notfound: NextPage<Props> = ({ ogimage }) => {
   return (
     <>
       <Hed title={title} desc={desc} ogimage={ogimage} path="/404" />
-      <header className="grider category-header">
+      <header className="grider page-list-header">
         <span></span>
         <div>
           <h1>{title}</h1>
@@ -56,14 +56,14 @@ const Notfound: NextPage<Props> = ({ ogimage }) => {
       <section className="grider">
         <span></span>
         <div>
-          <pre>
+          <pre className="asciiart">
             <code>
               {asciiart}
             </code>
           </pre>
           <p className="home">
             <Link className="to-home neumorphism-h" href="/">
-              Go back to 🏠
+              Go back to Home
             </Link>
           </p>
         </div>
