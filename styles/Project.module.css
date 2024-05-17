@@ -85,6 +85,9 @@
 }
 
 @media (max-width: 480px) {
+  .groupedCards {
+    margin: 0 var(--spacing-5);
+  }
   .cardTitle {
     margin: var(--spacing-2);
     text-align: right;
