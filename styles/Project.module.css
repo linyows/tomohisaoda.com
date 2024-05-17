@@ -85,11 +85,22 @@
 }
 
 @media (max-width: 480px) {
-  .groupedCards {
+  .gallery {
     margin: 0 var(--spacing-5);
   }
   .cardTitle {
     margin: var(--spacing-2);
     text-align: right;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .cardImage a {
+    border-color: #000;
+    background-color: #000;
+  }
+  .groupNameInner {
+    background: #393939;
+    color: #aaa;
   }
 }
