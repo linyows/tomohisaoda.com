@@ -5,6 +5,7 @@ import {
   DateResponse,
   SelectPropertyResponse,
   QueryDatabaseParameters,
+  GetDatabaseResponseEx,
 } from 'rotion'
 import { FormatDateMdY } from './date'
 
@@ -19,9 +20,10 @@ export type Project = {
   tags: string[]
   desc: string
   url: string
+  cover: string
 }
 
-export type DBPage = DBPageBase & {
+export type DBPage = GetDatabaseResponseEx & {
   properties: {
     Name: {
       type: "title"
@@ -90,23 +92,37 @@ const build = (page: DBPage): Project => {
     tags: props.Tags.multi_select.map(v => v.name) || [],
     desc: props.Description.rich_text.map(v => v.plain_text).join(',') || '',
     url: props.URL.url as string,
+    cover: page.cover?.src || '',
   }
 }
 
 export const GetProject = async (slug: string): Promise<Project | undefined> => {
   const db = await FetchDatabase(query)
   const page = db.results.find(v => {
-    const p = v as unknown as DBPage
+    const p = v as DBPage
     return p.properties.Slug.rich_text.map(v => v.plain_text).join(',') === slug
   })
-  return (page) ? build(page as unknown as DBPage) : page
+  return (page) ? build(page as DBPage) : page
 }
 
-export const GetProjects = async (): Promise<Project[]> => {
-  const db = await FetchDatabase(query)
-  return db.results.map(v => {
-    return build(v as unknown as DBPage)
-  })
+export interface GroupedProjects {
+  [key: string]: Project[]
+}
+
+export const GetProjects = async (): Promise<GroupedProjects> => {
+  const { results } = await FetchDatabase(query)
+  let res: GroupedProjects = {}
+
+  for (const v of results) {
+    const project = build(v as unknown as DBPage)
+    const key = project.tags.shift() || ''
+    if (!(key in res)) {
+      res[key] = []
+    }
+    res[key].push(project)
+  }
+
+  return res
 }
 
 export const GetPaths = async () => {

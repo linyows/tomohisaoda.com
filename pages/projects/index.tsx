@@ -1,12 +1,13 @@
 import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
-//import Image from 'next/image'
-import { Project, GetProjects } from '../../src/lib/project'
+import Image from 'next/image'
+import { GroupedProjects, GetProjects } from '../../src/lib/project'
 import Hed from '../../components/hed'
 import { MakeOgImage } from '../../src/lib/ogimage'
+import Styles from '../../styles/Project.module.css'
 
 type Props = {
-  pages: Project[]
+  pages: GroupedProjects
   ogimage: string
 }
 
@@ -26,7 +27,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 const ProjectIndex: NextPage<Props> = ({ pages, ogimage }) => {
   return (
-    <div className="page-list">
+    <div>
       <Hed title={title} desc={desc} ogimage={ogimage} path="/projects" />
       <header className="grider page-list-header">
         <span></span>
@@ -36,29 +37,36 @@ const ProjectIndex: NextPage<Props> = ({ pages, ogimage }) => {
         </div>
       </header>
 
-      <div className="page-list-body">
-        {pages.map((v, i) => (
-          <section key={`${v.title}-content`} className="post grider">
-            <p className="post-date">
-              <span className="post-date-inner">
-                {v.date}
+      <div className={Styles.gallery}>
+        {Object.keys(pages).map(key => (
+          <div key={key} className={Styles.groupedCards}>
+            <div className={Styles.groupName}>
+              <span className={Styles.groupNameInner}>
+                {key}
               </span>
-            </p>
-            <div>
-              <h2 className="post-title gradation-text">
-                <Link href="/projects/[slug]" as={`/projects/${v.slug}`}>
-                  {v.title}
-                </Link>
-              </h2>
-              {v.tags.length > 0 &&
-                <ul className="post-tags">
-                  {v.tags.map(tag => (
-                    <li key={`${v.title}-${tag}`}>{tag}</li>
-                  ))}
-                </ul>
-              }
             </div>
-          </section>
+            <div className={Styles.cards}>
+              {pages[key].map((v, i) => (
+                <section key={`${v.title}-content`} className={Styles.card}>
+                  <div className={Styles.cardImage}>
+                    <Link href="/projects/[slug]" as={`/projects/${v.slug}`}>
+                      <Image src={v.cover} fill={true} alt={v.title} />
+                    </Link>
+                  </div>
+                  <h2 className={Styles.cardTitle}>
+                    {v.title}
+                  </h2>
+                  {v.tags.length > 0 &&
+                    <ul className={Styles.tags}>
+                      {v.tags.map(tag => (
+                        <li key={`${v.title}-${tag}`}>{tag}</li>
+                      ))}
+                    </ul>
+                  }
+                </section>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </div>
