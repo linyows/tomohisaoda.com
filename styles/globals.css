@@ -692,7 +692,7 @@ a:focus {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: var(--spacing-10);
 }
 .global-nav li {
