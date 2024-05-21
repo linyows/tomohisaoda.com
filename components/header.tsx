@@ -54,6 +54,11 @@ const Header: React.FC<Props> = ({ children }) => {
               </Link>
             </li>
             <li>
+              <Link href="/workout">
+                Workout
+              </Link>
+            </li>
+            <li>
               <Link href="/contact">
                 Contact
               </Link>
@@ -87,6 +92,11 @@ const Header: React.FC<Props> = ({ children }) => {
               <li>
                 <Link href="/activities">
                   Activities
+                </Link>
+              </li>
+              <li>
+                <Link href="/workout">
+                  Workout
                 </Link>
               </li>
               <li>
