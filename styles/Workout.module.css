@@ -1,0 +1,29 @@
+.workout {
+  margin: 0 var(--spacing-20);
+}
+
+.training {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--spacing-16);
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--spacing-16);
+}
+
+.header2 {
+  margin-top: var(--spacing-4);
+  font-size: var(--fontSize-5);
+}
+
+@media (max-width: 1560px) {
+  .training {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .workout {
+    margin: 0 var(--spacing-5);
+  }
+}
