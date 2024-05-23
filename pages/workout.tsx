@@ -26,7 +26,6 @@ type Props = {
   latest: FetchDatabaseRes
   upperBody: ChartData<'line'>
   lowerBody: ChartData<'line'>
-  abs: ChartData<'line'>
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
@@ -44,13 +43,10 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
 
   const lowerTraining = await FetchDatabase({
     database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
-    filter: { property: 'Part', select: { equals: 'Lower body' } },
-    sorts: [ { property: 'Date', direction: 'ascending' }, ],
-  } as QueryDatabaseParameters)
-
-  const absTraining = await FetchDatabase({
-    database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
-    filter: { property: 'Part', select: { equals: 'Abdominal' } },
+    filter: { or: [
+      { property: 'Part', select: { equals: 'Lower body' } },
+      { property: 'Part', select: { equals: 'Abdominal' } },
+    ] },
     sorts: [ { property: 'Date', direction: 'ascending' }, ],
   } as QueryDatabaseParameters)
 
@@ -63,12 +59,11 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       latest,
       upperBody: MakeData(upperTraining),
       lowerBody: MakeData(lowerTraining),
-      abs: MakeData(absTraining),
     },
   }
 }
 
-export default function Workout ({ latest, upperBody, lowerBody, abs, ogimage }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Workout ({ latest, upperBody, lowerBody, ogimage }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Hed title={title} desc={desc} ogimage={ogimage} path="/weight-training" />
@@ -83,9 +78,11 @@ export default function Workout ({ latest, upperBody, lowerBody, abs, ogimage }:
 
       <div className={`workout ${Styles.workout}`}>
         <div className={Styles.training}>
-          <span></span>
+          <div className={Styles.pop}>
+            <span className={Styles.popInner}>Training Log</span>
+          </div>
           <div>
-            <h2 className={`gradation-text ${Styles.header2}`}>Latest 20 in workout</h2>
+            <h2 className={`gradation-text ${Styles.header2}`}>Latest 20</h2>
             <p>I prioritize weight training three times a week as the most important part of my routine. However, I make sure each session lasts about an hour.</p>
             <Table
               keys={['Name', 'Date', 'Part', 'Weight', 'Reps', 'Sets', 'Volume']}
@@ -96,21 +93,21 @@ export default function Workout ({ latest, upperBody, lowerBody, abs, ogimage }:
         </div>
 
         <div className={Styles.training}>
-          <span></span>
+          <div className={Styles.pop}>
+            <span className={Styles.popInner}>Training Volumes</span>
+          </div>
           <div>
-            <h2 className={`gradation-text ${Styles.header2}`}>Training Volumes by Month</h2>
+            <h2 className={`gradation-text ${Styles.header2}`}>Monthly Charts</h2>
             <p>Here is a chart showing the total training volume for each exercise by month, calculated as the product of weight, reps, and sets.</p>
             <div>
               <h3>Upper body</h3>
+              <p>Shoulders, arms, back, chest etc.</p>
               <Line data={upperBody} options={{spanGaps: true}} />
             </div>
             <div>
               <h3>Lower body</h3>
+              <p>Thighs, hamstrings, abdominal, oblique, etc.</p>
               <Line data={lowerBody} options={{spanGaps: true}} />
-            </div>
-            <div>
-              <h3>Abdominal</h3>
-              <Line data={abs} options={{spanGaps: true}} />
             </div>
           </div>
         </div>
