@@ -37,6 +37,10 @@
   .training {
     display: block;
   }
+  .pop {
+    text-align: center;
+    margin-bottom: var(--spacing-5);
+  }
 }
 
 @media (max-width: 480px) {
