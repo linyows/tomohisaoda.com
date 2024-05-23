@@ -71,10 +71,13 @@ export function MakeData (db: FetchDatabaseRes) {
   const xLabels = Object.keys(dataByMonth)
 
   const datasets = trainingNames.map(name => {
+    const color = getRandomBlue()
     return {
       label: name,
       data: xLabels.map(date => dataByMonth[date][name] || null),
-      borderColor: getRandomBlue(),
+      borderColor: color,
+      backgroundColor: color,
+      color,
     }
   })
 

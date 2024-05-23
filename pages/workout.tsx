@@ -15,6 +15,8 @@ import { MakeData } from '../src/lib/workout'
 import Styles from '../styles/Workout.module.css'
 
 Chart.register(...registerables)
+Chart.defaults.plugins.legend.position = 'chartArea'
+Chart.defaults.animation = false
 
 const title = 'Workout'
 const desc = 'Exercise is mother nature’s magic pill'
@@ -31,7 +33,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const latest = await FetchDatabase({
     database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
     sorts: [ { property: 'Date', direction: 'descending' }, ],
-    page_size: 10,
+    page_size: 20,
   } as QueryDatabaseParameters)
 
   const upperTraining = await FetchDatabase({
@@ -79,13 +81,17 @@ export default function Workout ({ latest, upperBody, lowerBody, abs, ogimage }:
         </div>
       </header>
 
-      <div className={Styles.workout}>
+      <div className={`workout ${Styles.workout}`}>
         <div className={Styles.training}>
           <span></span>
           <div>
-            <h2 className={`gradation-text ${Styles.header2}`}>Latest workout log</h2>
+            <h2 className={`gradation-text ${Styles.header2}`}>Latest 20 in workout</h2>
             <p>I prioritize weight training three times a week as the most important part of my routine. However, I make sure each session lasts about an hour.</p>
-            <Table keys={['Date', 'Name', 'Part', 'Weight', 'Reps', 'Sets', 'Volume']} db={latest} />
+            <Table
+              keys={['Name', 'Date', 'Part', 'Weight', 'Reps', 'Sets', 'Volume']}
+              db={latest}
+              options={ { suffix: { Weight: 'kg', Reps: 'reps', Sets: 'sets', Volume: 'kg' } } }
+            />
           </div>
         </div>
 
@@ -93,9 +99,9 @@ export default function Workout ({ latest, upperBody, lowerBody, abs, ogimage }:
           <span></span>
           <div>
             <h2 className={`gradation-text ${Styles.header2}`}>Training Volumes by Month</h2>
-            <p>Here is a chart showing the total training volume for each exercise by month, calculated as the product of weight (kg), reps, and sets.</p>
+            <p>Here is a chart showing the total training volume for each exercise by month, calculated as the product of weight, reps, and sets.</p>
             <div>
-              <h3>Uppser body</h3>
+              <h3>Upper body</h3>
               <Line data={upperBody} options={{spanGaps: true}} />
             </div>
             <div>

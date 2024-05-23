@@ -66,6 +66,8 @@
   --rotion-tertiary-text: rgb(130, 130, 130);
   --rotion-dark-tertiary-text: rgb(130, 130, 130);
   --rotion-annot-bg-default: rgba(255,255,255,0.7);
+
+  --rotion-dark-table-border: 1px solid rgba(250, 250, 250, 0.1);
 }
 
 /* HTML elements */
@@ -472,6 +474,19 @@ a:focus {
 .page-detail .rotion-richtext-code {
   font-family: var(--fontFamily-sans)!important;
   padding-bottom: .3rem;
+}
+.workout .rotion-table-column0 .rotion-table-cell-inner {
+  width: 16rem;
+}
+.workout .rotion-table-column1 .rotion-table-cell-inner,
+.workout .rotion-table-column2 .rotion-table-cell-inner {
+  width: 10rem;
+}
+.workout .rotion-table-column3 .rotion-table-cell-inner,
+.workout .rotion-table-column4 .rotion-table-cell-inner,
+.workout .rotion-table-column5 .rotion-table-cell-inner,
+.workout .rotion-table-column6 .rotion-table-cell-inner {
+  width: 8rem;
 }
 
 @media (max-width: 1560px) {

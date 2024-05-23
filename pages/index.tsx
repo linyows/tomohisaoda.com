@@ -1,22 +1,23 @@
-import type { GetStaticProps, NextPage } from 'next'
+import type {
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from 'next'
 import Link from 'next/link'
-//import Image from 'next/image'
 import {
   FetchBlocks,
   FetchDatabase,
   FetchPage,
+  FetchDatabaseRes,
   ListBlockChildrenResponseEx,
   GetPageResponseEx,
   QueryDatabaseResponseEx,
   QueryDatabaseParameters,
 } from 'rotion'
-
 import {
   List,
   Page,
-  Link as NLink,
+  Link as RotionLink,
 } from 'rotion/ui'
-
 import Hed from '../components/hed'
 import GenFeed from '../src/lib/feed'
 import { MakeOgImage } from '../src/lib/ogimage'
@@ -28,6 +29,7 @@ type Props = {
   project: QueryDatabaseResponseEx
   blog: QueryDatabaseResponseEx
   activity: QueryDatabaseResponseEx
+  workout: FetchDatabaseRes
   ogimage: string
 }
 
@@ -58,6 +60,12 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     page_size: 15,
   } as QueryDatabaseParameters)
 
+  const workout = await FetchDatabase({
+    database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
+    sorts: [ { property: 'Date', direction: 'descending' }, ],
+    page_size: 7,
+  } as QueryDatabaseParameters)
+
   await GenFeed()
   const ogimage = await MakeOgImage('', 'home')
 
@@ -68,12 +76,13 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       project,
       blog,
       activity,
+      workout,
       ogimage,
     },
   }
 }
 
-const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogimage }) => {
+export default function Home ({ aboutPage, about, project, blog, activity, workout, ogimage }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Hed ogimage={ogimage} path="/" />
@@ -97,8 +106,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
           <List
             keys={['Name', 'Description', 'dashed', 'URL', 'Tags', 'Date']}
             db={project}
-            href={'/projects/[Slug]'}
-            link={Link as NLink}
+            options={{ href: { Name: '/projects/[Slug]'}, link: Link as RotionLink}}
           />
           <p className={Styles.viewall}>
             <Link className={`flat-button ${Styles.viewallButton}`} href="/projects">
@@ -114,8 +122,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
           <List
             keys={['Name', 'dashed', 'Tags', 'Date']}
             db={blog}
-            href={'/blog/[Slug]'}
-            link={Link as NLink}
+            options={{ href: { Name: '/blog/[Slug]'}, link: Link as RotionLink}}
           />
           <p className={Styles.viewall}>
             <Link className={`flat-button ${Styles.viewallButton}`} href="/blog">
@@ -131,8 +138,7 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
           <List
             keys={['Name', 'dashed', 'URL', 'Tags', 'Date']}
             db={activity}
-            href={'/activities/[id]'}
-            link={Link as NLink}
+            options={{ href: { Name: '/activities/[id]'}, link: Link as RotionLink}}
           />
           <p className={Styles.viewall}>
             <Link className={`flat-button ${Styles.viewallButton}`}href="/activities">
@@ -141,8 +147,22 @@ const Home: NextPage<Props> = ({ aboutPage, about, project, blog, activity, ogim
           </p>
         </div>
       </section>
+
+      <section className={`${Styles.section} grider`}>
+        <h2 className={Styles.title}><span className="neumorphism-h">Workout</span></h2>
+        <div className={Styles.recent}>
+          <List
+            keys={['Name', 'dashed', 'Weight', 'Reps', 'Sets', 'Volume', 'Date' ]}
+            db={workout}
+            options={{ suffix: { Weight: 'kg', Reps: 'reps', Sets: 'sets', Volume: 'kg' } }}
+          />
+          <p className={Styles.viewall}>
+            <Link className={`flat-button ${Styles.viewallButton}`}href="/workout">
+              View all
+            </Link>
+          </p>
+        </div>
+      </section>
     </>
   )
 }
-
-export default Home
