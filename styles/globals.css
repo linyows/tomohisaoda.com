@@ -296,6 +296,16 @@ a:focus {
   line-height: 1;
 }
 
+.flat-button-light {
+  font-family: var(--fontFamily-sans);
+  line-height: 1.7;
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-4);
+  background: rgba(120,120,120,0.1);
+  color: rgba(0,0,0,0.6);
+  border-radius: 30px;
+}
+
 .flat-button:hover {
   background: rgba(180, 180, 180, 0.4);
   color: #444;
@@ -911,6 +921,10 @@ a:focus {
   .flat-button:hover {
     border-color: #eee;
     color: #eee;
+  }
+  .flat-button-light {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
   }
 
   .global-nav a {

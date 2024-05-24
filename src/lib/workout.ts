@@ -48,7 +48,6 @@ export function MakeData (db: FetchDatabaseRes) {
     const { Date, Name, Volume } = db.properties
     const d = Date.date?.start
     if (!d) {
-      console.log('date is empty: ', d)
       continue
     }
     const n = Name.title.map(t => t.plain_text).join('')

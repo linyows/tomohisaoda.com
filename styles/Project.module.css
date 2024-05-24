@@ -12,18 +12,12 @@
 }
 
 .groupName {
-  font-family: var(--fontFamily-sans);
-  font-size: var(--fontSize-0);
-  line-height: 1.7;
   text-align: right;
   margin-top: var(--spacing-1);
 }
 
 .groupNameInner {
-  display: inline-block;
-  padding: var(--spacing-1) var(--spacing-4);
-  background: #e0e0e0;
-  border-radius: 30px;
+  font-size: var(--fontSize-0);
 }
 
 .cards {
@@ -100,7 +94,7 @@
     background-color: #000;
   }
   .groupNameInner {
-    background: #393939;
+    background: rgba(255,255,255,0.1);
     color: #aaa;
   }
 }

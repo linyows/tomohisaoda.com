@@ -31,7 +31,10 @@ type Props = {
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const latest = await FetchDatabase({
     database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
-    sorts: [ { property: 'Date', direction: 'descending' }, ],
+    sorts: [
+      { property: 'Date', direction: 'descending' },
+      { property: 'Name', direction: 'descending' },
+    ],
     page_size: 20,
   } as QueryDatabaseParameters)
 
@@ -79,7 +82,9 @@ export default function Workout ({ latest, upperBody, lowerBody, ogimage }: Infe
       <div className={`workout ${Styles.workout}`}>
         <div className={Styles.training}>
           <div className={Styles.pop}>
-            <span className={Styles.popInner}>Training Log</span>
+            <span className={`flat-button-light ${Styles.popInner}`}>
+              Training Log
+            </span>
           </div>
           <div>
             <h2 className={`gradation-text ${Styles.header2}`}>Latest 20</h2>
@@ -94,7 +99,9 @@ export default function Workout ({ latest, upperBody, lowerBody, ogimage }: Infe
 
         <div className={Styles.training}>
           <div className={Styles.pop}>
-            <span className={Styles.popInner}>Training Volumes</span>
+            <span className={`flat-button-light ${Styles.popInner}`}>
+              Training Volumes
+            </span>
           </div>
           <div>
             <h2 className={`gradation-text ${Styles.header2}`}>Monthly Charts</h2>
@@ -102,12 +109,20 @@ export default function Workout ({ latest, upperBody, lowerBody, ogimage }: Infe
             <div>
               <h3>Upper body</h3>
               <p>Shoulders, arms, back, chest etc.</p>
-              <Line data={upperBody} options={{spanGaps: true}} />
+              <div className={Styles.chart}>
+                <div className={Styles.chartInner}>
+                  <Line className={Styles.chart} data={upperBody} options={{spanGaps: true}} />
+                </div>
+              </div>
             </div>
             <div>
               <h3>Lower body</h3>
               <p>Thighs, hamstrings, abdominal, oblique, etc.</p>
-              <Line data={lowerBody} options={{spanGaps: true}} />
+              <div className={Styles.chart}>
+                <div className={Styles.chartInner}>
+                  <Line data={lowerBody} options={{spanGaps: true}} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

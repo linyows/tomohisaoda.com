@@ -41,7 +41,7 @@ const ProjectIndex: NextPage<Props> = ({ pages, ogimage }) => {
         {Object.keys(pages).map(key => (
           <div key={key} className={Styles.groupedCards}>
             <div className={Styles.groupName}>
-              <span className={Styles.groupNameInner}>
+              <span className={`flat-button-light ${Styles.groupNameInner}`}>
                 {key}
               </span>
             </div>
