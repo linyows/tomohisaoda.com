@@ -7,68 +7,26 @@ on:
     branches:
       - main
   schedule:
-    - cron: 0 0 * * *
+    - cron: 0 2 * * *
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [21.x]
+        node-version: [22.x]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: npm
     - name: Run builds and deploys with ${{ matrix.node-version }}
       run: |
         npm i && npm run lint
 
-  staging:
-    runs-on: ubuntu-latest
-    needs: [build]
-    if: github.ref != 'refs/heads/main'
-    env:
-      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-      ROTION_INCREMENTAL_CACHE: true
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '21'
-        cache: 'npm'
-    - name: Restore next cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          .next/cache
-        key: nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-        restore-keys: |
-          nextjs-${{ hashFiles('**/package-lock.json') }}-
-    - name: Restore rotion cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          .cache
-          public/images
-        key: rotion
-        restore-keys: rotion
-    - name: Run next build
-      run: |
-        npm i && npm run build
-    - name: Deploy by SCP
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        source: "out/*"
-        target: "web/stag.tomohisaoda.com"
-
-  release:
+  deploy:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.ref == 'refs/heads/main'
@@ -76,13 +34,13 @@ jobs:
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       ROTION_INCREMENTAL_CACHE: true
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: '21'
-        cache: 'npm'
+        node-version: 22
+        cache: npm
     - name: Restore next cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           .next/cache
@@ -90,7 +48,7 @@ jobs:
         restore-keys: |
           nextjs-${{ hashFiles('**/package-lock.json') }}-
     - name: Restore rotion cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           .cache
