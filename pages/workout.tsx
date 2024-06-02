@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import {
   FetchDatabase,
@@ -16,7 +17,7 @@ import Styles from '../styles/Workout.module.css'
 
 Chart.register(...registerables)
 Chart.defaults.plugins.legend.position = 'chartArea'
-Chart.defaults.animation = false
+// Chart.defaults.animation = false
 
 const title = 'Workout'
 const desc = 'Exercise is mother nature’s magic pill'
@@ -24,8 +25,10 @@ const desc = 'Exercise is mother nature’s magic pill'
 type Props = {
   ogimage: string
   latest: FetchDatabaseRes
-  upperBody: ChartData<'line'>
-  lowerBody: ChartData<'line'>
+  upperBodyW: ChartData<'line'>
+  lowerBodyW: ChartData<'line'>
+  upperBodyM: ChartData<'line'>
+  lowerBodyM: ChartData<'line'>
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
@@ -60,13 +63,37 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     props: {
       ogimage,
       latest,
-      upperBody: MakeData(upperTraining),
-      lowerBody: MakeData(lowerTraining),
+      upperBodyW: MakeData(upperTraining, 'weekly'),
+      lowerBodyW: MakeData(lowerTraining, 'weekly'),
+      upperBodyM: MakeData(upperTraining, 'monthly'),
+      lowerBodyM: MakeData(lowerTraining, 'monthly'),
     },
   }
 }
 
-export default function Workout ({ latest, upperBody, lowerBody, ogimage }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Workout ({ latest, upperBodyW, lowerBodyW, upperBodyM, lowerBodyM, ogimage }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [upperbodyInterval, setUpperbodyInterval] = useState('monthly')
+  const [upperbody, setUpperbody] = useState(upperBodyM)
+  const showUpperbodyM = () => {
+    setUpperbodyInterval('monthly')
+    setUpperbody(upperBodyM)
+  }
+  const showUpperbodyW = () => {
+    setUpperbodyInterval('weekly')
+    setUpperbody(upperBodyW)
+  }
+
+  const [lowerbodyInterval, setLowerbodyInterval] = useState('monthly')
+  const [lowerbody, setLowerbody] = useState(lowerBodyM)
+  const showLowerbodyM = () => {
+    setLowerbodyInterval('monthly')
+    setLowerbody(lowerBodyM)
+  }
+  const showLowerbodyW = () => {
+    setLowerbodyInterval('weekly')
+    setLowerbody(lowerBodyW)
+  }
+
   return (
     <>
       <Hed title={title} desc={desc} ogimage={ogimage} path="/weight-training" />
@@ -104,14 +131,18 @@ export default function Workout ({ latest, upperBody, lowerBody, ogimage }: Infe
             </span>
           </div>
           <div>
-            <h2 className={`gradation-text ${Styles.header2}`}>Monthly Charts</h2>
+            <h2 className={`gradation-text ${Styles.header2}`}>Monthly or Weekly Charts</h2>
             <p>Here is a chart showing the total training volume for each exercise by month, calculated as the product of weight, reps, and sets.</p>
             <div>
               <h3>Upper body</h3>
               <p>Shoulders, arms, back, chest etc.</p>
               <div className={Styles.chart}>
                 <div className={Styles.chartInner}>
-                  <Line className={Styles.chart} data={upperBody} options={{spanGaps: true}} />
+                  <ul className={Styles.intervals}>
+                    <li onClick={showUpperbodyM} className={upperbodyInterval === 'monthly' ? Styles.selected : undefined}>Monthly</li>
+                    <li onClick={showUpperbodyW} className={upperbodyInterval === 'weekly' ? Styles.selected : undefined}>Weekly</li>
+                  </ul>
+                  <Line className={Styles.chart} data={upperbody} options={{spanGaps: true}} />
                 </div>
               </div>
             </div>
@@ -120,7 +151,11 @@ export default function Workout ({ latest, upperBody, lowerBody, ogimage }: Infe
               <p>Thighs, hamstrings, abdominal, oblique, etc.</p>
               <div className={Styles.chart}>
                 <div className={Styles.chartInner}>
-                  <Line data={lowerBody} options={{spanGaps: true}} />
+                  <ul className={Styles.intervals}>
+                    <li onClick={showLowerbodyM} className={lowerbodyInterval === 'monthly' ? Styles.selected : undefined}>Monthly</li>
+                    <li onClick={showLowerbodyW} className={lowerbodyInterval === 'weekly' ? Styles.selected : undefined}>Weekly</li>
+                  </ul>
+                  <Line className={Styles.chart} data={lowerbody} options={{spanGaps: true}} />
                 </div>
               </div>
             </div>

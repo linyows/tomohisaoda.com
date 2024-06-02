@@ -39,7 +39,7 @@ function getRandomBlue() {
   return `rgba(${r}, ${g}, ${b}, 0.7)`
 }
 
-export function MakeData (db: FetchDatabaseRes) {
+export function MakeData (db: FetchDatabaseRes, intervals: 'weekly' | 'monthly' = 'monthly') {
   let dataByMonth: {[key: Month]: {[key: Menuname]: number} } = {}
   let trainingNames: Menuname[] = []
 
@@ -54,7 +54,7 @@ export function MakeData (db: FetchDatabaseRes) {
     const vol = Volume.formula.number || 0
 
     trainingNames.push(n)
-    const m = cdate(d).startOf('month').format('YYYY-MM')
+    const m = intervals === 'monthly' ? cdate(d).startOf('month').format('YYYY-MM') : cdate(d).startOf('week').format('YYYY-MM-DD')
 
     if (dataByMonth[m] && dataByMonth[m][n]) {
       dataByMonth[m][n] = dataByMonth[m][n] + vol

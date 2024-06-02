@@ -21,6 +21,7 @@
 .chartInner {
   min-width: 1200px;
   min-height: 400px;
+  position: relative;
 }
 
 .pop {
@@ -34,6 +35,45 @@
   font-size: var(--fontSize-5);
 }
 
+.intervals {
+  list-style-type: none;
+  margin: 0 -5rem;
+  padding: 0;
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+}
+
+.intervals li {
+  display: inline-block;
+  padding: .3rem 1.2rem;
+  border: 1px solid rgba(0,0,0,0.2);
+  line-height: 1.7;
+  font-size: var(--fontSize-0);
+  cursor: pointer;
+}
+
+.intervals li:first-child {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-right: none;
+}
+
+.intervals li:last-child {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-left: none;
+}
+
+.intervals li:hover {
+  border-color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255,0.9);
+}
+
+.selected {
+  background-color: rgba(0,0,0,0.1);
+}
+
 @media (max-width: 1560px) {
   .training {
     display: block;
@@ -41,6 +81,10 @@
   .pop {
     text-align: center;
     margin-bottom: var(--spacing-5);
+  }
+  .intervals {
+    margin-left: 0;
+    left: 5rem;
   }
 }
 
