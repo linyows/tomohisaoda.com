@@ -16,6 +16,7 @@ export type Blog = {
   slug: string
   createdTs: number
   lastEditedTs: number
+  lastEditedTime: string
   tags: string[]
 }
 
@@ -75,6 +76,7 @@ const build = (page: DBPage): Blog => {
     edited: FormatDateMdY(page.last_edited_time),
     createdTs: Date.parse(page.created_time),
     lastEditedTs: Date.parse(page.last_edited_time),
+    lastEditedTime: page.last_edited_time,
     tags: props.Tags.multi_select.map(v => v.name) || [],
   }
 }

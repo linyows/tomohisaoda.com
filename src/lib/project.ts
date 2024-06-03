@@ -17,6 +17,7 @@ export type Project = {
   slug: string
   createdTs: number
   lastEditedTs: number
+  lastEditedTime: string
   tags: string[]
   desc: string
   url: string
@@ -89,6 +90,7 @@ const build = (page: DBPage): Project => {
     edited: FormatDateMdY(page.last_edited_time),
     createdTs: Date.parse(page.created_time),
     lastEditedTs: Date.parse(page.last_edited_time),
+    lastEditedTime: page.last_edited_time,
     tags: props.Tags.multi_select.map(v => v.name) || [],
     desc: props.Description.rich_text.map(v => v.plain_text).join(',') || '',
     url: props.URL.url as string,

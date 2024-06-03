@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) 
   const page = await GetProject(params!.slug)
 
   if (page) {
-    const blocks = await FetchBlocks({ block_id: page.id })
+    const blocks = await FetchBlocks({ block_id: page.id, last_edited_time: page.lastEditedTime })
     const ogimage = await MakeOgImage(page!.title, `projects-${page!.slug}`)
     return {
       props: {

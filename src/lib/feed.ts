@@ -37,7 +37,7 @@ export default async function GenFeed() {
 
   await Promise.all(
     blogs.map(async (v) => {
-      const blocks = await FetchBlocks({ block_id: v.id })
+      const blocks = await FetchBlocks({ block_id: v.id, last_edited_time: v.lastEditedTime })
       const html = ReactDOMServer.renderToString(Page({ blocks }))
       const link = `${url}/blog/${v.slug}`
 

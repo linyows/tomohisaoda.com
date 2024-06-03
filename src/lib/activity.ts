@@ -16,6 +16,7 @@ export type Activity = {
   slug: string
   createdTs: number
   lastEditedTs: number
+  lastEditedTime: string
   tags: string[]
   host: string
   authors: string
@@ -93,6 +94,7 @@ const build = (page: DBPage): Activity => {
     edited: FormatDateMdY(page.last_edited_time),
     createdTs: Date.parse(page.created_time),
     lastEditedTs: Date.parse(page.last_edited_time),
+    lastEditedTime: page.last_edited_time,
     tags: props.Tags.multi_select.map(v => v.name) || [],
     host: props.Host.rich_text.map(v => v.plain_text).join(',') || '',
     authors: props.Authors.rich_text.map(v => v.plain_text).join(',') || '',
