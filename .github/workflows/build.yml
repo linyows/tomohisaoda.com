@@ -2,6 +2,7 @@ name: Build and Deploy
 
 on:
   repository_dispatch:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
