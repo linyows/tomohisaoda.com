@@ -1,5 +1,6 @@
 import { Buffer } from "node:buffer";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import React from "react";
 import satori, { type SatoriOptions } from "satori";
 import sharp from "sharp";
 import twemoji from "twemoji";
@@ -47,7 +48,7 @@ export const MakeOgImage = async (
 		},
 	};
 
-	const svg = await satori(OgImage({ title }), options);
+	const svg = await satori(React.createElement(OgImage, { title }), options);
 	const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
 	writeFileSync(path, png);

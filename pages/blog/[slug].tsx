@@ -27,14 +27,20 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props, Params> = async ({
 	params,
 }) => {
-	const page = await GetBlog(params?.slug);
+	if (!params?.slug) {
+		return {
+			notFound: true,
+		};
+	}
+
+	const page = await GetBlog(params.slug);
 
 	if (page) {
 		const blocks = await FetchBlocks({
 			block_id: page.id,
 			last_edited_time: page.lastEditedTime,
 		});
-		const ogimage = await MakeOgImage(page?.title, `blog-${page?.slug}`);
+		const ogimage = await MakeOgImage(page.title, `blog-${page.slug}`);
 		return {
 			props: {
 				page,
@@ -45,10 +51,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
 	}
 
 	return {
-		props: {},
-		redirect: {
-			destination: "/404",
-		},
+		notFound: true,
 	};
 };
 

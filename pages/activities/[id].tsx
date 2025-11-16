@@ -27,13 +27,19 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props, Params> = async ({
 	params,
 }) => {
-	const page = await GetActivity(params?.id);
+	if (!params?.id) {
+		return {
+			notFound: true,
+		};
+	}
+
+	const page = await GetActivity(params.id);
 	if (page) {
 		const blocks = await FetchBlocks({
 			block_id: page.id,
 			last_edited_time: page.lastEditedTime,
 		});
-		const ogimage = await MakeOgImage(page?.title, `activities-${page?.id}`);
+		const ogimage = await MakeOgImage(page.title, `activities-${page.id}`);
 		return {
 			props: {
 				page,
@@ -44,10 +50,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
 	}
 
 	return {
-		props: {},
-		redirect: {
-			destination: "/404",
-		},
+		notFound: true,
 	};
 };
 
