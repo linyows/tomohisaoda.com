@@ -1,33 +1,33 @@
-import { useState } from 'react'
-import type { GetStaticProps, NextPage } from 'next'
-import Link from 'next/link'
-import Hed from '../components/hed'
-import { MakeOgImage } from '../src/lib/ogimage'
+import type { GetStaticProps, NextPage } from "next";
+import Link from "next/link";
+import { useState } from "react";
+import Hed from "../components/hed";
+import { MakeOgImage } from "../src/lib/ogimage";
 
 type Props = {
-  ogimage?: string
-}
+	ogimage?: string;
+};
 
-const title = '404'
-const desc = 'Looks like this page is unavailable.'
+const title = "404";
+const desc = "Looks like this page is unavailable.";
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const ogimage = await MakeOgImage(`${title}: ${desc}`, '404')
-  return {
-    props: {
-      ogimage,
-    },
-  }
-}
+	const ogimage = await MakeOgImage(`${title}: ${desc}`, "404");
+	return {
+		props: {
+			ogimage,
+		},
+	};
+};
 
 const asciiart = `
          ,
        _=|_
      _[_## ]_
 _  +[_[_+_]P/    _    |_       ____      _=--|-~
- ~---\_I_I_[=\--~ ~~--[o]--==-|##==]-=-~~  o]H
+ ~---_I_I_[=--~ ~~--[o]--==-|##==]-=-~~  o]H
 -~ /[_[_|_]_]\\  -_  [[=]]    |====]  __  !j]H
-  /    "|"    \      ^U-U^  - |    - ~ .~  U/~
+  /    "|"          ^U-U^  - |    - ~ .~  U/~
  ~~--__~~~--__~~-__   H_H_    |_     --   _H_
 -. _  ~~~#######~~~     ~~~-    ~~--  ._ - ~~-=
            ~~~=~~  -~~--  _     . -      _ _ -
@@ -39,37 +39,35 @@ _  +[_[_+_]P/    _    |_       ____      _=--|-~
       | We came in Peace for all Mankind |
        ---------------------------=apx=--
 
-`
+`;
 
 const Notfound: NextPage<Props> = ({ ogimage }) => {
-  return (
-    <>
-      <Hed title={title} desc={desc} ogimage={ogimage} path="/404" />
-      <header className="grider page-list-header">
-        <span></span>
-        <div>
-          <h1>{title}</h1>
-          <p>{desc}</p>
-        </div>
-      </header>
+	return (
+		<>
+			<Hed title={title} desc={desc} ogimage={ogimage} path="/404" />
+			<header className="grider page-list-header">
+				<span></span>
+				<div>
+					<h1>{title}</h1>
+					<p>{desc}</p>
+				</div>
+			</header>
 
-      <section className="grider">
-        <span></span>
-        <div>
-          <pre className="asciiart">
-            <code>
-              {asciiart}
-            </code>
-          </pre>
-          <p className="home">
-            <Link className="to-home neumorphism-h" href="/">
-              Go back to Home
-            </Link>
-          </p>
-        </div>
-      </section>
-    </>
-  )
-}
+			<section className="grider">
+				<span></span>
+				<div>
+					<pre className="asciiart">
+						<code>{asciiart}</code>
+					</pre>
+					<p className="home">
+						<Link className="to-home neumorphism-h" href="/">
+							Go back to Home
+						</Link>
+					</p>
+				</div>
+			</section>
+		</>
+	);
+};
 
-export default Notfound
+export default Notfound;
