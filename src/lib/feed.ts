@@ -57,11 +57,13 @@ export default async function GenFeed() {
 		}),
 	);
 
-	items
-		.sort((a: Item, b: Item) => {
-			return new Date(b.date).getTime() - new Date(a.date).getTime();
-		})
-		.forEach((i) => feed.addItem(i));
+	items.sort((a: Item, b: Item) => {
+		return new Date(b.date).getTime() - new Date(a.date).getTime();
+	});
+
+	for (const item of items) {
+		feed.addItem(item);
+	}
 
 	fs.mkdirSync("./public/rss", { recursive: true });
 	fs.writeFileSync("./public/index.xml", feed.rss2());

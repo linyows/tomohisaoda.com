@@ -15,9 +15,24 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"style": {
+				"noDescendingSpecificity": "off"
+			}
 		}
 	},
+	"overrides": [
+		{
+			"includes": ["components/ogimage.tsx"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noImgElement": "off"
+					}
+				}
+			}
+		}
+	],
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"

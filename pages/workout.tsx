@@ -178,25 +178,31 @@ export default function Workout({
 							<div className={Styles.chart}>
 								<div className={Styles.chartInner}>
 									<ul className={Styles.intervals}>
-										<li
-											onClick={showUpperbodyM}
-											className={
-												upperbodyInterval === "monthly"
-													? Styles.selected
-													: undefined
-											}
-										>
-											Monthly
+										<li>
+											<button
+												type="button"
+												onClick={showUpperbodyM}
+												className={
+													upperbodyInterval === "monthly"
+														? Styles.selected
+														: undefined
+												}
+											>
+												Monthly
+											</button>
 										</li>
-										<li
-											onClick={showUpperbodyW}
-											className={
-												upperbodyInterval === "weekly"
-													? Styles.selected
-													: undefined
-											}
-										>
-											Weekly
+										<li>
+											<button
+												type="button"
+												onClick={showUpperbodyW}
+												className={
+													upperbodyInterval === "weekly"
+														? Styles.selected
+														: undefined
+												}
+											>
+												Weekly
+											</button>
 										</li>
 									</ul>
 									<Line
@@ -213,25 +219,31 @@ export default function Workout({
 							<div className={Styles.chart}>
 								<div className={Styles.chartInner}>
 									<ul className={Styles.intervals}>
-										<li
-											onClick={showLowerbodyM}
-											className={
-												lowerbodyInterval === "monthly"
-													? Styles.selected
-													: undefined
-											}
-										>
-											Monthly
+										<li>
+											<button
+												type="button"
+												onClick={showLowerbodyM}
+												className={
+													lowerbodyInterval === "monthly"
+														? Styles.selected
+														: undefined
+												}
+											>
+												Monthly
+											</button>
 										</li>
-										<li
-											onClick={showLowerbodyW}
-											className={
-												lowerbodyInterval === "weekly"
-													? Styles.selected
-													: undefined
-											}
-										>
-											Weekly
+										<li>
+											<button
+												type="button"
+												onClick={showLowerbodyW}
+												className={
+													lowerbodyInterval === "weekly"
+														? Styles.selected
+														: undefined
+												}
+											>
+												Weekly
+											</button>
 										</li>
 									</ul>
 									<Line

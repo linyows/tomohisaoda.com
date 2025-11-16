@@ -1,10 +1,16 @@
 import type { GetStaticProps, NextPage } from "next";
-import { useEffect, useState } from "react";
-import { MutatingDots } from "react-loader-spinner";
+import { useCallback, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { FetchBlocks, type ListBlockChildrenResponseEx } from "rotion";
 import { Page } from "rotion/ui";
 import Hed from "../components/hed";
 import { MakeOgImage } from "../src/lib/ogimage";
+
+// Dynamically import to load only on client-side
+const MutatingDots = dynamic(
+	() => import("react-loader-spinner").then((mod) => mod.MutatingDots),
+	{ ssr: false },
+);
 
 type Props = {
 	contact: ListBlockChildrenResponseEx;
@@ -144,23 +150,26 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 
 	const [widgetId, setWidgetId] = useState("");
 	const scriptId = "cf-turnstile-script";
-	const isScriptInjected = () => !!document.querySelector(`#${scriptId}`);
-	const removeScript = () => {
+	const isScriptInjected = useCallback(
+		() => !!document.querySelector(`#${scriptId}`),
+		[],
+	);
+	const removeScript = useCallback(() => {
 		const el = document.getElementById(scriptId);
 		if (el) {
 			el.remove();
 		}
-	};
-	const onSuccess = (token: string) => {
+	}, []);
+	const onSuccess = useCallback((token: string) => {
 		setQuery((prevState) => ({
 			...prevState,
 			token: token,
 		}));
 		setTurnstileError("");
-	};
-	const onError = () => {
+	}, []);
+	const onError = useCallback(() => {
 		setTurnstileError("* Network error.");
-	};
+	}, []);
 
 	useEffect(() => {
 		window.onloadTurnstileCallback = () => {

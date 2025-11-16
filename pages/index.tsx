@@ -1,4 +1,5 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
 	FetchBlocks,
@@ -92,10 +93,12 @@ export default function Home({
 			<Hed ogimage={ogimage} path="/" />
 			<section className={`${Styles.section} ${Styles.about} grider`}>
 				<div className={Styles.portrait}>
-					<img
+					<Image
 						className={Styles.icon}
-						src={aboutPage.icon?.src}
+						src={aboutPage.icon?.src || ""}
 						alt="tomohisaoda"
+						width={160}
+						height={160}
 					/>
 				</div>
 				<div className={Styles.aboutBody}>

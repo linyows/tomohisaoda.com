@@ -46,6 +46,16 @@
 
 .intervals li {
 	display: inline-block;
+	background: inherit;
+}
+
+.intervals li:hover {
+	background: inherit;
+}
+
+.intervals li button {
+	background: none;
+	display: inline-block;
 	padding: 0.3rem 1.2rem;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	line-height: 1.7;
@@ -53,24 +63,24 @@
 	cursor: pointer;
 }
 
-.intervals li:first-child {
+.intervals li:first-child button {
 	border-top-left-radius: 30px;
 	border-bottom-left-radius: 30px;
 	border-right: none;
 }
 
-.intervals li:last-child {
+.intervals li:last-child button {
 	border-top-right-radius: 30px;
 	border-bottom-right-radius: 30px;
 	border-left: none;
 }
 
-.intervals li:hover {
+.intervals li button:hover {
 	border-color: rgba(0, 0, 0, 0.5);
 	background-color: rgba(255, 255, 255, 0.9);
 }
 
-.selected {
+.intervals .selected {
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -95,12 +105,12 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.intervals li:hover {
+	.intervals li button:hover {
 		border-color: rgba(0, 0, 0, 0.4);
 		background-color: rgba(0, 0, 0, 0.4);
 	}
 
-	.selected {
+	.intervals .selected {
 		background-color: rgba(0, 0, 0, 0.2);
 	}
 }

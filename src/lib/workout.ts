@@ -48,8 +48,8 @@ export function MakeData(
 
 	for (const v of db.results) {
 		const db = v as unknown as TrainingDB;
-		const { Date, Name, Volume } = db.properties;
-		const d = Date.date?.start;
+		const { Date: dateProperty, Name, Volume } = db.properties;
+		const d = dateProperty.date?.start;
 		if (!d) {
 			continue;
 		}
