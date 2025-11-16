@@ -1,6 +1,6 @@
 import type { GetStaticProps, NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { useCallback, useEffect, useState } from "react";
 import { FetchBlocks, type ListBlockChildrenResponseEx } from "rotion";
 import { Page } from "rotion/ui";
 import Hed from "../components/hed";
