@@ -1,5 +1,5 @@
-import { Buffer } from "buffer";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { Buffer } from "node:buffer";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import satori, { type SatoriOptions } from "satori";
 import sharp from "sharp";
 import twemoji from "twemoji";

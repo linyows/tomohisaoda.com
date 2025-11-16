@@ -27,13 +27,13 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props, Params> = async ({
 	params,
 }) => {
-	const page = await GetActivity(params!.id);
+	const page = await GetActivity(params?.id);
 	if (page) {
 		const blocks = await FetchBlocks({
 			block_id: page.id,
 			last_edited_time: page.lastEditedTime,
 		});
-		const ogimage = await MakeOgImage(page!.title, `activities-${page!.id}`);
+		const ogimage = await MakeOgImage(page?.title, `activities-${page?.id}`);
 		return {
 			props: {
 				page,
@@ -52,8 +52,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
 };
 
 const ActivityPage: NextPage<Props> = (context) => {
-	const page = context.page!;
-	const blocks = context.blocks!;
+	if (!context.page || !context.blocks) {
+		return null;
+	}
+	const page = context.page;
+	const blocks = context.blocks;
 	return (
 		<article className="grider page-detail activity">
 			<Hed

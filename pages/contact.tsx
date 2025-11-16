@@ -132,12 +132,12 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 		});
 
 		fetch(endpoint, { method: "POST", body: formData })
-			.then((res) => {
+			.then((_res) => {
 				setLockStatus(false);
 				setFormStatus(true);
 				setQuery(initQuery);
 			})
-			.catch((err) => {
+			.catch((_err) => {
 				setLockStatus(false);
 			});
 	};
@@ -154,7 +154,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 	const onSuccess = (token: string) => {
 		setQuery((prevState) => ({
 			...prevState,
-			["token"]: token,
+			token: token,
 		}));
 		setTurnstileError("");
 	};
@@ -184,7 +184,7 @@ const Contact: NextPage<Props> = ({ contact, ogimage }) => {
 				"https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback";
 			document.getElementsByTagName("head")[0].appendChild(script);
 		}
-	}, [widgetId]);
+	}, [widgetId, isScriptInjected, onError, onSuccess, removeScript]);
 
 	return (
 		<div className="page-list">

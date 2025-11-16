@@ -8,14 +8,13 @@
 import { useRouter } from "next/router";
 import Script from "next/script";
 import type React from "react";
-import { type ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 
-type Props = {
-	children?: ReactNode;
-};
+type GtagCommand = "config" | "event" | "set" | "js";
+
 declare global {
 	interface Window {
-		gtag: any;
+		gtag: (command: GtagCommand, ...args: unknown[]) => void;
 	}
 }
 
@@ -43,7 +42,7 @@ export const event = ({ action, category, label, value }: EventProps) => {
 	});
 };
 
-const GA: React.FC<Props> = ({ children }) => {
+const GA: React.FC = () => {
 	const router = useRouter();
 
 	useEffect(() => {

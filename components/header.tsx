@@ -1,23 +1,13 @@
 import Link from "next/link";
 import type React from "react";
-import {
-	type MutableRefObject,
-	type ReactNode,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { type MutableRefObject, useEffect, useRef, useState } from "react";
 
-type Props = {
-	children?: ReactNode;
-};
-
-const Header: React.FC<Props> = ({ children }) => {
+const Header: React.FC = () => {
 	const [open, setOpen] = useState(false);
 
 	const useOnClickOutside = (
 		ref: MutableRefObject<HTMLElement | null>,
-		handler: Function,
+		handler: (event: MouseEvent) => void,
 	) => {
 		useEffect(() => {
 			const listener = (event: MouseEvent) => {
@@ -66,6 +56,7 @@ const Header: React.FC<Props> = ({ children }) => {
 
 				<div ref={node}>
 					<button
+						type="button"
 						aria-controls="burger"
 						aria-expanded={open}
 						className="burger"

@@ -1,12 +1,7 @@
 import Link from "next/link";
 import type React from "react";
-import type { ReactNode } from "react";
 
-type Props = {
-	children?: ReactNode;
-};
-
-const Footer: React.FC<Props> = ({ children }) => {
+const Footer: React.FC = () => {
 	return (
 		<footer className="footer grider">
 			<span></span>

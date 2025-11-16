@@ -31,7 +31,7 @@ type Props = {
 	lowerBodyM: ChartData<"line">;
 };
 
-export const getStaticProps: GetStaticProps<Props> = async (context) => {
+export const getStaticProps: GetStaticProps<Props> = async (_context) => {
 	const latest = await FetchDatabase({
 		database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
 		sorts: [

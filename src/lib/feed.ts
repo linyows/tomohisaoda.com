@@ -1,5 +1,5 @@
+import fs from "node:fs";
 import { Feed, type Item } from "feed";
-import fs from "fs";
 import { FetchBlocks } from "rotion";
 import { Page } from "rotion/ui";
 import { GetBlogs } from "./blog";

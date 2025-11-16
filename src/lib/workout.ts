@@ -62,7 +62,7 @@ export function MakeData(
 				? cdate(d).startOf("month").format("YYYY-MM")
 				: cdate(d).startOf("week").format("YYYY-MM-DD");
 
-		if (dataByMonth[m] && dataByMonth[m][n]) {
+		if (dataByMonth[m]?.[n]) {
 			dataByMonth[m][n] = dataByMonth[m][n] + vol;
 		} else if (dataByMonth[m]) {
 			dataByMonth[m][n] = vol;

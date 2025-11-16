@@ -21,6 +21,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 	return {
 		props: {
 			pages,
+			ogimage,
 		},
 	};
 };
@@ -44,34 +45,33 @@ const ActivityIndex: NextPage<Props> = ({ pages, ogimage }) => {
 			</header>
 
 			<div className="page-list-body">
-				{currentPosts &&
-					currentPosts.map((v, i) => (
-						<section key={`${v.title}-content`} className="post grider">
-							<p className="post-date">
-								<span className="post-date-inner">{v.date}</span>
-							</p>
-							<div>
-								<h2 className="post-title gradation-text">
-									<Link href="/activities/[id]" as={`/activities/${v.id}`}>
-										{v.title}
-									</Link>
-								</h2>
-								{v.tags.length > 0 && (
-									<ul className="post-tags">
-										{v.tags.map((tag) => (
-											<li key={`${v.title}-${tag}`}>{tag}</li>
-										))}
-									</ul>
-								)}
-							</div>
-						</section>
-					))}
+				{currentPosts?.map((v, _i) => (
+					<section key={`${v.title}-content`} className="post grider">
+						<p className="post-date">
+							<span className="post-date-inner">{v.date}</span>
+						</p>
+						<div>
+							<h2 className="post-title gradation-text">
+								<Link href="/activities/[id]" as={`/activities/${v.id}`}>
+									{v.title}
+								</Link>
+							</h2>
+							{v.tags.length > 0 && (
+								<ul className="post-tags">
+									{v.tags.map((tag) => (
+										<li key={`${v.title}-${tag}`}>{tag}</li>
+									))}
+								</ul>
+							)}
+						</div>
+					</section>
+				))}
 
 				<div className="grider">
 					<span></span>
 					<div className="content-loader">
 						{currentPage !== maxPage ? (
-							<button onClick={next} className="neumorphism-h">
+							<button type="button" onClick={next} className="neumorphism-h">
 								Load More
 							</button>
 						) : (

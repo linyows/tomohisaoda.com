@@ -26,7 +26,7 @@ type Props = {
 	ogimage: string;
 };
 
-export const getStaticProps: GetStaticProps<Props> = async (context) => {
+export const getStaticProps: GetStaticProps<Props> = async (_context) => {
 	const page_id = process.env.NOTION_INTRO_PAGE_ID as string;
 	const block_id = process.env.NOTION_INTRO_PAGE_ID as string;
 	const aboutPage = await FetchPage({ page_id });
@@ -94,7 +94,7 @@ export default function Home({
 				<div className={Styles.portrait}>
 					<img
 						className={Styles.icon}
-						src={aboutPage.icon!.src}
+						src={aboutPage.icon?.src}
 						alt="tomohisaoda"
 					/>
 				</div>

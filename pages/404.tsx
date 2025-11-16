@@ -1,6 +1,5 @@
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
-import { useState } from "react";
 import Hed from "../components/hed";
 import { MakeOgImage } from "../src/lib/ogimage";
 

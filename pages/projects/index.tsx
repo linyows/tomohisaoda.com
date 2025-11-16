@@ -47,7 +47,7 @@ const ProjectIndex: NextPage<Props> = ({ pages, ogimage }) => {
 							</span>
 						</div>
 						<div className={Styles.cards}>
-							{pages[key].map((v, i) => (
+							{pages[key].map((v, _i) => (
 								<section key={`${v.title}-content`} className={Styles.card}>
 									<div className={Styles.cardImage}>
 										<Link href="/projects/[slug]" as={`/projects/${v.slug}`}>

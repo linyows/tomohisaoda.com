@@ -486,7 +486,7 @@ a:focus {
 	line-height: var(--lineHeight-relaxed);
 }
 .page-detail .rotion-richtext-code {
-	font-family: var(--fontFamily-sans) !important;
+	font-family: var(--fontFamily-sans);
 	padding-bottom: 0.3rem;
 }
 .workout .rotion-table-column0 .rotion-table-cell-inner {

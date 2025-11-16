@@ -1,6 +1,5 @@
 import {
 	type DateResponse,
-	DBPageBase,
 	FetchDatabase,
 	type GetDatabaseResponseEx,
 	type QueryDatabaseParameters,

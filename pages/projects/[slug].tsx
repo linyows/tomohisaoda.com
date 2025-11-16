@@ -1,10 +1,5 @@
 import type { ParsedUrlQuery } from "node:querystring";
-import {
-	type GetStaticPaths,
-	type GetStaticProps,
-	type NextPage,
-	PreviewData,
-} from "next";
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import { FetchBlocks, type ListBlockChildrenResponseEx } from "rotion";
 import { Page } from "rotion/ui";
@@ -33,14 +28,14 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 export const getStaticProps: GetStaticProps<Props, Params> = async ({
 	params,
 }) => {
-	const page = await GetProject(params!.slug);
+	const page = await GetProject(params?.slug);
 
 	if (page) {
 		const blocks = await FetchBlocks({
 			block_id: page.id,
 			last_edited_time: page.lastEditedTime,
 		});
-		const ogimage = await MakeOgImage(page!.title, `projects-${page!.slug}`);
+		const ogimage = await MakeOgImage(page?.title, `projects-${page?.slug}`);
 		return {
 			props: {
 				page,
@@ -59,8 +54,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
 };
 
 const ProjectPage: NextPage<Props> = (context) => {
-	const page = context.page!;
-	const blocks = context.blocks!;
+	if (!context.page || !context.blocks) {
+		return null;
+	}
+	const page = context.page;
+	const blocks = context.blocks;
 	return (
 		<article className="grider page-detail project">
 			<Hed
