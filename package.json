@@ -18,7 +18,7 @@
 		"cdate": "^0.0.7",
 		"chart.js": "^4.4.3",
 		"feed": "^4.2.2",
-		"next": "^16.0.3",
+		"next": "^16.0.7",
 		"normalize.css": "^8.0.1",
 		"react": "^19.2.0",
 		"react-chartjs-2": "^5.2.0",
