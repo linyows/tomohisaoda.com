@@ -2,7 +2,7 @@ import {
 	type DateResponse,
 	type DBPageBase,
 	FetchDatabase,
-	type QueryDatabaseParameters,
+	type FetchDatabaseArgs,
 	type RichTextItemResponse,
 	type SelectPropertyResponse,
 } from "rotion";
@@ -82,7 +82,7 @@ const query = {
 			direction: "descending",
 		},
 	],
-} as QueryDatabaseParameters;
+} as FetchDatabaseArgs;
 
 const build = (page: DBPage): Activity => {
 	const props = page.properties;

@@ -4,11 +4,11 @@ import Link from "next/link";
 import {
 	FetchBlocks,
 	FetchDatabase,
+	type FetchDatabaseArgs,
 	type FetchDatabaseRes,
 	FetchPage,
 	type GetPageResponseEx,
 	type ListBlockChildrenResponseEx,
-	type QueryDatabaseParameters,
 	type QueryDatabaseResponseEx,
 } from "rotion";
 import { List, Page, type Link as RotionLink } from "rotion/ui";
@@ -41,27 +41,27 @@ export const getStaticProps: GetStaticProps<Props> = async (_context) => {
 		filter: { property: "Published", checkbox: { equals: true } },
 		sorts: [{ property: "Date", direction: "descending" }],
 		page_size: 5,
-	} as QueryDatabaseParameters);
+	} as FetchDatabaseArgs);
 
 	const blog = await FetchDatabase({
 		database_id: process.env.NOTION_BLOG_DB_ID as string,
 		filter: { property: "Published", checkbox: { equals: true } },
 		sorts: [{ property: "Date", direction: "descending" }],
 		page_size: 7,
-	} as QueryDatabaseParameters);
+	} as FetchDatabaseArgs);
 
 	const activity = await FetchDatabase({
 		database_id: process.env.NOTION_ACTIVITY_DB_ID as string,
 		filter: { property: "Published", checkbox: { equals: true } },
 		sorts: [{ property: "Date", direction: "descending" }],
 		page_size: 15,
-	} as QueryDatabaseParameters);
+	} as FetchDatabaseArgs);
 
 	const workout = await FetchDatabase({
 		database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
 		sorts: [{ property: "Date", direction: "descending" }],
 		page_size: 7,
-	} as QueryDatabaseParameters);
+	} as FetchDatabaseArgs);
 
 	await GenFeed();
 	const ogimage = await MakeOgImage("", "home");

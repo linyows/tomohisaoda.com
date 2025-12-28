@@ -2,7 +2,7 @@ import {
 	type DateResponse,
 	type DBPageBase,
 	FetchDatabase,
-	type QueryDatabaseParameters,
+	type FetchDatabaseArgs,
 	type RichTextItemResponse,
 	type SelectPropertyResponse,
 } from "rotion";
@@ -64,7 +64,7 @@ const query = {
 			direction: "descending",
 		},
 	],
-} as QueryDatabaseParameters;
+} as FetchDatabaseArgs;
 
 const build = (page: DBPage): Blog => {
 	const props = page.properties;
@@ -102,7 +102,7 @@ export const GetBlogs = async (): Promise<Blog[]> => {
 export const GetPaths = async () => {
 	const db = await FetchDatabase(query);
 	return db.results.map((v) => {
-		const p = v as DBPage;
+		const p = v as unknown as DBPage;
 		const slug = p.properties.Slug.rich_text.map((v) => v.plain_text).join(",");
 		return { params: { slug } };
 	});

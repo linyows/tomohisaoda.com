@@ -1,8 +1,8 @@
 import {
 	type DateResponse,
 	FetchDatabase,
+	type FetchDatabaseArgs,
 	type GetDatabaseResponseEx,
-	type QueryDatabaseParameters,
 	type RichTextItemResponse,
 	type SelectPropertyResponse,
 } from "rotion";
@@ -77,7 +77,7 @@ const query = {
 			direction: "descending",
 		},
 	],
-} as QueryDatabaseParameters;
+} as FetchDatabaseArgs;
 
 const build = (page: DBPage): Project => {
 	const props = page.properties;
@@ -102,12 +102,12 @@ export const GetProject = async (
 ): Promise<Project | undefined> => {
 	const db = await FetchDatabase(query);
 	const page = db.results.find((v) => {
-		const p = v as DBPage;
+		const p = v as unknown as DBPage;
 		return (
 			p.properties.Slug.rich_text.map((v) => v.plain_text).join(",") === slug
 		);
 	});
-	return page ? build(page as DBPage) : page;
+	return page ? build(page as unknown as DBPage) : page;
 };
 
 export interface GroupedProjects {
@@ -133,7 +133,7 @@ export const GetProjects = async (): Promise<GroupedProjects> => {
 export const GetPaths = async () => {
 	const db = await FetchDatabase(query);
 	return db.results.map((v) => {
-		const p = v as DBPage;
+		const p = v as unknown as DBPage;
 		const slug = p.properties.Slug.rich_text.map((v) => v.plain_text).join(",");
 		return { params: { slug } };
 	});

@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
 	FetchDatabase,
+	type FetchDatabaseArgs,
 	type FetchDatabaseRes,
-	type QueryDatabaseParameters,
 } from "rotion";
 import { Table } from "rotion/ui";
 
@@ -39,13 +39,13 @@ export const getStaticProps: GetStaticProps<Props> = async (_context) => {
 			{ property: "Name", direction: "descending" },
 		],
 		page_size: 20,
-	} as QueryDatabaseParameters);
+	} as FetchDatabaseArgs);
 
 	const upperTraining = await FetchDatabase({
 		database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
 		filter: { property: "Part", select: { equals: "Upper body" } },
 		sorts: [{ property: "Date", direction: "ascending" }],
-	} as QueryDatabaseParameters);
+	} as FetchDatabaseArgs);
 
 	const lowerTraining = await FetchDatabase({
 		database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
@@ -56,7 +56,7 @@ export const getStaticProps: GetStaticProps<Props> = async (_context) => {
 			],
 		},
 		sorts: [{ property: "Date", direction: "ascending" }],
-	} as QueryDatabaseParameters);
+	} as FetchDatabaseArgs);
 
 	await GenFeed();
 	const ogimage = await MakeOgImage(`${title}: ${desc}`, `weight-training`);
