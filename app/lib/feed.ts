@@ -24,10 +24,16 @@ function extractTextFromBlocks(blocks: ListBlockChildrenResponseEx): string {
 		} else if (blockType === "heading_3" && "heading_3" in block) {
 			richTextArray = block.heading_3.rich_text;
 			text += "\n";
-		} else if (blockType === "bulleted_list_item" && "bulleted_list_item" in block) {
+		} else if (
+			blockType === "bulleted_list_item" &&
+			"bulleted_list_item" in block
+		) {
 			richTextArray = block.bulleted_list_item.rich_text;
 			text += "• ";
-		} else if (blockType === "numbered_list_item" && "numbered_list_item" in block) {
+		} else if (
+			blockType === "numbered_list_item" &&
+			"numbered_list_item" in block
+		) {
 			richTextArray = block.numbered_list_item.rich_text;
 			text += "- ";
 		} else if (blockType === "quote" && "quote" in block) {

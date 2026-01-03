@@ -1,5 +1,5 @@
-import { FetchBlocks } from "rotion";
 import { notFound } from "next/navigation";
+import { FetchBlocks } from "rotion";
 import PageDetail from "../../components/page-detail";
 import { GetBlog, GetPaths } from "../../lib/blog";
 import { MakeOgImage } from "../../lib/ogimage";
@@ -15,7 +15,11 @@ export async function generateStaticParams() {
 	}));
 }
 
-export default async function BlogPage({ params }: { params: Promise<Params> }) {
+export default async function BlogPage({
+	params,
+}: {
+	params: Promise<Params>;
+}) {
 	const { slug } = await params;
 	const page = await GetBlog(slug);
 

@@ -2,8 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
-import { Page, type ListBlockChildrenResponseEx } from "../../components/rotion-wrappers";
 import Hed from "../../components/hed";
+import {
+	type ListBlockChildrenResponseEx,
+	Page,
+} from "../../components/rotion-wrappers";
 
 // Dynamically import to load only on client-side
 const MutatingDots = dynamic(

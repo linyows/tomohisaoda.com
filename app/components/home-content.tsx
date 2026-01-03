@@ -4,8 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PageObjectResponseEx } from "rotion";
 import type { Link as RotionLink } from "rotion/ui";
-import { List, Page, type FetchDatabaseRes, type ListBlockChildrenResponseEx } from "./rotion-wrappers";
 import Styles from "../styles/Home.module.css";
+import {
+	type FetchDatabaseRes,
+	List,
+	type ListBlockChildrenResponseEx,
+	Page,
+} from "./rotion-wrappers";
 
 type Props = {
 	aboutPage: PageObjectResponseEx;

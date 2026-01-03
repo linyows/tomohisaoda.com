@@ -1,5 +1,5 @@
-import { FetchBlocks } from "rotion";
 import { notFound } from "next/navigation";
+import { FetchBlocks } from "rotion";
 import PageDetail from "../../components/page-detail";
 import { MakeOgImage } from "../../lib/ogimage";
 import { GetPaths, GetProject } from "../../lib/project";
@@ -17,7 +17,9 @@ export async function generateStaticParams() {
 
 export default async function ProjectPage({
 	params,
-}: { params: Promise<Params> }) {
+}: {
+	params: Promise<Params>;
+}) {
 	const { slug } = await params;
 	const page = await GetProject(slug);
 

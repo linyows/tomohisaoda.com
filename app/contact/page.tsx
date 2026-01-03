@@ -11,5 +11,12 @@ export default async function Contact() {
 	});
 	const ogimage = await MakeOgImage(`${title}`, `contact`);
 
-	return <ContactForm contact={contact} ogimage={ogimage} title={title} desc={desc} />;
+	return (
+		<ContactForm
+			contact={contact}
+			ogimage={ogimage}
+			title={title}
+			desc={desc}
+		/>
+	);
 }

@@ -1,7 +1,4 @@
-import {
-	FetchDatabase,
-	type FetchDatabaseArgs,
-} from "rotion";
+import { FetchDatabase, type FetchDatabaseArgs } from "rotion";
 import GenFeed from "../lib/feed";
 import { MakeOgImage } from "../lib/ogimage";
 import { MakeData } from "../lib/workout";

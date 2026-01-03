@@ -3,9 +3,8 @@
 import { Chart, type ChartData, registerables } from "chart.js";
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
-import { Table, type FetchDatabaseRes } from "../../components/rotion-wrappers";
-
 import Hed from "../../components/hed";
+import { type FetchDatabaseRes, Table } from "../../components/rotion-wrappers";
 import Styles from "../../styles/Workout.module.css";
 
 Chart.register(...registerables);

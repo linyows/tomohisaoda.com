@@ -1,5 +1,5 @@
-import { FetchBlocks } from "rotion";
 import { notFound } from "next/navigation";
+import { FetchBlocks } from "rotion";
 import PageDetail from "../../../components/page-detail";
 import { GetActivity, GetPaths } from "../../lib/activity";
 import { MakeOgImage } from "../../lib/ogimage";
@@ -17,7 +17,9 @@ export async function generateStaticParams() {
 
 export default async function ActivityPage({
 	params,
-}: { params: Promise<Params> }) {
+}: {
+	params: Promise<Params>;
+}) {
 	const { id } = await params;
 	const page = await GetActivity(id);
 

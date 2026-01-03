@@ -49,7 +49,9 @@ const GA: React.FC = () => {
 	const searchParams = useSearchParams();
 
 	useEffect(() => {
-		const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
+		const url =
+			pathname +
+			(searchParams?.toString() ? `?${searchParams.toString()}` : "");
 		pageview(url);
 	}, [pathname, searchParams]);
 
