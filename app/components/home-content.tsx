@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { PageObjectResponseEx } from "rotion";
-import type { Link as RotionLink } from "rotion/ui";
 import Styles from "../styles/Home.module.css";
 import {
   type FetchDatabaseRes,
@@ -67,7 +66,6 @@ export default function HomeContent({
             db={project}
             options={{
               href: { Name: "/projects/[Slug]" },
-              link: Link as RotionLink,
             }}
           />
           <p className={Styles.viewall}>
@@ -91,7 +89,6 @@ export default function HomeContent({
             db={blog}
             options={{
               href: { Name: "/blog/[Slug]" },
-              link: Link as RotionLink,
             }}
           />
           <p className={Styles.viewall}>
@@ -115,7 +112,6 @@ export default function HomeContent({
             db={activity}
             options={{
               href: { Name: "/activities/[id]" },
-              link: Link as RotionLink,
             }}
           />
           <p className={Styles.viewall}>
