@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Page, type ListBlockChildrenResponseEx } from "../app/components/rotion-wrappers";
+import { Page, type ListBlockChildrenResponseEx } from "./rotion-wrappers";
 
 type BlogDetailProps = {
 	type: "blog";

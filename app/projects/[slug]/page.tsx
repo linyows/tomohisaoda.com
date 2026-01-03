@@ -1,6 +1,6 @@
 import { FetchBlocks } from "rotion";
 import { notFound } from "next/navigation";
-import PageDetail from "../../../components/page-detail";
+import PageDetail from "../../components/page-detail";
 import { MakeOgImage } from "../../lib/ogimage";
 import { GetPaths, GetProject } from "../../lib/project";
 
