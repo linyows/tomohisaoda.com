@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Hed from "../../components/hed";
+import Hed from "../components/hed";
 import { MakeOgImage } from "../../src/lib/ogimage";
 import { GetProjects } from "../../src/lib/project";
 import Styles from "../../styles/Project.module.css";

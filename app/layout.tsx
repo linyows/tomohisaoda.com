@@ -3,9 +3,9 @@ import "../styles/globals.css";
 import "normalize.css/normalize.css";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Footer from "../components/footer";
-import GA from "../components/ga";
-import Header from "../components/header";
+import Footer from "./components/footer";
+import GA from "./components/ga";
+import Header from "./components/header";
 import { notosans, notoserif } from "../src/lib/fonts";
 
 export const metadata: Metadata = {

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { UsePagination } from "../../components/rotion-wrappers";
-import Hed from "../../../components/hed";
+import { UsePagination } from "../components/rotion-wrappers";
+import Hed from "../components/hed";
 import type { Blog } from "../../../src/lib/blog";
 
 type Props = {
