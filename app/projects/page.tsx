@@ -1,6 +1,7 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Hed from "../components/hed";
+import { generatePageMetadata } from "../lib/metadata";
 import { MakeOgImage } from "../lib/ogimage";
 import { GetProjects } from "../lib/project";
 import Styles from "../styles/Project.module.css";
@@ -9,13 +10,16 @@ const title = "Project";
 const desc =
   "These are software engineering projects with me and my colleagues.";
 
+export async function generateMetadata(): Promise<Metadata> {
+  const ogimage = await MakeOgImage(`${title}: ${desc}`, "projects");
+  return generatePageMetadata({ title, desc, ogimage, path: "/projects" });
+}
+
 export default async function ProjectIndex() {
   const pages = await GetProjects();
-  const ogimage = await MakeOgImage(`${title}: ${desc}`, `projects`);
 
   return (
     <div>
-      <Hed title={title} desc={desc} ogimage={ogimage} path="/projects" />
       <header className="grider page-list-header">
         <span></span>
         <div>

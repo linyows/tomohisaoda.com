@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FetchBlocks } from "rotion";
 import PageDetail from "../../../components/page-detail";
 import { GetActivity, GetPaths } from "../../lib/activity";
+import { generatePageMetadata } from "../../lib/metadata";
 import { MakeOgImage } from "../../lib/ogimage";
 
 type Params = {
@@ -13,6 +15,26 @@ export async function generateStaticParams() {
   return paths.map((path) => ({
     id: path.params.id,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const page = await GetActivity(id);
+
+  if (!page) {
+    return generatePageMetadata({});
+  }
+
+  const ogimage = await MakeOgImage(page.title, `activities-${page.id}`);
+  return generatePageMetadata({
+    title: page.title,
+    ogimage,
+    path: `/activities/${page.id}`,
+  });
 }
 
 export default async function ActivityPage({
@@ -31,7 +53,6 @@ export default async function ActivityPage({
     block_id: page.id,
     last_edited_time: page.lastEditedTime,
   });
-  const ogimage = await MakeOgImage(page.title, `activities-${page.id}`);
 
   return (
     <PageDetail

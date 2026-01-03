@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import Hed from "./components/hed";
+import { generatePageMetadata } from "./lib/metadata";
 import { MakeOgImage } from "./lib/ogimage";
 
 const title = "404";
@@ -26,12 +27,14 @@ _  +[_[_+_]P/    _    |_       ____      _=--|-~
 
 `;
 
-export default async function NotFound() {
+export async function generateMetadata(): Promise<Metadata> {
   const ogimage = await MakeOgImage(`${title}: ${desc}`, "404");
+  return generatePageMetadata({ title, desc, ogimage, path: "/404" });
+}
 
+export default async function NotFound() {
   return (
     <>
-      <Hed title={title} desc={desc} ogimage={ogimage} path="/404" />
       <header className="grider page-list-header">
         <span></span>
         <div>

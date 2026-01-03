@@ -1,11 +1,18 @@
+import type { Metadata } from "next";
 import { FetchDatabase, type FetchDatabaseArgs } from "rotion";
 import GenFeed from "../lib/feed";
+import { generatePageMetadata } from "../lib/metadata";
 import { MakeOgImage } from "../lib/ogimage";
 import { MakeData } from "../lib/workout";
 import WorkoutClient from "./components/workout-client";
 
 const title = "Workout";
 const desc = "Exercise is mother nature's magic pill";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const ogimage = await MakeOgImage(`${title}: ${desc}`, `weight-training`);
+  return generatePageMetadata({ title, desc, ogimage, path: "/workout" });
+}
 
 export default async function Workout() {
   const latest = await FetchDatabase({
@@ -35,11 +42,9 @@ export default async function Workout() {
   } as FetchDatabaseArgs);
 
   await GenFeed();
-  const ogimage = await MakeOgImage(`${title}: ${desc}`, `weight-training`);
 
   return (
     <WorkoutClient
-      ogimage={ogimage}
       latest={latest}
       upperBodyW={MakeData(upperTraining, "weekly")}
       lowerBodyW={MakeData(lowerTraining, "weekly")}

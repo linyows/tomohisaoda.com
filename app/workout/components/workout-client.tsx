@@ -3,7 +3,6 @@
 import { Chart, type ChartData, registerables } from "chart.js";
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
-import Hed from "../../components/hed";
 import { type FetchDatabaseRes, Table } from "../../components/rotion-wrappers";
 import Styles from "../../styles/Workout.module.css";
 
@@ -11,7 +10,6 @@ Chart.register(...registerables);
 Chart.defaults.plugins.legend.position = "chartArea";
 
 type Props = {
-  ogimage: string;
   latest: FetchDatabaseRes;
   upperBodyW: ChartData<"line">;
   lowerBodyW: ChartData<"line">;
@@ -27,7 +25,6 @@ export default function WorkoutClient({
   lowerBodyW,
   upperBodyM,
   lowerBodyM,
-  ogimage,
   title,
   desc,
 }: Props) {
@@ -55,13 +52,6 @@ export default function WorkoutClient({
 
   return (
     <>
-      <Hed
-        title={title}
-        desc={desc}
-        ogimage={ogimage}
-        path="/weight-training"
-      />
-
       <header className="grider page-list-header">
         <span></span>
         <div>

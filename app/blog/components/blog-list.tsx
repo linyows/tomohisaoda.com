@@ -1,18 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import Hed from "../../components/hed";
 import { UsePagination } from "../../components/rotion-wrappers";
 import type { Blog } from "../../lib/blog";
 
 type Props = {
   pages: Blog[];
-  ogimage: string;
   title: string;
   desc: string;
 };
 
-export default function BlogList({ pages, ogimage, title, desc }: Props) {
+export default function BlogList({ pages, title, desc }: Props) {
   const { next, currentPage, currentData, maxPage } = UsePagination<Blog>(
     pages,
     10,
@@ -21,7 +19,6 @@ export default function BlogList({ pages, ogimage, title, desc }: Props) {
 
   return (
     <div className="page-list">
-      <Hed title={title} desc={desc} ogimage={ogimage} path="/blog" />
       <header className="grider page-list-header">
         <span></span>
         <div>

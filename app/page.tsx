@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   FetchBlocks,
   FetchDatabase,
@@ -6,7 +7,13 @@ import {
 } from "rotion";
 import HomeContent from "./components/home-content";
 import GenFeed from "./lib/feed";
+import { generatePageMetadata } from "./lib/metadata";
 import { MakeOgImage } from "./lib/ogimage";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const ogimage = await MakeOgImage("", "home");
+  return generatePageMetadata({ ogimage, path: "/" });
+}
 
 export default async function Home() {
   const page_id = process.env.NOTION_INTRO_PAGE_ID as string;
@@ -45,7 +52,6 @@ export default async function Home() {
   } as FetchDatabaseArgs);
 
   await GenFeed();
-  const ogimage = await MakeOgImage("", "home");
 
   return (
     <HomeContent

@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
-import Hed from "../../components/hed";
 import {
   type ListBlockChildrenResponseEx,
   Page,
@@ -16,7 +15,6 @@ const MutatingDots = dynamic(
 
 type Props = {
   contact: ListBlockChildrenResponseEx;
-  ogimage?: string;
   title: string;
   desc: string;
 };
@@ -45,7 +43,7 @@ const captchaError = (msg: string) => {
   return <p className="captcha-error">{msg}</p>;
 };
 
-export default function ContactForm({ contact, ogimage, title, desc }: Props) {
+export default function ContactForm({ contact, title, desc }: Props) {
   const endpoint = `https://contact.tomohisaoda.com/`;
   const initQuery = {
     name: "",
@@ -185,7 +183,6 @@ export default function ContactForm({ contact, ogimage, title, desc }: Props) {
 
   return (
     <div className="page-list">
-      <Hed title={title} desc={desc} ogimage={ogimage} path="/contact" />
       <header className="grider page-list-header">
         <span></span>
         <div>

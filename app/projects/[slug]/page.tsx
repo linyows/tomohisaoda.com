@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FetchBlocks } from "rotion";
 import PageDetail from "../../components/page-detail";
+import { generatePageMetadata } from "../../lib/metadata";
 import { MakeOgImage } from "../../lib/ogimage";
 import { GetPaths, GetProject } from "../../lib/project";
 
@@ -13,6 +15,27 @@ export async function generateStaticParams() {
   return paths.map((path) => ({
     slug: path.params.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const page = await GetProject(slug);
+
+  if (!page) {
+    return generatePageMetadata({});
+  }
+
+  const ogimage = await MakeOgImage(page.title, `projects-${page.slug}`);
+  return generatePageMetadata({
+    title: page.title,
+    desc: page.desc,
+    ogimage,
+    path: `/projects/${page.slug}`,
+  });
 }
 
 export default async function ProjectPage({
@@ -31,7 +54,6 @@ export default async function ProjectPage({
     block_id: page.id,
     last_edited_time: page.lastEditedTime,
   });
-  const ogimage = await MakeOgImage(page.title, `projects-${page.slug}`);
 
   return (
     <PageDetail

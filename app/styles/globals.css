@@ -632,6 +632,11 @@ a:focus {
 .post-body .rotion-text-blockquote {
   font-family: var(--fontFamily-sans);
 }
+@media (max-width: 480px) {
+  .post-body .rotion-bulleted-list {
+    font-size: var(--fontSize-1);
+  }
+}
 
 /* CONTACT */
 .form-body input,
