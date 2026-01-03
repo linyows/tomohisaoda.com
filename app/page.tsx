@@ -1,60 +1,60 @@
 import {
-	FetchBlocks,
-	FetchDatabase,
-	type FetchDatabaseArgs,
-	FetchPage,
+  FetchBlocks,
+  FetchDatabase,
+  type FetchDatabaseArgs,
+  FetchPage,
 } from "rotion";
 import HomeContent from "./components/home-content";
 import GenFeed from "./lib/feed";
 import { MakeOgImage } from "./lib/ogimage";
 
 export default async function Home() {
-	const page_id = process.env.NOTION_INTRO_PAGE_ID as string;
-	const block_id = process.env.NOTION_INTRO_PAGE_ID as string;
-	const aboutPage = await FetchPage({ page_id });
-	const about = await FetchBlocks({
-		block_id,
-		last_edited_time: aboutPage.last_edited_time,
-	});
+  const page_id = process.env.NOTION_INTRO_PAGE_ID as string;
+  const block_id = process.env.NOTION_INTRO_PAGE_ID as string;
+  const aboutPage = await FetchPage({ page_id });
+  const about = await FetchBlocks({
+    block_id,
+    last_edited_time: aboutPage.last_edited_time,
+  });
 
-	const project = await FetchDatabase({
-		database_id: process.env.NOTION_PROJECT_DB_ID as string,
-		filter: { property: "Published", checkbox: { equals: true } },
-		sorts: [{ property: "Date", direction: "descending" }],
-		page_size: 5,
-	} as FetchDatabaseArgs);
+  const project = await FetchDatabase({
+    database_id: process.env.NOTION_PROJECT_DB_ID as string,
+    filter: { property: "Published", checkbox: { equals: true } },
+    sorts: [{ property: "Date", direction: "descending" }],
+    page_size: 5,
+  } as FetchDatabaseArgs);
 
-	const blog = await FetchDatabase({
-		database_id: process.env.NOTION_BLOG_DB_ID as string,
-		filter: { property: "Published", checkbox: { equals: true } },
-		sorts: [{ property: "Date", direction: "descending" }],
-		page_size: 7,
-	} as FetchDatabaseArgs);
+  const blog = await FetchDatabase({
+    database_id: process.env.NOTION_BLOG_DB_ID as string,
+    filter: { property: "Published", checkbox: { equals: true } },
+    sorts: [{ property: "Date", direction: "descending" }],
+    page_size: 7,
+  } as FetchDatabaseArgs);
 
-	const activity = await FetchDatabase({
-		database_id: process.env.NOTION_ACTIVITY_DB_ID as string,
-		filter: { property: "Published", checkbox: { equals: true } },
-		sorts: [{ property: "Date", direction: "descending" }],
-		page_size: 15,
-	} as FetchDatabaseArgs);
+  const activity = await FetchDatabase({
+    database_id: process.env.NOTION_ACTIVITY_DB_ID as string,
+    filter: { property: "Published", checkbox: { equals: true } },
+    sorts: [{ property: "Date", direction: "descending" }],
+    page_size: 15,
+  } as FetchDatabaseArgs);
 
-	const workout = await FetchDatabase({
-		database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
-		sorts: [{ property: "Date", direction: "descending" }],
-		page_size: 7,
-	} as FetchDatabaseArgs);
+  const workout = await FetchDatabase({
+    database_id: process.env.NOTION_WEIGHTTRAINING_DB_ID as string,
+    sorts: [{ property: "Date", direction: "descending" }],
+    page_size: 7,
+  } as FetchDatabaseArgs);
 
-	await GenFeed();
-	const ogimage = await MakeOgImage("", "home");
+  await GenFeed();
+  const ogimage = await MakeOgImage("", "home");
 
-	return (
-		<HomeContent
-			aboutPage={aboutPage}
-			about={about}
-			project={project}
-			blog={blog}
-			activity={activity}
-			workout={workout}
-		/>
-	);
+  return (
+    <HomeContent
+      aboutPage={aboutPage}
+      about={about}
+      project={project}
+      blog={blog}
+      activity={activity}
+      workout={workout}
+    />
+  );
 }

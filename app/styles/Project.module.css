@@ -1,101 +1,101 @@
 .gallery {
-	margin: 0 var(--spacing-20);
+  margin: 0 var(--spacing-20);
 }
 
 .groupedCards {
-	display: grid;
-	grid-template-columns: 160px 1fr;
-	gap: var(--spacing-16);
-	width: 100%;
-	padding: var(--spacing-5) 0 0;
-	margin-bottom: var(--spacing-10);
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--spacing-16);
+  width: 100%;
+  padding: var(--spacing-5) 0 0;
+  margin-bottom: var(--spacing-10);
 }
 
 .groupName {
-	text-align: right;
-	margin-top: var(--spacing-1);
+  text-align: right;
+  margin-top: var(--spacing-1);
 }
 
 .groupNameInner {
-	font-size: var(--fontSize-0);
+  font-size: var(--fontSize-0);
 }
 
 .cards {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	gap: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3rem;
 }
 
 .card {
-	width: 100%;
-	height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .cardTitle {
-	font-size: var(--fontSize-1);
-	font-weight: normal;
-	margin: var(--spacing-5) 0 0;
+  font-size: var(--fontSize-1);
+  font-weight: normal;
+  margin: var(--spacing-5) 0 0;
 }
 
 .cardImage a {
-	display: block;
-	border: 1px solid #fff;
-	width: 100%;
-	height: 100px;
-	overflow: hidden;
-	position: relative;
-	background-color: #fff;
-	border-radius: 15px;
+  display: block;
+  border: 1px solid #fff;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
 .cardImage a:hover img {
-	animation: blinker 1s ease infinite;
+  animation: blinker 1s ease infinite;
 }
 
 @keyframes blinker {
-	0% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .card img {
-	object-fit: cover;
+  object-fit: cover;
 }
 
 @media (max-width: 1560px) {
-	.groupedCards {
-		display: block;
-	}
-	.groupName {
-		text-align: center;
-		margin-bottom: var(--spacing-10);
-	}
+  .groupedCards {
+    display: block;
+  }
+  .groupName {
+    text-align: center;
+    margin-bottom: var(--spacing-10);
+  }
 }
 
 @media (max-width: 480px) {
-	.gallery {
-		margin: 0 var(--spacing-5);
-	}
-	.cardTitle {
-		margin: var(--spacing-2);
-		text-align: right;
-	}
+  .gallery {
+    margin: 0 var(--spacing-5);
+  }
+  .cardTitle {
+    margin: var(--spacing-2);
+    text-align: right;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-	.cardImage a {
-		border-color: #000;
-		background-color: #000;
-	}
+  .cardImage a {
+    border-color: #000;
+    background-color: #000;
+  }
 
-	.groupNameInner {
-		background: rgba(255, 255, 255, 0.1);
-		color: #aaa;
-	}
+  .groupNameInner {
+    background: rgba(255, 255, 255, 0.1);
+    color: #aaa;
+  }
 }

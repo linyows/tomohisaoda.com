@@ -9,42 +9,42 @@ import Header from "./components/header";
 import { notosans, notoserif } from "./lib/fonts";
 
 export const metadata: Metadata = {
-	alternates: {
-		types: {
-			"application/rss+xml": "/index.xml",
-		},
-	},
+  alternates: {
+    types: {
+      "application/rss+xml": "/index.xml",
+    },
+  },
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<html lang="ja" className={`${notosans.variable} ${notoserif.variable}`}>
-			<head>
-				<link rel="icon" href="/favicon.ico" />
-			</head>
-			<body>
-				<Suspense fallback={null}>
-					<GA />
-				</Suspense>
+  return (
+    <html lang="ja" className={`${notosans.variable} ${notoserif.variable}`}>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body>
+        <Suspense fallback={null}>
+          <GA />
+        </Suspense>
 
-				<div className="accent"></div>
+        <div className="accent"></div>
 
-				<div className="container">
-					<div>
-						<Header />
-					</div>
+        <div className="container">
+          <div>
+            <Header />
+          </div>
 
-					<div className="content">{children}</div>
+          <div className="content">{children}</div>
 
-					<div>
-						<Footer />
-					</div>
-				</div>
-			</body>
-		</html>
-	);
+          <div>
+            <Footer />
+          </div>
+        </div>
+      </body>
+    </html>
+  );
 }

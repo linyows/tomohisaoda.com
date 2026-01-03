@@ -1,116 +1,116 @@
 .workout {
-	margin: 0 var(--spacing-20);
+  margin: 0 var(--spacing-20);
 }
 
 .training {
-	display: grid;
-	grid-template-columns: 160px 1fr;
-	gap: var(--spacing-16);
-	width: 100%;
-	padding: 0;
-	margin-bottom: var(--spacing-16);
-	overflow: scroll;
-	font-family: var(--fontFamily-sans);
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--spacing-16);
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--spacing-16);
+  overflow: scroll;
+  font-family: var(--fontFamily-sans);
 }
 
 .chart {
-	overflow-x: scroll;
-	padding-bottom: var(--spacing-6);
+  overflow-x: scroll;
+  padding-bottom: var(--spacing-6);
 }
 
 .chartInner {
-	min-width: 1200px;
-	min-height: 400px;
-	position: relative;
+  min-width: 1200px;
+  min-height: 400px;
+  position: relative;
 }
 
 .pop {
-	font-size: var(--fontSize-0);
-	text-align: right;
-	margin-top: var(--spacing-6);
+  font-size: var(--fontSize-0);
+  text-align: right;
+  margin-top: var(--spacing-6);
 }
 
 .header2 {
-	margin-top: var(--spacing-4);
-	font-size: var(--fontSize-5);
+  margin-top: var(--spacing-4);
+  font-size: var(--fontSize-5);
 }
 
 .intervals {
-	list-style-type: none;
-	margin: 0 -5rem;
-	padding: 0;
-	position: absolute;
-	top: 2rem;
-	left: 50%;
+  list-style-type: none;
+  margin: 0 -5rem;
+  padding: 0;
+  position: absolute;
+  top: 2rem;
+  left: 50%;
 }
 
 .intervals li {
-	display: inline-block;
-	background: inherit;
+  display: inline-block;
+  background: inherit;
 }
 
 .intervals li:hover {
-	background: inherit;
+  background: inherit;
 }
 
 .intervals li button {
-	background: none;
-	display: inline-block;
-	padding: 0.3rem 1.2rem;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	line-height: 1.7;
-	font-size: var(--fontSize-0);
-	cursor: pointer;
+  background: none;
+  display: inline-block;
+  padding: 0.3rem 1.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  line-height: 1.7;
+  font-size: var(--fontSize-0);
+  cursor: pointer;
 }
 
 .intervals li:first-child button {
-	border-top-left-radius: 30px;
-	border-bottom-left-radius: 30px;
-	border-right: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-right: none;
 }
 
 .intervals li:last-child button {
-	border-top-right-radius: 30px;
-	border-bottom-right-radius: 30px;
-	border-left: none;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-left: none;
 }
 
 .intervals li button:hover {
-	border-color: rgba(0, 0, 0, 0.5);
-	background-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .intervals .selected {
-	background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 1560px) {
-	.training {
-		display: block;
-	}
-	.pop {
-		text-align: center;
-		margin-bottom: var(--spacing-5);
-	}
-	.intervals {
-		margin-left: 0;
-		left: 5rem;
-	}
+  .training {
+    display: block;
+  }
+  .pop {
+    text-align: center;
+    margin-bottom: var(--spacing-5);
+  }
+  .intervals {
+    margin-left: 0;
+    left: 5rem;
+  }
 }
 
 @media (max-width: 480px) {
-	.workout {
-		margin: 0 var(--spacing-5);
-	}
+  .workout {
+    margin: 0 var(--spacing-5);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-	.intervals li button:hover {
-		border-color: rgba(0, 0, 0, 0.4);
-		background-color: rgba(0, 0, 0, 0.4);
-	}
+  .intervals li button:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 
-	.intervals .selected {
-		background-color: rgba(0, 0, 0, 0.2);
-	}
+  .intervals .selected {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }

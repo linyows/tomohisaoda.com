@@ -27,32 +27,32 @@ _  +[_[_+_]P/    _    |_       ____      _=--|-~
 `;
 
 export default async function NotFound() {
-	const ogimage = await MakeOgImage(`${title}: ${desc}`, "404");
+  const ogimage = await MakeOgImage(`${title}: ${desc}`, "404");
 
-	return (
-		<>
-			<Hed title={title} desc={desc} ogimage={ogimage} path="/404" />
-			<header className="grider page-list-header">
-				<span></span>
-				<div>
-					<h1>{title}</h1>
-					<p>{desc}</p>
-				</div>
-			</header>
+  return (
+    <>
+      <Hed title={title} desc={desc} ogimage={ogimage} path="/404" />
+      <header className="grider page-list-header">
+        <span></span>
+        <div>
+          <h1>{title}</h1>
+          <p>{desc}</p>
+        </div>
+      </header>
 
-			<section className="grider">
-				<span></span>
-				<div>
-					<pre className="asciiart">
-						<code>{asciiart}</code>
-					</pre>
-					<p className="home">
-						<Link className="to-home neumorphism-h" href="/">
-							Go back to Home
-						</Link>
-					</p>
-				</div>
-			</section>
-		</>
-	);
+      <section className="grider">
+        <span></span>
+        <div>
+          <pre className="asciiart">
+            <code>{asciiart}</code>
+          </pre>
+          <p className="home">
+            <Link className="to-home neumorphism-h" href="/">
+              Go back to Home
+            </Link>
+          </p>
+        </div>
+      </section>
+    </>
+  );
 }
