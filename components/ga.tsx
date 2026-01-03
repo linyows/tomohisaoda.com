@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Document:
  * https://nextjs.org/docs/messages/next-script-for-ga
@@ -5,7 +7,7 @@
  * https://github.com/vercel/next.js/tree/canary/examples/with-google-analytics
  */
 
-import { useRouter } from "next/router";
+import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import type React from "react";
 import { useEffect } from "react";
@@ -43,21 +45,13 @@ export const event = ({ action, category, label, value }: EventProps) => {
 };
 
 const GA: React.FC = () => {
-	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
 
 	useEffect(() => {
-		const handleRouteChange = (url: string) => {
-			pageview(url);
-		};
-
-		router.events.on("routeChangeComplete", handleRouteChange);
-		router.events.on("hashChangeComplete", handleRouteChange);
-
-		return () => {
-			router.events.off("routeChangeComplete", handleRouteChange);
-			router.events.off("hashChangeComplete", handleRouteChange);
-		};
-	}, [router.events]);
+		const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
+		pageview(url);
+	}, [pathname, searchParams]);
 
 	return (
 		<>
