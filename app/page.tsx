@@ -5,8 +5,8 @@ import {
 	FetchPage,
 } from "rotion";
 import HomeContent from "./components/home-content";
-import GenFeed from "../src/lib/feed";
-import { MakeOgImage } from "../src/lib/ogimage";
+import GenFeed from "./lib/feed";
+import { MakeOgImage } from "./lib/ogimage";
 
 export default async function Home() {
 	const page_id = process.env.NOTION_INTRO_PAGE_ID as string;

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { UsePagination } from "../components/rotion-wrappers";
 import Hed from "../components/hed";
-import type { Activity } from "../../../src/lib/activity";
+import type { Activity } from "../../lib/activity";
 
 type Props = {
 	pages: Activity[];

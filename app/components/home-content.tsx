@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { PageObjectResponseEx } from "rotion";
 import type { Link as RotionLink } from "rotion/ui";
 import { List, Page, type FetchDatabaseRes, type ListBlockChildrenResponseEx } from "./rotion-wrappers";
-import Styles from "../../styles/Home.module.css";
+import Styles from "../styles/Home.module.css";
 
 type Props = {
 	aboutPage: PageObjectResponseEx;

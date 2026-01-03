@@ -1,5 +1,5 @@
-import { GetActivities } from "../../src/lib/activity";
-import { MakeOgImage } from "../../src/lib/ogimage";
+import { GetActivities } from "../lib/activity";
+import { MakeOgImage } from "../lib/ogimage";
 import ActivityList from "./components/activity-list";
 
 const title = "Activities";

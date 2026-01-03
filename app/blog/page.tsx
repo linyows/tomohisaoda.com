@@ -1,5 +1,5 @@
-import { GetBlogs } from "../../src/lib/blog";
-import { MakeOgImage } from "../../src/lib/ogimage";
+import { GetBlogs } from "../lib/blog";
+import { MakeOgImage } from "../lib/ogimage";
 import BlogList from "./components/blog-list";
 
 const title = "Blog";

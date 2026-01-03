@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Hed from "./components/hed";
-import { MakeOgImage } from "../src/lib/ogimage";
+import { MakeOgImage } from "./lib/ogimage";
 
 const title = "404";
 const desc = "Looks like this page is unavailable.";

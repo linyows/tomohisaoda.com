@@ -1,8 +1,8 @@
 import { FetchBlocks } from "rotion";
 import { notFound } from "next/navigation";
 import PageDetail from "../../../components/page-detail";
-import { MakeOgImage } from "../../../src/lib/ogimage";
-import { GetPaths, GetProject } from "../../../src/lib/project";
+import { MakeOgImage } from "../../lib/ogimage";
+import { GetPaths, GetProject } from "../../lib/project";
 
 type Params = {
 	slug: string;

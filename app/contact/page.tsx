@@ -1,5 +1,5 @@
 import { FetchBlocks } from "rotion";
-import { MakeOgImage } from "../../src/lib/ogimage";
+import { MakeOgImage } from "../lib/ogimage";
 import ContactForm from "./components/contact-form";
 
 const title = "Contact";

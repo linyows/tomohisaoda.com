@@ -6,7 +6,7 @@ import { Line } from "react-chartjs-2";
 import { Table, type FetchDatabaseRes } from "../components/rotion-wrappers";
 
 import Hed from "../components/hed";
-import Styles from "../../../styles/Workout.module.css";
+import Styles from "../../styles/Workout.module.css";
 
 Chart.register(...registerables);
 Chart.defaults.plugins.legend.position = "chartArea";

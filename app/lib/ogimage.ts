@@ -4,10 +4,10 @@ import React from "react";
 import satori, { type SatoriOptions } from "satori";
 import sharp from "sharp";
 import twemoji from "twemoji";
-import OgImage from "../../app/components/ogimage";
+import OgImage from "../components/ogimage";
 
-const notosansBold = readFileSync("./src/fonts/NotoSansJP-Black.woff");
-const notosansRegular = readFileSync("./src/fonts/NotoSansJP-Regular.woff");
+const notosansBold = readFileSync("./app/fonts/NotoSansJP-Black.woff");
+const notosansRegular = readFileSync("./app/fonts/NotoSansJP-Regular.woff");
 
 const getIconUrl = (s: string): string => {
 	const codePoint = twemoji.convert.toCodePoint(s);

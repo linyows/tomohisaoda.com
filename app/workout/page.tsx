@@ -2,9 +2,9 @@ import {
 	FetchDatabase,
 	type FetchDatabaseArgs,
 } from "rotion";
-import GenFeed from "../../src/lib/feed";
-import { MakeOgImage } from "../../src/lib/ogimage";
-import { MakeData } from "../../src/lib/workout";
+import GenFeed from "../lib/feed";
+import { MakeOgImage } from "../lib/ogimage";
+import { MakeData } from "../lib/workout";
 import WorkoutClient from "./components/workout-client";
 
 const title = "Workout";
