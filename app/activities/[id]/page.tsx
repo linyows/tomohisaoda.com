@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FetchBlocks } from "rotion";
-import PageDetail from "../../../components/page-detail";
+import PageDetail from "../../components/page-detail";
 import { GetActivity, GetPaths } from "../../lib/activity";
 import { generatePageMetadata } from "../../lib/metadata";
 import { MakeOgImage } from "../../lib/ogimage";

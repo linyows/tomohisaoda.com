@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ListBlockChildrenResponseEx, PageObjectResponseEx } from "rotion";
 import {
   FetchBlocks,
   FetchDatabase,
@@ -18,11 +19,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const page_id = process.env.NOTION_INTRO_PAGE_ID as string;
   const block_id = process.env.NOTION_INTRO_PAGE_ID as string;
-  const aboutPage = await FetchPage({ page_id });
+  const aboutPage = await FetchPage({ page_id }) as PageObjectResponseEx;
   const about = await FetchBlocks({
     block_id,
     last_edited_time: aboutPage.last_edited_time,
-  });
+  }) as ListBlockChildrenResponseEx;
 
   const project = await FetchDatabase({
     database_id: process.env.NOTION_PROJECT_DB_ID as string,
