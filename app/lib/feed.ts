@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import { Feed, type Item } from "feed";
 import { FetchBlocks, type ListBlockChildrenResponseEx } from "rotion";
 import { GetBlogs } from "./blog";
@@ -10,7 +11,7 @@ function extractTextFromBlocks(blocks: ListBlockChildrenResponseEx): string {
     if (!("type" in block)) continue;
 
     const blockType = block.type;
-    let richTextArray: any[] = [];
+    let richTextArray: RichTextItemResponse[] = [];
 
     // Extract rich_text array from different block types
     if (blockType === "paragraph" && "paragraph" in block) {

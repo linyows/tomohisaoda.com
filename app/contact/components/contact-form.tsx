@@ -43,7 +43,7 @@ const captchaError = (msg: string) => {
   return <p className="captcha-error">{msg}</p>;
 };
 
-export default function ContactForm({ contact, title, desc }: Props) {
+export default function ContactForm({ contact, title, desc: _desc }: Props) {
   const endpoint = `https://contact.tomohisaoda.com/`;
   const initQuery = {
     name: "",
