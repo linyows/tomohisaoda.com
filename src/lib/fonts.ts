@@ -31,6 +31,7 @@ export const notosans = localFont({
 		"Noto Color Emoji",
 	],
 	display: "block",
+	variable: "--fontFamily-sans",
 });
 
 export const notoserif = localFont({
@@ -56,4 +57,5 @@ export const notoserif = localFont({
 		"serif",
 	],
 	display: "block",
+	variable: "--fontFamily-serif",
 });
