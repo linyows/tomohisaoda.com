@@ -31,9 +31,12 @@ const nameStyle = {
   fontSize: 50,
 };
 
-const titleStyle = {
+const titleStyle: CSSProperties = {
   fontSize: 50,
   width: "80%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 };
 const footerIconStyle = {
   marginRight: "20px",
@@ -62,8 +65,8 @@ const OgImage: FC<Props> = ({ title }) => {
     return (
       <div style={divStyle}>
         <img
-          width="200"
-          height="200"
+          width={200}
+          height={200}
           style={iconStyle}
           src={iconSrc}
           alt="icon"
@@ -78,8 +81,8 @@ const OgImage: FC<Props> = ({ title }) => {
       <p style={titleStyle}>{title}</p>
       <p style={footerStyle}>
         <img
-          width="70"
-          height="70"
+          width={70}
+          height={70}
           style={footerIconStyle}
           src={iconSrc}
           alt="icon"
