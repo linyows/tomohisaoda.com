@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { UsePagination } from "../../components/rotion-wrappers";
+import { usePagination } from "../../components/rotion-wrappers";
 import type { Activity } from "../../lib/activity";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function ActivityList({ pages, title, desc }: Props) {
-  const { next, currentPage, currentData, maxPage } = UsePagination<Activity>(
+  const { next, currentPage, currentData, maxPage } = usePagination<Activity>(
     pages,
     10,
   );

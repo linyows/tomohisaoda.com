@@ -9,7 +9,7 @@ import {
   List as RotionList,
   Page as RotionPage,
   Table as RotionTable,
-  UsePagination,
+  usePagination,
 } from "rotion/ui";
 
 export type { FetchDatabaseRes, ListBlockChildrenResponseEx };
@@ -38,4 +38,4 @@ export const Table = (props: ComponentProps<typeof RotionTable>) => {
   return <RotionTable {...props} />;
 };
 
-export { UsePagination };
+export { usePagination };

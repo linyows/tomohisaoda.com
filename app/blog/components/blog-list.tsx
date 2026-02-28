@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { UsePagination } from "../../components/rotion-wrappers";
+import { usePagination } from "../../components/rotion-wrappers";
 import type { Blog } from "../../lib/blog";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function BlogList({ pages, title, desc }: Props) {
-  const { next, currentPage, currentData, maxPage } = UsePagination<Blog>(
+  const { next, currentPage, currentData, maxPage } = usePagination<Blog>(
     pages,
     10,
   );
