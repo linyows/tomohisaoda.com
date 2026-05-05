@@ -25,7 +25,7 @@
     "react-dom": "^19.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-loader-spinner": "^8.0.0",
-    "rotion": "^3.0.0"
+    "rotion": "^3.5.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.5",
@@ -37,5 +37,9 @@
     "sharp": "^0.34.5",
     "twemoji": "^14.0.2",
     "typescript": "^5.4.5"
+  },
+  "overrides": {
+    "postcss": ">=8.5.10",
+    "uuid": "^14.0.0"
   }
 }
