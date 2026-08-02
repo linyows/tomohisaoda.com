@@ -7,4 +7,8 @@ module.exports = {
   images: {
     unoptimized: true,
   },
+  // For TypeScript 7
+  experimental: {
+    useTypeScriptCli: true,
+  },
 };
