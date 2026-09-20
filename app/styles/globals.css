@@ -69,7 +69,7 @@
   --rotion-border-color: rgba(180, 180, 180, 0.8);
   --rotion-dark-border-color: rgba(100, 100, 100, 0.8);
   --rotion-secondary-text: rgb(110, 110, 110);
-  --rotion-dark-primary-text: #f7f0e8;
+  --rotion-dark-primary-text: #e4c0bc;
   --rotion-dark-secondary-text: rgb(180, 180, 180);
   --rotion-tertiary-text: rgb(130, 130, 130);
   --rotion-dark-tertiary-text: rgb(130, 130, 130);
@@ -900,7 +900,7 @@ a:focus {
 @media (prefers-color-scheme: dark) {
   :root {
     --color-accent: #7a3336;
-    --color-heading: #e4c0bc;
+    --color-heading: #b6c5be;
     --color-surface: #5d1c1e;
     --color-surface-hover: #6a2325;
     --color-surface-sunken: #4e1719;
@@ -913,7 +913,7 @@ a:focus {
     color-scheme: dark;
   }
   body {
-    color: #f7f0e8;
+    color: #e4c0bc;
     background: var(--color-surface);
   }
   a {
@@ -978,6 +978,12 @@ a:focus {
   .page-list-header {
     color: rgba(250, 240, 240, 0.6);
     text-shadow: 0 -1px #2c0d0e;
+  }
+  /* Page titles sit on their own, away from the body text. The class is
+     needed because .gradation-text on the detail pages outweighs h1. */
+  h1,
+  h1.gradation-text {
+    color: #f7f0e8;
   }
 
   .page-detail .rotion-text-quote {

@@ -57,9 +57,9 @@ export default function WorkoutClient({
 
   const isDark = useDarkMode();
   const chartOptions = useMemo(() => {
-    const text = isDark ? "rgba(247, 240, 232, 0.8)" : "rgba(54, 51, 16, 0.8)";
+    const text = isDark ? "rgba(228, 192, 188, 0.8)" : "rgba(54, 51, 16, 0.8)";
     const grid = isDark
-      ? "rgba(247, 240, 232, 0.15)"
+      ? "rgba(228, 192, 188, 0.15)"
       : "rgba(54, 51, 16, 0.15)";
     return {
       spanGaps: true,
