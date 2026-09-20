@@ -31,8 +31,6 @@ export default function RootLayout({
           <GA />
         </Suspense>
 
-        <div className="accent"></div>
-
         <div className="container">
           <div>
             <Header />

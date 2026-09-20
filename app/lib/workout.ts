@@ -29,14 +29,21 @@ interface TrainingDB extends DBPageBase {
 type Month = string;
 type Menuname = string;
 
-function getRandomBlue() {
-  // 100-255
-  const r = Math.floor(100 + Math.random() * 156);
-  // 0-155
-  const g = Math.floor(Math.random() * 156);
-  // 100-255
-  const b = Math.floor(200 + Math.random() * 56);
-  return `rgba(${r}, ${g}, ${b}, 0.7)`;
+// Earth tones that stay readable on both the sage light background and the
+// wine red dark background
+const chartColors = [
+  "#8a7c2e",
+  "#b5654a",
+  "#4f7a63",
+  "#a8894c",
+  "#8c4a52",
+  "#3f6b7a",
+  "#c08a3e",
+  "#5f7d3a",
+];
+
+function getColor(index: number) {
+  return chartColors[index % chartColors.length];
 }
 
 export function MakeData(
@@ -75,8 +82,8 @@ export function MakeData(
   trainingNames = Array.from(new Set(trainingNames));
   const xLabels = Object.keys(dataByMonth);
 
-  const datasets = trainingNames.map((name) => {
-    const color = getRandomBlue();
+  const datasets = trainingNames.map((name, i) => {
+    const color = getColor(i);
     return {
       label: name,
       data: xLabels.map((date) => dataByMonth[date][name] || null),

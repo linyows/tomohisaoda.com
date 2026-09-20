@@ -1,13 +1,29 @@
 "use client";
 
 import { Chart, type ChartData, registerables } from "chart.js";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { type FetchDatabaseRes, Table } from "../../components/rotion-wrappers";
 import Styles from "../../styles/Workout.module.css";
 
 Chart.register(...registerables);
 Chart.defaults.plugins.legend.position = "chartArea";
+
+// The chart is drawn on canvas, so it cannot inherit the colors from the
+// stylesheet and has to follow the color scheme on its own
+const useDarkMode = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsDark(mql.matches);
+    const onChange = (ev: MediaQueryListEvent) => setIsDark(ev.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+
+  return isDark;
+};
 
 type Props = {
   latest: FetchDatabaseRes;
@@ -38,6 +54,23 @@ export default function WorkoutClient({
     setUpperbodyInterval("weekly");
     setUpperbody(upperBodyW);
   };
+
+  const isDark = useDarkMode();
+  const chartOptions = useMemo(() => {
+    const text = isDark ? "rgba(247, 240, 232, 0.8)" : "rgba(54, 51, 16, 0.8)";
+    const grid = isDark
+      ? "rgba(247, 240, 232, 0.15)"
+      : "rgba(54, 51, 16, 0.15)";
+    return {
+      spanGaps: true,
+      color: text,
+      plugins: { legend: { labels: { color: text } } },
+      scales: {
+        x: { ticks: { color: text }, grid: { color: grid } },
+        y: { ticks: { color: text }, grid: { color: grid } },
+      },
+    };
+  }, [isDark]);
 
   const [lowerbodyInterval, setLowerbodyInterval] = useState("monthly");
   const [lowerbody, setLowerbody] = useState(lowerBodyM);
@@ -148,7 +181,7 @@ export default function WorkoutClient({
                   <Line
                     className={Styles.chart}
                     data={upperbody}
-                    options={{ spanGaps: true }}
+                    options={chartOptions}
                   />
                 </div>
               </div>
@@ -189,7 +222,7 @@ export default function WorkoutClient({
                   <Line
                     className={Styles.chart}
                     data={lowerbody}
-                    options={{ spanGaps: true }}
+                    options={chartOptions}
                   />
                 </div>
               </div>
