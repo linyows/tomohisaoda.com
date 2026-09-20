@@ -9,6 +9,7 @@ import {
 import HomeContent from "./components/home-content";
 import GenFeed from "./lib/feed";
 import { generatePageMetadata } from "./lib/metadata";
+import { GetLastEditedTime } from "./lib/notion";
 import { MakeOgImage } from "./lib/ogimage";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,7 +20,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const page_id = process.env.NOTION_INTRO_PAGE_ID as string;
   const block_id = process.env.NOTION_INTRO_PAGE_ID as string;
-  const aboutPage = (await FetchPage({ page_id })) as PageObjectResponseEx;
+  const aboutPage = (await FetchPage({
+    page_id,
+    last_edited_time: await GetLastEditedTime(page_id),
+  })) as PageObjectResponseEx;
   const about = (await FetchBlocks({
     block_id,
     last_edited_time: aboutPage.last_edited_time,

@@ -15,6 +15,7 @@
     "clean": "rm -rf .cache public/images && mkdir .cache && mkdir public/images"
   },
   "dependencies": {
+    "@notionhq/client": "^5.26.0",
     "cdate": "^0.0.7",
     "chart.js": "^4.5.1",
     "feed": "^6.0.0",

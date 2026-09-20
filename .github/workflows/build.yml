@@ -34,6 +34,7 @@ jobs:
     env:
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       ROTION_DEBUG: ${{ secrets.ROTION_DEBUG }}
+      ROTION_INCREMENTAL_CACHE: true
     steps:
     - uses: actions/checkout@71cf2267d89c5cb81562390fa70a37fa40b1305e # v6-beta
     - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
