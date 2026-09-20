@@ -2,14 +2,14 @@ import type { CSSProperties, FC } from "react";
 
 type Props = {
   title: string;
+  backgroundUrl: string;
+  iconUrl: string;
 };
 
-const divStyle: CSSProperties = {
+const baseDivStyle: CSSProperties = {
   display: "flex",
   color: "#fff",
   backgroundColor: "#3d3d3d",
-  backgroundImage:
-    "url(https://raw.githubusercontent.com/linyows/tomohisaoda.com/main/public/ogibg.png)",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "0 0",
   width: "100%",
@@ -56,10 +56,13 @@ const footerUrlStyle = {
   fontWeight: "normal",
 };
 
-const OgImage: FC<Props> = ({ title }) => {
+const OgImage: FC<Props> = ({ title, backgroundUrl, iconUrl }) => {
   const name = `Tomohisa Oda`;
-  const iconSrc = `https://github.com/linyows.png`;
   const url = `https://tomohisaoda.com`;
+  const divStyle: CSSProperties = {
+    ...baseDivStyle,
+    backgroundImage: `url(${backgroundUrl})`,
+  };
 
   if (title === "") {
     return (
@@ -68,7 +71,7 @@ const OgImage: FC<Props> = ({ title }) => {
           width={200}
           height={200}
           style={iconStyle}
-          src={iconSrc}
+          src={iconUrl}
           alt="icon"
         />
         <p style={nameStyle}>{name}</p>
@@ -84,7 +87,7 @@ const OgImage: FC<Props> = ({ title }) => {
           width={70}
           height={70}
           style={footerIconStyle}
-          src={iconSrc}
+          src={iconUrl}
           alt="icon"
         />
         <span style={footerNameStyle}>{name}</span>
