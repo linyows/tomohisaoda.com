@@ -19,11 +19,8 @@ export const ClientLink = createClientLink(Link) as RotionLink;
 
 // Wrapper components with ClientLink as default
 export const List = (props: ComponentProps<typeof RotionList>) => {
-  props.options = {
-    ...props.options,
-    link: ClientLink,
-  };
-  return <RotionList {...props} />;
+  const options = { ...props.options, link: ClientLink };
+  return <RotionList {...props} options={options} />;
 };
 
 export const Page = (props: ComponentProps<typeof RotionPage>) => {
@@ -31,11 +28,8 @@ export const Page = (props: ComponentProps<typeof RotionPage>) => {
 };
 
 export const Table = (props: ComponentProps<typeof RotionTable>) => {
-  props.options = {
-    ...props.options,
-    link: ClientLink,
-  };
-  return <RotionTable {...props} />;
+  const options = { ...props.options, link: ClientLink };
+  return <RotionTable {...props} options={options} />;
 };
 
 export { usePagination };
